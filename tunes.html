@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>RLP Tunes Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root { --app-black: #000000; --app-gray: #121212; --app-card: #181818; --app-card-hvr: #242424; --app-border: #282828; --app-text: #FFFFFF; --app-muted: #A7A7A7; --electric: #FF4600; --danger: #E11D48; --r-sm: 12px; --r-md: 20px; --r-lg: 28px; --r-pill: 9999px; --ease-smoke: cubic-bezier(0.25, 0.46, 0.45, 0.94); --dur-slow: 0.7s; --dur-med: 0.4s; }
+html, body { height: 100%; width: 100%; overflow: hidden; overscroll-behavior: none; background: var(--app-black); color: var(--app-text); font-family: 'Inter', sans-serif; }
+.scroll-root { height: 100vh; width: 100%; overflow-y: auto; overflow-x: hidden; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
+.monolith { width: 100%; max-width: 820px; margin: 0 auto; background: var(--app-gray); border-left: 1px solid var(--app-border); border-right: 1px solid var(--app-border); min-height: 100vh; position: relative; }
+.lodge-header { position: relative; overflow: hidden; background: var(--app-black); padding: 48px 24px 28px; text-align: center; border-bottom: 1px solid var(--app-border); }
+.fire-corona { position: absolute; top: 50%; left: 50%; width: 340px; height: 340px; border-radius: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(255, 70, 0, 0.15) 0%, transparent 70%); filter: blur(30px); pointer-events: none; z-index: 0; transition: opacity var(--dur-slow) var(--ease-smoke); }
+.fire-corona.active { animation: corona-pulse 3s ease-in-out infinite; }
+@keyframes corona-pulse { 0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } }
+.art-wrap { position: relative; z-index: 1; display: inline-block; width: clamp(240px, 50vw, 320px); margin-bottom: 28px; }
+.art-square { width: 100%; aspect-ratio: 1 / 1; border-radius: var(--r-md); background-color: var(--app-card); background-size: cover; background-position: center; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9); transition: background-image var(--dur-slow) var(--ease-smoke), box-shadow var(--dur-slow) var(--ease-smoke); }
+.art-square.playing { animation: art-glow 3.5s ease-in-out infinite alternate; }
+@keyframes art-glow { 0% { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 70, 0, 0.1); } 100% { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 60px rgba(255, 70, 0, 0.4); } }
+.np-wrap { position: relative; z-index: 1; }
+.np-label { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 3px; color: var(--electric); text-transform: uppercase; margin-bottom: 8px; }
+.np-title { font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 900; color: var(--app-text); letter-spacing: -0.03em; margin-bottom: 4px; }
+.np-sub { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500; color: var(--app-muted); }
+.player-box { padding: 28px 24px 24px; background: var(--app-gray); border-bottom: 1px solid var(--app-border); }
+audio { display: none; }
+.time-row { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; font-size: 13px; font-weight: 600; color: var(--app-muted); font-variant-numeric: tabular-nums; }
+.time-stamp { min-width: 36px; } .time-stamp:last-child { text-align: right; }
+.scrubber-wrap { flex: 1; height: 28px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
+.scrubber-track { width: 100%; height: 6px; background: var(--app-border); border-radius: 3px; position: relative; }
+.scrubber-fill { height: 100%; width: 0%; background: var(--electric); border-radius: 3px; position: absolute; left: 0; top: 0; box-shadow: 0 0 10px rgba(255, 70, 0, 0.5); }
+.scrubber-knob { width: 16px; height: 16px; background: var(--app-text); border-radius: 50%; position: absolute; right: -8px; top: -5px; transform: scale(0); transition: transform 0.25s var(--ease-smoke); }
+.scrubber-wrap:hover .scrubber-knob, .scrubber-wrap.dragging .scrubber-knob { transform: scale(1); }
+.controls { display: flex; justify-content: center; align-items: center; gap: 12px; }
+.btn { background: none; border: none; color: var(--app-text); cursor: pointer; padding: 10px; display: flex; align-items: center; justify-content: center; border-radius: 50%; min-width: 48px; min-height: 48px; }
+.btn:hover { background: var(--app-card); }
+.btn svg { width: 24px; height: 24px; fill: currentColor; }
+.main-play { width: 68px; height: 68px; border-radius: 50%; background: var(--app-text); color: var(--app-black); margin: 0 16px; min-width: 68px; min-height: 68px; }
+.main-play:active { transform: scale(0.93); }
+.main-play svg { width: 28px; height: 28px; }
+.skip-btn { background: var(--app-card) !important; border: 1px solid var(--app-border) !important; }
+.track-list { padding: 16px 16px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 8px; background: var(--app-gray); border-bottom: 1px solid var(--app-border); }
+.track { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: var(--r-sm); cursor: pointer; border: 1px solid transparent; transition: all var(--dur-med) var(--ease-smoke); }
+.track:hover { background: var(--app-card); }
+.track.active { background: rgba(255, 70, 0, 0.08); border-color: rgba(255, 70, 0, 0.2); }
+.track-thumb { width: 48px; height: 48px; border-radius: 8px; flex-shrink: 0; background-size: cover; background-position: center; }
+.track-info { flex: 1; min-width: 0; }
+.track-label { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--electric); text-transform: uppercase; margin-bottom: 2px; }
+.track-name { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track.active .track-name { color: var(--electric); }
+.back-nav { position: absolute; top: 24px; left: 24px; z-index: 10; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 2px; color: var(--app-text); text-decoration: none; text-transform: uppercase; display: flex; align-items: center; gap: 6px; opacity: 0.7; transition: opacity 0.2s; }
+.back-nav:hover { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="scroll-root" id="scrollRoot">
+  <div class="monolith">
+    <div class="lodge-header">
+      <a href="index.html" class="back-nav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg> Store</a>
+      <div class="fire-corona" id="fireCorona"></div>
+      <div class="art-wrap"><div class="art-square" id="artSquare"></div></div>
+      <div class="np-wrap">
+        <div class="np-label">Now Playing · RLP</div>
+        <div class="np-title" id="npTitle">Volume One</div>
+        <div class="np-sub">Music of the Native American Church</div>
+      </div>
+    </div>
+    <div class="player-box">
+      <audio id="player" preload="metadata"></audio>
+      <div class="time-row">
+        <span class="time-stamp" id="cT">0:00</span>
+        <div class="scrubber-wrap" id="sC"><div class="scrubber-track"><div class="scrubber-fill" id="sF"><div class="scrubber-knob"></div></div></div></div>
+        <span class="time-stamp" id="dT">0:00</span>
+      </div>
+      <div class="controls">
+        <button class="btn skip-btn" onclick="sk(-15)"><svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05 1-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg></button>
+        <button class="btn main-play" onclick="tgl()"><svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
+        <button class="btn skip-btn" onclick="sk(15)"><svg viewBox="0 0 24 24"><path d="M11.5 8c2.65 0 5.05 1 6.9 2.6L22 7v9h-9l3.62-3.62C15.23 11.22 13.46 10.5 11.5 10.5c-3.54 0-6.55 2.31-7.6 5.5L1.53 15.22C2.92 11.03 6.85 8 11.5 8z"/></svg></button>
+      </div>
+    </div>
+    <div class="track-list" id="tL"></div>
+  </div>
+</div>
+<script>
+const DATA = [
+  { v: 'Volume One', u: 'https://archive.org/download/Rlptunes/V%201.m4a', i: 'https://drive.google.com/thumbnail?id=1NgZLKZgmeA_1-pH2lSAghPQ8bfpzR3Hy&sz=w1000' },
+  { v: 'Volume Two', u: 'https://archive.org/download/Rlptunes/V%202.m4a', i: 'https://drive.google.com/thumbnail?id=1JHpp88_Bgtt8Ocv9VjNtFW00hM6xH4dK&sz=w1000' },
+  { v: 'Volume Three', u: 'https://archive.org/download/Rlptunes/V%203.m4a', i: 'https://drive.google.com/thumbnail?id=1qKloIu59N4Sq0Kj45BlY6fNUa--j8Dmr&sz=w1000' },
+  { v: 'Volume Four', u: 'https://archive.org/download/Rlptunes/Volume%20Four.m4a', i: 'https://drive.google.com/thumbnail?id=1r4EhgI4wz26FzvkfTyey6tV36va0FfHz&sz=w1000' }
+];
+let cur = 0, isPlaying = false, isDragging = false;
+const audio = document.getElementById('player'), artEl = document.getElementById('artSquare'), coronaEl = document.getElementById('fireCorona'), titleEl = document.getElementById('npTitle'), fill = document.getElementById('sF');
+
+artEl.style.backgroundImage = `url('${DATA[0].i}')`; audio.src = DATA[0].u;
+
+function renderTracks() {
+  document.getElementById('tL').innerHTML = DATA.map((t, i) => `
+    <div class="track ${i === cur ? 'active' : ''}" onclick="pk(${i})">
+      <div class="track-thumb" style="background-image:url('${t.i}')"></div>
+      <div class="track-info"><div class="track-label">RLP</div><div class="track-name">${t.v}</div></div>
+    </div>`).join('');
+} renderTracks();
+
+function pk(i) { cur = i; const t = DATA[i]; artEl.style.backgroundImage = `url('${t.i}')`; titleEl.textContent = t.v; renderTracks(); audio.src = t.u; audio.play().then(() => { isPlaying = true; syncUI(); }); }
+function tgl() { if (audio.paused) { audio.play().then(() => { isPlaying = true; syncUI(); }); } else { audio.pause(); isPlaying = false; syncUI(); } }
+function sk(secs) { audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + secs)); }
+function syncUI() { document.getElementById('playIcon').style.display = isPlaying ? 'none' : 'block'; document.getElementById('pauseIcon').style.display = isPlaying ? 'block' : 'none'; isPlaying ? artEl.classList.add('playing') : artEl.classList.remove('playing'); isPlaying ? coronaEl.classList.add('active') : coronaEl.classList.remove('active'); renderTracks(); }
+
+audio.addEventListener('timeupdate', () => { if (audio.duration && !isDragging) { fill.style.width = (audio.currentTime / audio.duration * 100) + '%'; document.getElementById('cT').textContent = fmt(audio.currentTime); }});
+audio.addEventListener('loadedmetadata', () => document.getElementById('dT').textContent = fmt(audio.duration));
+audio.addEventListener('ended', () => pk((cur + 1) % DATA.length));
+function fmt(s) { if(isNaN(s)) return '0:00'; const m=Math.floor(s/60), sc=Math.floor(s%60); return `${m}:${sc<10?'0':''}${sc}`; }
+
+const scr = document.getElementById('sC');
+scr.addEventListener('mousedown', e => { isDragging = true; applyDrag(e); });
+window.addEventListener('mousemove', e => { if (isDragging) applyDrag(e); });
+window.addEventListener('mouseup', e => { if (isDragging) { isDragging = false; if (audio.duration) audio.currentTime = applyDrag(e) * audio.duration; }});
+function applyDrag(e) { const r = scr.getBoundingClientRect(); const p = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)); fill.style.width = (p*100)+'%'; if(audio.duration) document.getElementById('cT').textContent = fmt(p*audio.duration); return p; }
+</script>
+</body>
+</html>
