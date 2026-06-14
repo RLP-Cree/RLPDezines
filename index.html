@@ -18,7 +18,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Square Web Payments SDK (Sandbox for Testing) -->
     <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 
     <style>
@@ -232,7 +231,6 @@
 </head>
 <body class="min-h-screen pb-24">
 
-<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
 <header class="fixed top-0 w-full border-b border-gray-900 z-50 glass">
     <div class="max-w-7xl mx-auto flex justify-between items-center px-5 py-4">
         <a href="#top" class="text-xl font-black tracking-widest italic bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">RLP</a>
@@ -258,7 +256,6 @@
     </div>
 </header>
 
-<!-- Mobile nav -->
 <div id="mobile-nav" class="fixed top-[65px] left-0 w-full glass border-b border-gray-900 z-40 px-6 py-6 space-y-4">
     <a href="#shop-section" class="mobile-nav-link block text-white font-black tracking-widest uppercase text-sm py-3 border-b border-gray-900 hover:text-orange-400 transition">Shop</a>
     <a href="#music-section" class="mobile-nav-link block text-white font-black tracking-widest uppercase text-sm py-3 border-b border-gray-900 hover:text-orange-400 transition">Music</a>
@@ -268,7 +265,6 @@
 </div>
 
 
-<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
 <section id="top" class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 grid-texture overflow-hidden">
     <div class="absolute w-[700px] h-[700px] rounded-full blur-[140px] top-1/3 left-1/4 pointer-events-none" style="background:rgba(37,99,235,0.07)"></div>
     <div class="absolute w-[700px] h-[700px] rounded-full blur-[140px] bottom-1/4 right-1/4 pointer-events-none" style="background:rgba(234,88,12,0.07)"></div>
@@ -295,7 +291,6 @@
 </section>
 
 
-<!-- ═══════════════════════════ SHOP ═══════════════════════════ -->
 <section id="shop-section" class="py-24 px-6 border-t border-gray-900">
     <div class="max-w-6xl mx-auto">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 reveal">
@@ -306,8 +301,11 @@
             <p class="text-gray-500 text-sm font-light max-w-xs">Every item made to order. Ships directly to you.</p>
         </div>
 
-        <!-- Product grid - populated by JS -->
-        <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="skeleton h-96 reveal"></div>
+            <div class="skeleton h-96 reveal reveal-d1"></div>
+            <div class="skeleton h-96 reveal reveal-d2"></div>
+        </div>
 
         <p id="catalog-error" class="hidden text-center text-gray-500 text-sm py-12">
             Unable to load catalog right now. <a href="https://rlp.printful.me" target="_blank" class="text-blue-400 underline">Browse the store →</a>
@@ -316,7 +314,6 @@
 </section>
 
 
-<!-- ═══════════════════════════ MUSIC ═══════════════════════════ -->
 <section id="music-section" class="py-24 px-6 border-t border-gray-900 bg-neutral-950/60">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-14 reveal">
@@ -398,7 +395,6 @@
 </section>
 
 
-<!-- ═══════════════════════════ BUNDLES ═══════════════════════════ -->
 <section id="bundles-section" class="py-24 px-6 border-t border-gray-900">
     <div class="max-w-4xl mx-auto">
         <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
@@ -455,7 +451,6 @@
 </section>
 
 
-<!-- ═══════════════════════════ STORY ═══════════════════════════ -->
 <section id="story-section" class="py-24 px-6 border-t border-gray-900 bg-neutral-950/50">
     <div class="max-w-5xl mx-auto">
         <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -501,7 +496,6 @@
 </section>
 
 
-<!-- ═══════════════════════════ ENDORSEMENTS ═══════════════════════════ -->
 <section class="py-24 px-6 border-t border-gray-900">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-14 reveal">
@@ -559,7 +553,6 @@
 </section>
 
 
-<!-- ═══════════════════════════ COLLABORATIONS ═══════════════════════════ -->
 <section id="collab-section" class="py-24 px-6 border-t border-gray-900 bg-neutral-950/40">
     <div class="max-w-3xl mx-auto">
         <div class="text-center mb-10 reveal">
@@ -602,7 +595,6 @@
 </section>
 
 
-<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
 <footer class="border-t border-gray-900 py-14 px-6">
     <div class="max-w-6xl mx-auto">
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
@@ -647,7 +639,6 @@
 </footer>
 
 
-<!-- ═══════════════════════════ CART DRAWER ═══════════════════════════ -->
 <div id="cart-overlay" onclick="closeCart()"></div>
 <div id="cart-drawer">
     <div class="flex justify-between items-center px-6 py-5 border-b border-gray-900">
@@ -657,12 +648,10 @@
         </button>
     </div>
 
-    <!-- Cart items -->
     <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
         <p id="cart-empty" class="text-gray-600 text-sm font-light text-center py-8">Your cart is empty.</p>
     </div>
 
-    <!-- Checkout -->
     <div class="px-6 py-5 border-t border-gray-900 space-y-4">
         <div class="flex justify-between items-center">
             <span class="text-sm font-bold uppercase tracking-wider text-gray-400">Total</span>
@@ -698,16 +687,13 @@
 </div>
 
 
-<!-- ═══════════════════════════ MUSIC PLAYER ═══════════════════════════ -->
 <div id="player-bar" class="fixed bottom-0 left-0 w-full z-40 px-4 sm:px-6 py-3">
     <div class="max-w-5xl mx-auto flex flex-col gap-2">
-        <!-- Progress -->
         <div id="progress-track" class="w-full">
             <div id="progress-fill"></div>
         </div>
 
         <div class="flex items-center gap-4">
-            <!-- Art + title -->
             <div class="flex items-center gap-3 flex-1 min-w-0">
                 <div class="w-10 h-10 rounded-lg overflow-hidden bg-gray-900 flex-shrink-0">
                     <img id="player-art" src="https://drive.google.com/thumbnail?id=1NgZLKZgmeA_1-pH2lSAghPQ8bfpzR3Hy&sz=w200" class="w-full h-full object-cover" alt="Now playing">
@@ -720,7 +706,6 @@
 
             <audio id="audio" preload="none"></audio>
 
-            <!-- Controls -->
             <div class="flex items-center gap-3 flex-shrink-0">
                 <button onclick="skipAudio(-15)" class="text-gray-500 hover:text-orange-400 transition p-1.5">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 8c-2.65 0-5.05 1-6.9 2.6L2 7v9h9l-3.62-3.62C8.77 11.22 10.54 10.5 12.5 10.5c3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
@@ -733,7 +718,6 @@
                 </button>
             </div>
 
-            <!-- Time -->
             <div class="hidden sm:flex items-center gap-2 text-[11px] font-mono text-gray-500 flex-shrink-0">
                 <span id="time-current">0:00</span>
                 <span>/</span>
@@ -743,16 +727,14 @@
     </div>
 </div>
 
-<!-- Toast -->
 <div id="toast">Added to cart</div>
 
 
-<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────────
 // Sandbox configuration for safe testing
 const APP_ID   = 'sandbox-sq0idb-kjZ_P7KcBFrQuuXniRG6Hg'; 
-const LOC_ID   = 'YOUR_SANDBOX_LOCATION_ID_HERE'; // <--- PASTE LOCATION ID HERE 
+const LOC_ID   = 'L5CPNKT6Y7JE7'; 
 const FUNCTION = '/.netlify/functions/square';
 
 // ── SCROLL REVEAL ───────────────────────────────────────────────────────────
