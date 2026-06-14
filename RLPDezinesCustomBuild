@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RLP Dezines — Indigenous Art, Apparel & Music</title>
+    <meta name="description" content="Official platform of Ronnie Lodgepole. Premium Indigenous apparel, ceremony blankets, custom design services, and original NAC music. Chippewa Cree.">
+    <meta name="author" content="Ronnie Lodgepole">
+    <meta property="og:title" content="RLP Dezines — One Culture. One Platform.">
+    <meta property="og:description" content="Shop premium Indigenous apparel and stream original NAC music by Ronnie Lodgepole, Chippewa Cree.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rlpdezines.com">
+    <meta property="og:image" content="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1200">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Square Web Payments SDK (Sandbox for Testing) -->
+    <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+
+    <style>
+        :root {
+            --blue: #2563EB;
+            --blue-light: #3B82F6;
+            --orange: #EA580C;
+            --orange-light: #F97316;
+            --surface: #0A0A0C;
+            --border: #1F2937;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            overscroll-behavior-y: none;
+        }
+
+        /* Grid texture */
+        .grid-texture {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+
+        /* Glassmorphism header */
+        .glass {
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Nav underline */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute; left: 0; bottom: -3px;
+            width: 0; height: 1px;
+            background: linear-gradient(90deg, var(--blue-light), var(--orange-light));
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: 0.08s; }
+        .reveal-d2 { transition-delay: 0.16s; }
+        .reveal-d3 { transition-delay: 0.24s; }
+
+        /* Product card */
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.25s, transform 0.25s;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-3px);
+        }
+        .product-card img {
+            width: 100%; aspect-ratio: 1;
+            object-fit: cover;
+            background: #111;
+        }
+
+        /* Cart drawer */
+        #cart-drawer {
+            position: fixed; top: 0; right: 0;
+            width: 100%; max-width: 420px;
+            height: 100vh;
+            background: #050507;
+            border-left: 1px solid var(--border);
+            z-index: 200;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+            display: flex; flex-direction: column;
+        }
+        #cart-drawer.open { transform: translateX(0); }
+        #cart-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 199;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        #cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+        /* Square card form */
+        #card-container {
+            min-height: 90px;
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+        }
+        #card-container iframe { border-radius: 6px !important; }
+
+        /* Persistent player */
+        #player-bar {
+            background: rgba(5,5,7,0.97);
+            border-top: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Progress bar */
+        #progress-track {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+            touch-action: none;
+        }
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue), var(--orange));
+            border-radius: 2px;
+            width: 0%;
+            pointer-events: none;
+            position: relative;
+        }
+        #progress-fill::after {
+            content: '';
+            position: absolute; right: -5px; top: 50%;
+            transform: translateY(-50%);
+            width: 10px; height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+        #progress-track:hover #progress-fill::after { opacity: 1; }
+
+        /* Volume card active */
+        .volume-card { cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+        .volume-card:hover { border-color: var(--blue) !important; }
+        .volume-card.active { border-color: var(--orange) !important; background: rgba(234,88,12,0.05) !important; }
+
+        /* Toast */
+        #toast {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--blue);
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* Mobile menu */
+        #mobile-nav {
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        #mobile-nav.open { opacity: 1; visibility: visible; }
+
+        /* Form inputs */
+        .field {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 11px 14px;
+            border-radius: 7px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .field:focus { border-color: var(--blue); }
+        .field::placeholder { color: #4b5563; }
+
+        /* Skeleton loader for products */
+        .skeleton {
+            background: linear-gradient(90deg, #111 25%, #1a1a1a 50%, #111 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 8px;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .product-card { transition: none; }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24">
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header class="fixed top-0 w-full border-b border-gray-900 z-50 glass">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-5 py-4">
+        <a href="#top" class="text-xl font-black tracking-widest italic bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">RLP</a>
+
+        <nav class="hidden lg:flex items-center gap-7 text-[11px] font-bold uppercase tracking-widest text-gray-400">
+            <a href="#shop-section" class="nav-link hover:text-white transition">Shop</a>
+            <a href="#music-section" class="nav-link hover:text-white transition">Music</a>
+            <a href="#bundles-section" class="nav-link hover:text-white transition">Bundles</a>
+            <a href="#story-section" class="nav-link hover:text-white transition">Story</a>
+            <a href="#collab-section" class="nav-link hover:text-white transition">Collaborations</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+            <button id="cart-btn" onclick="openCart()" class="relative flex items-center gap-2 border border-orange-500/30 hover:border-orange-500 bg-orange-600/5 text-orange-400 hover:text-orange-300 px-4 py-2 rounded-lg text-[11px] font-black tracking-widest uppercase transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                Cart
+                <span id="cart-count" class="hidden absolute -top-1.5 -right-1.5 bg-orange-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
+            </button>
+            <button id="menu-btn" class="lg:hidden text-white p-1" aria-label="Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile nav -->
+<div id="mobile-nav" class="fixed top-[65px] left-0 w-full glass border-b border-gray-900 z-40 px-6 py-6 space-y-4">
+    <a href="#shop-section" class="mobile-nav-link block text-white font-black tracking-widest uppercase text-sm py-3 border-b border-gray-900 hover:text-orange-400 transition">Shop</a>
+    <a href="#music-section" class="mobile-nav-link block text-white font-black tracking-widest uppercase text-sm py-3 border-b border-gray-900 hover:text-orange-400 transition">Music</a>
+    <a href="#bundles-section" class="mobile-nav-link block text-white font-black tracking-widest uppercase text-sm py-3 border-b border-gray-900 hover:text-orange-400 transition">Bundles</a>
+    <a href="#story-section" class="mobile-nav-link block text-white font-black tracking-widest uppercase text-sm py-3 border-b border-gray-900 hover:text-orange-400 transition">Story</a>
+    <a href="#collab-section" class="mobile-nav-link block text-white font-black tracking-widest uppercase text-sm py-3 hover:text-orange-400 transition">Collaborations</a>
+</div>
+
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section id="top" class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 grid-texture overflow-hidden">
+    <div class="absolute w-[700px] h-[700px] rounded-full blur-[140px] top-1/3 left-1/4 pointer-events-none" style="background:rgba(37,99,235,0.07)"></div>
+    <div class="absolute w-[700px] h-[700px] rounded-full blur-[140px] bottom-1/4 right-1/4 pointer-events-none" style="background:rgba(234,88,12,0.07)"></div>
+
+    <div class="relative z-10 max-w-3xl mx-auto">
+        <p class="text-[11px] font-black tracking-[0.4em] uppercase text-gray-500 mb-6 reveal">Chippewa Cree · Indigenous-Owned</p>
+        <h1 class="text-5xl sm:text-7xl font-black uppercase tracking-tighter leading-none mb-6 reveal reveal-d1">
+            One Culture.<br>
+            <span class="bg-gradient-to-r from-blue-400 via-blue-300 to-orange-400 bg-clip-text text-transparent">One Platform.</span>
+        </h1>
+        <p class="text-gray-400 text-base sm:text-lg font-light leading-relaxed max-w-xl mx-auto mb-12 reveal reveal-d2">
+            Premium Indigenous apparel. Original NAC music. Custom ceremony blankets. All in one place, rooted in the heart of Chippewa Cree culture.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-d3">
+            <a href="#shop-section" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white text-xs font-black tracking-widest uppercase px-10 py-4 rounded-full transition shadow-lg">Shop Now</a>
+            <a href="#music-section" class="border border-orange-500/40 hover:border-orange-400 text-orange-400 hover:text-orange-300 text-xs font-black tracking-widest uppercase px-10 py-4 rounded-full transition">Listen Free</a>
+        </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-700 text-[10px] tracking-widest uppercase font-bold">
+        <div class="w-px h-10 bg-gradient-to-b from-transparent to-gray-700"></div>
+        <span>Scroll</span>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════ SHOP ═══════════════════════════ -->
+<section id="shop-section" class="py-24 px-6 border-t border-gray-900">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 reveal">
+            <div>
+                <p class="text-[11px] font-black tracking-[0.35em] uppercase text-orange-500 mb-2">Live Catalog</p>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight">The Collection</h2>
+            </div>
+            <p class="text-gray-500 text-sm font-light max-w-xs">Every item made to order. Ships directly to you.</p>
+        </div>
+
+        <!-- Product grid - populated by JS -->
+        <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Skeletons while loading -->
+            <div class="skeleton h-96 reveal"></div>
+            <div class="skeleton h-96 reveal reveal-d1"></div>
+            <div class="skeleton h-96 reveal reveal-d2"></div>
+        </div>
+
+        <p id="catalog-error" class="hidden text-center text-gray-500 text-sm py-12">
+            Unable to load catalog right now. <a href="https://rlp.printful.me" target="_blank" class="text-blue-400 underline">Browse the store →</a>
+        </p>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════ MUSIC ═══════════════════════════ -->
+<section id="music-section" class="py-24 px-6 border-t border-gray-900 bg-neutral-950/60">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-14 reveal">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full border border-orange-500/20 bg-orange-500/5 text-orange-500 mb-5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+            </div>
+            <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mb-4">RLP Tunes</h2>
+            <p class="text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
+                Original Native American Church compositions by Ronnie Lodgepole. Sacred music that lives here — free forever, never on corporate platforms.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8 items-start">
+            <div class="bg-black p-7 rounded-xl border border-gray-900 reveal">
+                <p class="text-[10px] text-orange-500 font-black uppercase tracking-widest mb-3">A Note on the Music</p>
+                <p class="text-gray-400 font-light text-sm leading-relaxed mb-5">
+                    NAC songs carry no titles — they never have. These are cataloged in the exact sequence they were composed and received. The order is the story.
+                </p>
+                <div class="p-4 bg-orange-600/5 border border-orange-500/10 rounded-lg text-xs font-black text-orange-400 tracking-widest uppercase text-center">
+                    Free to Listen. Always.
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-3 reveal reveal-d1">
+                <div onclick="selectVolume(0)" id="vol-0" class="volume-card flex justify-between items-center bg-black p-5 rounded-xl border border-gray-900">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg overflow-hidden bg-gray-900 flex-shrink-0">
+                            <img src="https://drive.google.com/thumbnail?id=1NgZLKZgmeA_1-pH2lSAghPQ8bfpzR3Hy&sz=w200" class="w-full h-full object-cover" alt="Vol 1" loading="lazy">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Volume One</h4>
+                            <p class="text-[11px] text-gray-500 mt-0.5">Chippewa Cree Composition Layout Ledger</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-black tracking-widest uppercase text-blue-400">Play</span>
+                </div>
+
+                <div onclick="selectVolume(1)" id="vol-1" class="volume-card flex justify-between items-center bg-black p-5 rounded-xl border border-gray-900">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg overflow-hidden bg-gray-900 flex-shrink-0">
+                            <img src="https://drive.google.com/thumbnail?id=1JHpp88_Bgtt8Ocv9VjNtFW00hM6xH4dK&sz=w200" class="w-full h-full object-cover" alt="Vol 2" loading="lazy">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Volume Two</h4>
+                            <p class="text-[11px] text-gray-500 mt-0.5">The second chapter of chronological arrangements.</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-black tracking-widest uppercase text-blue-400">Play</span>
+                </div>
+
+                <div onclick="selectVolume(2)" id="vol-2" class="volume-card flex justify-between items-center bg-black p-5 rounded-xl border border-gray-900">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg overflow-hidden bg-gray-900 flex-shrink-0">
+                            <img src="https://drive.google.com/thumbnail?id=1qKloIu59N4Sq0Kj45BlY6fNUa--j8Dmr&sz=w200" class="w-full h-full object-cover" alt="Vol 3" loading="lazy">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Volume Three</h4>
+                            <p class="text-[11px] text-gray-500 mt-0.5">Continuing the journey as life evolves.</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-black tracking-widest uppercase text-blue-400">Play</span>
+                </div>
+
+                <div onclick="selectVolume(3)" id="vol-3" class="volume-card flex justify-between items-center bg-black p-5 rounded-xl border border-gray-900">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg overflow-hidden bg-gray-900 flex-shrink-0">
+                            <img src="https://drive.google.com/thumbnail?id=1r4EhgI4wz26FzvkfTyey6tV36va0FfHz&sz=w200" class="w-full h-full object-cover" alt="Vol 4" loading="lazy">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Volume Four</h4>
+                            <p class="text-[11px] text-gray-500 mt-0.5">The most recent recordings.</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-black tracking-widest uppercase text-blue-400">Play</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════ BUNDLES ═══════════════════════════ -->
+<section id="bundles-section" class="py-24 px-6 border-t border-gray-900">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
+            <div class="text-center mb-10 reveal">
+                <p class="text-[11px] font-black tracking-[0.35em] uppercase text-blue-400 mb-4">A Gift for Your Guests</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5">Family Honoring Specials</h2>
+                <p class="text-gray-300 font-light leading-relaxed max-w-xl mx-auto mb-3">
+                    Premium <strong class="text-white">60″ × 80″</strong> Sublimated Sherpa Throws for powwows, memorials, and honoring ceremonies. Fully customizable. Free shipping included.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8 reveal">
+                <div class="bg-gray-900 border border-gray-800 hover:border-blue-500 p-5 rounded-xl text-center transition">
+                    <div class="text-xs font-black text-white uppercase tracking-widest mb-3">5 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea</div>
+                    <div class="text-3xl font-black text-blue-400">$85</div>
+                    <div class="text-[10px] text-gray-500 mt-1 uppercase tracking-wider">per throw</div>
+                    <div class="text-xs text-gray-400 mt-2 font-semibold">$425 total</div>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 hover:border-blue-500 p-5 rounded-xl text-center transition">
+                    <div class="text-xs font-black text-white uppercase tracking-widest mb-3">10 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea</div>
+                    <div class="text-3xl font-black text-blue-400">$79</div>
+                    <div class="text-[10px] text-gray-500 mt-1 uppercase tracking-wider">per throw</div>
+                    <div class="text-xs text-gray-400 mt-2 font-semibold">$790 total</div>
+                </div>
+                <div class="bg-gray-900 border border-blue-600 p-5 rounded-xl text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
+                    <div class="text-xs font-black text-white uppercase tracking-widest mb-3">15 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea</div>
+                    <div class="text-3xl font-black text-blue-400">$76</div>
+                    <div class="text-[10px] text-gray-500 mt-1 uppercase tracking-wider">per throw</div>
+                    <div class="text-xs text-gray-400 mt-2 font-semibold">$1,140 total</div>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 hover:border-blue-500 p-5 rounded-xl text-center transition">
+                    <div class="text-xs font-black text-white uppercase tracking-widest mb-3">20 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea</div>
+                    <div class="text-3xl font-black text-blue-400">$73</div>
+                    <div class="text-[10px] text-gray-500 mt-1 uppercase tracking-wider">per throw</div>
+                    <div class="text-xs text-gray-400 mt-2 font-semibold">$1,460 total</div>
+                </div>
+            </div>
+
+            <div class="text-center mb-8 reveal">
+                <a href="https://rlp-dezines.square.site/sherpa-throw-blanket-bundles" target="_blank" rel="noopener" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase transition shadow-lg text-xs">Order Your Bundle →</a>
+                <p class="text-gray-600 text-xs mt-3">Questions? <a href="mailto:rlp@rlpdezines.com" class="text-blue-400 hover:text-blue-300 transition">rlp@rlpdezines.com</a></p>
+            </div>
+
+            <div class="bg-gray-900 border-l-4 border-blue-500 p-5 rounded-lg text-sm text-gray-300 font-light reveal">
+                <strong class="text-white font-semibold">Timing:</strong> Please order at least <strong class="text-white">14 days before your event.</strong> Every bundle is handcrafted to order.
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════ STORY ═══════════════════════════ -->
+<section id="story-section" class="py-24 px-6 border-t border-gray-900 bg-neutral-950/50">
+    <div class="max-w-5xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="reveal">
+                <p class="text-[11px] font-black tracking-[0.35em] uppercase text-orange-500 mb-3">The Founder</p>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mb-6">Ronnie<br>Lodgepole</h2>
+                <p class="text-gray-300 font-light leading-relaxed text-sm mb-5">
+                    I grew up around the fireplace, surrounded by ceremonies from the time I was young. That upbringing informed every part of my worldview — it taught me how to channel creative energy to pay blessings forward.
+                </p>
+                <p class="text-gray-300 font-light leading-relaxed text-sm mb-5">
+                    I found my way through our traditional ways. Through prayer, the sweat lodge, the discipline of training, the power of laughter, and the energy of the dance arena — I found healing. I learned how to channel that into something positive for my family and our community.
+                </p>
+                <p class="text-gray-400 font-light leading-relaxed text-sm">
+                    <strong class="text-white">RLP Dezines</strong> is an expression of that journey. The music is the soul. The designs are the outward voice.
+                </p>
+            </div>
+
+            <div class="space-y-5 reveal reveal-d1">
+                <div class="bg-black border border-gray-800 rounded-xl overflow-hidden">
+                    <img src="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w800" alt="Ronnie Lodgepole" class="w-full h-64 object-cover" loading="lazy">
+                </div>
+                <div class="bg-black p-6 rounded-xl border border-gray-800 relative overflow-hidden">
+                    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(234,88,12,0.04) 0%,transparent 60%)"></div>
+                    <blockquote class="text-sm italic text-orange-400 border-l-2 border-orange-500 pl-4 relative z-10">
+                        "Creator blessed my mind to be creative, and this is how I share it with the world."
+                    </blockquote>
+                    <p class="text-gray-600 text-[11px] font-black tracking-widest uppercase mt-3 pl-4">— Ronnie Lodgepole, Founder</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-black border border-gray-900 p-5 rounded-xl text-center">
+                        <div class="text-2xl font-black text-blue-400 mb-1">60K+</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Community</div>
+                    </div>
+                    <div class="bg-black border border-gray-900 p-5 rounded-xl text-center">
+                        <div class="text-2xl font-black text-orange-400 mb-1">4 Vols</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">NAC Music</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════ ENDORSEMENTS ═══════════════════════════ -->
+<section class="py-24 px-6 border-t border-gray-900">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-14 reveal">
+            <p class="text-[11px] font-black tracking-[0.35em] uppercase text-blue-400 mb-3">Verified Partners</p>
+            <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight">Client Endorsements</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-neutral-950 border border-gray-800 hover:border-blue-500 p-8 rounded-2xl flex flex-col transition reveal">
+                <div class="flex gap-1 mb-5">
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="text-gray-300 font-light text-sm leading-relaxed mb-6 flex-grow">"RLP Dezines provided us with incredible support. From our official organization logo to the banners and custom gear we use for our events, the quality is exceptional. Every piece is crafted with genuine respect for our culture."</p>
+                <div class="flex gap-3 mb-5">
+                    <div class="flex-1 h-24 bg-gray-900 border border-gray-800 rounded-lg overflow-hidden flex items-center justify-center p-2">
+                        <img src="https://drive.google.com/thumbnail?id=1FHCFehM9ll9ck4hIXncXefoJAeEoJ2pv&sz=w400" class="max-w-full max-h-full object-contain" alt="NACNA" loading="lazy">
+                    </div>
+                    <div class="flex-1 h-24 bg-gray-900 border border-gray-800 rounded-lg overflow-hidden flex items-center justify-center p-2">
+                        <img src="https://drive.google.com/thumbnail?id=1KEWYxxGlsKiK5mN4TaPrT6kKJRs5BtGK&sz=w400" class="max-w-full max-h-full object-contain" alt="NACNA" loading="lazy">
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 pt-4">
+                    <div class="text-white text-xs font-black uppercase">Executive Committee</div>
+                    <div class="text-blue-400 text-[11px] font-bold tracking-widest uppercase mt-1">Native American Church of North America</div>
+                </div>
+            </div>
+
+            <div class="bg-neutral-950 border border-gray-800 hover:border-orange-500 p-8 rounded-2xl flex flex-col transition reveal reveal-d2">
+                <div class="flex gap-1 mb-5">
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg class="w-4 h-4 fill-orange-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="text-gray-300 font-light text-sm leading-relaxed mb-6 flex-grow">"Working with RLP Dezines has been a great experience. We needed high-quality gear for our health board and community events, and the final products were exactly what we were looking for. The communication was excellent."</p>
+                <div class="flex gap-3 mb-5">
+                    <div class="flex-1 h-24 bg-gray-900 border border-gray-800 rounded-lg overflow-hidden flex items-center justify-center p-2">
+                        <img src="https://drive.google.com/thumbnail?id=1ZTpJTkYK2wgDabX5d5y9jjpnf1PCLDMQ&sz=w400" class="max-w-full max-h-full object-contain" alt="Rocky Boy" loading="lazy">
+                    </div>
+                    <div class="flex-1 h-24 bg-gray-900 border border-gray-800 rounded-lg overflow-hidden flex items-center justify-center p-2">
+                        <img src="https://drive.google.com/thumbnail?id=1Kclhwfy8oV4Cf1SCzB2Pb97VU3vo3tr3&sz=w400" class="max-w-full max-h-full object-contain" alt="Rocky Boy" loading="lazy">
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 pt-4">
+                    <div class="text-white text-xs font-black uppercase">Leadership Team</div>
+                    <div class="text-orange-400 text-[11px] font-bold tracking-widest uppercase mt-1">Rocky Boy Health Board</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════ COLLABORATIONS ═══════════════════════════ -->
+<section id="collab-section" class="py-24 px-6 border-t border-gray-900 bg-neutral-950/40">
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10 reveal">
+            <p class="text-[11px] font-black tracking-[0.35em] uppercase text-orange-500 mb-3">B2B & Creative Services</p>
+            <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mb-4">Start a Project</h2>
+            <p class="text-gray-400 text-sm max-w-sm mx-auto leading-relaxed">Bulk manufacturing, custom event apparel, powwow flyers, brand identities. Willing to work with your budget.</p>
+        </div>
+
+        <div class="bg-black border border-gray-900 p-8 rounded-2xl space-y-5 reveal reveal-d1">
+            <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Name / Organization</label>
+                    <input class="field" type="text" id="collab-name" placeholder="Your name or org">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Your Email</label>
+                    <input class="field" type="email" id="collab-email" placeholder="you@example.com">
+                </div>
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Project Type</label>
+                <select class="field" id="collab-intent">
+                    <option value="General Inquiry">General Inquiry</option>
+                    <option value="Bulk Manufacturing Request">Bulk Manufacturing</option>
+                    <option value="Custom Event Design">Custom Event Design</option>
+                    <option value="Brand Identity">Brand Identity</option>
+                    <option value="Wholesale Partnership">Wholesale Partnership</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Project Details</label>
+                <textarea class="field h-28 resize-none" id="collab-message" placeholder="Tell me your timeline, quantities, and vision..."></textarea>
+            </div>
+            <button onclick="submitCollabForm()" class="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-500 hover:to-orange-500 text-white text-xs font-black tracking-widest uppercase py-4 rounded-lg transition duration-300">
+                Submit Project Request
+            </button>
+            <p id="collab-error" class="hidden text-red-400 text-xs text-center">Please fill in your name and project details.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer class="border-t border-gray-900 py-14 px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+            <div class="lg:col-span-2">
+                <div class="text-2xl font-black italic tracking-widest bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent mb-3">RLP</div>
+                <p class="text-gray-600 text-sm font-light leading-relaxed max-w-xs">Indigenous-owned creative studio. Premium apparel, ceremony blankets, and original NAC music rooted in Chippewa Cree culture.</p>
+                <div class="flex gap-5 mt-5">
+                    <a href="https://www.facebook.com/rlpdezines" target="_blank" rel="noopener" aria-label="Facebook" class="text-gray-700 hover:text-blue-400 transition">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/rlpdezines" target="_blank" rel="noopener" aria-label="Instagram" class="text-gray-700 hover:text-orange-400 transition">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@rlpdezines" target="_blank" rel="noopener" aria-label="TikTok" class="text-gray-700 hover:text-white transition">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.37a8.16 8.16 0 0 0 4.78 1.52V7.44a4.85 4.85 0 0 1-1.01-.75z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-black text-[10px] uppercase tracking-widest mb-4">Navigate</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="#shop-section" class="hover:text-white transition">Shop</a></li>
+                    <li><a href="#music-section" class="hover:text-white transition">Music</a></li>
+                    <li><a href="#bundles-section" class="hover:text-white transition">Bundles</a></li>
+                    <li><a href="#story-section" class="hover:text-white transition">Our Story</a></li>
+                    <li><a href="#collab-section" class="hover:text-white transition">Collaborations</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-black text-[10px] uppercase tracking-widest mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="mailto:rlp@rlpdezines.com" class="hover:text-white transition">rlp@rlpdezines.com</a></li>
+                    <li class="text-xs leading-relaxed pt-2">Gilbert, Arizona<br>Chippewa Cree Nation<br>Rocky Boy's Reservation</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-900 pt-8 flex flex-col sm:flex-row justify-between gap-3 text-xs text-gray-700">
+            <div>© 2026 RLP Dezines. All rights reserved. Indigenous-Owned & Operated.</div>
+            <div>W-9 available upon request · Gilbert, AZ</div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ═══════════════════════════ CART DRAWER ═══════════════════════════ -->
+<div id="cart-overlay" onclick="closeCart()"></div>
+<div id="cart-drawer">
+    <div class="flex justify-between items-center px-6 py-5 border-b border-gray-900">
+        <h3 class="text-lg font-black uppercase tracking-widest">Your Cart</h3>
+        <button onclick="closeCart()" class="text-gray-500 hover:text-white transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+
+    <!-- Cart items -->
+    <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <p id="cart-empty" class="text-gray-600 text-sm font-light text-center py-8">Your cart is empty.</p>
+    </div>
+
+    <!-- Checkout -->
+    <div class="px-6 py-5 border-t border-gray-900 space-y-4">
+        <div class="flex justify-between items-center">
+            <span class="text-sm font-bold uppercase tracking-wider text-gray-400">Total</span>
+            <span id="cart-total" class="font-black text-xl text-white">$0.00</span>
+        </div>
+
+        <div id="checkout-form" class="hidden space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Your Name</label>
+                    <input class="field text-sm py-2.5" type="text" id="buyer-name" placeholder="Full name">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Email</label>
+                    <input class="field text-sm py-2.5" type="email" id="buyer-email" placeholder="you@example.com">
+                </div>
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Card Details</label>
+                <div id="card-container"></div>
+            </div>
+            <button id="pay-btn" onclick="processPayment()" class="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-500 hover:to-orange-500 text-white text-xs font-black tracking-widest uppercase py-4 rounded-lg transition">
+                Pay Now
+            </button>
+            <p id="pay-error" class="hidden text-red-400 text-xs text-center"></p>
+            <p id="pay-success" class="hidden text-green-400 text-xs text-center font-bold">✓ Order confirmed! Check your email.</p>
+        </div>
+
+        <button id="checkout-btn" onclick="showCheckout()" class="w-full bg-orange-600 hover:bg-orange-500 text-white text-xs font-black tracking-widest uppercase py-4 rounded-lg transition">
+            Proceed to Checkout
+        </button>
+    </div>
+</div>
+
+
+<!-- ═══════════════════════════ MUSIC PLAYER ═══════════════════════════ -->
+<div id="player-bar" class="fixed bottom-0 left-0 w-full z-40 px-4 sm:px-6 py-3">
+    <div class="max-w-5xl mx-auto flex flex-col gap-2">
+        <!-- Progress -->
+        <div id="progress-track" class="w-full">
+            <div id="progress-fill"></div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <!-- Art + title -->
+            <div class="flex items-center gap-3 flex-1 min-w-0">
+                <div class="w-10 h-10 rounded-lg overflow-hidden bg-gray-900 flex-shrink-0">
+                    <img id="player-art" src="https://drive.google.com/thumbnail?id=1NgZLKZgmeA_1-pH2lSAghPQ8bfpzR3Hy&sz=w200" class="w-full h-full object-cover" alt="Now playing">
+                </div>
+                <div class="min-w-0">
+                    <p class="text-sm font-bold text-white truncate" id="player-title">Volume One</p>
+                    <p class="text-[10px] text-gray-500 font-bold tracking-widest uppercase truncate" id="player-sub">RLP Tunes</p>
+                </div>
+            </div>
+
+            <audio id="audio" preload="none"></audio>
+
+            <!-- Controls -->
+            <div class="flex items-center gap-3 flex-shrink-0">
+                <button onclick="skipAudio(-15)" class="text-gray-500 hover:text-orange-400 transition p-1.5">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 8c-2.65 0-5.05 1-6.9 2.6L2 7v9h9l-3.62-3.62C8.77 11.22 10.54 10.5 12.5 10.5c3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+                </button>
+                <button onclick="togglePlay()" id="play-btn" class="w-11 h-11 rounded-full flex items-center justify-center text-white transition shadow-[0_0_18px_rgba(234,88,12,0.3)]" style="background:linear-gradient(135deg,#2563EB,#EA580C)">
+                    <svg id="play-icon" class="w-5 h-5 fill-white" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <button onclick="skipAudio(15)" class="text-gray-500 hover:text-orange-400 transition p-1.5">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M11.5 8c2.65 0 5.05 1 6.9 2.6L22 7v9h-9l3.62-3.62C15.23 11.22 13.46 10.5 11.5 10.5c-3.54 0-6.55 2.31-7.6 5.5L1.53 15.22C2.92 11.03 6.85 8 11.5 8z"/></svg>
+                </button>
+            </div>
+
+            <!-- Time -->
+            <div class="hidden sm:flex items-center gap-2 text-[11px] font-mono text-gray-500 flex-shrink-0">
+                <span id="time-current">0:00</span>
+                <span>/</span>
+                <span id="time-duration">0:00</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast">Added to cart</div>
+
+
+<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+// Sandbox configuration for safe testing
+const APP_ID   = 'sandbox-sq0idb-kjZ_P7KcBFrQuuXniRG6Hg'; 
+const LOC_ID   = 'L5CPNKT6Y7JE7';
+const FUNCTION = '/.netlify/functions/square';
+
+// ── SCROLL REVEAL ───────────────────────────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ── MOBILE MENU ─────────────────────────────────────────────────────────────
+const mobileNav = document.getElementById('mobile-nav');
+document.getElementById('menu-btn').addEventListener('click', () => mobileNav.classList.toggle('open'));
+document.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+// ── TOAST ───────────────────────────────────────────────────────────────────
+function showToast(msg, color = '#2563EB') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = color;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── CART STATE ───────────────────────────────────────────────────────────────
+let cart = [];
+
+function addToCart(id, name, variationId, variation, price) {
+    const existing = cart.find(i => i.variationId === variationId);
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({ id, name, variationId, variation, price, qty: 1 });
+    }
+    renderCart();
+    openCart();
+    showToast(`${name} added to cart`, '#EA580C');
+}
+
+function removeFromCart(variationId) {
+    cart = cart.filter(i => i.variationId !== variationId);
+    renderCart();
+}
+
+function renderCart() {
+    const itemsEl  = document.getElementById('cart-items');
+    const emptyEl  = document.getElementById('cart-empty');
+    const totalEl  = document.getElementById('cart-total');
+    const countEl  = document.getElementById('cart-count');
+    const checkBtn = document.getElementById('checkout-btn');
+
+    const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+
+    totalEl.textContent = `$${(total / 100).toFixed(2)}`;
+
+    if (count > 0) {
+        countEl.textContent = count;
+        countEl.classList.remove('hidden');
+        checkBtn.classList.remove('hidden');
+    } else {
+        countEl.classList.add('hidden');
+        checkBtn.classList.add('hidden');
+        document.getElementById('checkout-form').classList.add('hidden');
+    }
+
+    if (cart.length === 0) {
+        emptyEl.classList.remove('hidden');
+        itemsEl.innerHTML = '';
+        itemsEl.appendChild(emptyEl);
+        return;
+    }
+
+    emptyEl.classList.add('hidden');
+    itemsEl.innerHTML = cart.map(item => `
+        <div class="flex gap-4 items-start bg-neutral-950 p-4 rounded-xl border border-gray-900">
+            <div class="flex-1 min-w-0">
+                <p class="text-white font-bold text-sm truncate">${item.name}</p>
+                ${item.variation !== 'Regular' ? `<p class="text-gray-500 text-xs mt-0.5">${item.variation}</p>` : ''}
+                <p class="text-orange-400 text-sm font-black mt-1">$${((item.price * item.qty) / 100).toFixed(2)}</p>
+            </div>
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <button onclick="changeQty('${item.variationId}', -1)" class="w-7 h-7 rounded bg-gray-900 text-white text-lg font-bold flex items-center justify-center hover:bg-gray-800 transition">−</button>
+                <span class="text-white text-sm font-bold w-4 text-center">${item.qty}</span>
+                <button onclick="changeQty('${item.variationId}', 1)" class="w-7 h-7 rounded bg-gray-900 text-white text-lg font-bold flex items-center justify-center hover:bg-gray-800 transition">+</button>
+                <button onclick="removeFromCart('${item.variationId}')" class="ml-1 text-gray-600 hover:text-red-400 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function changeQty(variationId, delta) {
+    const item = cart.find(i => i.variationId === variationId);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) removeFromCart(variationId);
+    else renderCart();
+}
+
+function openCart()  { document.getElementById('cart-drawer').classList.add('open'); document.getElementById('cart-overlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeCart() { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+// ── NATIVE FRONTEND CATALOG ENGINE ───────────────────────────────────────────
+const CATALOG = [
+    {
+        id: 'item-1',
+        name: "Signature Crest Hoodie",
+        price: 7500, 
+        tag: "Limited Run",
+        tagColor: "orange",
+        desc: "Ultra-premium fabric constructed for utility and cultural pride.",
+        img: "https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w400"
+    },
+    {
+        id: 'item-2',
+        name: "Sacred Matriarch Sherpa",
+        price: 8500, 
+        tag: "Ceremony Drop",
+        tagColor: "blue",
+        desc: "Plush, high-definition sublimated blanket constructed for ceremony use.",
+        img: "https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w400"
+    },
+    {
+        id: 'item-3',
+        name: "RLP Everyday Tumbler",
+        price: 4800, 
+        tag: "Everyday Carry",
+        tagColor: "orange",
+        desc: "Keep your coffee hot during those long drives. Built tough for daily use.",
+        img: "https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w400"
+    }
+];
+
+async function loadCatalog() {
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+
+    // Clear the skeletons and error messages
+    document.getElementById('catalog-error').classList.add('hidden');
+
+    grid.innerHTML = CATALOG.map(p => {
+        const color = p.tagColor === 'blue' ? 'blue' : 'orange';
+        return `
+        <div class="product-card reveal visible">
+            <div class="relative bg-gray-950 aspect-square flex items-center justify-center border-b border-gray-900 overflow-hidden group">
+                <span class="text-[10px] text-${color}-400 bg-${color}-500/10 px-3 py-1 rounded absolute top-4 right-4 uppercase tracking-widest font-black z-10">${p.tag}</span>
+                <img src="${p.img}" alt="${p.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-white text-base leading-tight flex-1 pr-3 group-hover:text-${color}-400 transition">${p.name}</h4>
+                    <span class="font-black text-${color}-400 text-base flex-shrink-0">$${(p.price / 100).toFixed(2)}</span>
+                </div>
+                <p class="text-gray-500 text-xs font-light mb-4 leading-relaxed flex-1">${p.desc}</p>
+                <button
+                    onclick="addToCart('${p.id}', '${p.name.replace(/'/g, "\\'")}', 'default', 'Regular', ${p.price})"
+                    class="w-full bg-gray-900 hover:bg-${color}-600 border border-gray-800 hover:border-transparent text-white text-xs font-black tracking-widest uppercase py-3.5 rounded-lg transition duration-200 mt-auto">
+                    Add to Cart
+                </button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+
+// ── SQUARE CHECKOUT ──────────────────────────────────────────────────────────
+let squareCard = null;
+let squarePayments = null;
+
+async function showCheckout() {
+    if (cart.length === 0) return;
+    document.getElementById('checkout-btn').classList.add('hidden');
+    document.getElementById('checkout-form').classList.remove('hidden');
+
+    if (!squareCard) {
+        try {
+            squarePayments = Square.payments(APP_ID, LOC_ID);
+            squareCard = await squarePayments.card({
+                style: {
+                    '.input-container': { borderColor: '#1F2937', borderRadius: '7px' },
+                    '.input-container.is-focus': { borderColor: '#2563EB' },
+                    input: { color: '#FFFFFF', fontFamily: 'Inter, sans-serif' },
+                    'input::placeholder': { color: '#4B5563' }
+                }
+            });
+            await squareCard.attach('#card-container');
+        } catch (e) {
+            console.error('Square init error:', e);
+            document.getElementById('pay-error').textContent = 'Payment system unavailable. Please contact us directly.';
+            document.getElementById('pay-error').classList.remove('hidden');
+        }
+    }
+}
+
+async function processPayment() {
+    const name  = document.getElementById('buyer-name').value.trim();
+    const email = document.getElementById('buyer-email').value.trim();
+    const errEl = document.getElementById('pay-error');
+    const payBtn = document.getElementById('pay-btn');
+
+    errEl.classList.add('hidden');
+
+    if (!name || !email) {
+        errEl.textContent = 'Please enter your name and email.';
+        errEl.classList.remove('hidden');
+        return;
+    }
+
+    payBtn.textContent = 'Processing…';
+    payBtn.disabled = true;
+
+    try {
+        const result = await squareCard.tokenize();
+        if (result.status !== 'OK') {
+            throw new Error(result.errors?.[0]?.message || 'Card error.');
+        }
+
+        const res = await fetch(`${FUNCTION}?action=pay`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sourceId: result.token,
+                cart,
+                customerName: name,
+                customerEmail: email
+            })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            document.getElementById('checkout-form').classList.add('hidden');
+            document.getElementById('pay-success').classList.remove('hidden');
+            showToast('Order confirmed! Check your email.', '#16a34a');
+            cart = [];
+            renderCart();
+            squareCard = null;
+            setTimeout(closeCart, 3000);
+        } else {
+            throw new Error(data.message || 'Payment failed.');
+        }
+
+    } catch (err) {
+        errEl.textContent = err.message;
+        errEl.classList.remove('hidden');
+    } finally {
+        payBtn.textContent = 'Pay Now';
+        payBtn.disabled = false;
+    }
+}
+
+// ── AUDIO ENGINE ─────────────────────────────────────────────────────────────
+const VOLUMES = [
+    { title: 'Volume One',   sub: 'Chippewa Cree Composition Layout Ledger',      url: 'https://archive.org/download/Rlptunes/V%201.m4a',           art: 'https://drive.google.com/thumbnail?id=1NgZLKZgmeA_1-pH2lSAghPQ8bfpzR3Hy&sz=w200' },
+    { title: 'Volume Two',   sub: 'The second chapter of chronological arrangements.', url: 'https://archive.org/download/Rlptunes/V%202.m4a',           art: 'https://drive.google.com/thumbnail?id=1JHpp88_Bgtt8Ocv9VjNtFW00hM6xH4dK&sz=w200' },
+    { title: 'Volume Three', sub: 'Continuing the journey as life evolves.',           url: 'https://archive.org/download/Rlptunes/V%203.m4a',           art: 'https://drive.google.com/thumbnail?id=1qKloIu59N4Sq0Kj45BlY6fNUa--j8Dmr&sz=w200' },
+    { title: 'Volume Four',  sub: 'The most recent recordings.',                       url: 'https://archive.org/download/Rlptunes/Volume%20Four.m4a',   art: 'https://drive.google.com/thumbnail?id=1r4EhgI4wz26FzvkfTyey6tV36va0FfHz&sz=w200' }
+];
+
+const audio    = document.getElementById('audio');
+let currentVol = 0;
+let playing    = false;
+let dragging   = false;
+
+function selectVolume(i) {
+    currentVol = i;
+    const v = VOLUMES[i];
+    audio.src = v.url;
+    document.getElementById('player-art').src   = v.art;
+    document.getElementById('player-title').textContent = v.title;
+    document.getElementById('player-sub').textContent   = v.sub;
+    document.querySelectorAll('.volume-card').forEach((c, idx) => c.classList.toggle('active', idx === i));
+    audio.play().then(() => { playing = true; setIcon(true); setMediaSession(); }).catch(console.log);
+}
+
+function togglePlay() {
+    if (!audio.src || audio.src === window.location.href) { selectVolume(0); return; }
+    if (audio.paused) { audio.play(); playing = true; setIcon(true); }
+    else              { audio.pause(); playing = false; setIcon(false); }
+}
+
+function skipAudio(s) {
+    audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + s));
+}
+
+function setIcon(isPlaying) {
+    document.getElementById('play-icon').innerHTML = isPlaying
+        ? '<rect x="4" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
+        : '<polygon points="5 3 19 12 5 21 5 3"/>';
+}
+
+function fmt(s) {
+    if (isNaN(s)||s<0) return '0:00';
+    return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+}
+
+// Scrubber
+const track = document.getElementById('progress-track');
+const fill  = document.getElementById('progress-fill');
+
+function setProgress(e) {
+    const rect = track.getBoundingClientRect();
+    const cx   = e.clientX ?? e.touches?.[0]?.clientX ?? 0;
+    return Math.max(0, Math.min(1, (cx - rect.left) / rect.width));
+}
+
+track.addEventListener('mousedown',  e => { dragging = true; setProgress(e); });
+track.addEventListener('touchstart', e => { dragging = true; setProgress(e); }, { passive: false });
+window.addEventListener('mousemove',  e => { if (dragging) { const p=setProgress(e); fill.style.width=(p*100)+'%'; if(audio.duration) document.getElementById('time-current').textContent=fmt(p*audio.duration); }});
+window.addEventListener('touchmove',  e => { if (dragging) { e.preventDefault(); const p=setProgress(e); fill.style.width=(p*100)+'%'; if(audio.duration) document.getElementById('time-current').textContent=fmt(p*audio.duration); }}, { passive: false });
+window.addEventListener('mouseup',   e => { if (dragging) { dragging=false; if(audio.duration) audio.currentTime=setProgress(e)*audio.duration; }});
+window.addEventListener('touchend',  e => { if (dragging) { dragging=false; if(audio.duration) audio.currentTime=setProgress(e.changedTouches[0])*audio.duration; }});
+
+audio.addEventListener('timeupdate', () => {
+    if (audio.duration && !dragging) {
+        fill.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+        document.getElementById('time-current').textContent = fmt(audio.currentTime);
+    }
+});
+audio.addEventListener('loadedmetadata', () => {
+    document.getElementById('time-duration').textContent = fmt(audio.duration);
+});
+audio.addEventListener('ended', () => selectVolume((currentVol + 1) % VOLUMES.length));
+
+// MediaSession
+function setMediaSession() {
+    if (!('mediaSession' in navigator)) return;
+    const v = VOLUMES[currentVol];
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'RLP ' + v.title, artist: 'Ronnie Lodgepole', album: 'Native American Church Music',
+        artwork: [{ src: v.art, sizes: '200x200', type: 'image/jpeg' }]
+    });
+    navigator.mediaSession.setActionHandler('play',          togglePlay);
+    navigator.mediaSession.setActionHandler('pause',         togglePlay);
+    navigator.mediaSession.setActionHandler('nexttrack',     () => selectVolume((currentVol+1) % VOLUMES.length));
+    navigator.mediaSession.setActionHandler('previoustrack', () => selectVolume((currentVol-1+VOLUMES.length) % VOLUMES.length));
+    navigator.mediaSession.setActionHandler('seekforward',   () => skipAudio(15));
+    navigator.mediaSession.setActionHandler('seekbackward',  () => skipAudio(-15));
+}
+
+// ── COLLAB FORM ───────────────────────────────────────────────────────────────
+function submitCollabForm() {
+    const name    = document.getElementById('collab-name').value.trim();
+    const email   = document.getElementById('collab-email').value.trim();
+    const intent  = document.getElementById('collab-intent').value;
+    const message = document.getElementById('collab-message').value.trim();
+    const errEl   = document.getElementById('collab-error');
+
+    if (!name || !message) { errEl.classList.remove('hidden'); return; }
+    errEl.classList.add('hidden');
+
+    const body = `Name: ${name}\nEmail: ${email}\nProject Type: ${intent}\n\nDetails:\n${message}`;
+    window.location.href = `mailto:rlp@rlpdezines.com?subject=${encodeURIComponent('Project Inquiry — ' + name)}&body=${encodeURIComponent(body)}`;
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadCatalog();
+renderCart();
+</script>
+</body>
+</html>
