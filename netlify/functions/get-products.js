@@ -1,32 +1,51 @@
 const { Client, Environment } = require('square');
 
+// 1. HARDCODED TO PRODUCTION: This completely bypasses the missing environment variable issue.
 const client = new Client({
     accessToken: process.env.SQUARE_ACCESS_TOKEN,
-    environment: process.env.SQUARE_ENVIRONMENT === 'production' ? Environment.Production : Environment.Sandbox,
+    environment: Environment.Production, 
 });
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
     if (event.httpMethod !== 'GET') return { statusCode: 405, body: 'Method Not Allowed' };
 
     try {
-        const response = await client.catalogApi.listCatalog(null, 'ITEM');
+        // 2. SAFER FETCH: Using searchCatalogObjects instead of listCatalog prevents Node.js SDK crashes
+        // and allows us to pull the actual image URLs at the same time.
+        const response = await client.catalogApi.searchCatalogObjects({
+            objectTypes: ['ITEM'],
+            includeRelatedObjects: true
+        });
         
-        // 1. Safe fallback: If the catalog is completely empty, return an empty array instead of crashing
         const objects = response.result.objects || [];
+        const related = response.result.relatedObjects || [];
         
-        // 2. Safe mapping: Check that pricing and variations actually exist before reading them
+        // 3. IMAGE MAPPING: This extracts the actual .png/.jpg URLs so your product images show up
+        const imageMap = {};
+        related.forEach(rel => {
+            if (rel.type === 'IMAGE' && rel.imageData && rel.imageData.url) {
+                imageMap[rel.id] = rel.imageData.url;
+            }
+        });
+        
         const products = objects.map(obj => {
             const itemData = obj.itemData || {};
             const variations = itemData.variations || [];
             const variationData = variations.length > 0 ? variations[0].itemVariationData : {};
             const priceMoney = variationData.priceMoney || { amount: 0 };
             
+            // Match the product to its image URL
+            let imageUrl = null;
+            if (itemData.imageIds && itemData.imageIds.length > 0) {
+                imageUrl = imageMap[itemData.imageIds[0]];
+            }
+            
             return {
                 id: obj.id,
                 name: itemData.name || 'Unnamed Item',
                 description: itemData.description || '',
                 price: Number(priceMoney.amount),
-                imageUrl: itemData.imageIds ? itemData.imageIds[0] : null,
+                imageUrl: imageUrl,
                 sku: variationData.sku || null
             };
         });
@@ -37,10 +56,7 @@ exports.handler = async (event, context) => {
             body: JSON.stringify(products)
         };
     } catch (error) {
-        // This will print the exact reason to your Netlify Function Logs if it fails again
         console.error("Square API Error:", error.message);
-        if(error.errors) console.error("Square Error Details:", JSON.stringify(error.errors));
-        
         return { 
             statusCode: 500, 
             body: JSON.stringify({ error: 'Failed to fetch products', details: error.message }) 
