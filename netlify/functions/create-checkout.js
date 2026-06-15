@@ -16,18 +16,35 @@ exports.handler = async (event) => {
     if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
     if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: 'Method Not Allowed' };
 
+    // Parse body early with a clean error
+    let body;
     try {
-        const body = JSON.parse(event.body || '{}');
+        body = JSON.parse(event.body || '{}');
+    } catch {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON body' }) };
+    }
+
+    try {
         console.log('📥 Incoming payload:', JSON.stringify(body, null, 2));
 
         const items = body.items || body.cart || [];
         if (items.length === 0) throw new Error("Cart is empty");
 
+        if (!process.env.SQUARE_LOCATION_ID) {
+            throw new Error("SQUARE_LOCATION_ID environment variable is missing");
+        }
+
         const squareLineItems = items.map((item, i) => {
             console.log(`Processing item ${i}:`, item);
 
             if (item.catalogObjectId) {
-                return { catalogObjectId: item.catalogObjectId, quantity: String(item.quantity || 1) };
+                if (typeof item.catalogObjectId !== 'string' || !item.catalogObjectId.trim()) {
+                    throw new Error(`Invalid catalogObjectId on item ${i}`);
+                }
+                return {
+                    catalogObjectId: item.catalogObjectId.trim(),
+                    quantity: String(item.quantity || 1)
+                };
             }
 
             const rawPrice = String(item.price || 0).replace(/[^0-9.]/g, '');
@@ -36,18 +53,14 @@ exports.handler = async (event) => {
             if (!cents || isNaN(cents)) throw new Error(`Bad price on item: ${item.name}`);
 
             return {
-                name: item.name || `Item ${i+1}`,
+                name: item.name || `Item ${i + 1}`,
                 quantity: String(item.quantity || 1),
                 basePriceMoney: {
-                    amount: BigInt(cents),
+                    amount: BigInt(cents), // Use plain `cents` if square SDK < 35.x
                     currency: 'USD'
                 }
             };
         });
-
-        if (!process.env.SQUARE_LOCATION_ID) {
-            throw new Error("SQUARE_LOCATION_ID environment variable is missing");
-        }
 
         const payload = {
             idempotencyKey: crypto.randomUUID(),
@@ -58,21 +71,23 @@ exports.handler = async (event) => {
             },
             checkoutOptions: {
                 askForShippingAddress: true,
-                redirectUrl: 'https://rlpdezines.com',
+                redirectUrl: 'https://rlpdezines.com/order-complete',
                 merchantSupportEmail: 'rlp@rlpdezines.com'
             }
         };
 
-        console.log('🚀 Sending to Square:', JSON.stringify(payload, (k, v) => typeof v === 'bigint' ? v.toString() : v, 2));
+        console.log('🚀 Sending to Square:', JSON.stringify(payload, (k, v) =>
+            typeof v === 'bigint' ? v.toString() : v, 2));
 
         const response = await squareClient.checkoutApi.createPaymentLink(payload);
+
+        const paymentLink = response?.result?.paymentLink;
+        if (!paymentLink?.url) throw new Error("Square returned no payment link URL");
 
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({
-                checkoutUrl: response.result.paymentLink.url
-            })
+            body: JSON.stringify({ checkoutUrl: paymentLink.url })
         };
 
     } catch (error) {
