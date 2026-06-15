@@ -48,7 +48,7 @@ exports.handler = async (event) => {
                 name: item.name || `Item ${i + 1}`,
                 quantity: String(item.quantity || 1),
                 basePriceMoney: {
-                    amount: BigInt(cents),
+                    amount: cents,
                     currency: 'USD'
                 }
             };
