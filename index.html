@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RLP Dezines — Indigenous Art & Apparel by Ronnie Lodgepole</title>
+
+    <meta name="description" content="RLP Dezines is an Indigenous-owned creative studio offering premium apparel, custom blankets, and original NAC music by Ronnie Lodgepole, Chippewa Cree.">
+    <meta name="author" content="Ronnie Lodgepole">
+    <meta name="keywords" content="Indigenous apparel, Native American design, powwow blankets, NAC music, Chippewa Cree, RLP Dezines, Indigipreneur">
+    <meta property="og:title" content="RLP Dezines — Indigenous Art & Apparel">
+    <meta property="og:description" content="Premium apparel, custom ceremony blankets, and original NAC music rooted in Chippewa Cree culture.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rlpdezines.com">
+    <meta property="og:image" content="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1200">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root { --blue: #2563EB; --blue-light: #3B82F6; --blue-dim: rgba(37,99,235,0.12); }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; -webkit-font-smoothing: antialiased; }
+
+        /* ── Hero & Nav styling ── */
+        #hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.03; pointer-events: none; z-index: 0; }
+        #hero > * { position: relative; z-index: 1; }
+        .nav-link { position: relative; text-decoration: none; }
+        .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--blue-light); transition: width 0.25s ease; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover { color: #fff; cursor: pointer; }
+
+        /* ── Cart Drawer ── */
+        #cart-drawer { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+        #cart-drawer.open { transform: translateX(0); }
+        .cart-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out; }
+        .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+        /* ── General UI ── */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .form-input { width: 100%; background: #000; border: 1px solid #374151; color: #fff; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s; }
+        .form-input:focus { border-color: var(--blue); }
+        .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 11px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
+        .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
+        #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
+        #toast.show { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body class="bg-black text-white antialiased flex flex-col min-h-screen relative">
+
+<header class="fixed top-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-900 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+        <a href="#top" class="text-2xl font-black italic tracking-widest text-white hover:text-blue-400 transition">RLP</a>
+
+        <nav class="hidden lg:flex items-center space-x-7 text-[13px] font-semibold text-gray-400">
+            <a href="#mission" class="nav-link hover:text-white transition">Mission</a>
+            <a href="#apparel" class="nav-link hover:text-white transition">Apparel</a>
+            <a href="#tunes" class="nav-link hover:text-white transition">Music</a>
+            <a href="#bundles" class="nav-link hover:text-white transition">Bundles</a>
+            <a href="#wholesale" class="nav-link hover:text-white transition">Wholesale</a>
+            <button id="nav-cart-btn" class="text-white bg-gray-900 hover:bg-gray-800 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                Cart (<span id="cart-count">0</span>)
+            </button>
+        </nav>
+    </div>
+</header>
+
+<div id="cart-overlay" class="cart-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"></div>
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-950 border-l border-gray-800 z-[70] flex flex-col shadow-2xl">
+    <div class="px-6 py-5 border-b border-gray-900 flex justify-between items-center bg-black">
+        <h3 class="text-lg font-black uppercase tracking-widest text-white">Your Cart</h3>
+        <button id="close-cart-btn" class="text-gray-400 hover:text-white transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+    
+    <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4">
+        </div>
+
+    <div class="p-6 bg-black border-t border-gray-900">
+        <div class="flex justify-between text-gray-300 mb-4 font-bold">
+            <span>Subtotal</span>
+            <span id="cart-total">$0.00</span>
+        </div>
+        <button id="checkout-btn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-lg transition duration-300 flex justify-center items-center gap-2">
+            Proceed to Checkout
+        </button>
+    </div>
+</div>
+
+<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-32 min-h-screen overflow-hidden" id="hero">
+    <div class="relative z-10 max-w-3xl mx-auto">
+        <p class="section-label mb-6 justify-center reveal">Welcome to the Lodgepole Home</p>
+        <h1 class="text-5xl sm:text-7xl font-black mb-6 tracking-tight uppercase leading-none reveal reveal-delay-1">Come On In</h1>
+        <p class="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed font-light mb-12 reveal reveal-delay-3">
+            Whether you're just looking to browse or need something specific for your walk, <strong class="text-white font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-delay-4">
+            <a href="#mission" class="bg-white text-black px-8 py-3.5 rounded-full font-bold hover:bg-gray-100 transition shadow-lg text-sm uppercase tracking-widest">Our Story</a>
+            <a href="#apparel" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Now</a>
+        </div>
+    </div>
+</section>
+
+<section id="apparel" class="py-28 px-6 border-t border-gray-900 bg-black">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <p class="section-label mb-5 justify-center">Premium Goods</p>
+            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">The <span class="text-blue-500">Collection</span></h2>
+            <p class="text-gray-400 mt-4 max-w-xl mx-auto">Directly integrated with our new headless fulfillment. Add to cart to begin the custom checkout process.</p>
+        </div>
+
+        <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
+            <p id="loading-products" class="text-gray-500 col-span-full text-center py-10 animate-pulse">Loading collection from catalog...</p>
+        </div>
+    </div>
+</section>
+
+<section id="bundles" class="py-28 px-6 border-t border-gray-900">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
+            <div class="text-center mb-10 reveal">
+                <p class="section-label mb-5 justify-center">A Special Gift</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-6">Family Honoring Specials</h2>
+                <p class="text-gray-300 font-light leading-relaxed mb-5">Mix & match. 60″ × 80″ Sublimated Sherpa Throws.</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 reveal">
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center">
+                    <div class="text-xs font-black text-white uppercase tracking-widest mb-3">5 Throws</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$85</div>
+                    <button onclick="window.Cart.addItem({id: 'bundle-5', name: '5x Sherpa Bundle', price: 42500})" class="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-[10px] text-white py-2 rounded uppercase font-bold tracking-widest">Add Bundle</button>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center">
+                    <div class="text-xs font-black text-white uppercase tracking-widest mb-3">10 Throws</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$79</div>
+                    <button onclick="window.Cart.addItem({id: 'bundle-10', name: '10x Sherpa Bundle', price: 79000})" class="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-[10px] text-white py-2 rounded uppercase font-bold tracking-widest">Add Bundle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="border-t border-gray-900 bg-black py-16 px-6 text-center text-sm text-gray-500">
+    © 2026 RLP Dezines. All rights reserved. Indigenous-owned & operated.
+</footer>
+
+<div id="toast" role="alert" aria-live="polite">Added to cart!</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // ── UI Reveals & Toasts ──
+    const toast = document.getElementById('toast');
+    function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    });
+    revealEls.forEach(el => io.observe(el));
+
+    // ── Cart State Manager ──
+    class ShoppingCart {
+        constructor() {
+            this.items = JSON.parse(localStorage.getItem('rlp_cart')) || [];
+            this.initDOM();
+            this.updateUI();
+        }
+
+        initDOM() {
+            this.drawer = document.getElementById('cart-drawer');
+            this.overlay = document.getElementById('cart-overlay');
+            this.countBadge = document.getElementById('cart-count');
+            this.totalEl = document.getElementById('cart-total');
+            this.container = document.getElementById('cart-items-container');
+
+            document.getElementById('nav-cart-btn').addEventListener('click', () => this.toggleCart(true));
+            document.getElementById('close-cart-btn').addEventListener('click', () => this.toggleCart(false));
+            this.overlay.addEventListener('click', () => this.toggleCart(false));
+            document.getElementById('checkout-btn').addEventListener('click', () => this.checkout());
+        }
+
+        toggleCart(show) {
+            this.drawer.classList.toggle('open', show);
+            this.overlay.classList.toggle('open', show);
+        }
+
+        addItem(product) {
+            const existing = this.items.find(i => i.id === product.id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                this.items.push({ ...product, quantity: 1 });
+            }
+            this.save();
+            this.updateUI();
+            this.toggleCart(true);
+            showToast('Item added to cart');
+        }
+
+        removeItem(id) {
+            this.items = this.items.filter(i => i.id !== id);
+            this.save();
+            this.updateUI();
+        }
+
+        save() {
+            localStorage.setItem('rlp_cart', JSON.stringify(this.items));
+        }
+
+        updateUI() {
+            // Count
+            const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
+            this.countBadge.textContent = totalItems;
+
+            // Render Items
+            if (this.items.length === 0) {
+                this.container.innerHTML = '<p class="text-gray-500 text-center mt-10 text-sm">Your cart is empty.</p>';
+                this.totalEl.textContent = '$0.00';
+                document.getElementById('checkout-btn').disabled = true;
+                return;
+            }
+
+            document.getElementById('checkout-btn').disabled = false;
+            this.container.innerHTML = this.items.map(item => `
+                <div class="flex justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-800">
+                    <div>
+                        <h4 class="text-sm font-bold text-white uppercase tracking-widest">${item.name}</h4>
+                        <p class="text-xs text-gray-400 mt-1">Qty: ${item.quantity} x $${(item.price / 100).toFixed(2)}</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-sm font-black text-blue-500">$${((item.price * item.quantity) / 100).toFixed(2)}</span>
+                        <button onclick="window.Cart.removeItem('${item.id}')" class="text-red-400 hover:text-red-300 text-xs">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Total
+            const totalCents = this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            this.totalEl.textContent = '$' + (totalCents / 100).toFixed(2);
+        }
+
+        async checkout() {
+            const btn = document.getElementById('checkout-btn');
+            btn.innerHTML = 'Securely Routing...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/.netlify/functions/create-checkout', {
+                    method: 'POST',
+                    body: JSON.stringify({ cartItems: this.items })
+                });
+                
+                const data = await response.json();
+                if (data.url) {
+                    window.location.href = data.url; // Redirect to Square
+                } else {
+                    throw new Error('No checkout URL returned');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Checkout error. Please try again.');
+                btn.innerHTML = 'Proceed to Checkout';
+                btn.disabled = false;
+            }
+        }
+    }
+
+    // Bind to window so inline onclicks work
+    window.Cart = new ShoppingCart();
+
+    // ── Fetch Dynamic Products ──
+    async function loadProducts() {
+        const grid = document.getElementById('product-grid');
+        const loader = document.getElementById('loading-products');
+        
+        try {
+            // Un-comment the line below when your get-products function is deployed
+            // const res = await fetch('/.netlify/functions/get-products');
+            // const products = await res.json();
+            
+            // Mock data for immediate front-end testing until Netlify function is live
+            const products = [
+                { id: 'item_1', name: 'Heritage Sublimated Hoodie', price: 6500, desc: 'Premium fleece with traditional geometric patterns.' },
+                { id: 'item_2', name: 'Ceremony Sherpa Blanket', price: 8000, desc: '60x80 plush sublimated throw.' },
+                { id: 'item_3', name: 'Indigipreneur Tumbler', price: 4800, desc: 'Insulated steel for the road.' }
+            ];
+
+            if(loader) loader.style.display = 'none';
+
+            grid.innerHTML = products.map(p => `
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl group hover:border-blue-500 transition duration-300 flex flex-col">
+                    <div class="h-48 bg-gray-800 rounded-lg mb-6 flex items-center justify-center text-gray-700">
+                        [Product Image Here]
+                    </div>
+                    <h3 class="text-lg font-black uppercase tracking-widest text-white">${p.name}</h3>
+                    <p class="text-sm text-gray-400 mt-2 mb-6 flex-grow">${p.desc}</p>
+                    <div class="flex items-center justify-between border-t border-gray-800 pt-4">
+                        <span class="text-xl font-black text-blue-500">$${(p.price/100).toFixed(2)}</span>
+                        <button onclick='window.Cart.addItem(${JSON.stringify(p)})' class="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest rounded hover:bg-gray-200 transition">Add to Cart</button>
+                    </div>
+                </div>
+            `).join('');
+            
+        } catch (e) {
+            console.error('Failed to load products', e);
+            loader.textContent = 'Failed to load collection. Please try again later.';
+        }
+    }
+
+    loadProducts();
+});
+</script>
+</body>
+</html>
