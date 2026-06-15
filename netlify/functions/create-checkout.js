@@ -24,16 +24,15 @@ exports.handler = async (event) => {
     }
 
     try {
+        console.log('📥 Incoming Payload Check:', JSON.stringify(body, null, 2));
+
         const items = body.items || body.cart || body.cartItems || [];
-        
-        if (items.length === 0) {
-            throw new Error("Cart is empty");
-        }
+        if (items.length === 0) throw new Error("Cart is empty");
 
         const squareLineItems = items.map((item, i) => {
-            // FIX: Check for catalogObjectId OR item.id
             const squareId = item.catalogObjectId || item.id;
 
+            // 1. Core Path: If it has an ID, pass it cleanly to Square's catalog registry
             if (squareId) {
                 return {
                     catalogObjectId: String(squareId).trim(),
@@ -41,14 +40,17 @@ exports.handler = async (event) => {
                 };
             }
 
+            // 2. Fallback Path: Defensive price parser if IDs ever vanish
             const rawPrice = parseFloat(item.price) || 0;
+            // Handle raw cents (8900) vs decimal values (89.00) safely
             const cents = rawPrice > 1000 ? Math.round(rawPrice) : Math.round(rawPrice * 100);
 
             return {
                 name: item.name || `Item ${i + 1}`,
                 quantity: String(item.quantity || 1),
                 basePriceMoney: {
-                    amount: cents,
+                    // CONVERT TO BIGINT: Prevents Square's internal SDK typing validation from crashing
+                    amount: BigInt(cents),
                     currency: 'USD'
                 }
             };
@@ -59,6 +61,7 @@ exports.handler = async (event) => {
             order: {
                 locationId: process.env.SQUARE_LOCATION_ID,
                 lineItems: squareLineItems,
+                // THIS FORCES AUTOMATIC SALES TAX APPLICATION FROM YOUR DASHBOARD
                 pricingOptions: { autoApplyTaxes: true }
             },
             checkoutOptions: {
@@ -68,22 +71,33 @@ exports.handler = async (event) => {
             }
         };
 
+        console.log('🚀 Final Payload Flight Check:', JSON.stringify(payload, (k, v) =>
+            typeof v === 'bigint' ? v.toString() : v, 2));
+
         const response = await squareClient.checkoutApi.createPaymentLink(payload);
         
+        const paymentLink = response?.result?.paymentLink;
+        if (!paymentLink?.url) throw new Error("Square returned no payment link URL");
+
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ checkoutUrl: response.result.paymentLink.url })
+            body: JSON.stringify({ checkoutUrl: paymentLink.url })
         };
 
     } catch (error) {
-        console.error('💥 FULL ERROR:', error);
+        console.error('💥 FULL ERROR ENCOUNTERED:', error);
+        
+        const errorDetails = error.errors 
+            ? JSON.stringify(error.errors, (k, v) => typeof v === 'bigint' ? v.toString() : v) 
+            : error.message;
+
         return {
             statusCode: 500,
             headers,
             body: JSON.stringify({
                 error: 'Checkout failed',
-                details: error.message
+                details: errorDetails
             })
         };
     }
