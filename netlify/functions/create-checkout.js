@@ -18,92 +18,74 @@ exports.handler = async (event) => {
 
     try {
         const body = JSON.parse(event.body || '{}');
-        console.log('Received cart payload:', JSON.stringify(body, null, 2)); // ← Important for debugging
+        console.log('📥 Incoming payload:', JSON.stringify(body, null, 2));
 
         const items = body.items || body.cart || [];
+        if (items.length === 0) throw new Error("Cart is empty");
 
-        if (items.length === 0) {
-            throw new Error("Cart is empty");
-        }
-
-        const squareLineItems = items.map((item, index) => {
-            console.log(`Processing item ${index}:`, item);
+        const squareLineItems = items.map((item, i) => {
+            console.log(`Processing item ${i}:`, item);
 
             if (item.catalogObjectId) {
-                return {
-                    catalogObjectId: item.catalogObjectId,
-                    quantity: String(item.quantity || 1),
-                };
+                return { catalogObjectId: item.catalogObjectId, quantity: String(item.quantity || 1) };
             }
 
-            // Custom item
-            const rawPrice = String(item.price || "0").replace(/[^0-9.]/g, '');
-            const amountInCents = Math.round(parseFloat(rawPrice) * 100);
+            const rawPrice = String(item.price || 0).replace(/[^0-9.]/g, '');
+            const cents = Math.round(parseFloat(rawPrice) * 100);
 
-            if (isNaN(amountInCents) || amountInCents <= 0) {
-                throw new Error(`Invalid price for item "${item.name || 'Unknown'}": ${item.price}`);
-            }
+            if (!cents || isNaN(cents)) throw new Error(`Bad price on item: ${item.name}`);
 
             return {
-                name: item.name || `Item ${index + 1}`,
+                name: item.name || `Item ${i+1}`,
                 quantity: String(item.quantity || 1),
                 basePriceMoney: {
-                    amount: BigInt(amountInCents),
+                    amount: BigInt(cents),
                     currency: 'USD'
-                },
+                }
             };
         });
 
-        const checkoutPayload = {
+        if (!process.env.SQUARE_LOCATION_ID) {
+            throw new Error("SQUARE_LOCATION_ID environment variable is missing");
+        }
+
+        const payload = {
             idempotencyKey: crypto.randomUUID(),
             order: {
                 locationId: process.env.SQUARE_LOCATION_ID,
                 lineItems: squareLineItems,
-                pricingOptions: { autoApplyTaxes: true },
+                pricingOptions: { autoApplyTaxes: true }
             },
             checkoutOptions: {
                 askForShippingAddress: true,
                 redirectUrl: 'https://rlpdezines.com',
-                merchantSupportEmail: 'rlp@rlpdezines.com',
-            },
+                merchantSupportEmail: 'rlp@rlpdezines.com'
+            }
         };
 
-        console.log('Sending to Square:', JSON.stringify(checkoutPayload, (k, v) => 
-            typeof v === 'bigint' ? v.toString() : v, 2));
+        console.log('🚀 Sending to Square:', JSON.stringify(payload, (k, v) => typeof v === 'bigint' ? v.toString() : v, 2));
 
-        const response = await squareClient.checkoutApi.createPaymentLink(checkoutPayload);
+        const response = await squareClient.checkoutApi.createPaymentLink(payload);
 
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify({
-                checkoutUrl: response.result.paymentLink.url,
-                orderId: response.result.paymentLink.orderId,
-            }),
+                checkoutUrl: response.result.paymentLink.url
+            })
         };
 
     } catch (error) {
-        console.error('=== FULL CHECKOUT ERROR ===');
-        console.error(error);
-
-        let details = error.message;
-
-        if (error.errors && Array.isArray(error.errors)) {
-            details = error.errors.map(e => ({
-                code: e.code,
-                detail: e.detail,
-                field: e.field
-            }));
-            console.error('Square API Errors:', details);
-        }
+        console.error('💥 FULL ERROR:', error);
+        if (error.errors) console.error('Square Errors:', JSON.stringify(error.errors, null, 2));
 
         return {
             statusCode: 500,
             headers,
             body: JSON.stringify({
-                error: 'Failed to create checkout link',
-                details: details
-            }),
+                error: 'Checkout failed',
+                details: error.message || error.errors || 'Unknown error - check function logs'
+            })
         };
     }
 };
