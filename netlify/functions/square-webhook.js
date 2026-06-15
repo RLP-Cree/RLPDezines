@@ -9,45 +9,57 @@ const squareClient = new Client({
 });
 
 exports.handler = async (event) => {
-    // Master Safety Net: If anything in this entire file breaks, it emails you.
     try {
         if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
         const payload = JSON.parse(event.body);
 
-        // Listen for either updated or created, just to be absolutely certain we catch it
         if ((payload.type === 'payment.updated' || payload.type === 'payment.created') && payload.data.object.payment.status === 'COMPLETED') {
             const payment = payload.data.object.payment;
             const orderId = payment.order_id;
 
             if (!orderId) throw new Error("Payment was completed, but Square did not attach an order_id.");
 
-            // Get full details from Square
+            // Fetch full order data directly from the Square SDK
             const orderResponse = await squareClient.ordersApi.retrieveOrder(orderId);
             const order = orderResponse.result.order;
             const lineItems = order.lineItems || [];
 
-            // Map items for Printful (Using Square's variation ID)
+            // Map products for Printful using the catalog IDs
             const printfulItems = lineItems.map(item => ({
                 external_variant_id: item.sku || item.catalogObjectId,
                 quantity: parseInt(item.quantity) || 1,
                 name: item.name
             }));
 
+            // ── THE DETAILED ADDRESS FIX ──
+            // Square's SDK converts backend data to camelCase. 
+            // We drill straight into the fulfillment layer where the checkout address lives.
+            const fulfillment = order.fulfillments?.[0] || {};
+            const shipmentDetails = fulfillment.shipmentDetails || {};
+            const orderRecipient = shipmentDetails.recipient || {};
+            const orderAddress = orderRecipient.address || {};
+
+            // Backup layer: check the raw payment snake_case fields if fulfillment is missing
+            const payAddress = payment.shipping_address || {};
+
             const recipient = {
-                name: payment.shipping_address?.first_name 
-                    ? `${payment.shipping_address.first_name} ${payment.shipping_address.last_name}`
-                    : 'Customer',
-                address1: payment.shipping_address?.address_line_1 || 'Address on file',
-                city: payment.shipping_address?.locality || '',
-                state_code: payment.shipping_address?.administrative_district_level_1 || '',
-                country_code: payment.shipping_address?.country || 'US',
-                zip: payment.shipping_address?.postal_code || '',
+                name: orderRecipient.displayName || (payAddress.first_name ? `${payAddress.first_name} ${payAddress.last_name}` : 'Customer'),
+                address1: orderAddress.addressLine1 || payAddress.address_line_1 || 'Address on file',
+                city: orderAddress.locality || payAddress.locality || '',
+                state_code: orderAddress.administrativeDistrictLevel1 || payAddress.administrative_district_level_1 || '',
+                country_code: orderAddress.country || payAddress.country || 'US',
+                zip: orderAddress.postalCode || payAddress.postal_code || '',
                 email: payment.buyer_email_address || 'rlp@rlpdezines.com',
-                phone: payment.shipping_address?.phone_number || ''
+                phone: orderRecipient.phoneNumber || payAddress.phone_number || ''
             };
 
-            // ── PRINTFUL ATTEMPT ──
+            // Double check that we aren't bypassing required metrics
+            if (!recipient.city || !recipient.state_code) {
+                throw new Error(`Address mapping failed. City: "${recipient.city}", State: "${recipient.state_code}"`);
+            }
+
+            // ── SUBMIT TO PRINTFUL ──
             try {
                 const printfulPayload = {
                     external_id: orderId,
@@ -64,7 +76,6 @@ exports.handler = async (event) => {
                 });
                 console.log(`Printful Order Drafted for Square Order: ${orderId}`);
             } catch (printfulError) {
-                // If Printful complains, catch exactly what they said and email Ronnie immediately
                 const errorReason = printfulError.response?.data ? JSON.stringify(printfulError.response.data) : printfulError.message;
                 
                 await resend.emails.send({
@@ -75,14 +86,14 @@ exports.handler = async (event) => {
                 });
             }
 
-            // ── RECEIPT EMAIL ATTEMPT ──
+            // ── CUSTOMER CONFIRMATION EMAIL ──
             try {
                 const totalPaid = (payment.amount_money.amount / 100).toFixed(2);
                 const emailHtml = `
                     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #000; color: #fff; padding: 40px; border-radius: 12px; border: 1px solid #1f1f1f;">
                         <h1 style="font-size: 24px; font-weight: 900; letter-spacing: 2px; font-style: italic; margin-bottom: 30px; color:#fff;">RLP DEZINES</h1>
                         <h2 style="font-size: 20px; font-weight: bold; color: #3B82F6; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 15px;">Order Confirmed</h2>
-                        <p style="color: #d1d5db;">Your order has been successfully processed.</p>
+                        <p style="color: #d1d5db;">Your order has been successfully processed and sent to production.</p>
                         <div style="background-color: #111; padding: 20px; border-radius: 8px; margin: 30px 0; border: 1px solid #222;">
                             <p style="margin: 0 0 10px 0; color: #9ca3af; font-size: 12px; text-transform: uppercase;">Amount Paid</p>
                             <p style="margin: 0; font-size: 28px; font-weight: bold;">$${totalPaid}</p>
@@ -106,7 +117,6 @@ exports.handler = async (event) => {
         return { statusCode: 200, body: 'Webhook ignored event type.' };
 
     } catch (fatalError) {
-        // FATAL CRASH TRIGGER: If the webhook code breaks completely, email Ronnie.
         await resend.emails.send({
             from: 'System <orders@rlpdezines.com>',
             to: ['rlp@rlpdezines.com'],
