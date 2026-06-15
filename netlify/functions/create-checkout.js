@@ -29,13 +29,13 @@ exports.handler = async (event) => {
         const items = body.items || body.cart || body.cartItems || [];
         if (items.length === 0) throw new Error("Cart is empty");
 
-        // We will keep a running tally of how many total items are in the cart
+        // Keep a running tally of total items for dynamic shipping
         let totalQuantity = 0;
 
         const squareLineItems = items.map((item, i) => {
             const squareId = item.catalogObjectId || item.id;
             
-            // Add this item's quantity to our master shipping count
+            // Add to our master shipping count
             totalQuantity += parseInt(item.quantity || 1, 10);
 
             if (squareId) {
