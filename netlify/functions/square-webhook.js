@@ -9,13 +9,10 @@ const squareClient = new Client({
     environment: Environment.Production,
 });
 
-// URGET FIX 1: Cryptographic Signature Verification
 function isValidSquareSignature(signature, body) {
     if (!signature || !process.env.SQUARE_WEBHOOK_SIGNATURE_KEY) return false;
     
-    // Construct the webhook URL exactly as Square sees it
     const webhookUrl = process.env.URL + '/.netlify/functions/square-webhook';
-    
     const hmac = crypto.createHmac('sha256', process.env.SQUARE_WEBHOOK_SIGNATURE_KEY);
     hmac.update(webhookUrl + body);
     const hash = hmac.digest('base64');
@@ -26,7 +23,6 @@ function isValidSquareSignature(signature, body) {
 exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
-    // Security Lock: Verify the request actually came from Square
     const signature = event.headers['x-square-hmacsha256-signature'];
     if (!isValidSquareSignature(signature, event.body)) {
         console.error("Unauthorized Webhook Attempt: Signature mismatch.");
@@ -45,21 +41,20 @@ exports.handler = async (event) => {
                 return { statusCode: 400, body: 'Missing order_id' };
             }
 
-            // Fetch the complete order details from Square
             const orderResponse = await squareClient.ordersApi.retrieveOrder(orderId);
             const order = orderResponse.result.order;
             const lineItems = order.lineItems || [];
 
-            // Format items for Printful
+            // ── THE PRINTFUL MAPPING FIX ──
+            // We omit sync_variant_id entirely. By passing external_variant_id, 
+            // Printful looks at its Square integration map and links either the SKU 
+            // or the Square Variation ID directly to your print files.
             const printfulItems = lineItems.map(item => ({
-                sync_variant_id: item.catalogObjectId, 
                 external_variant_id: item.sku || item.catalogObjectId,
-                name: item.name,
                 quantity: parseInt(item.quantity) || 1,
-                price: (Number(item.basePriceMoney?.amount || 0) / 100).toFixed(2)
+                name: item.name
             }));
 
-            // Construct recipient info
             const recipient = {
                 name: payment.shipping_address?.first_name 
                     ? `${payment.shipping_address.first_name} ${payment.shipping_address.last_name}`
@@ -73,19 +68,12 @@ exports.handler = async (event) => {
                 phone: payment.shipping_address?.phone_number || ''
             };
 
-            // URGENT FIX 2 & 3: Isolated Try/Catch for Printful (Idempotency built-in via external_id)
             try {
                 const printfulPayload = {
-                    external_id: orderId, // Printful rejects duplicate external_ids, preventing double-printing
+                    external_id: orderId,
                     shipping: "STANDARD",
                     recipient: recipient,
-                    items: printfulItems,
-                    retail_costs: {
-                        subtotal: (Number(order.netAmounts?.subtotalMoney?.amount || 0) / 100).toFixed(2),
-                        tax: (Number(order.netAmounts?.taxMoney?.amount || 0) / 100).toFixed(2),
-                        shipping: (Number(order.netAmounts?.serviceChargeMoney?.amount || 0) / 100).toFixed(2),
-                        total: (Number(order.netAmounts?.totalMoney?.amount || 0) / 100).toFixed(2)
-                    }
+                    items: printfulItems
                 };
 
                 await axios.post('https://api.printful.com/orders', printfulPayload, {
@@ -97,10 +85,8 @@ exports.handler = async (event) => {
                 console.log(`Printful Order Drafted for Square Order: ${orderId}`);
             } catch (printfulError) {
                 console.error("Printful API Error:", printfulError.response?.data || printfulError.message);
-                // We do NOT return an error here. We want the email to still attempt to send.
             }
 
-            // URGENT FIX 3: Isolated Try/Catch for Resend Emails
             try {
                 const totalPaid = (payment.amount_money.amount / 100).toFixed(2);
                 const emailHtml = `
@@ -142,7 +128,6 @@ exports.handler = async (event) => {
 
     } catch (error) {
         console.error("Critical Webhook Failure:", error.message);
-        // Returning 200 even on catch so Square doesn't endlessly retry a fundamentally broken payload
         return { statusCode: 200, body: 'Workflow failed but acknowledged.' }; 
     }
 };
