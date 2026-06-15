@@ -18,15 +18,9 @@ exports.handler = async (event) => {
         const related = response.result.relatedObjects || [];
         
         const imageMap = {};
-        const categoryMap = {};
-        
-        // Grab the Image URLs AND the Category Names
         related.forEach(rel => {
             if (rel.type === 'IMAGE' && rel.imageData && rel.imageData.url) {
                 imageMap[rel.id] = rel.imageData.url;
-            }
-            if (rel.type === 'CATEGORY' && rel.categoryData && rel.categoryData.name) {
-                categoryMap[rel.id] = rel.categoryData.name;
             }
         });
         
@@ -37,29 +31,22 @@ exports.handler = async (event) => {
             const mappedVariations = variations.map(v => {
                 const vData = v.itemVariationData || {};
                 const priceMoney = vData.priceMoney || { amount: 0 };
-                const safePrice = typeof priceMoney.amount === 'bigint' ? Number(priceMoney.amount) : Number(priceMoney.amount || 0);
-
                 return {
                     id: v.id,
                     name: vData.name || 'Regular',
                     sku: vData.sku || '',
-                    price: safePrice
+                    price: Number(priceMoney.amount)
                 };
             }).filter(v => v.price > 0);
             
-            let imageUrl = null;
-            if (itemData.imageIds && itemData.imageIds.length > 0) {
-                imageUrl = imageMap[itemData.imageIds[0]];
-            }
-            
-            // Map the item to its true Square Category
-            const categoryName = itemData.categoryId ? categoryMap[itemData.categoryId] : 'Other Goods';
+            // FIX: Pulling Reporting Category directly from itemData
+            const categoryName = itemData.reportingCategory?.name || 'Other Goods';
 
             return {
                 id: obj.id,
                 name: itemData.name || 'Unnamed Item',
                 description: itemData.description || '',
-                imageUrl: imageUrl,
+                imageUrl: (itemData.imageIds && itemData.imageIds.length > 0) ? imageMap[itemData.imageIds[0]] : null,
                 category: categoryName,
                 variations: mappedVariations
             };
@@ -70,9 +57,7 @@ exports.handler = async (event) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(products)
         };
-
     } catch (error) {
-        console.error("Square API Error:", error.message);
-        return { statusCode: 500, body: JSON.stringify({ error: 'Failed to fetch products' }) };
+        return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
     }
 };
