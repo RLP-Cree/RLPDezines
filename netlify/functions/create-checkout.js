@@ -19,8 +19,8 @@ exports.handler = async (event) => {
             return { catalogObjectId: item.id, quantity: String(item.quantity) };
         });
 
-        const baseShippingCents = 900; 
-        const extraItemCents = 200;
+        const baseShippingCents = 1350; 
+        const extraItemCents = 400;
         const totalShippingCents = baseShippingCents + ((totalItems - 1) * extraItemCents);
 
         const response = await client.checkoutApi.createPaymentLink({
