@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { Resend } = require('resend');
-const { Client, Environment } = require('square');
+const { Client, Environment, WebhooksHelper } = require('square');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const squareClient = new Client({
@@ -11,6 +11,16 @@ const squareClient = new Client({
 exports.handler = async (event) => {
     try {
         if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
+
+        // ── Verify Webhook Signature ──
+        const signature = event.headers['x-square-hmacsha256-signature'];
+        const webhookUrl = 'https://rlpdezines.com/.netlify/functions/square-webhook';
+        const signatureKey = process.env.SQUARE_WEBHOOK_SIGNATURE_KEY;
+
+        if (!WebhooksHelper.isValidWebhookEventSignature(event.body, signature, signatureKey, webhookUrl)) {
+            console.error("Unauthorized webhook attempt.");
+            return { statusCode: 401, body: 'Unauthorized' };
+        }
 
         const payload = JSON.parse(event.body);
 
@@ -128,19 +138,19 @@ exports.handler = async (event) => {
                     const calculatedShipping = (totalServiceCharges / 100).toFixed(2);
 
                     const emailHtml = `
-                        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #000000; padding: 40px; border: 1px solid #111111; border-radius: 16px;">
+                        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #000000; padding: 0; color: #ffffff;">
                             <div style="text-align: center; margin-bottom: 40px; border-bottom: 1px solid #1f1f1f; padding-bottom: 30px;">
                                 <h1 style="font-size: 28px; font-weight: 900; letter-spacing: 4px; color: #ffffff; font-style: italic; margin: 0; text-transform: uppercase;">RLP DEZINES</h1>
-                                <p style="color: #3b82f6; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; margin-bottom: 0;">Order Confirmed & Sent To Production</p>
+                                <p style="color: #3b82f6; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; margin-bottom: 0;">Order Confirmed & Sent to Production</p>
                             </div>
                             <p style="color: #d1d5db; font-size: 15px; line-height: 1.6; margin-bottom: 30px;">
-                                Miigwech (Thank you) for supporting authentic design. Your payment cleared successfully, and your custom gear has officially entered production. Here is your transaction breakdown:
+                                Miigwech (Thank you) for supporting authentic design. Your payment cleared successfully, and your custom gear has officially entered production. Here is your transaction summary:
                             </p>
                             <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left; color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; padding-bottom: 10px; border-bottom: 1px solid #333333;">Item Description</th>
-                                        <th style="text-align: right; color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; padding-bottom: 10px; border-bottom: 1px solid #333333;">Total</th>
+                                        <th style="text-align: left; color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; padding-bottom: 10px; border-bottom: 1px solid #333333;">Item</th>
+                                        <th style="text-align: right; color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; padding-bottom: 10px; border-bottom: 1px solid #333333;">Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,7 +187,7 @@ exports.handler = async (event) => {
                             </div>
                             <div style="margin-top: 40px; border-top: 1px solid #1f1f1f; padding-top: 20px; text-align: center;">
                                 <p style="color: #6b7280; font-size: 12px; line-height: 1.6; margin: 0 0 15px 0;">
-                                    Because our drops are custom-produced specifically for you, entries cannot be adjusted once in production. If you notice an immediate defect upon arrival, contact us within 14 days.
+                                    Because our drops are custom-produced specifically for you, entries cannot be adjusted once in production. If you notice an immediate defect upon arrival, contact us within 24 hours.
                                 </p>
                                 <p style="color: #4b5563; font-size: 11px; margin: 0;">
                                     Square Order Reference: ${orderId}
