@@ -8,14 +8,22 @@ const squareClient = new Client({
     environment: Environment.Production,
 });
 
+// Track processed orders to prevent duplicate fulfillments
+const processedOrders = new Map();
+
 exports.handler = async (event) => {
     try {
         if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
         // ── Verify Webhook Signature ──
         const signature = event.headers['x-square-hmacsha256-signature'];
-        const webhookUrl = 'https://rlpdezines.netlify.app/.netlify/functions/square-webhook';
+        const webhookUrl = process.env.WEBHOOK_URL || 'https://rlpdezines.netlify.app/.netlify/functions/square-webhook';
         const signatureKey = process.env.SQUARE_WEBHOOK_SIGNATURE_KEY;
+
+        if (!webhookUrl) {
+            console.error("WEBHOOK_URL environment variable is not set");
+            return { statusCode: 500, body: 'Configuration error' };
+        }
 
         if (!WebhooksHelper.isValidWebhookEventSignature(event.body, signature, signatureKey, webhookUrl)) {
             console.error("Unauthorized webhook attempt. Signature check failed.");
@@ -30,9 +38,21 @@ exports.handler = async (event) => {
 
             if (!orderId) throw new Error("Payment was completed, but Square did not attach an order_id.");
 
+            // Check for duplicate processing
+            if (processedOrders.has(orderId)) {
+                console.log(`Order ${orderId} already processed in this function instance. Skipping.`);
+                return { statusCode: 200, body: 'Duplicate webhook ignored.' };
+            }
+
             const orderResponse = await squareClient.ordersApi.retrieveOrder(orderId);
             const order = orderResponse.result.order;
             const lineItems = order.lineItems || [];
+
+            // Validate that we have items to fulfill
+            if (!lineItems || lineItems.length === 0) {
+                console.warn(`Order ${orderId} has no line items. Skipping fulfillment.`);
+                return { statusCode: 200, body: 'No items to fulfill.' };
+            }
 
             const printfulItems = lineItems.map(item => ({
                 external_variant_id: item.sku || item.catalogObjectId || 'unknown-item',
@@ -46,6 +66,12 @@ exports.handler = async (event) => {
             const orderAddress = orderRecipient.address || {};
             const payAddress = payment.shipping_address || {};
 
+            // Validate email address
+            const customerEmail = payment.buyer_email_address?.trim();
+            if (!customerEmail || !customerEmail.includes('@')) {
+                console.warn(`Order ${orderId} has invalid customer email. Using fallback.`);
+            }
+
             const recipient = {
                 name: orderRecipient.displayName || (payAddress.first_name ? `${payAddress.first_name} ${payAddress.last_name}` : 'Customer'),
                 address1: orderAddress.addressLine1 || payAddress.address_line_1 || 'Address on file',
@@ -53,7 +79,7 @@ exports.handler = async (event) => {
                 state_code: orderAddress.administrativeDistrictLevel1 || payAddress.administrative_district_level_1 || '',
                 country_code: orderAddress.country || payAddress.country || 'US',
                 zip: orderAddress.postalCode || payAddress.postal_code || '',
-                email: payment.buyer_email_address || 'rlp@rlpdezines.com',
+                email: customerEmail || 'rlp@rlpdezines.com',
                 phone: orderRecipient.phoneNumber || payAddress.phone_number || ''
             };
 
@@ -84,8 +110,9 @@ exports.handler = async (event) => {
                             'Content-Type': 'application/json'
                         }
                     });
-                    console.log(`Printful Order ${printfulOrderId} officially submitted to production!`);
+                    console.log(`Printful Order ${printfulOrderId} officially submitted to production for Square Order ${orderId}!`);
                     firstHookProcessed = true;
+                    processedOrders.set(orderId, { timestamp: Date.now(), printfulOrderId });
                 }
             } catch (printfulError) {
                 const errorData = printfulError.response?.data || {};
@@ -93,13 +120,30 @@ exports.handler = async (event) => {
                 
                 if (errorReason.includes("already exists") || errorData.error?.message?.includes("already exists") || errorData.api_error_code === "OR-13") {
                     console.log(`Duplicate event for Square Order ${orderId} ignored safely.`);
+                    firstHookProcessed = true; // Treat as success for email purposes
                 } else {
-                    await resend.emails.send({
-                        from: 'System <orders@rlpdezines.com>',
-                        to: ['rlp@rlpdezines.com'],
-                        subject: '🚨 URGENT: Printful Fulfillment Error',
-                        html: `<p>Square took the payment, but the Printful pipeline hit a roadblock.</p><p><strong>Square Order ID:</strong> ${orderId}</p><p><strong>Printful Error:</strong> ${errorReason}</p>`
-                    });
+                    console.error(`Printful API Error for Order ${orderId}:`, errorReason);
+                    
+                    try {
+                        await resend.emails.send({
+                            from: 'System <orders@rlpdezines.com>',
+                            to: ['rlp@rlpdezines.com'],
+                            subject: '🚨 URGENT: Printful Fulfillment Error',
+                            html: `
+                                <div style="font-family: Arial, sans-serif; color: #333;">
+                                    <h2>Printful Fulfillment Error</h2>
+                                    <p>Square took the payment, but the Printful pipeline hit a roadblock.</p>
+                                    <p><strong>Square Order ID:</strong> ${orderId}</p>
+                                    <p><strong>Customer Email:</strong> ${recipient.email}</p>
+                                    <p><strong>Error Details:</strong></p>
+                                    <pre style="background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto;">${errorReason}</pre>
+                                    <p><strong>Action Required:</strong> Please investigate and manually confirm this order if necessary.</p>
+                                </div>
+                            `
+                        });
+                    } catch (emailError) {
+                        console.error("Failed to send error notification email:", emailError.message);
+                    }
                 }
             }
 
@@ -128,8 +172,43 @@ exports.handler = async (event) => {
                         from: 'RLP Dezines <orders@rlpdezines.com>',
                         to: [recipient.email],
                         subject: 'Order Confirmed - RLP Dezines',
-                        html: `<div style="background:#000; color:#fff; padding:20px;"><h1>RLP DEZINES</h1><p>Order Confirmed.</p><table>${itemsHtml}</table><p>Subtotal: $${calculatedSubtotal.toFixed(2)}</p><p>Shipping: $${calculatedShipping}</p><p>Tax: $${totalTax}</p><p>Total: $${totalGross}</p></div>`
+                        html: `
+                            <div style="background:#000; color:#fff; padding:20px; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                                <h1 style="margin: 0 0 20px 0; color: #fff;">RLP DEZINES</h1>
+                                <p style="font-size: 16px; margin: 0 0 20px 0;">Your order has been confirmed and is being prepared for shipment.</p>
+                                
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="border-bottom: 2px solid #fff;">
+                                            <th style="padding: 12px 0; text-align: left; color: #fff;">Item</th>
+                                            <th style="padding: 12px 0; text-align: right; color: #fff;">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${itemsHtml}
+                                    </tbody>
+                                </table>
+                                
+                                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #333;">
+                                    <p style="margin: 8px 0; display: flex; justify-content: space-between;"><span>Subtotal:</span> <span>$${calculatedSubtotal.toFixed(2)}</span></p>
+                                    <p style="margin: 8px 0; display: flex; justify-content: space-between;"><span>Shipping:</span> <span>$${calculatedShipping}</span></p>
+                                    <p style="margin: 8px 0; display: flex; justify-content: space-between;"><span>Tax:</span> <span>$${totalTax}</span></p>
+                                    <p style="margin: 16px 0; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between;"><span>Total:</span> <span>$${totalGross}</span></p>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: #1f1f1f; border-radius: 5px;">
+                                    <p style="margin: 0 0 8px 0;"><strong>Shipping To:</strong></p>
+                                    <p style="margin: 0; color: #9ca3af;">${recipient.name}</p>
+                                    <p style="margin: 0; color: #9ca3af;">${recipient.address1}</p>
+                                    <p style="margin: 0; color: #9ca3af;">${recipient.city}, ${recipient.state_code} ${recipient.zip}</p>
+                                    <p style="margin: 0; color: #9ca3af;">${recipient.country_code}</p>
+                                </div>
+                                
+                                <p style="margin-top: 20px; font-size: 12px; color: #9ca3af;">Thank you for your purchase! You'll receive a tracking number via email once your order ships.</p>
+                            </div>
+                        `
                     });
+                    console.log(`Confirmation email sent to ${recipient.email} for order ${orderId}`);
                 } catch (emailError) {
                     console.error("Resend API Error:", emailError.message);
                 }
@@ -139,6 +218,6 @@ exports.handler = async (event) => {
         return { statusCode: 200, body: 'Webhook ignored event type.' };
     } catch (fatalError) {
         console.error("Fatal Error:", fatalError);
-        return { statusCode: 200, body: 'Workflow crashed.' }; 
+        return { statusCode: 500, body: JSON.stringify({ error: fatalError.message }) }; 
     }
 };
