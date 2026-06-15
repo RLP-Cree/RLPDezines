@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RLP Dezines — Indigenous Art & Apparel by Ronnie Lodgepole</title>
+    <title>RLP Dezines — Indigenous Art & Apparel</title>
 
     <meta name="description" content="RLP Dezines is an Indigenous-owned creative studio offering premium apparel, custom blankets, and original NAC music by Ronnie Lodgepole, Chippewa Cree.">
     <meta name="author" content="Ronnie Lodgepole">
@@ -110,9 +110,6 @@
 </head>
 <body class="bg-black text-white antialiased flex flex-col min-h-screen relative">
 
-<!-- ════════════════════════════════════════
-     HEADER / NAV
-════════════════════════════════════════ -->
 <header class="fixed top-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-900 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 py-4">
         <a href="#top" class="text-2xl font-black italic tracking-widest text-white hover:text-blue-400 transition">RLP</a>
@@ -146,7 +143,6 @@
     </div>
 </header>
 
-<!-- Mobile Menu -->
 <div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-black/98 backdrop-blur-xl border-b border-gray-900 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overflow-y-auto" style="height: calc(100vh - 69px);">
     <a href="#mission"   class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">The Mission</a>
     <a href="#shop-live" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Shop Now</a>
@@ -159,9 +155,6 @@
     <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px]">Start a Project</a>
 </div>
 
-<!-- ════════════════════════════════════════
-     CART DRAWER
-════════════════════════════════════════ -->
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-[60]"></div>
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-950 border-l border-gray-800 z-[70] flex flex-col shadow-2xl">
     <div class="px-5 py-4 border-b border-gray-900 flex justify-between items-center bg-black flex-shrink-0">
@@ -186,17 +179,10 @@
     </div>
 </div>
 
-<!-- ════════════════════════════════════════
-     PRODUCT POPUP MODAL
-════════════════════════════════════════ -->
 <div id="product-modal-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[80] hidden opacity-0 transition-opacity duration-300"></div>
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] sm:w-[85%] max-w-4xl bg-gray-950 border border-gray-800 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
-    <!-- Modal content injected by JS -->
-</div>
+    </div>
 
-<!-- ════════════════════════════════════════
-     HERO
-════════════════════════════════════════ -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-32 min-h-screen overflow-hidden">
     <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px); background-size: 60px 60px;"></div>
     <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 65%);"></div>
@@ -213,9 +199,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     MISSION
-════════════════════════════════════════ -->
 <section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-900 bg-gray-950">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12 reveal">
@@ -263,9 +246,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     APPAREL / TUNES SPLIT
-════════════════════════════════════════ -->
 <section class="border-t border-gray-900 grid md:grid-cols-2" id="apparel">
     <div class="py-20 px-8 flex flex-col items-center justify-center text-center bg-black hover:bg-[#0a0a0a] transition duration-500 group border-b md:border-b-0 border-gray-900">
         <p class="section-label mb-5 justify-center reveal">Premium Apparel</p>
@@ -282,9 +262,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     LIVE STORE (ACCORDION CATEGORIES)
-════════════════════════════════════════ -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-10 sm:mb-14 reveal">
@@ -294,12 +271,13 @@
         </div>
         
         <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
-            <!-- Loading Skeletons -->
             <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
                 <div class="flex items-center gap-3 w-1/2"><div class="h-5 w-5 bg-gray-800 rounded"></div><div class="h-5 bg-gray-800 rounded w-1/2"></div></div>
             </div>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
-                <div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl hidden lg:block"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
+                <div class="skeleton h-64 rounded-xl"></div>
+                <div class="skeleton h-64 rounded-xl hidden sm:block"></div>
+                <div class="skeleton h-64 rounded-xl hidden lg:block"></div>
             </div>
             <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
                 <div class="flex items-center gap-3 w-1/3"><div class="h-5 w-5 bg-gray-800 rounded"></div><div class="h-5 bg-gray-800 rounded w-full"></div></div>
@@ -308,9 +286,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     BUNDLES
-════════════════════════════════════════ -->
 <section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
     <div class="max-w-4xl mx-auto">
         <div class="bg-black border border-gray-800 p-6 sm:p-14 rounded-2xl">
@@ -357,9 +332,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     WHOLESALE PORTAL
-════════════════════════════════════════ -->
 <section id="wholesale" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
     <div class="max-w-4xl mx-auto space-y-8">
         <div class="bg-gray-950 border border-gray-800 p-6 sm:p-14 rounded-2xl">
@@ -423,9 +395,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     DESIGN SERVICES
-════════════════════════════════════════ -->
 <section id="services" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
     <div class="max-w-4xl mx-auto">
         <div class="bg-black border border-gray-800 border-l-4 border-l-blue-500 p-6 sm:p-14 rounded-2xl">
@@ -437,7 +406,6 @@
                 </p>
             </div>
 
-            <!-- Intake Form -->
             <div id="intake-form-wrap" class="max-w-2xl mx-auto bg-gray-900 p-6 sm:p-8 rounded-xl border border-gray-800 reveal">
                 <form name="design-intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
                     <input type="text" name="name">
@@ -488,9 +456,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     ENDORSEMENTS
-════════════════════════════════════════ -->
 <section id="endorsements" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -524,9 +489,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     POLICIES / FAQ
-════════════════════════════════════════ -->
 <section id="info" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 flex-grow bg-gray-950">
     <div class="max-w-4xl mx-auto">
         <div class="bg-black border-t-4 border-t-blue-600 border border-gray-800 p-6 sm:p-14 rounded-2xl">
@@ -550,9 +512,6 @@
     </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════ -->
 <footer class="border-t border-gray-900 bg-black py-16 px-5">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600 gap-4">
         <div>© 2026 RLP Dezines. Indigenous-owned &amp; operated.</div>
@@ -562,9 +521,6 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
-<!-- ════════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════════ -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -689,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const p = window.globalProducts[id]; if(!p) return;
         const safeName = (p.name || 'Item').replace(/'/g, "&#39;"), safeDesc = p.description || 'No additional details available.';
         const opts = p.variations.map(v => `<option value="${v.id}" data-price="${v.price}" data-name="${(v.name||'Regular').replace(/'/g,"&#39;")}" data-sku="${v.sku||''}">${v.name||'Regular'} — $${(v.price/100).toFixed(2)}</option>`).join('');
-        const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-500 text-xs tracking-widest uppercase font-bold">RLP</div>`;
+        const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-500 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
 
         pModal.innerHTML = `
             <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-black/60 hover:bg-black text-white p-2 rounded-full z-10 transition shadow-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -731,15 +687,22 @@ document.addEventListener('DOMContentLoaded', () => {
         closeProductModal();
     };
 
-    // ── Load Catalog with Accordions ──
+    // ── Load Catalog mapped to Square Categories (1-col mobile grid) ──
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
+        
         const icons = {
-            'Blankets & Throws': `<svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
-            'Apparel': `<svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
-            'Drinkware': `<svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
-            'Accessories': `<svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
-            'Other Goods': `<svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`
+            'Sherpa Throws': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
+            'Hoodies': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
+            'T Shirts': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
+            'Mugs': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
+            'Tumblers': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
+            'Totes': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+            'Towels': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
+            'Hand Towels': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
+            'Phone Cases': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+            'Design Services': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`,
+            'Other Goods': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`
         };
 
         try {
@@ -750,25 +713,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found in catalog.</p>`; return; }
 
+            // Group strictly by reportingCategory as mapped by the backend
             const catMap = {};
             products.forEach(p => {
                 window.globalProducts[p.id] = p; 
-                const n = (p.name || '').toLowerCase(); let c = 'Other Goods';
-                if (n.includes('blanket') || n.includes('throw') || n.includes('sherpa')) c = 'Blankets & Throws';
-                else if (n.includes('shirt') || n.includes('tee') || n.includes('hoodie') || n.includes('apparel')) c = 'Apparel';
-                else if (n.includes('tumbler') || n.includes('mug') || n.includes('cup')) c = 'Drinkware';
-                else if (n.includes('tote') || n.includes('bag') || n.includes('towel')) c = 'Accessories';
-                if (!catMap[c]) catMap[c] = []; catMap[c].push(p);
+                const c = p.category || 'Other Goods';
+                if (!catMap[c]) catMap[c] = []; 
+                catMap[c].push(p);
             });
 
-            ['Blankets & Throws', 'Apparel', 'Drinkware', 'Accessories', 'Other Goods'].forEach((cat, idx) => {
+            // Specific order based on Square Dashboard
+            const categoryOrder = ['Sherpa Throws', 'T Shirts', 'Hoodies', 'Tumblers', 'Mugs', 'Totes', 'Towels', 'Hand Towels', 'Phone Cases', 'Design Services'];
+            
+            const existingCats = Object.keys(catMap);
+            const sortedCats = categoryOrder.filter(c => existingCats.includes(c));
+            existingCats.forEach(c => { if(!sortedCats.includes(c)) sortedCats.push(c); });
+
+            sortedCats.forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
                 const minPrice = Math.min(...items.flatMap(p => p.variations.map(v => v.price)));
                 const priceLabel = `<span class="text-[11px] text-gray-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
 
                 const cards = items.map(p => {
                     const sName = (p.name || 'Item').replace(/'/g, "&#39;");
-                    const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP</span></div>`;
+                    const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP DEZINES</span></div>`;
                     const pMinPrice = Math.min(...p.variations.map(v => v.price));
                     
                     return `
@@ -792,7 +760,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <span class="text-gray-500 group-hover:text-blue-500 transition-transform duration-300 group-open:rotate-180"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
                     </summary>
-                    <div class="accordion-content grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pt-4 pb-2">${cards}</div>
+                    <div class="accordion-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pt-4 pb-2">${cards}</div>
                 </details>`;
             });
         } catch { grid.innerHTML = `<p class="text-red-400 text-sm text-center">Failed to sync catalog.</p>`; }
