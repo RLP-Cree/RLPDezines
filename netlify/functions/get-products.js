@@ -9,13 +9,23 @@ exports.handler = async (event) => {
     if (event.httpMethod !== 'GET') return { statusCode: 405, body: 'Method Not Allowed' };
 
     try {
-        const response = await client.catalogApi.searchCatalogObjects({
-            objectTypes: ['ITEM'],
-            includeRelatedObjects: true
-        });
-        
-        const objects = response.result.objects || [];
-        const related = response.result.relatedObjects || [];
+        let objects = [];
+        let related = [];
+        let cursor = undefined;
+
+        // Fetch all pages of the catalog
+        do {
+            const response = await client.catalogApi.searchCatalogObjects({
+                objectTypes: ['ITEM'],
+                includeRelatedObjects: true,
+                cursor: cursor
+            });
+            
+            if (response.result.objects) objects.push(...response.result.objects);
+            if (response.result.relatedObjects) related.push(...response.result.relatedObjects);
+            
+            cursor = response.result.cursor;
+        } while (cursor);
         
         const imageMap = {};
         const categoryMap = {};
