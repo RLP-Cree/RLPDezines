@@ -5,24 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RLP Dezines — Indigenous Art & Apparel by Ronnie Lodgepole</title>
 
-    <!-- SEO -->
     <meta name="description" content="RLP Dezines is an Indigenous-owned creative studio offering premium apparel, custom blankets, and original NAC music by Ronnie Lodgepole, Chippewa Cree.">
     <meta name="author" content="Ronnie Lodgepole">
     <meta name="keywords" content="Indigenous apparel, Native American design, powwow blankets, NAC music, Chippewa Cree, RLP Dezines, Indigipreneur">
 
-    <!-- Open Graph -->
     <meta property="og:title" content="RLP Dezines — Indigenous Art & Apparel">
     <meta property="og:description" content="Premium apparel, custom ceremony blankets, and original NAC music rooted in Chippewa Cree culture.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rlpdezines.com">
     <meta property="og:image" content="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1200">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="RLP Dezines — Indigenous Art & Apparel">
     <meta name="twitter:description" content="Premium apparel, custom ceremony blankets, and original NAC music rooted in Chippewa Cree culture.">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -99,63 +95,122 @@
         .reveal-delay-3 { transition-delay: 0.3s; }
         .reveal-delay-4 { transition-delay: 0.4s; }
 
-        /* ── Price card & Endorse hover ── */
-        .price-card, .endorse-card {
-            transition: border-color 0.3s, transform 0.3s, background 0.3s;
+        /* ── Price card hover ── */
+        .price-card {
+            transition: border-color 0.2s, transform 0.2s, background 0.2s;
         }
-        .price-card:hover, .endorse-card:hover {
+        .price-card:hover {
             border-color: var(--blue);
             transform: translateY(-3px);
             background: #0f172a;
         }
 
+        /* ── Endorsement card ── */
+        .endorse-card {
+            transition: border-color 0.3s, background 0.3s, transform 0.3s;
+        }
+        .endorse-card:hover {
+            border-color: var(--blue);
+            background: #0f172a;
+            transform: translateY(-2px);
+        }
+
         /* ── Form inputs ── */
         .form-input {
-            width: 100%; background: #000; border: 1px solid #374151; color: #fff;
-            padding: 12px 14px; border-radius: 6px; outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s; font-family: 'Inter', sans-serif; font-size: 0.875rem;
+            width: 100%;
+            background: #000;
+            border: 1px solid #374151;
+            color: #fff;
+            padding: 12px 14px;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
         }
-        .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        .form-input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        }
         .form-input::placeholder { color: #4B5563; }
 
         /* ── Toast notification ── */
         #toast {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-            background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 0.875rem;
-            font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 9999;
-            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap;
+            position: fixed; bottom: 24px; left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #1e3a8a;
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            white-space: nowrap;
         }
         #toast.show { transform: translateX(-50%) translateY(0); }
 
         /* ── Section divider pulse ── */
-        .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 11px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
-        .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--blue-light);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+        }
+        .section-label::before,
+        .section-label::after {
+            content: '';
+            display: block;
+            height: 1px; width: 28px;
+            background: var(--blue-light);
+        }
 
-        /* ── Back to top & Mobile Menu ── */
-        #back-top { opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; transform: translateY(8px); }
-        #back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
-        #mobile-menu.open { opacity: 1; visibility: visible; }
+        /* ── Back to top ── */
+        #back-top {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(8px);
+        }
+        #back-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
 
+        /* ── Mobile menu backdrop ── */
+        #mobile-menu {
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            opacity: 0; visibility: hidden;
+        }
+        #mobile-menu.open {
+            opacity: 1; visibility: visible;
+        }
+        
         /* ── Cart Drawer Styling ── */
         #cart-drawer { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
         #cart-drawer.open { transform: translateX(0); }
         .cart-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out; }
         .cart-overlay.open { opacity: 1; pointer-events: auto; }
 
-        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .price-card, .endorse-card { transition: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .price-card, .endorse-card { transition: none; }
+        }
     </style>
 </head>
 <body class="bg-black text-white antialiased flex flex-col min-h-screen relative">
 
-<!-- ═══════════════════════════════════════════
-     HEADER / NAV
-════════════════════════════════════════════ -->
 <header class="fixed top-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-900 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
         <a href="#top" class="text-2xl font-black italic tracking-widest text-white hover:text-blue-400 transition">RLP</a>
 
-        <nav class="hidden lg:flex items-center space-x-6 text-[13px] font-semibold text-gray-400">
+        <nav class="hidden lg:flex items-center space-x-7 text-[13px] font-semibold text-gray-400">
             <a href="#mission" class="nav-link hover:text-white transition">Mission</a>
             <a href="#apparel" class="nav-link hover:text-white transition">Apparel</a>
             <a href="#tunes" class="nav-link hover:text-white transition">Music</a>
@@ -164,7 +219,6 @@
             <a href="#services" class="nav-link hover:text-white transition">Design</a>
             <a href="mailto:rlp@rlpdezines.com" class="bg-white hover:bg-gray-200 text-black px-4 py-2 rounded-full font-bold text-[12px] tracking-widest uppercase transition">Contact</a>
             
-            <!-- Cart Button -->
             <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition text-[12px] tracking-widest uppercase">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Cart (<span id="cart-count">0</span>)
@@ -172,13 +226,11 @@
         </nav>
 
         <div class="flex items-center gap-4 lg:hidden">
-            <!-- Mobile Cart Button -->
             <button id="mobile-cart-btn" class="text-white hover:text-blue-400 flex items-center gap-1 transition font-bold text-sm">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 <span id="mobile-cart-count">0</span>
             </button>
 
-            <!-- Menu Toggle -->
             <button id="menu-btn" class="text-white hover:text-blue-400 transition focus:outline-none" aria-label="Toggle menu" aria-expanded="false">
                 <svg id="menu-icon-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -187,22 +239,18 @@
     </div>
 </header>
 
-<!-- Mobile menu dropdown -->
 <div id="mobile-menu" class="fixed top-[69px] left-0 w-full bg-black/98 backdrop-blur-xl border-b border-gray-900 z-40 flex flex-col px-8 py-8 space-y-1 shadow-2xl" style="max-height: calc(100vh - 69px); overflow-y: auto;">
-    <a href="#mission" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">The Mission</a>
-    <a href="#apparel" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">The Collection</a>
-    <a href="#tunes" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">RLP Tunes</a>
-    <a href="#bundles" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Specials Bundles</a>
-    <a href="#wholesale" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Wholesale Portal</a>
-    <a href="#services" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Design Services</a>
+    <a href="#mission"      class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">The Mission</a>
+    <a href="#apparel"      class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">The Collection</a>
+    <a href="#tunes"        class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">RLP Tunes</a>
+    <a href="#bundles"      class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Specials Bundles</a>
+    <a href="#wholesale"    class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Wholesale Portal</a>
+    <a href="#services"     class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Design Services</a>
     <a href="#endorsements" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Endorsements</a>
-    <a href="#info" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">FAQ & Policies</a>
+    <a href="#info"         class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">FAQ & Policies</a>
     <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 hover:bg-blue-500 text-white text-center font-black tracking-widest uppercase py-4 rounded transition">Start a Project</a>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     CART DRAWER
-════════════════════════════════════════════ -->
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"></div>
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-950 border-l border-gray-800 z-[70] flex flex-col shadow-2xl">
     <div class="px-6 py-5 border-b border-gray-900 flex justify-between items-center bg-black">
@@ -213,8 +261,7 @@
     </div>
     
     <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4">
-        <!-- Cart Items injected here by JS -->
-    </div>
+        </div>
 
     <div class="p-6 bg-black border-t border-gray-900">
         <div class="flex justify-between text-gray-300 mb-4 font-bold">
@@ -227,9 +274,6 @@
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     HERO
-════════════════════════════════════════════ -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-32 min-h-screen overflow-hidden" id="hero">
     <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 60px 60px;"></div>
     <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 65%);"></div>
@@ -255,11 +299,10 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     MISSION / STORY
-════════════════════════════════════════════ -->
+
 <section id="mission" class="py-28 px-6 border-t border-gray-900 bg-gray-950">
     <div class="max-w-4xl mx-auto">
+
         <div class="text-center mb-16 reveal">
             <p class="section-label mb-5 justify-center">The Ethos</p>
             <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">Our <span class="text-blue-500">Story</span></h2>
@@ -296,11 +339,11 @@
         <div class="grid md:grid-cols-2 gap-6 mb-16 reveal">
             <div class="bg-gray-900 border border-gray-800 border-l-4 border-l-blue-500 p-8 rounded-lg">
                 <h4 class="text-white font-black tracking-widest text-sm uppercase mb-4">The Mission</h4>
-                <p class="text-gray-300 font-light text-sm leading-relaxed">To offer a space of encouragement for the Indigenous spirit. Through the synergy of our traditional values and modern design, I aim to provide items that serve as a reminder of our collective strength.</p>
+                <p class="text-gray-300 font-light text-sm leading-relaxed">To offer a space of encouragement for the Indigenous spirit. Through the synergy of our traditional values and modern design, I aim to provide items that serve as a reminder of our collective strength. We exist to bring beauty and meaning into the modern world, helping our relatives stay connected to our culture and the life-giving laughter of our people.</p>
             </div>
             <div class="bg-gray-900 border border-gray-800 border-l-4 border-l-blue-500 p-8 rounded-lg">
                 <h4 class="text-white font-black tracking-widest text-sm uppercase mb-4">The Vision</h4>
-                <p class="text-gray-300 font-light text-sm leading-relaxed">To see RLP Dezines worn as a reflection of <strong class="text-white font-semibold">health, happiness, and cultural pride</strong> across Indian Country.</p>
+                <p class="text-gray-300 font-light text-sm leading-relaxed">To see RLP Dezines worn as a reflection of <strong class="text-white font-semibold">health, happiness, and cultural pride</strong> across Indian Country. My vision is for our creative work to serve as a bridge—a way to find inspiration and strength, ensuring that our connection to our heritage remains vibrant and alive for every generation.</p>
             </div>
         </div>
 
@@ -308,12 +351,10 @@
             <p class="text-xl italic text-white leading-relaxed mb-4">"In a timeline full of noise, we are focusing on what <span class="text-blue-500 font-bold not-italic">truly matters</span>."</p>
             <div class="text-gray-500 text-[11px] font-black tracking-[0.2em] uppercase">— Ronnie Lodgepole, Founder</div>
         </div>
+
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     COLLECTION + MUSIC (side-by-side)
-════════════════════════════════════════════ -->
 <section class="border-t border-gray-900 grid md:grid-cols-2" id="apparel">
     <div class="py-28 px-10 flex flex-col items-center justify-center text-center bg-black hover:bg-[#0a0a0a] transition duration-500 group border-b md:border-b-0 border-gray-900">
         <p class="section-label mb-5 justify-center reveal">Premium Apparel</p>
@@ -330,9 +371,7 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     LIVE SQUARE STORE FRONT
-════════════════════════════════════════════ -->
+
 <section id="shop-live" class="py-28 px-6 border-t border-gray-900 bg-gray-950">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -340,7 +379,6 @@
             <p class="text-gray-400 mt-4 text-sm uppercase tracking-widest">Powered by Square Checkout</p>
         </div>
 
-        <!-- Dynamic Product Grid populated by Netlify Function -->
         <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
             <div id="loading-products" class="col-span-full flex flex-col items-center justify-center py-16 text-gray-500 animate-pulse">
                 <svg class="w-8 h-8 mb-4 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
@@ -350,12 +388,9 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     BUNDLES / HONORING SPECIALS
-════════════════════════════════════════════ -->
-<section id="bundles" class="py-28 px-6 border-t border-gray-900 bg-black">
+<section id="bundles" class="py-28 px-6 border-t border-gray-900">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-gray-900 border border-gray-800 p-8 sm:p-14 rounded-2xl">
+        <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
 
             <div class="text-center mb-10 reveal">
                 <p class="section-label mb-5 justify-center">A Special Gift for Your Guests</p>
@@ -368,30 +403,28 @@
                 </p>
             </div>
 
-            <!-- Feature list -->
             <ul class="space-y-3 text-gray-300 font-light mb-12 max-w-2xl mx-auto reveal">
                 <li class="flex gap-3"><span class="text-blue-500 font-black mt-0.5">—</span><span><strong class="text-white font-semibold">Mix & Match:</strong> Choose any designs across our catalog to create a bundle that speaks to your family's story.</span></li>
                 <li class="flex gap-3"><span class="text-blue-500 font-black mt-0.5">—</span><span><strong class="text-white font-semibold">Materials:</strong> Smooth sublimated surface on one side, plush sherpa warmth on the reverse.</span></li>
                 <li class="flex gap-3"><span class="text-blue-500 font-black mt-0.5">—</span><span><strong class="text-white font-semibold">Care:</strong> Machine washable and fade-resistant — these blankets stay beautiful for years to come.</span></li>
             </ul>
 
-            <!-- Pricing tiers -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 reveal">
-                <div class="price-card bg-black border border-gray-800 p-6 rounded-xl text-center">
+                <div class="price-card bg-gray-900 border border-gray-800 p-6 rounded-xl text-center">
                     <div class="text-xs font-black text-white uppercase tracking-widest mb-3">5 Throws</div>
                     <div class="text-xs text-gray-500 line-through mb-1">$89 each</div>
                     <div class="text-3xl font-black text-blue-500 leading-none">$85</div>
                     <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
                     <div class="text-[11px] text-gray-400 mt-2 font-semibold">Bundle: $425</div>
                 </div>
-                <div class="price-card bg-black border border-gray-800 p-6 rounded-xl text-center">
+                <div class="price-card bg-gray-900 border border-gray-800 p-6 rounded-xl text-center">
                     <div class="text-xs font-black text-white uppercase tracking-widest mb-3">10 Throws</div>
                     <div class="text-xs text-gray-500 line-through mb-1">$89 each</div>
                     <div class="text-3xl font-black text-blue-500 leading-none">$79</div>
                     <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
                     <div class="text-[11px] text-gray-400 mt-2 font-semibold">Bundle: $790</div>
                 </div>
-                <div class="price-card bg-black border border-gray-800 p-6 rounded-xl text-center relative overflow-hidden">
+                <div class="price-card bg-gray-900 border border-gray-800 p-6 rounded-xl text-center relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
                     <div class="text-xs font-black text-white uppercase tracking-widest mb-3">15 Throws</div>
                     <div class="text-xs text-gray-500 line-through mb-1">$89 each</div>
@@ -399,7 +432,7 @@
                     <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
                     <div class="text-[11px] text-gray-400 mt-2 font-semibold">Bundle: $1,140</div>
                 </div>
-                <div class="price-card bg-black border border-gray-800 p-6 rounded-xl text-center">
+                <div class="price-card bg-gray-900 border border-gray-800 p-6 rounded-xl text-center">
                     <div class="text-xs font-black text-white uppercase tracking-widest mb-3">20 Throws</div>
                     <div class="text-xs text-gray-500 line-through mb-1">$89 each</div>
                     <div class="text-3xl font-black text-blue-500 leading-none">$73</div>
@@ -413,7 +446,7 @@
                 <p class="text-gray-500 text-xs mt-3">Email us with your event date, quantity, and design preferences.</p>
             </div>
 
-            <div class="bg-black border-l-4 border-blue-500 p-6 text-sm text-gray-300 font-light leading-relaxed rounded-lg reveal">
+            <div class="bg-gray-900 border-l-4 border-blue-500 p-6 text-sm text-gray-300 font-light leading-relaxed rounded-lg reveal">
                 <strong class="text-white font-semibold">A NOTE ON TIMING:</strong> Every bundle is handcrafted to order. To ensure I can get these to you with the care they deserve, please place your orders at least <strong class="text-white font-semibold">14 days before your event.</strong> I don't like to rush good work.
             </div>
 
@@ -421,13 +454,10 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     WHOLESALE PORTAL
-════════════════════════════════════════════ -->
+
 <section id="wholesale" class="py-28 px-6 border-t border-gray-900 bg-gray-950">
     <div class="max-w-4xl mx-auto space-y-10">
 
-        <!-- Wholesale pricing -->
         <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
             <div class="text-center mb-12 reveal">
                 <p class="section-label mb-5 justify-center">Retail Partners</p>
@@ -480,16 +510,15 @@
                 </div>
                 <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg">
                     <div class="text-2xl font-black text-blue-500 mb-3">2</div>
-                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Compile:</strong> Email your list to <strong class="text-white">RLP@RLPDEZINES.COM</strong>.</p>
+                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Compile:</strong> Email your list (Product, Design, Size, Quantity) to <strong class="text-white">RLP@RLPDEZINES.COM</strong>.</p>
                 </div>
                 <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg">
                     <div class="text-2xl font-black text-blue-500 mb-3">3</div>
-                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Invoice:</strong> I'll apply tier discounts and send a digital invoice.</p>
+                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Invoice:</strong> I'll apply tier discounts and send a digital invoice. Production starts on payment.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Custom Partnerships -->
         <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
             <div class="text-center mb-12 reveal">
                 <p class="section-label mb-5 justify-center">Organizations &amp; Events</p>
@@ -508,12 +537,12 @@
                 <div class="bg-gray-900 border border-gray-800 border-t-4 border-t-blue-500 p-8 rounded-lg hover:-translate-y-1 hover:bg-[#1a1a2e] transition duration-300">
                     <div class="text-blue-500 text-4xl font-black leading-none mb-5 opacity-25">02</div>
                     <h4 class="text-white font-black tracking-widest text-sm uppercase mb-3">Premium Production</h4>
-                    <p class="text-gray-300 font-light text-sm leading-relaxed">Whether you need throws for dignitaries, mugs for staff, or shirts for volunteers.</p>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">Whether you need throws for dignitaries or shirts for volunteers, I ensure everything is top quality.</p>
                 </div>
                 <div class="bg-gray-900 border border-gray-800 border-t-4 border-t-blue-500 p-8 rounded-lg hover:-translate-y-1 hover:bg-[#1a1a2e] transition duration-300">
                     <div class="text-blue-500 text-4xl font-black leading-none mb-5 opacity-25">03</div>
                     <h4 class="text-white font-black tracking-widest text-sm uppercase mb-3">Direct Delivery</h4>
-                    <p class="text-gray-300 font-light text-sm leading-relaxed">I handle the logistics — coordinating packaging and shipping securely.</p>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">I handle the logistics — coordinating packaging and shipping so your items arrive securely.</p>
                 </div>
             </div>
         </div>
@@ -521,9 +550,7 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     DESIGN SERVICES + INTAKE FORM
-════════════════════════════════════════════ -->
+
 <section id="services" class="py-28 px-6 border-t border-gray-900">
     <div class="max-w-4xl mx-auto">
         <div class="bg-black border border-gray-800 border-l-4 border-l-blue-500 p-8 sm:p-14 rounded-2xl">
@@ -532,12 +559,11 @@
                 <p class="section-label mb-5">B2B & Creative Services</p>
                 <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-6 tracking-tight">Design <span class="text-blue-500">Services</span></h2>
                 <p class="text-gray-300 font-light leading-relaxed max-w-2xl">
-                    RLP Dezines is your full-stack design partner. We provide bulk production on all catalog items and custom design services. Fill out the intake form below with your project scope and budget.
+                    RLP Dezines is your full-stack design partner. We provide <strong class="text-white font-semibold">bulk production on all catalog items</strong> and <strong class="text-white font-semibold">custom design services</strong>. Fill out the intake form below with your project scope and budget.
                 </p>
             </div>
 
-            <!-- ── INTAKE FORM (Netlify-compatible) ── -->
-            <div id="intake-form-wrap" class="max-w-2xl bg-gray-900 p-8 rounded-xl border border-gray-800 reveal">
+            <div id="intake-form-wrap" class="max-w-2xl mx-auto bg-gray-900 p-8 rounded-xl border border-gray-800 reveal">
                 <form name="design-intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
                     <input type="text" name="name">
                     <input type="email" name="email">
@@ -548,12 +574,12 @@
                 <div id="form-fields">
                     <div class="grid sm:grid-cols-2 gap-5 mb-5">
                         <div>
-                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-name">Name / Org</label>
-                            <input class="form-input" type="text" id="intake-name" name="name" required>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-name">Name / Organization</label>
+                            <input class="form-input" type="text" id="intake-name" name="name" placeholder="Your name or org" required>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-email">Email</label>
-                            <input class="form-input" type="email" id="intake-email" name="email" required>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-email">Email Address</label>
+                            <input class="form-input" type="email" id="intake-email" name="email" placeholder="you@example.com" required>
                         </div>
                     </div>
                     <div class="mb-5">
@@ -562,17 +588,19 @@
                             <option value="Not Sure Yet">Not Sure Yet</option>
                             <option value="Under $500">Under $500</option>
                             <option value="$500 - $1,000">$500 – $1,000</option>
-                            <option value="$1,000+">$1,000+</option>
+                            <option value="$1,000 - $5,000">$1,000 – $5,000</option>
+                            <option value="$5,000+">$5,000+</option>
                         </select>
                     </div>
                     <div class="mb-6">
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
-                        <textarea class="form-input h-32 resize-y" id="intake-message" name="message" required></textarea>
+                        <textarea class="form-input h-32 resize-y" id="intake-message" name="message" placeholder="Tell me what you're looking for..." required></textarea>
                     </div>
-                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-lg transition duration-300">
-                        <span id="btn-label">Submit Request</span>
+                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-lg transition duration-300 flex items-center justify-center gap-2">
+                        <span id="btn-label">Submit Project Request</span>
+                        <svg id="btn-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                     </button>
-                    <p id="form-error" class="text-red-400 text-xs mt-3 hidden text-center">Please fill in all fields.</p>
+                    <p id="form-error" class="text-red-400 text-xs mt-3 hidden text-center">Please fill in all fields before submitting.</p>
                 </div>
 
                 <div id="form-success" class="hidden text-center py-8">
@@ -581,71 +609,30 @@
                     <p class="text-gray-400 font-light text-sm">Thank you for reaching out. I'll be in touch within 2 business days.</p>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     ENDORSEMENTS
-════════════════════════════════════════════ -->
-<section id="endorsements" class="py-28 px-6 border-t border-gray-900 bg-gray-950">
-    <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-16 reveal">
-            <p class="section-label mb-5 justify-center">Verified Partners</p>
-            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">Client <span class="text-blue-500">Endorsements</span></h2>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="endorse-card bg-gray-900 border border-gray-800 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal">
-                <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
-                <p class="text-gray-300 font-light leading-relaxed mb-8 flex-grow relative z-10">
-                    "RLP Dezines provided us with incredible support. From our official organization logo to the banners and custom gear we use for our events, the quality is exceptional."
-                </p>
-                <div class="border-t border-gray-800 pt-5 mt-auto">
-                    <div class="text-white text-sm font-black uppercase mb-1">Executive Committee</div>
-                    <div class="text-blue-500 text-[11px] font-bold tracking-widest uppercase">Native American Church of North America</div>
-                </div>
-            </div>
-
-            <div class="endorse-card bg-gray-900 border border-gray-800 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal reveal-delay-2">
-                <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
-                <p class="text-gray-300 font-light leading-relaxed mb-8 flex-grow relative z-10">
-                    "Working with RLP Dezines has been a great experience. We needed high-quality gear for our health board and community events, and the final products were exactly what we were looking for."
-                </p>
-                <div class="border-t border-gray-800 pt-5 mt-auto">
-                    <div class="text-white text-sm font-black uppercase mb-1">Leadership Team</div>
-                    <div class="text-blue-500 text-[11px] font-bold tracking-widest uppercase">Rocky Boy Health Board</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     FAQ & POLICIES
-════════════════════════════════════════════ -->
-<section id="info" class="py-28 px-6 border-t border-gray-900 flex-grow bg-black">
+<section id="info" class="py-28 px-6 border-t border-gray-900 flex-grow">
     <div class="max-w-4xl mx-auto space-y-10">
-        <div class="bg-gray-900 border-t-4 border-t-blue-600 border border-gray-800 p-8 sm:p-14 rounded-2xl reveal">
-            <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-12 text-center tracking-tight">Store Policies &amp; Disclaimers</h2>
-            <div class="space-y-10 divide-y divide-gray-800">
-                <div class="pt-0">
+        <div class="bg-black border-t-4 border-t-blue-600 border border-gray-800 p-8 sm:p-14 rounded-2xl">
+            <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-12 text-center tracking-tight reveal">Store Policies &amp; Disclaimers</h2>
+
+            <div class="space-y-10 divide-y divide-gray-900">
+                <div class="pt-0 reveal">
                     <h3 class="text-blue-500 font-black tracking-widest text-xs uppercase mb-4">All Sales Are Final</h3>
-                    <p class="text-gray-300 font-light leading-relaxed text-sm">Every item is crafted specifically for you at the time of purchase. Because of this custom model, I do not accept returns, exchanges, or offer cash refunds for buyer's remorse.</p>
+                    <p class="text-gray-300 font-light leading-relaxed text-sm">Every item is crafted specifically for you at the time of purchase. Because of this custom, print-on-demand model, <strong class="text-white font-semibold">I do not accept returns, exchanges, or offer cash refunds for buyer's remorse or incorrect size selections.</strong> Please review all product descriptions and size charts carefully before completing your purchase.</p>
                 </div>
-                <div class="pt-8">
-                    <h3 class="text-blue-500 font-black tracking-widest text-xs uppercase mb-4">Damaged Items</h3>
-                    <p class="text-gray-300 font-light leading-relaxed text-sm">In the rare event that your item arrives misprinted or defective, contact me at rlp@rlpdezines.com within 7 days. I will make it right with a free replacement.</p>
+                <div class="pt-8 reveal">
+                    <h3 class="text-blue-500 font-black tracking-widest text-xs uppercase mb-4">Damaged or Defective Items</h3>
+                    <p class="text-gray-300 font-light leading-relaxed text-sm mb-4">I stand behind the quality of my designs and materials. In the rare event that your item arrives misprinted or defective, contact me at <strong class="text-white">rlp@rlpdezines.com</strong> within 7 days. I will make it right with a free replacement.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
+
 <footer class="border-t border-gray-900 bg-black py-16 px-6">
     <div class="max-w-6xl mx-auto">
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
@@ -670,6 +657,7 @@
                 </ul>
             </div>
         </div>
+
         <div class="border-t border-gray-900 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-600">
             <div>© 2026 RLP Dezines. All rights reserved. Indigenous-owned &amp; operated.</div>
             <div><a href="#info" class="hover:text-gray-400 transition">Store Policies</a></div>
@@ -677,27 +665,15 @@
     </div>
 </footer>
 
-<!-- Back to top -->
+
 <a href="#top" id="back-top" class="fixed bottom-6 right-6 bg-gray-800 hover:bg-blue-600 text-white p-3.5 rounded-full shadow-lg transition z-50" aria-label="Back to top">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
 </a>
 
-<!-- Toast -->
 <div id="toast" role="alert" aria-live="polite">Notification</div>
 
-<!-- ═══════════════════════════════════════════
-     SCRIPTS
-════════════════════════════════════════════ -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-
-    // ── Toast helper ──
-    const toast = document.getElementById('toast');
-    function showToast(msg) {
-        toast.textContent = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
-    }
 
     // ── Mobile menu toggle ──
     const menuBtn  = document.getElementById('menu-btn');
@@ -712,6 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
         closeIcon.classList.toggle('hidden', !isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
     }
+
     menuBtn.addEventListener('click', () => toggleMenu());
     document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => toggleMenu(false)));
 
@@ -728,14 +705,23 @@ document.addEventListener('DOMContentLoaded', () => {
         backTop.classList.toggle('visible', window.scrollY > 400);
     }, { passive: true });
 
+    // ── Toast helper ──
+    const toast = document.getElementById('toast');
+    function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
     // ── Intake form submission ──
     const submitBtn   = document.getElementById('form-submit-btn');
     const btnLabel    = document.getElementById('btn-label');
+    const btnSpinner  = document.getElementById('btn-spinner');
     const formFields  = document.getElementById('form-fields');
     const formSuccess = document.getElementById('form-success');
     const formError   = document.getElementById('form-error');
 
-    if (submitBtn) {
+    if(submitBtn) {
         submitBtn.addEventListener('click', async () => {
             const name    = document.getElementById('intake-name').value.trim();
             const email   = document.getElementById('intake-email').value.trim();
@@ -746,15 +732,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 formError.classList.remove('hidden'); return;
             }
             formError.classList.add('hidden');
-            btnLabel.textContent = 'Sending…'; submitBtn.disabled = true;
+            btnLabel.textContent = 'Sending…';
+            btnSpinner.classList.remove('hidden');
+            submitBtn.disabled = true;
 
             const body = new URLSearchParams({ 'form-name': 'design-intake', name, email, budget, message });
+
             try {
-                await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
-                formFields.classList.add('hidden'); formSuccess.classList.remove('hidden'); showToast('Request received!');
+                const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                if (res.ok) {
+                    formFields.classList.add('hidden');
+                    formSuccess.classList.remove('hidden');
+                    showToast('Request received! Talk soon.');
+                } else throw new Error('Network response was not ok');
             } catch (err) {
                 const mailto = `mailto:rlp@rlpdezines.com?subject=Design%20Project%20Inquiry&body=Name%3A%20${encodeURIComponent(name)}%0AEmail%3A%20${encodeURIComponent(email)}%0ABudget%3A%20${encodeURIComponent(budget)}%0A%0AProject%20Details%3A%0A${encodeURIComponent(message)}`;
-                window.location.href = mailto; formFields.classList.add('hidden'); formSuccess.classList.remove('hidden');
+                window.location.href = mailto;
+                formFields.classList.add('hidden');
+                formSuccess.classList.remove('hidden');
+            } finally {
+                btnLabel.textContent = 'Submit Project Request';
+                btnSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
             }
         });
     }
@@ -786,14 +785,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if(this.drawer && this.overlay) {
                 this.drawer.classList.toggle('open', show);
                 this.overlay.classList.toggle('open', show);
-                if(show && mobileMenu.classList.contains('open')) toggleMenu(false); // Close mobile menu if cart opens
+                if(show && mobileMenu.classList.contains('open')) toggleMenu(false);
             }
         }
 
         addItem(product) {
             const existing = this.items.find(i => i.id === product.id);
-            if (existing) existing.quantity += 1;
-            else this.items.push({ ...product, quantity: 1 });
+            if (existing) existing.quantity += product.quantity || 1;
+            else this.items.push({ ...product, quantity: product.quantity || 1 });
             this.save(); this.updateUI(); this.toggleCart(true); showToast('Added to cart');
         }
 
@@ -817,16 +816,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if(document.getElementById('checkout-btn')) document.getElementById('checkout-btn').disabled = false;
+            
             if(this.container) {
                 this.container.innerHTML = this.items.map(item => `
                     <div class="flex justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-800">
                         <div>
-                            <h4 class="text-sm font-bold text-white uppercase tracking-widest">${item.name}</h4>
-                            <p class="text-xs text-gray-400 mt-1">Qty: ${item.quantity} x $${(item.price / 100).toFixed(2)}</p>
+                            <h4 class="text-[11px] font-bold text-white uppercase tracking-widest leading-tight pr-4">${item.name}</h4>
+                            <p class="text-xs text-gray-400 mt-2">Qty: ${item.quantity} x $${(item.price / 100).toFixed(2)}</p>
                         </div>
-                        <div class="flex items-center gap-4">
+                        <div class="flex flex-col items-end gap-2 shrink-0">
                             <span class="text-sm font-black text-blue-500">$${((item.price * item.quantity) / 100).toFixed(2)}</span>
-                            <button onclick="window.Cart.removeItem('${item.id}')" class="text-red-400 hover:text-red-300 text-xs">Remove</button>
+                            <button onclick="window.Cart.removeItem('${item.id}')" class="text-red-400 hover:text-red-300 text-[10px] uppercase tracking-widest font-bold">Remove</button>
                         </div>
                     </div>
                 `).join('');
@@ -854,13 +854,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.Cart = new ShoppingCart();
 
-    // ── Fetch LIVE Square Products ──
+    // ── Fetch LIVE Square Products & Render Variations ──
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
         const loader = document.getElementById('loading-products');
         
         try {
-            // Live fetch to your Netlify function pulling from Square API
             const res = await fetch('/.netlify/functions/get-products');
             if (!res.ok) throw new Error('Network response was not ok');
             const products = await res.json();
@@ -873,20 +872,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             grid.innerHTML = products.map(p => {
-                // Safeguard against missing strings to prevent JSON stringify breaks
                 const safeName = p.name ? p.name.replace(/'/g, "&#39;") : 'Item';
                 const safeDesc = p.description ? p.description : '';
+                
+                // Build the dropdown options for Size/Color variants
+                const optionsHtml = p.variations.map(v => 
+                    `<option value="${v.id}" data-price="${v.price}" data-name="${v.name ? v.name.replace(/'/g, "&#39;") : 'Regular'}" data-sku="${v.sku || ''}">
+                        ${v.name || 'Regular'} — $${(v.price/100).toFixed(2)}
+                    </option>`
+                ).join('');
                 
                 return `
                 <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl group hover:border-blue-500 transition duration-300 flex flex-col">
                     <div class="h-48 bg-gray-800 rounded-lg mb-6 flex items-center justify-center text-gray-600 font-bold tracking-widest uppercase text-xs border border-gray-700 overflow-hidden">
                         ${p.imageUrl && p.imageUrl.startsWith('http') ? `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">` : 'RLP Dezines Product'}
                     </div>
-                    <h3 class="text-lg font-black uppercase tracking-widest text-white">${safeName}</h3>
-                    <p class="text-sm text-gray-400 mt-2 mb-6 flex-grow line-clamp-3">${safeDesc}</p>
-                    <div class="flex items-center justify-between border-t border-gray-800 pt-4">
-                        <span class="text-xl font-black text-blue-500">$${(p.price/100).toFixed(2)}</span>
-                        <button onclick='window.Cart.addItem(${JSON.stringify(p).replace(/'/g, "&#39;")})' class="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest rounded hover:bg-gray-200 transition">Add to Cart</button>
+                    <h3 class="text-lg font-black uppercase tracking-widest text-white mb-2">${safeName}</h3>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">${safeDesc}</p>
+                    
+                    <div class="flex flex-col gap-3 border-t border-gray-800 pt-5 mt-auto">
+                        <select id="variant-${p.id}" class="form-input text-xs font-bold uppercase tracking-widest bg-black border border-gray-700 text-white rounded p-3 w-full outline-none focus:border-blue-500">
+                            ${optionsHtml}
+                        </select>
+                        <div class="flex items-center gap-3">
+                            <input type="number" id="qty-${p.id}" value="1" min="1" max="99" class="form-input w-16 text-center font-bold bg-black border border-gray-700 text-white rounded p-3 outline-none focus:border-blue-500">
+                            <button onclick="window.addVariantToCart('${p.id}', '${safeName}')" class="flex-grow bg-white text-black px-4 py-3 text-xs font-black uppercase tracking-widest rounded hover:bg-gray-200 transition">
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 </div>
                 `;
@@ -895,15 +908,34 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             console.error('Failed to load products from Square', e);
             if(loader) {
-                loader.innerHTML = `
-                    <svg class="w-8 h-8 mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <p class="text-gray-400">Unable to sync catalog at this time. Please check back shortly.</p>
-                `;
+                loader.innerHTML = '<p class="text-red-500">Unable to sync catalog. Please check back shortly.</p>';
             }
         }
     }
 
+    // Global helper to capture the selected variation and quantity
+    window.addVariantToCart = function(productId, productName) {
+        const selectEl = document.getElementById(`variant-${productId}`);
+        const qtyEl = document.getElementById(`qty-${productId}`);
+        const selectedOption = selectEl.options[selectEl.selectedIndex];
+
+        // Format name carefully so the cart reads beautifully: "Heritage Hoodie (Large, Black)"
+        const variantName = selectedOption.getAttribute('data-name');
+        const finalName = (variantName === 'Regular' || variantName === '') ? productName : `${productName} (${variantName})`;
+
+        const cartItem = {
+            id: selectedOption.value, // Send the exact Variation ID so the cart groups sizes separately
+            name: finalName, 
+            price: parseInt(selectedOption.getAttribute('data-price')),
+            sku: selectedOption.getAttribute('data-sku'),
+            quantity: parseInt(qtyEl.value) || 1
+        };
+
+        window.Cart.addItem(cartItem);
+    };
+
     loadProducts();
+
 });
 </script>
 
