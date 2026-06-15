@@ -10,46 +10,32 @@ exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ error: 'Method Not Allowed' })
         };
     }
 
     try {
-        let body;
-        try {
-            body = JSON.parse(event.body);
-        } catch (e) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ error: 'Invalid JSON body' })
-            };
-        }
+        const { cartItems } = JSON.parse(event.body);
 
-        const { cartItems } = body;
-        if (!Array.isArray(cartItems) || cartItems.length === 0) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ error: 'cartItems is required' })
-            };
+        if (!cartItems || cartItems.length === 0) {
+            return { statusCode: 400, body: JSON.stringify({ error: 'Cart is empty' }) };
         }
 
         const lineItems = cartItems.map(item => ({
             name: item.name,
             quantity: String(item.quantity),
             basePriceMoney: {
-                amount: Math.round(Number(item.price)), // already cents
+                amount: Math.round(Number(item.price)),
                 currency: 'USD'
             }
         }));
 
+        // CORRECTED: Square expects the order object directly, not wrapped in another 'order' key
         const response = await client.checkoutApi.createPaymentLink({
             idempotencyKey: crypto.randomUUID(),
             order: {
-                order: {
-                    locationId: process.env.SQUARE_LOCATION_ID,
-                    lineItems
-                }
+                locationId: process.env.SQUARE_LOCATION_ID,
+                lineItems: lineItems
             },
             checkoutOptions: {
                 askForShippingAddress: true,
@@ -63,26 +49,18 @@ exports.handler = async (event) => {
         return {
             statusCode: 200,
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                url: response.result.paymentLink.url
-            })
+            body: JSON.stringify({ url: response.result.paymentLink.url })
         };
 
     } catch (error) {
-        console.error("Checkout Error:", error);
-
-        const detail =
-            error?.errors?.[0]?.detail ||
-            error?.errors?.[0]?.code ||
-            error.message;
-
+        console.error("Checkout Error:", JSON.stringify(error, null, 2));
+        
+        // Pinpoint the specific Square API error
+        const detail = error.errors?.[0]?.detail || error.message;
+        
         return {
             statusCode: 500,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                error: 'Failed to create checkout',
-                details: detail
-            })
+            body: JSON.stringify({ error: 'Failed to create checkout', details: detail })
         };
     }
 };
