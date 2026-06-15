@@ -18,9 +18,15 @@ exports.handler = async (event) => {
         const related = response.result.relatedObjects || [];
         
         const imageMap = {};
+        const categoryMap = {};
+        
+        // Build reference dictionaries for Images and Categories
         related.forEach(rel => {
             if (rel.type === 'IMAGE' && rel.imageData && rel.imageData.url) {
                 imageMap[rel.id] = rel.imageData.url;
+            }
+            if (rel.type === 'CATEGORY' && rel.categoryData && rel.categoryData.name) {
+                categoryMap[rel.id] = rel.categoryData.name;
             }
         });
         
@@ -35,12 +41,21 @@ exports.handler = async (event) => {
                     id: v.id,
                     name: vData.name || 'Regular',
                     sku: vData.sku || '',
-                    price: Number(priceMoney.amount)
+                    price: Number(priceMoney.amount || 0)
                 };
             }).filter(v => v.price > 0);
             
-            // FIX: Pulling Reporting Category directly from itemData
-            const categoryName = itemData.reportingCategory?.name || 'Other Goods';
+            let categoryName = 'Other Goods';
+            
+            // THE FIX: Check both legacy and modern Square Category arrays
+            if (itemData.categoryId && categoryMap[itemData.categoryId]) {
+                categoryName = categoryMap[itemData.categoryId];
+            } else if (itemData.categories && itemData.categories.length > 0) {
+                const catId = itemData.categories[0].id;
+                if (categoryMap[catId]) {
+                    categoryName = categoryMap[catId];
+                }
+            }
 
             return {
                 id: obj.id,
@@ -58,6 +73,7 @@ exports.handler = async (event) => {
             body: JSON.stringify(products)
         };
     } catch (error) {
+        console.error("Square API Fetch Error:", error);
         return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
     }
 };
