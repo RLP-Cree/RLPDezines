@@ -24,24 +24,23 @@ exports.handler = async (event) => {
     }
 
     try {
-        // FIX 1: Look for 'cartItems' as well
         const items = body.items || body.cart || body.cartItems || [];
         
         if (items.length === 0) {
-            throw new Error("Cart is empty - payload keys did not match 'items', 'cart', or 'cartItems'");
+            throw new Error("Cart is empty");
         }
 
         const squareLineItems = items.map((item, i) => {
-            if (item.catalogObjectId) {
+            // FIX: Check for catalogObjectId OR item.id
+            const squareId = item.catalogObjectId || item.id;
+
+            if (squareId) {
                 return {
-                    catalogObjectId: String(item.catalogObjectId).trim(),
+                    catalogObjectId: String(squareId).trim(),
                     quantity: String(item.quantity || 1)
                 };
             }
 
-            // FIX 2: Handle cents vs dollars automatically
-            // If the price is > 1000 (like 8900), treat as cents. 
-            // If it's small (like 89), multiply by 100.
             const rawPrice = parseFloat(item.price) || 0;
             const cents = rawPrice > 1000 ? Math.round(rawPrice) : Math.round(rawPrice * 100);
 
