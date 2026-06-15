@@ -26,16 +26,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        :root {
-            --blue: #2563EB;
-            --blue-light: #3B82F6;
-        }
-
+        :root { --blue: #2563EB; --blue-light: #3B82F6; }
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background: #000; color: #fff; -webkit-font-smoothing: antialiased; }
+        body.no-scroll { overflow: hidden !important; touch-action: none; }
 
-        /* ── Hero Backgrounds ── */
+        /* Hero Background */
         #hero::before {
             content: ''; position: absolute; inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
@@ -43,93 +40,74 @@
         }
         #hero > * { position: relative; z-index: 1; }
 
-        /* ── Nav Underline ── */
+        /* Nav & Scrollbars */
         .nav-link { position: relative; text-decoration: none; }
-        .nav-link::after {
-            content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px;
-            background: var(--blue-light); transition: width 0.25s ease;
-        }
+        .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--blue-light); transition: width 0.25s ease; }
         .nav-link:hover::after { width: 100%; }
         .nav-link:hover { color: #fff; }
-
-        /* ── Scrollbars ── */
         .table-scroll::-webkit-scrollbar { height: 6px; }
         .table-scroll::-webkit-scrollbar-track { background: #111; border-radius: 3px; }
         .table-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
         .table-scroll::-webkit-scrollbar-thumb:hover { background: var(--blue); }
 
-        /* ── Scroll Reveal ── */
+        /* Scroll Reveal */
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.08s; }
         .reveal-delay-2 { transition-delay: 0.16s; }
+        .reveal-delay-3 { transition-delay: 0.24s; }
+        .reveal-delay-4 { transition-delay: 0.32s; }
 
-        /* ── Forms ── */
-        .form-input {
-            width: 100%; background: #000; border: 1px solid #374151; color: #fff;
-            padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-            font-size: 0.875rem;
-        }
-        .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
-
-        /* ── Toast ── */
-        #toast {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-            background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 0.875rem; font-weight: 600;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap;
-        }
+        /* Toast */
+        #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
         #toast.show { transform: translateX(-50%) translateY(0); }
 
-        /* ── Section label ── */
+        /* UI Elements */
         .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 11px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
         .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
+        .form-input { width: 100%; background: #000; border: 1px solid #374151; color: #fff; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s; font-size: 0.875rem; }
+        .form-input:focus { border-color: var(--blue); }
+        
+        #back-top { opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; transform: translateY(8px); }
+        #back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 
-        /* ── Cart Drawer ── */
-        #cart-drawer { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+        /* Cart Drawer */
+        #cart-drawer { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         #cart-drawer.open { transform: translateX(0); }
-        .cart-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out; }
+        .cart-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .cart-overlay.open { opacity: 1; pointer-events: auto; }
 
-        /* ── Skeleton Loaders ── */
-        .skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #242424 50%, #1a1a1a 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        /* Mobile Menu */
+        #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
+        #mobile-menu.open { opacity: 1; visibility: visible; }
 
-        /* ── Accordion Animations ── */
-        details[open] .accordion-content { animation: fadeInDown 0.35s ease-out forwards; }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── Product Card ── */
-        .product-card {
-            display: flex; flex-direction: column; background: #0d0d0d; border: 1px solid #1f1f1f;
-            border-radius: 14px; overflow: hidden; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-        }
-        .product-card:hover { border-color: #2563EB; transform: translateY(-3px); box-shadow: 0 0 28px rgba(37,99,235,0.12); }
-        .product-card .card-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #161616; display: block; }
-        .product-card .card-img-placeholder { width: 100%; aspect-ratio: 1 / 1; background: #161616; display: flex; align-items: center; justify-content: center; color: #333; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
-        .product-card .card-body { padding: 16px 16px 0; flex-grow: 1; }
-        .product-card .card-footer { padding: 14px 16px 16px; border-top: 1px solid #1f1f1f; margin-top: 14px; }
-
-        /* Variant selector & Steppers */
-        .variant-select { appearance: none; -webkit-appearance: none; background: #111 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid #2a2a2a; color: #e5e7eb; padding: 10px 36px 10px 12px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%; outline: none; transition: border-color 0.2s; }
-        .variant-select:focus { border-color: #2563EB; }
-        .qty-wrap { display: flex; align-items: center; background: #111; border: 1px solid #2a2a2a; border-radius: 7px; height: 40px; flex-shrink: 0; }
-        .qty-btn { width: 36px; height: 100%; background: transparent; color: #9ca3af; border: none; font-size: 18px; font-weight: 300; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        /* Product Cards */
+        .product-card { display: flex; flex-direction: column; background: #0d0d0d; border: 1px solid #1f1f1f; border-radius: 14px; overflow: hidden; transition: border-color 0.25s, transform 0.25s; }
+        .product-card:hover { border-color: #2563EB; transform: translateY(-3px); }
+        .card-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #161616; display: block; }
+        .card-img-placeholder { width: 100%; aspect-ratio: 1 / 1; background: #161616; display: flex; align-items: center; justify-content: center; color: #333; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
+        
+        .variant-select { appearance: none; -webkit-appearance: none; background: #111 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid #2a2a2a; color: #e5e7eb; padding: 10px 36px 10px 12px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%; outline: none; }
+        .qty-wrap { display: flex; align-items: center; background: #111; border: 1px solid #2a2a2a; border-radius: 7px; height: 40px; }
+        .qty-btn { width: 36px; height: 100%; background: transparent; color: #9ca3af; border: none; font-size: 18px; cursor: pointer; }
         .qty-btn:hover { color: #fff; background: #1a1a1a; }
-        .qty-num { width: 34px; text-align: center; font-size: 13px; font-weight: 700; color: #fff; background: transparent; border: none; outline: none; }
+        .qty-num { width: 34px; text-align: center; font-size: 13px; font-weight: 700; color: #fff; background: transparent; border: none; outline: none; -moz-appearance: textfield; }
         .qty-num::-webkit-outer-spin-button, .qty-num::-webkit-inner-spin-button { -webkit-appearance: none; }
-        .qty-num[type=number] { -moz-appearance: textfield; }
-
-        /* Buttons */
+        
         .atc-btn { flex-grow: 1; background: #2563EB; color: #fff; border: none; border-radius: 7px; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 0 14px; height: 40px; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
         .atc-btn:hover { background: #1d4ed8; }
-        .atc-btn:active { transform: scale(0.97); }
+
+        details[open] .accordion-content { animation: fadeInDown 0.35s ease-out forwards; }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #242424 50%, #1a1a1a 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body class="bg-black text-white antialiased flex flex-col min-h-screen relative">
 
+<!-- ════════════════════════════════════════
+     HEADER / NAV
+════════════════════════════════════════ -->
 <header class="fixed top-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-900 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 py-4">
         <a href="#top" class="text-2xl font-black italic tracking-widest text-white hover:text-blue-400 transition">RLP</a>
@@ -148,12 +126,13 @@
             </button>
         </nav>
 
+        <!-- Mobile header right side -->
         <div class="flex items-center gap-3 lg:hidden">
             <button id="mobile-cart-btn" class="relative text-white hover:text-blue-400 transition p-1" aria-label="Open cart">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 <span id="mobile-cart-badge" class="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center hidden"><span id="mobile-cart-count">0</span></span>
             </button>
-            <button id="menu-btn" class="text-white hover:text-blue-400 transition focus:outline-none p-1" aria-label="Toggle menu" aria-expanded="false">
+            <button id="menu-btn" class="text-white hover:text-blue-400 transition focus:outline-none p-1" aria-label="Toggle menu">
                 <svg id="menu-icon-open"  class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -161,14 +140,19 @@
     </div>
 </header>
 
-<div id="mobile-menu" class="fixed top-[69px] left-0 w-full bg-black/98 backdrop-blur-xl border-b border-gray-900 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl" style="max-height: calc(100vh - 69px); overflow-y: auto;">
-    <a href="#mission" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900 hover:text-blue-400">The Mission</a>
-    <a href="#shop-live" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900 hover:text-blue-400">Shop Now</a>
-    <a href="#bundles" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900 hover:text-blue-400">Ceremony Bundles</a>
-    <a href="#services" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900 hover:text-blue-400">Design Services</a>
-    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-3 bg-blue-600 hover:bg-blue-500 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px]">Start a Project</a>
+<!-- ── Mobile Menu (FIXED hidden class for iPad/Desktop) ── -->
+<div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-black/98 backdrop-blur-xl border-b border-gray-900 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overflow-y-auto" style="height: calc(100vh - 69px);">
+    <a href="#mission"   class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">The Mission</a>
+    <a href="#shop-live" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Shop Now</a>
+    <a href="#tunes"     class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">RLP Tunes</a>
+    <a href="#bundles"   class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Ceremony Bundles</a>
+    <a href="#wholesale" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Wholesale</a>
+    <a href="#services"  class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Design Services</a>
+    <a href="#info"      class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Policies</a>
+    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px]">Start a Project</a>
 </div>
 
+<!-- ── Cart Overlay & Drawer ── -->
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-[60]"></div>
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-950 border-l border-gray-800 z-[70] flex flex-col shadow-2xl">
     <div class="px-5 py-4 border-b border-gray-900 flex justify-between items-center bg-black flex-shrink-0">
@@ -180,23 +164,23 @@
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
     </div>
-
     <div id="cart-items-container" class="flex-grow overflow-y-auto px-5 py-4 space-y-3"></div>
-
     <div class="px-5 py-5 bg-black border-t border-gray-900 flex-shrink-0">
         <div class="flex justify-between text-sm text-gray-300 mb-1 font-semibold">
             <span>Subtotal</span>
             <span id="cart-total" class="text-white font-black text-base">$0.00</span>
         </div>
-        <p class="text-[11px] text-gray-600 mb-4">Shipping & taxes calculated at checkout</p>
+        <p class="text-[11px] text-gray-600 mb-4">Shipping & taxes calculated dynamically at checkout</p>
         <button id="checkout-btn" class="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex justify-center items-center gap-2 text-sm" disabled>
             Checkout
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </button>
     </div>
 </div>
 
-<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-32 min-h-screen overflow-hidden" id="hero">
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-32 min-h-screen overflow-hidden">
     <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px); background-size: 60px 60px;"></div>
     <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 65%);"></div>
 
@@ -204,9 +188,7 @@
         <p class="section-label mb-6 justify-center reveal">Welcome to the Lodgepole Home</p>
         <h1 class="text-5xl sm:text-7xl font-black mb-6 tracking-tight uppercase leading-none reveal reveal-delay-1">Come On In</h1>
         <p class="text-gray-400 max-w-lg mx-auto text-lg mb-4 font-light leading-relaxed reveal reveal-delay-2">It's good to have you here.<br>Make yourself comfortable.</p>
-        <p class="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed font-light mb-12 reveal reveal-delay-3">
-            Whether you're just looking to browse or need something specific for your walk, <strong class="text-white font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here.
-        </p>
+        <p class="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed font-light mb-12 reveal reveal-delay-3">Whether you're just looking to browse or need something specific for your walk, <strong class="text-white font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-delay-4">
             <a href="#mission" class="bg-white text-black px-8 py-3.5 rounded-full font-bold hover:bg-gray-100 transition shadow-lg text-sm uppercase tracking-widest">Our Story</a>
             <a href="#shop-live" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Now</a>
@@ -214,82 +196,63 @@
     </div>
 </section>
 
-<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
-    <div class="max-w-6xl mx-auto">
+<!-- ════════════════════════════════════════
+     MISSION
+════════════════════════════════════════ -->
+<section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-900 bg-gray-950">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12 reveal">
+            <p class="section-label mb-5 justify-center">The Ethos</p>
+            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">Our <span class="text-blue-500">Story</span></h2>
+        </div>
+        <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+            <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-wide mb-5">What is an <span class="text-blue-500">Indigipreneur?</span></h3>
+            <p class="text-gray-300 font-light leading-relaxed mb-4">An Indigipreneur is an Indigenous person who shares their resilience to create a meaningful life and clear a path for the next generation. It is a modern expression of the ingenuity that has always been in our DNA.</p>
+            <p class="text-gray-300 font-light leading-relaxed mb-7">By utilizing modern tools and technology, we operate from our own perspective. Whether in design, education, or service, we see the world through an Indigenous lens, grounding our work in the values we were raised with.</p>
+        </div>
+        <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+            <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-wide mb-5">Art Born From <span class="text-blue-500">Experience</span></h3>
+            <p class="text-gray-300 font-light leading-relaxed mb-4">I found my way through our traditional ways. Through prayer, the sweat lodge, the discipline of training, the power of laughter, and the energy of the dance arena, I found healing.</p>
+            <p class="text-gray-300 font-light leading-relaxed mb-7"><strong class="text-white font-semibold">RLP Dezines</strong> is an expression of that journey. My hope is to share the strength and healing I have found with you.</p>
+        </div>
+    </div>
+</section>
 
+<!-- ════════════════════════════════════════
+     LIVE STORE (ACCORDION CATEGORIES)
+════════════════════════════════════════ -->
+<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
+    <div class="max-w-6xl mx-auto">
         <div class="text-center mb-10 sm:mb-14 reveal">
             <p class="section-label mb-4 justify-center">Live Catalog</p>
             <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">The <span class="text-blue-500">Store</span></h2>
             <p class="text-gray-500 mt-3 text-sm">Powered by Square Checkout</p>
         </div>
-
         <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
-            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/2">
-                    <div class="h-5 w-5 bg-gray-800 rounded"></div>
-                    <div class="h-5 bg-gray-800 rounded w-1/2"></div>
-                </div>
-                <div class="h-4 bg-gray-800 rounded w-16"></div>
-            </div>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
-                <div class="skeleton h-80 rounded-xl"></div>
-                <div class="skeleton h-80 rounded-xl"></div>
-                <div class="skeleton h-80 rounded-xl hidden lg:block"></div>
-            </div>
-            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/3">
-                    <div class="h-5 w-5 bg-gray-800 rounded"></div>
-                    <div class="h-5 bg-gray-800 rounded w-full"></div>
-                </div>
-                <div class="h-4 bg-gray-800 rounded w-16"></div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900">
-    <div class="max-w-4xl mx-auto">
-        <div class="bg-black border border-gray-800 p-6 sm:p-14 rounded-2xl">
-            <div class="text-center mb-10 reveal">
-                <p class="section-label mb-5 justify-center">A Special Gift for Your Guests</p>
-                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5">Family Honoring Specials</h2>
-                <p class="text-gray-300 font-light leading-relaxed mb-4">When you're hosting, you want your relatives to feel truly taken care of. These bundles honor your guests with <strong class="text-blue-500 font-semibold">unmatched comfort and meaningful design.</strong></p>
-            </div>
-            
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10 reveal">
-                <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
-                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">5 Throws</div>
-                    <div class="text-3xl font-black text-blue-500 leading-none">$85</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl text-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
-                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">15 Throws</div>
-                    <div class="text-3xl font-black text-blue-500 leading-none">$76</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
-                </div>
-            </div>
-
-            <div class="text-center reveal">
-                <a href="mailto:rlp@rlpdezines.com?subject=Bundle%20Order%20Inquiry" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm">Order Your Bundle →</a>
-            </div>
+            <!-- Loading State -->
+            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 animate-pulse h-16"></div>
+            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 animate-pulse h-16"></div>
         </div>
     </div>
 </section>
 
-<section id="services" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900">
-    <div class="max-w-4xl mx-auto">
-        <div class="bg-black border border-gray-800 border-l-4 border-l-blue-500 p-6 sm:p-14 rounded-2xl reveal">
-            <h2 class="text-3xl font-black text-white uppercase mb-5 tracking-tight">Design <span class="text-blue-500">Services</span></h2>
-            <p class="text-gray-300 font-light leading-relaxed mb-6">RLP Dezines provides bulk production and custom branding. Reach out with your project details.</p>
-            <a href="mailto:rlp@rlpdezines.com" class="inline-block bg-white text-black px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm">Contact Us</a>
-        </div>
+<!-- ════════════════════════════════════════
+     DESIGN SERVICES
+════════════════════════════════════════ -->
+<section id="services" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
+    <div class="max-w-4xl mx-auto text-center reveal">
+        <p class="section-label mb-4 justify-center">B2B & Creative Services</p>
+        <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5 tracking-tight">Design <span class="text-blue-500">Services</span></h2>
+        <p class="text-gray-300 font-light leading-relaxed mb-8 max-w-2xl mx-auto">RLP Dezines provides bulk production and custom branding for organizations. Reach out with your project details.</p>
+        <a href="mailto:rlp@rlpdezines.com" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm transition">Start a Project</a>
     </div>
 </section>
 
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
 <footer class="border-t border-gray-900 bg-black py-16 px-5">
-    <div class="max-w-6xl mx-auto flex justify-between items-center text-xs text-gray-600">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600 gap-4">
         <div>© 2026 RLP Dezines. Indigenous-owned &amp; operated.</div>
         <div><a href="mailto:rlp@rlpdezines.com" class="hover:text-gray-400">rlp@rlpdezines.com</a></div>
     </div>
@@ -297,14 +260,38 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── Base UI Setup ──
-    const menuBtn = document.getElementById('menu-btn'), mobileMenu = document.getElementById('mobile-menu');
-    menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('open'); document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : ''; });
-    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    // ── Safe Body Scroll Lock ──
+    const body = document.body;
     
+    // ── Mobile menu ──
+    const menuBtn = document.getElementById('menu-btn'), mobileMenu = document.getElementById('mobile-menu');
+    const openIcon = document.getElementById('menu-icon-open'), closeIcon = document.getElementById('menu-icon-close');
+
+    function toggleMobileMenu(forceState) {
+        const isOpen = forceState !== undefined ? forceState : !mobileMenu.classList.contains('open');
+        mobileMenu.classList.toggle('open', isOpen);
+        openIcon.classList.toggle('hidden', isOpen);
+        closeIcon.classList.toggle('hidden', !isOpen);
+        
+        if (isOpen) body.classList.add('no-scroll');
+        else body.classList.remove('no-scroll');
+    }
+
+    menuBtn.addEventListener('click', () => toggleMobileMenu());
+    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => toggleMobileMenu(false)));
+
+    // Failsafe: Reset scrolling if resized to desktop while menu is open
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024 && mobileMenu.classList.contains('open')) toggleMobileMenu(false);
+    });
+
+    // ── Toast & Reveal ──
     const toast = document.getElementById('toast');
     function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3500); }
 
@@ -322,8 +309,15 @@ document.addEventListener('DOMContentLoaded', () => {
             this.overlay?.addEventListener('click', () => this.close());
             document.getElementById('checkout-btn')?.addEventListener('click', () => this.checkout());
         }
-        open() { this.drawer?.classList.add('open'); this.overlay?.classList.add('open'); document.body.style.overflow = 'hidden'; }
-        close() { this.drawer?.classList.remove('open'); this.overlay?.classList.remove('open'); document.body.style.overflow = ''; }
+        open() { 
+            this.drawer?.classList.add('open'); this.overlay?.classList.add('open'); 
+            body.classList.add('no-scroll');
+            if (mobileMenu.classList.contains('open')) toggleMobileMenu(false);
+        }
+        close() { 
+            this.drawer?.classList.remove('open'); this.overlay?.classList.remove('open'); 
+            body.classList.remove('no-scroll');
+        }
         addItem(p) {
             const ex = this.items.find(i => i.id === p.id);
             if (ex) ex.quantity += (p.quantity || 1); else this.items.push({ ...p, quantity: p.quantity || 1 });
@@ -371,8 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Load Catalog with Accordions ──
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
-        
-        // SVG Icons for Categories
         const icons = {
             'Blankets & Throws': `<svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
             'Apparel': `<svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
@@ -387,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const products = await res.json();
             grid.innerHTML = '';
 
-            if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm">No items found.</p>`; return; }
+            if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found.</p>`; return; }
 
             const catMap = {};
             products.forEach(p => {
@@ -402,8 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ['Blankets & Throws', 'Apparel', 'Drinkware', 'Accessories', 'Other Goods'].forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
-                
-                // Get lowest price for the category
                 const minPrice = Math.min(...items.flatMap(p => p.variations.map(v => v.price)));
                 const priceLabel = `<span class="text-[11px] text-gray-500 font-medium ml-3 lowercase tracking-normal">from $${(minPrice/100).toFixed(2)}</span>`;
 
@@ -442,11 +432,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="accordion-content grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pt-4 pb-2">${cards}</div>
                 </details>`;
             });
-        } catch { grid.innerHTML = `<p class="text-red-400 text-sm">Failed to sync catalog.</p>`; }
+        } catch { grid.innerHTML = `<p class="text-red-400 text-sm text-center">Failed to sync catalog.</p>`; }
     }
     loadProducts();
 });
 </script>
-
 </body>
 </html>
