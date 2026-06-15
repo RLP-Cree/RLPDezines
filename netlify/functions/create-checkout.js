@@ -14,39 +14,34 @@ exports.handler = async (event) => {
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
     };
 
-    if (event.httpMethod === 'OPTIONS') {
-        return { statusCode: 200, headers, body: '' };
-    }
-
-    if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, headers, body: 'Method Not Allowed' };
-    }
+    if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
+    if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: 'Method Not Allowed' };
 
     try {
         const body = JSON.parse(event.body);
         const items = body.items || body.cart || [];
 
-        if (items.length === 0) {
-            throw new Error("The cart is empty. Cannot generate a checkout link.");
-        }
+        if (items.length === 0) throw new Error("The cart is empty. Cannot generate a checkout link.");
 
         const squareLineItems = items.map(item => {
-            // If pulling from Square's item catalog:
-            if (item.catalogObjectId || item.id) {
+            // 1. If your frontend explicitly provides a Square Catalog ID, use it safely:
+            if (item.catalogObjectId) {
                 return {
-                    catalogObjectId: item.catalogObjectId || item.id,
-                    quantity: item.quantity.toString()
+                    catalogObjectId: item.catalogObjectId,
+                    quantity: String(item.quantity || 1)
                 };
             }
             
-            // If passing custom items from your frontend:
+            // 2. The Regex Price Cleaner (Strips out '$', ',', or any letters)
+            const rawPrice = String(item.price || "0").replace(/[^0-9.]/g, '');
+            const amountInCents = Math.round(parseFloat(rawPrice) * 100);
+
+            // 3. Force Custom Ad-Hoc Mapping (Bypasses the Catalog ID crash entirely)
             return {
-                name: item.name,
-                quantity: item.quantity.toString(),
+                name: item.name || "Custom Item",
+                quantity: String(item.quantity || 1),
                 basePriceMoney: {
-                    // ── THE BIGINT FIX ── 
-                    // Square strictly requires money to be wrapped in a BigInt format
-                    amount: BigInt(Math.round(parseFloat(item.price) * 100)), 
+                    amount: BigInt(amountInCents),
                     currency: 'USD'
                 }
             };
@@ -58,7 +53,7 @@ exports.handler = async (event) => {
                 locationId: process.env.SQUARE_LOCATION_ID,
                 lineItems: squareLineItems,
                 
-                // ── THE TAX FIX ──
+                // ── THE TAX FIX IS STILL HERE ──
                 pricingOptions: {
                     autoApplyTaxes: true
                 }
@@ -84,7 +79,6 @@ exports.handler = async (event) => {
     } catch (error) {
         console.error('Checkout Generation Error:', error);
         
-        // Added a custom stringifier so BigInt errors don't crash the Netlify logs
         const errorMessage = error.errors 
             ? JSON.stringify(error.errors, (key, value) => typeof value === 'bigint' ? value.toString() : value) 
             : error.message;
