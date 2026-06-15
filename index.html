@@ -5,72 +5,204 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RLP Dezines — Indigenous Art & Apparel by Ronnie Lodgepole</title>
 
+    <!-- SEO -->
     <meta name="description" content="RLP Dezines is an Indigenous-owned creative studio offering premium apparel, custom blankets, and original NAC music by Ronnie Lodgepole, Chippewa Cree.">
     <meta name="author" content="Ronnie Lodgepole">
     <meta name="keywords" content="Indigenous apparel, Native American design, powwow blankets, NAC music, Chippewa Cree, RLP Dezines, Indigipreneur">
+
+    <!-- Open Graph -->
     <meta property="og:title" content="RLP Dezines — Indigenous Art & Apparel">
     <meta property="og:description" content="Premium apparel, custom ceremony blankets, and original NAC music rooted in Chippewa Cree culture.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rlpdezines.com">
     <meta property="og:image" content="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1200">
-    
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RLP Dezines — Indigenous Art & Apparel">
+    <meta name="twitter:description" content="Premium apparel, custom ceremony blankets, and original NAC music rooted in Chippewa Cree culture.">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        :root { --blue: #2563EB; --blue-light: #3B82F6; --blue-dim: rgba(37,99,235,0.12); }
+        :root {
+            --blue: #2563EB;
+            --blue-light: #3B82F6;
+            --blue-dim: rgba(37,99,235,0.12);
+        }
+
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background: #000; color: #fff; -webkit-font-smoothing: antialiased; }
 
-        /* ── Hero & Nav styling ── */
-        #hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.03; pointer-events: none; z-index: 0; }
+        /* ── Hero grain overlay ── */
+        #hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
         #hero > * { position: relative; z-index: 1; }
-        .nav-link { position: relative; text-decoration: none; }
-        .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--blue-light); transition: width 0.25s ease; }
-        .nav-link:hover::after { width: 100%; }
-        .nav-link:hover { color: #fff; cursor: pointer; }
 
-        /* ── Cart Drawer ── */
+        /* ── Hero radial glow ── */
+        #hero::after {
+            content: '';
+            position: absolute;
+            top: 30%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Animated underline for nav links ── */
+        .nav-link {
+            position: relative;
+            text-decoration: none;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute; left: 0; bottom: -2px;
+            width: 0; height: 1px;
+            background: var(--blue-light);
+            transition: width 0.25s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover { color: #fff; }
+
+        /* ── Custom scrollbar ── */
+        .table-scroll::-webkit-scrollbar { height: 6px; }
+        .table-scroll::-webkit-scrollbar-track { background: #111; border-radius: 3px; }
+        .table-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        .table-scroll::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+
+        /* ── Scroll reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ── Price card & Endorse hover ── */
+        .price-card, .endorse-card {
+            transition: border-color 0.3s, transform 0.3s, background 0.3s;
+        }
+        .price-card:hover, .endorse-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-3px);
+            background: #0f172a;
+        }
+
+        /* ── Form inputs ── */
+        .form-input {
+            width: 100%; background: #000; border: 1px solid #374151; color: #fff;
+            padding: 12px 14px; border-radius: 6px; outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s; font-family: 'Inter', sans-serif; font-size: 0.875rem;
+        }
+        .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        .form-input::placeholder { color: #4B5563; }
+
+        /* ── Toast notification ── */
+        #toast {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+            background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 0.875rem;
+            font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ── Section divider pulse ── */
+        .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 11px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
+        .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
+
+        /* ── Back to top & Mobile Menu ── */
+        #back-top { opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; transform: translateY(8px); }
+        #back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
+        #mobile-menu.open { opacity: 1; visibility: visible; }
+
+        /* ── Cart Drawer Styling ── */
         #cart-drawer { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
         #cart-drawer.open { transform: translateX(0); }
         .cart-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out; }
         .cart-overlay.open { opacity: 1; pointer-events: auto; }
 
-        /* ── General UI ── */
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .form-input { width: 100%; background: #000; border: 1px solid #374151; color: #fff; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s; }
-        .form-input:focus { border-color: var(--blue); }
-        .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 11px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
-        .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
-        #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
-        #toast.show { transform: translateX(-50%) translateY(0); }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .price-card, .endorse-card { transition: none; } }
     </style>
 </head>
 <body class="bg-black text-white antialiased flex flex-col min-h-screen relative">
 
+<!-- ═══════════════════════════════════════════
+     HEADER / NAV
+════════════════════════════════════════════ -->
 <header class="fixed top-0 w-full bg-black/95 backdrop-blur-md border-b border-gray-900 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
         <a href="#top" class="text-2xl font-black italic tracking-widest text-white hover:text-blue-400 transition">RLP</a>
 
-        <nav class="hidden lg:flex items-center space-x-7 text-[13px] font-semibold text-gray-400">
+        <nav class="hidden lg:flex items-center space-x-6 text-[13px] font-semibold text-gray-400">
             <a href="#mission" class="nav-link hover:text-white transition">Mission</a>
             <a href="#apparel" class="nav-link hover:text-white transition">Apparel</a>
             <a href="#tunes" class="nav-link hover:text-white transition">Music</a>
             <a href="#bundles" class="nav-link hover:text-white transition">Bundles</a>
             <a href="#wholesale" class="nav-link hover:text-white transition">Wholesale</a>
-            <button id="nav-cart-btn" class="text-white bg-gray-900 hover:bg-gray-800 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition">
+            <a href="#services" class="nav-link hover:text-white transition">Design</a>
+            <a href="mailto:rlp@rlpdezines.com" class="bg-white hover:bg-gray-200 text-black px-4 py-2 rounded-full font-bold text-[12px] tracking-widest uppercase transition">Contact</a>
+            
+            <!-- Cart Button -->
+            <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition text-[12px] tracking-widest uppercase">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Cart (<span id="cart-count">0</span>)
             </button>
         </nav>
+
+        <div class="flex items-center gap-4 lg:hidden">
+            <!-- Mobile Cart Button -->
+            <button id="mobile-cart-btn" class="text-white hover:text-blue-400 flex items-center gap-1 transition font-bold text-sm">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                <span id="mobile-cart-count">0</span>
+            </button>
+
+            <!-- Menu Toggle -->
+            <button id="menu-btn" class="text-white hover:text-blue-400 transition focus:outline-none" aria-label="Toggle menu" aria-expanded="false">
+                <svg id="menu-icon-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
     </div>
 </header>
 
+<!-- Mobile menu dropdown -->
+<div id="mobile-menu" class="fixed top-[69px] left-0 w-full bg-black/98 backdrop-blur-xl border-b border-gray-900 z-40 flex flex-col px-8 py-8 space-y-1 shadow-2xl" style="max-height: calc(100vh - 69px); overflow-y: auto;">
+    <a href="#mission" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">The Mission</a>
+    <a href="#apparel" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">The Collection</a>
+    <a href="#tunes" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">RLP Tunes</a>
+    <a href="#bundles" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Specials Bundles</a>
+    <a href="#wholesale" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Wholesale Portal</a>
+    <a href="#services" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Design Services</a>
+    <a href="#endorsements" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">Endorsements</a>
+    <a href="#info" class="mobile-link text-white font-black tracking-widest uppercase text-base py-4 border-b border-gray-900 hover:text-blue-400 transition">FAQ & Policies</a>
+    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 hover:bg-blue-500 text-white text-center font-black tracking-widest uppercase py-4 rounded transition">Start a Project</a>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CART DRAWER
+════════════════════════════════════════════ -->
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"></div>
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-950 border-l border-gray-800 z-[70] flex flex-col shadow-2xl">
     <div class="px-6 py-5 border-b border-gray-900 flex justify-between items-center bg-black">
@@ -81,7 +213,8 @@
     </div>
     
     <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4">
-        </div>
+        <!-- Cart Items injected here by JS -->
+    </div>
 
     <div class="p-6 bg-black border-t border-gray-900">
         <div class="flex justify-between text-gray-300 mb-4 font-bold">
@@ -94,68 +227,471 @@
     </div>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-32 min-h-screen overflow-hidden" id="hero">
+    <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 60px 60px;"></div>
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 65%);"></div>
+
     <div class="relative z-10 max-w-3xl mx-auto">
         <p class="section-label mb-6 justify-center reveal">Welcome to the Lodgepole Home</p>
         <h1 class="text-5xl sm:text-7xl font-black mb-6 tracking-tight uppercase leading-none reveal reveal-delay-1">Come On In</h1>
+        <p class="text-gray-400 max-w-lg mx-auto text-lg mb-4 font-light leading-relaxed reveal reveal-delay-2">
+            It's good to have you here.<br>Make yourself comfortable.
+        </p>
         <p class="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed font-light mb-12 reveal reveal-delay-3">
-            Whether you're just looking to browse or need something specific for your walk, <strong class="text-white font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here.
+            Whether you're just looking to browse or need something specific for your walk, <strong class="text-white font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here. Sure hope you're doing good today.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-delay-4">
             <a href="#mission" class="bg-white text-black px-8 py-3.5 rounded-full font-bold hover:bg-gray-100 transition shadow-lg text-sm uppercase tracking-widest">Our Story</a>
-            <a href="#apparel" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Now</a>
+            <a href="#shop-live" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Now</a>
+        </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600 text-[11px] tracking-widest uppercase font-bold">
+        <div class="w-[1px] h-10 bg-gradient-to-b from-transparent to-gray-700"></div>
+        <span>Scroll</span>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MISSION / STORY
+════════════════════════════════════════════ -->
+<section id="mission" class="py-28 px-6 border-t border-gray-900 bg-gray-950">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <p class="section-label mb-5 justify-center">The Ethos</p>
+            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">Our <span class="text-blue-500">Story</span></h2>
+        </div>
+
+        <div class="max-w-sm mx-auto mb-16 reveal">
+            <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden shadow-2xl">
+                <img class="w-full h-auto block" src="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1000" alt="Ronnie Lodgepole — Founder of RLP Dezines" loading="lazy">
+            </div>
+            <div class="text-center text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-4 flex flex-col items-center gap-3">
+                <span>Photo by <span class="text-gray-300 font-black">Aaron Tsosie</span> | Indigenous Event Recordings</span>
+            </div>
+        </div>
+
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+            <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-wide mb-6">What is an <span class="text-blue-500">Indigipreneur?</span></h3>
+            <p class="text-gray-300 font-light leading-relaxed mb-4">An Indigipreneur is an Indigenous person who shares their resilience to create a meaningful life and clear a path for the next generation. It is a modern expression of the ingenuity that has always been in our DNA.</p>
+            <p class="text-gray-300 font-light leading-relaxed mb-8">By utilizing modern tools and technology, we operate from our own perspective. Whether in design, education, or service, we see the world through an Indigenous lens, grounding our work in the values we were raised with.</p>
+            <div class="text-white text-lg font-bold leading-relaxed border-t border-gray-800 pt-8">
+                It is the merging of the entrepreneurial spirit with the Indigenous spirit.
+            </div>
+        </div>
+
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+            <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-wide mb-6">Art Born From <span class="text-blue-500">Experience</span></h3>
+            <p class="text-gray-300 font-light leading-relaxed mb-4">I did not start this just to create designs. I started this to contribute to the well-being of our community. I have walked through my own share of challenges and seen the struggles our people face.</p>
+            <p class="text-gray-300 font-light leading-relaxed mb-4">I found my way through our traditional ways. Through prayer, the sweat lodge, the discipline of training, the power of laughter, and the energy of the dance arena, I found healing. I learned how to channel that energy into something positive for my family and my community.</p>
+            <p class="text-gray-300 font-light leading-relaxed mb-8"><strong class="text-white font-semibold">RLP Dezines</strong> is an expression of that journey. My hope is to share the strength and healing I have found with you.</p>
+            <div class="text-white text-lg font-bold leading-relaxed border-t border-gray-800 pt-8">
+                These designs are meant to be a companion for your day—whether on apparel, blankets, or everyday items that keep you connected to your roots.
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-16 reveal">
+            <div class="bg-gray-900 border border-gray-800 border-l-4 border-l-blue-500 p-8 rounded-lg">
+                <h4 class="text-white font-black tracking-widest text-sm uppercase mb-4">The Mission</h4>
+                <p class="text-gray-300 font-light text-sm leading-relaxed">To offer a space of encouragement for the Indigenous spirit. Through the synergy of our traditional values and modern design, I aim to provide items that serve as a reminder of our collective strength.</p>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 border-l-4 border-l-blue-500 p-8 rounded-lg">
+                <h4 class="text-white font-black tracking-widest text-sm uppercase mb-4">The Vision</h4>
+                <p class="text-gray-300 font-light text-sm leading-relaxed">To see RLP Dezines worn as a reflection of <strong class="text-white font-semibold">health, happiness, and cultural pride</strong> across Indian Country.</p>
+            </div>
+        </div>
+
+        <div class="text-center max-w-2xl mx-auto border-t border-gray-800 pt-16 reveal">
+            <p class="text-xl italic text-white leading-relaxed mb-4">"In a timeline full of noise, we are focusing on what <span class="text-blue-500 font-bold not-italic">truly matters</span>."</p>
+            <div class="text-gray-500 text-[11px] font-black tracking-[0.2em] uppercase">— Ronnie Lodgepole, Founder</div>
         </div>
     </div>
 </section>
 
-<section id="apparel" class="py-28 px-6 border-t border-gray-900 bg-black">
+<!-- ═══════════════════════════════════════════
+     COLLECTION + MUSIC (side-by-side)
+════════════════════════════════════════════ -->
+<section class="border-t border-gray-900 grid md:grid-cols-2" id="apparel">
+    <div class="py-28 px-10 flex flex-col items-center justify-center text-center bg-black hover:bg-[#0a0a0a] transition duration-500 group border-b md:border-b-0 border-gray-900">
+        <p class="section-label mb-5 justify-center reveal">Premium Apparel</p>
+        <h2 class="text-4xl font-black mb-5 uppercase group-hover:scale-[1.03] transition duration-500 reveal">The Collection</h2>
+        <p class="text-gray-400 max-w-sm mx-auto mb-10 text-base font-light leading-relaxed reveal">Browse our latest premium apparel, blankets, and everyday carry items — each one rooted in authentic Indigenous design.</p>
+        <a href="#shop-live" class="reveal inline-block border-2 border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-black transition text-sm uppercase tracking-widest w-full sm:w-auto">Shop RLP Dezines →</a>
+    </div>
+
+    <div id="tunes" class="py-28 px-10 flex flex-col items-center justify-center text-center bg-gray-950 md:border-l border-gray-900 hover:bg-[#0f0f17] transition duration-500 group">
+        <p class="section-label mb-5 justify-center reveal">Original NAC Music</p>
+        <h2 class="text-4xl font-black mb-5 text-blue-500 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
+        <p class="text-gray-400 max-w-sm mx-auto mb-10 text-base font-light leading-relaxed reveal">The soundtrack to the hustle. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
+        <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-sm uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     LIVE SQUARE STORE FRONT
+════════════════════════════════════════════ -->
+<section id="shop-live" class="py-28 px-6 border-t border-gray-900 bg-gray-950">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16 reveal">
-            <p class="section-label mb-5 justify-center">Premium Goods</p>
-            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">The <span class="text-blue-500">Collection</span></h2>
-            <p class="text-gray-400 mt-4 max-w-xl mx-auto">Directly integrated with our new headless fulfillment. Add to cart to begin the custom checkout process.</p>
+            <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">Direct <span class="text-blue-500">Store</span></h2>
+            <p class="text-gray-400 mt-4 text-sm uppercase tracking-widest">Powered by Square Checkout</p>
         </div>
 
+        <!-- Dynamic Product Grid populated by Netlify Function -->
         <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
-            <p id="loading-products" class="text-gray-500 col-span-full text-center py-10 animate-pulse">Loading collection from catalog...</p>
+            <div id="loading-products" class="col-span-full flex flex-col items-center justify-center py-16 text-gray-500 animate-pulse">
+                <svg class="w-8 h-8 mb-4 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <p>Syncing live catalog from Square...</p>
+            </div>
         </div>
     </div>
 </section>
 
-<section id="bundles" class="py-28 px-6 border-t border-gray-900">
+<!-- ═══════════════════════════════════════════
+     BUNDLES / HONORING SPECIALS
+════════════════════════════════════════════ -->
+<section id="bundles" class="py-28 px-6 border-t border-gray-900 bg-black">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
+        <div class="bg-gray-900 border border-gray-800 p-8 sm:p-14 rounded-2xl">
+
             <div class="text-center mb-10 reveal">
-                <p class="section-label mb-5 justify-center">A Special Gift</p>
+                <p class="section-label mb-5 justify-center">A Special Gift for Your Guests</p>
                 <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-6">Family Honoring Specials</h2>
-                <p class="text-gray-300 font-light leading-relaxed mb-5">Mix & match. 60″ × 80″ Sublimated Sherpa Throws.</p>
+                <p class="text-gray-300 font-light leading-relaxed mb-5">
+                    When you're hosting, you want your relatives to feel truly taken care of. These bundles are designed to honor your guests with <strong class="text-blue-500 font-semibold">unmatched comfort and meaningful design.</strong> Let me handle the details so you can focus on the ceremony. <strong class="text-blue-500 font-semibold">Free shipping is included.</strong>
+                </p>
+                <p class="text-gray-300 font-light leading-relaxed">
+                    Every blanket is a <strong class="text-white font-semibold">60″ × 80″</strong> Sublimated Sherpa Throw — fully customizable and built to last. Soft sublimated surface on one side, plush sherpa warmth on the reverse.
+                </p>
             </div>
 
+            <!-- Feature list -->
+            <ul class="space-y-3 text-gray-300 font-light mb-12 max-w-2xl mx-auto reveal">
+                <li class="flex gap-3"><span class="text-blue-500 font-black mt-0.5">—</span><span><strong class="text-white font-semibold">Mix & Match:</strong> Choose any designs across our catalog to create a bundle that speaks to your family's story.</span></li>
+                <li class="flex gap-3"><span class="text-blue-500 font-black mt-0.5">—</span><span><strong class="text-white font-semibold">Materials:</strong> Smooth sublimated surface on one side, plush sherpa warmth on the reverse.</span></li>
+                <li class="flex gap-3"><span class="text-blue-500 font-black mt-0.5">—</span><span><strong class="text-white font-semibold">Care:</strong> Machine washable and fade-resistant — these blankets stay beautiful for years to come.</span></li>
+            </ul>
+
+            <!-- Pricing tiers -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 reveal">
-                <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center">
+                <div class="price-card bg-black border border-gray-800 p-6 rounded-xl text-center">
                     <div class="text-xs font-black text-white uppercase tracking-widest mb-3">5 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 each</div>
                     <div class="text-3xl font-black text-blue-500 leading-none">$85</div>
-                    <button onclick="window.Cart.addItem({id: 'bundle-5', name: '5x Sherpa Bundle', price: 42500})" class="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-[10px] text-white py-2 rounded uppercase font-bold tracking-widest">Add Bundle</button>
+                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
+                    <div class="text-[11px] text-gray-400 mt-2 font-semibold">Bundle: $425</div>
                 </div>
-                <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl text-center">
+                <div class="price-card bg-black border border-gray-800 p-6 rounded-xl text-center">
                     <div class="text-xs font-black text-white uppercase tracking-widest mb-3">10 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 each</div>
                     <div class="text-3xl font-black text-blue-500 leading-none">$79</div>
-                    <button onclick="window.Cart.addItem({id: 'bundle-10', name: '10x Sherpa Bundle', price: 79000})" class="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-[10px] text-white py-2 rounded uppercase font-bold tracking-widest">Add Bundle</button>
+                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
+                    <div class="text-[11px] text-gray-400 mt-2 font-semibold">Bundle: $790</div>
+                </div>
+                <div class="price-card bg-black border border-gray-800 p-6 rounded-xl text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
+                    <div class="text-xs font-black text-white uppercase tracking-widest mb-3">15 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 each</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$76</div>
+                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
+                    <div class="text-[11px] text-gray-400 mt-2 font-semibold">Bundle: $1,140</div>
+                </div>
+                <div class="price-card bg-black border border-gray-800 p-6 rounded-xl text-center">
+                    <div class="text-xs font-black text-white uppercase tracking-widest mb-3">20 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 each</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$73</div>
+                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
+                    <div class="text-[11px] text-gray-400 mt-2 font-semibold">Bundle: $1,460</div>
+                </div>
+            </div>
+
+            <div class="text-center mb-8 reveal">
+                <a href="mailto:rlp@rlpdezines.com?subject=Bundle%20Order%20Inquiry" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase transition shadow-lg text-sm">Order Your Bundle →</a>
+                <p class="text-gray-500 text-xs mt-3">Email us with your event date, quantity, and design preferences.</p>
+            </div>
+
+            <div class="bg-black border-l-4 border-blue-500 p-6 text-sm text-gray-300 font-light leading-relaxed rounded-lg reveal">
+                <strong class="text-white font-semibold">A NOTE ON TIMING:</strong> Every bundle is handcrafted to order. To ensure I can get these to you with the care they deserve, please place your orders at least <strong class="text-white font-semibold">14 days before your event.</strong> I don't like to rush good work.
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     WHOLESALE PORTAL
+════════════════════════════════════════════ -->
+<section id="wholesale" class="py-28 px-6 border-t border-gray-900 bg-gray-950">
+    <div class="max-w-4xl mx-auto space-y-10">
+
+        <!-- Wholesale pricing -->
+        <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
+            <div class="text-center mb-12 reveal">
+                <p class="section-label mb-5 justify-center">Retail Partners</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-6">Wholesale Portal</h2>
+                <p class="text-gray-300 font-light leading-relaxed max-w-2xl mx-auto">
+                    I am honored to partner with boutiques and galleries to share this work with a wider audience. Below you'll find the volume-based pricing tiers for our retail partnerships.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-10 reveal">
+                <div>
+                    <h4 class="text-blue-500 font-bold uppercase tracking-widest text-xs mb-3">Order Requirements</h4>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">Opening Order MOQ: <strong class="text-white">15 total items</strong><br>Reorder MOQ: <strong class="text-white">10 total items</strong></p>
+                </div>
+                <div>
+                    <h4 class="text-blue-500 font-bold uppercase tracking-widest text-xs mb-3">Volume Tiers</h4>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">
+                        Tier 1: 15–29 items → <strong class="text-white">10% Off</strong><br>
+                        Tier 2: 30–49 items → <strong class="text-white">15% Off</strong><br>
+                        Tier 3: 50+ items → <strong class="text-white">25% Off</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-full overflow-x-auto table-scroll mb-10 rounded-lg border border-gray-800 reveal">
+                <table class="w-full min-w-[500px] text-center border-collapse bg-gray-900">
+                    <thead>
+                        <tr class="bg-blue-700 text-white uppercase text-[11px] tracking-wider font-bold">
+                            <th class="p-3 text-left pl-5">Product</th>
+                            <th class="p-3">MSRP</th>
+                            <th class="p-3">Tier 1</th>
+                            <th class="p-3">Tier 2</th>
+                            <th class="p-3">Tier 3</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-gray-300 divide-y divide-gray-800">
+                        <tr><td class="p-3 text-left pl-5 font-semibold text-white">T-Shirt</td><td class="p-3">$35.00</td><td class="p-3">$31.50</td><td class="p-3">$29.75</td><td class="p-3">$26.25</td></tr>
+                        <tr><td class="p-3 text-left pl-5 font-semibold text-white">Sherpa Blanket</td><td class="p-3">$80.00</td><td class="p-3">$72.00</td><td class="p-3">$68.00</td><td class="p-3">$60.00</td></tr>
+                        <tr><td class="p-3 text-left pl-5 font-semibold text-white">Tumbler</td><td class="p-3">$48.00</td><td class="p-3">$43.20</td><td class="p-3">$40.80</td><td class="p-3">$36.00</td></tr>
+                        <tr><td class="p-3 text-left pl-5 font-semibold text-white">Tote Bag</td><td class="p-3">$65.00</td><td class="p-3">$58.50</td><td class="p-3">$55.25</td><td class="p-3">$48.75</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 class="text-blue-500 font-bold uppercase tracking-widest text-xs mb-5 reveal">How to Order</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 reveal">
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg">
+                    <div class="text-2xl font-black text-blue-500 mb-3">1</div>
+                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Browse:</strong> Select items from the public storefront.</p>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg">
+                    <div class="text-2xl font-black text-blue-500 mb-3">2</div>
+                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Compile:</strong> Email your list to <strong class="text-white">RLP@RLPDEZINES.COM</strong>.</p>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg">
+                    <div class="text-2xl font-black text-blue-500 mb-3">3</div>
+                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Invoice:</strong> I'll apply tier discounts and send a digital invoice.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Partnerships -->
+        <div class="bg-black border border-gray-800 p-8 sm:p-14 rounded-2xl">
+            <div class="text-center mb-12 reveal">
+                <p class="section-label mb-5 justify-center">Organizations &amp; Events</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-6">Custom <span class="text-blue-500">Partnerships</span></h2>
+                <p class="text-gray-300 font-light leading-relaxed max-w-3xl mx-auto">
+                    RLP Dezines is a creative studio dedicated to outfitting tribal organizations, committees, and events with premium, culture-focused gear.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-10 reveal">
+                <div class="bg-gray-900 border border-gray-800 border-t-4 border-t-blue-500 p-8 rounded-lg hover:-translate-y-1 hover:bg-[#1a1a2e] transition duration-300">
+                    <div class="text-blue-500 text-4xl font-black leading-none mb-5 opacity-25">01</div>
+                    <h4 class="text-white font-black tracking-widest text-sm uppercase mb-3">Collaborative Design</h4>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">We work together to create high-end designs that honor your organization's vision.</p>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 border-t-4 border-t-blue-500 p-8 rounded-lg hover:-translate-y-1 hover:bg-[#1a1a2e] transition duration-300">
+                    <div class="text-blue-500 text-4xl font-black leading-none mb-5 opacity-25">02</div>
+                    <h4 class="text-white font-black tracking-widest text-sm uppercase mb-3">Premium Production</h4>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">Whether you need throws for dignitaries, mugs for staff, or shirts for volunteers.</p>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 border-t-4 border-t-blue-500 p-8 rounded-lg hover:-translate-y-1 hover:bg-[#1a1a2e] transition duration-300">
+                    <div class="text-blue-500 text-4xl font-black leading-none mb-5 opacity-25">03</div>
+                    <h4 class="text-white font-black tracking-widest text-sm uppercase mb-3">Direct Delivery</h4>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">I handle the logistics — coordinating packaging and shipping securely.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     DESIGN SERVICES + INTAKE FORM
+════════════════════════════════════════════ -->
+<section id="services" class="py-28 px-6 border-t border-gray-900">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-black border border-gray-800 border-l-4 border-l-blue-500 p-8 sm:p-14 rounded-2xl">
+
+            <div class="mb-8 reveal">
+                <p class="section-label mb-5">B2B & Creative Services</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-6 tracking-tight">Design <span class="text-blue-500">Services</span></h2>
+                <p class="text-gray-300 font-light leading-relaxed max-w-2xl">
+                    RLP Dezines is your full-stack design partner. We provide bulk production on all catalog items and custom design services. Fill out the intake form below with your project scope and budget.
+                </p>
+            </div>
+
+            <!-- ── INTAKE FORM (Netlify-compatible) ── -->
+            <div id="intake-form-wrap" class="max-w-2xl bg-gray-900 p-8 rounded-xl border border-gray-800 reveal">
+                <form name="design-intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
+                    <input type="text" name="name">
+                    <input type="email" name="email">
+                    <select name="budget"></select>
+                    <textarea name="message"></textarea>
+                </form>
+
+                <div id="form-fields">
+                    <div class="grid sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-name">Name / Org</label>
+                            <input class="form-input" type="text" id="intake-name" name="name" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-email">Email</label>
+                            <input class="form-input" type="email" id="intake-email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-budget">Estimated Budget</label>
+                        <select class="form-input" id="intake-budget" name="budget">
+                            <option value="Not Sure Yet">Not Sure Yet</option>
+                            <option value="Under $500">Under $500</option>
+                            <option value="$500 - $1,000">$500 – $1,000</option>
+                            <option value="$1,000+">$1,000+</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
+                        <textarea class="form-input h-32 resize-y" id="intake-message" name="message" required></textarea>
+                    </div>
+                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-lg transition duration-300">
+                        <span id="btn-label">Submit Request</span>
+                    </button>
+                    <p id="form-error" class="text-red-400 text-xs mt-3 hidden text-center">Please fill in all fields.</p>
+                </div>
+
+                <div id="form-success" class="hidden text-center py-8">
+                    <div class="text-blue-500 text-5xl mb-4">✓</div>
+                    <h3 class="text-white font-black text-xl uppercase tracking-wide mb-2">Request Received</h3>
+                    <p class="text-gray-400 font-light text-sm">Thank you for reaching out. I'll be in touch within 2 business days.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ENDORSEMENTS
+════════════════════════════════════════════ -->
+<section id="endorsements" class="py-28 px-6 border-t border-gray-900 bg-gray-950">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <p class="section-label mb-5 justify-center">Verified Partners</p>
+            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">Client <span class="text-blue-500">Endorsements</span></h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="endorse-card bg-gray-900 border border-gray-800 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal">
+                <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
+                <p class="text-gray-300 font-light leading-relaxed mb-8 flex-grow relative z-10">
+                    "RLP Dezines provided us with incredible support. From our official organization logo to the banners and custom gear we use for our events, the quality is exceptional."
+                </p>
+                <div class="border-t border-gray-800 pt-5 mt-auto">
+                    <div class="text-white text-sm font-black uppercase mb-1">Executive Committee</div>
+                    <div class="text-blue-500 text-[11px] font-bold tracking-widest uppercase">Native American Church of North America</div>
+                </div>
+            </div>
+
+            <div class="endorse-card bg-gray-900 border border-gray-800 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal reveal-delay-2">
+                <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
+                <p class="text-gray-300 font-light leading-relaxed mb-8 flex-grow relative z-10">
+                    "Working with RLP Dezines has been a great experience. We needed high-quality gear for our health board and community events, and the final products were exactly what we were looking for."
+                </p>
+                <div class="border-t border-gray-800 pt-5 mt-auto">
+                    <div class="text-white text-sm font-black uppercase mb-1">Leadership Team</div>
+                    <div class="text-blue-500 text-[11px] font-bold tracking-widest uppercase">Rocky Boy Health Board</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<footer class="border-t border-gray-900 bg-black py-16 px-6 text-center text-sm text-gray-500">
-    © 2026 RLP Dezines. All rights reserved. Indigenous-owned & operated.
+<!-- ═══════════════════════════════════════════
+     FAQ & POLICIES
+════════════════════════════════════════════ -->
+<section id="info" class="py-28 px-6 border-t border-gray-900 flex-grow bg-black">
+    <div class="max-w-4xl mx-auto space-y-10">
+        <div class="bg-gray-900 border-t-4 border-t-blue-600 border border-gray-800 p-8 sm:p-14 rounded-2xl reveal">
+            <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-12 text-center tracking-tight">Store Policies &amp; Disclaimers</h2>
+            <div class="space-y-10 divide-y divide-gray-800">
+                <div class="pt-0">
+                    <h3 class="text-blue-500 font-black tracking-widest text-xs uppercase mb-4">All Sales Are Final</h3>
+                    <p class="text-gray-300 font-light leading-relaxed text-sm">Every item is crafted specifically for you at the time of purchase. Because of this custom model, I do not accept returns, exchanges, or offer cash refunds for buyer's remorse.</p>
+                </div>
+                <div class="pt-8">
+                    <h3 class="text-blue-500 font-black tracking-widest text-xs uppercase mb-4">Damaged Items</h3>
+                    <p class="text-gray-300 font-light leading-relaxed text-sm">In the rare event that your item arrives misprinted or defective, contact me at rlp@rlpdezines.com within 7 days. I will make it right with a free replacement.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="border-t border-gray-900 bg-black py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+            <div class="lg:col-span-2">
+                <div class="text-3xl font-black italic tracking-widest text-white mb-3">RLP</div>
+                <p class="text-gray-500 font-light text-sm leading-relaxed max-w-xs">Indigenous-owned creative studio. Premium apparel, ceremony blankets, and original NAC music rooted in Chippewa Cree culture.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-black text-xs uppercase tracking-widest mb-4">Navigate</h4>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#mission" class="hover:text-blue-400 transition">Our Story</a></li>
+                    <li><a href="#apparel" class="hover:text-blue-400 transition">The Collection</a></li>
+                    <li><a href="#tunes" class="hover:text-blue-400 transition">RLP Tunes</a></li>
+                    <li><a href="#bundles" class="hover:text-blue-400 transition">Honoring Bundles</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-black text-xs uppercase tracking-widest mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="mailto:rlp@rlpdezines.com" class="hover:text-blue-400 transition">rlp@rlpdezines.com</a></li>
+                    <li class="pt-2 text-gray-600 text-xs">Gilbert, Arizona<br>Chippewa Cree — Rocky Boy's Reservation</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-900 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-600">
+            <div>© 2026 RLP Dezines. All rights reserved. Indigenous-owned &amp; operated.</div>
+            <div><a href="#info" class="hover:text-gray-400 transition">Store Policies</a></div>
+        </div>
+    </div>
 </footer>
 
-<div id="toast" role="alert" aria-live="polite">Added to cart!</div>
+<!-- Back to top -->
+<a href="#top" id="back-top" class="fixed bottom-6 right-6 bg-gray-800 hover:bg-blue-600 text-white p-3.5 rounded-full shadow-lg transition z-50" aria-label="Back to top">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+</a>
 
+<!-- Toast -->
+<div id="toast" role="alert" aria-live="polite">Notification</div>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════ -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // ── UI Reveals & Toasts ──
+
+    // ── Toast helper ──
     const toast = document.getElementById('toast');
     function showToast(msg) {
         toast.textContent = msg;
@@ -163,11 +699,65 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
+    // ── Mobile menu toggle ──
+    const menuBtn  = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const openIcon = document.getElementById('menu-icon-open');
+    const closeIcon = document.getElementById('menu-icon-close');
+
+    function toggleMenu(force) {
+        const isOpen = mobileMenu.classList.toggle('open', force);
+        menuBtn.setAttribute('aria-expanded', isOpen);
+        openIcon.classList.toggle('hidden', isOpen);
+        closeIcon.classList.toggle('hidden', !isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+    menuBtn.addEventListener('click', () => toggleMenu());
+    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => toggleMenu(false)));
+
+    // ── Scroll reveal ──
     const revealEls = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-    });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     revealEls.forEach(el => io.observe(el));
+
+    // ── Back to top visibility ──
+    const backTop = document.getElementById('back-top');
+    window.addEventListener('scroll', () => {
+        backTop.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+
+    // ── Intake form submission ──
+    const submitBtn   = document.getElementById('form-submit-btn');
+    const btnLabel    = document.getElementById('btn-label');
+    const formFields  = document.getElementById('form-fields');
+    const formSuccess = document.getElementById('form-success');
+    const formError   = document.getElementById('form-error');
+
+    if (submitBtn) {
+        submitBtn.addEventListener('click', async () => {
+            const name    = document.getElementById('intake-name').value.trim();
+            const email   = document.getElementById('intake-email').value.trim();
+            const budget  = document.getElementById('intake-budget').value;
+            const message = document.getElementById('intake-message').value.trim();
+
+            if (!name || !email || !message) {
+                formError.classList.remove('hidden'); return;
+            }
+            formError.classList.add('hidden');
+            btnLabel.textContent = 'Sending…'; submitBtn.disabled = true;
+
+            const body = new URLSearchParams({ 'form-name': 'design-intake', name, email, budget, message });
+            try {
+                await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+                formFields.classList.add('hidden'); formSuccess.classList.remove('hidden'); showToast('Request received!');
+            } catch (err) {
+                const mailto = `mailto:rlp@rlpdezines.com?subject=Design%20Project%20Inquiry&body=Name%3A%20${encodeURIComponent(name)}%0AEmail%3A%20${encodeURIComponent(email)}%0ABudget%3A%20${encodeURIComponent(budget)}%0A%0AProject%20Details%3A%0A${encodeURIComponent(message)}`;
+                window.location.href = mailto; formFields.classList.add('hidden'); formSuccess.classList.remove('hidden');
+            }
+        });
+    }
 
     // ── Cart State Manager ──
     class ShoppingCart {
@@ -181,145 +771,141 @@ document.addEventListener('DOMContentLoaded', () => {
             this.drawer = document.getElementById('cart-drawer');
             this.overlay = document.getElementById('cart-overlay');
             this.countBadge = document.getElementById('cart-count');
+            this.mobileCountBadge = document.getElementById('mobile-cart-count');
             this.totalEl = document.getElementById('cart-total');
             this.container = document.getElementById('cart-items-container');
 
-            document.getElementById('nav-cart-btn').addEventListener('click', () => this.toggleCart(true));
-            document.getElementById('close-cart-btn').addEventListener('click', () => this.toggleCart(false));
-            this.overlay.addEventListener('click', () => this.toggleCart(false));
-            document.getElementById('checkout-btn').addEventListener('click', () => this.checkout());
+            document.getElementById('nav-cart-btn')?.addEventListener('click', () => this.toggleCart(true));
+            document.getElementById('mobile-cart-btn')?.addEventListener('click', () => this.toggleCart(true));
+            document.getElementById('close-cart-btn')?.addEventListener('click', () => this.toggleCart(false));
+            this.overlay?.addEventListener('click', () => this.toggleCart(false));
+            document.getElementById('checkout-btn')?.addEventListener('click', () => this.checkout());
         }
 
         toggleCart(show) {
-            this.drawer.classList.toggle('open', show);
-            this.overlay.classList.toggle('open', show);
+            if(this.drawer && this.overlay) {
+                this.drawer.classList.toggle('open', show);
+                this.overlay.classList.toggle('open', show);
+                if(show && mobileMenu.classList.contains('open')) toggleMenu(false); // Close mobile menu if cart opens
+            }
         }
 
         addItem(product) {
             const existing = this.items.find(i => i.id === product.id);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                this.items.push({ ...product, quantity: 1 });
-            }
-            this.save();
-            this.updateUI();
-            this.toggleCart(true);
-            showToast('Item added to cart');
+            if (existing) existing.quantity += 1;
+            else this.items.push({ ...product, quantity: 1 });
+            this.save(); this.updateUI(); this.toggleCart(true); showToast('Added to cart');
         }
 
         removeItem(id) {
             this.items = this.items.filter(i => i.id !== id);
-            this.save();
-            this.updateUI();
+            this.save(); this.updateUI();
         }
 
-        save() {
-            localStorage.setItem('rlp_cart', JSON.stringify(this.items));
-        }
+        save() { localStorage.setItem('rlp_cart', JSON.stringify(this.items)); }
 
         updateUI() {
-            // Count
             const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
-            this.countBadge.textContent = totalItems;
+            if(this.countBadge) this.countBadge.textContent = totalItems;
+            if(this.mobileCountBadge) this.mobileCountBadge.textContent = totalItems;
 
-            // Render Items
             if (this.items.length === 0) {
-                this.container.innerHTML = '<p class="text-gray-500 text-center mt-10 text-sm">Your cart is empty.</p>';
-                this.totalEl.textContent = '$0.00';
-                document.getElementById('checkout-btn').disabled = true;
+                if(this.container) this.container.innerHTML = '<p class="text-gray-500 text-center mt-10 text-sm">Your cart is empty.</p>';
+                if(this.totalEl) this.totalEl.textContent = '$0.00';
+                if(document.getElementById('checkout-btn')) document.getElementById('checkout-btn').disabled = true;
                 return;
             }
 
-            document.getElementById('checkout-btn').disabled = false;
-            this.container.innerHTML = this.items.map(item => `
-                <div class="flex justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-800">
-                    <div>
-                        <h4 class="text-sm font-bold text-white uppercase tracking-widest">${item.name}</h4>
-                        <p class="text-xs text-gray-400 mt-1">Qty: ${item.quantity} x $${(item.price / 100).toFixed(2)}</p>
+            if(document.getElementById('checkout-btn')) document.getElementById('checkout-btn').disabled = false;
+            if(this.container) {
+                this.container.innerHTML = this.items.map(item => `
+                    <div class="flex justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-800">
+                        <div>
+                            <h4 class="text-sm font-bold text-white uppercase tracking-widest">${item.name}</h4>
+                            <p class="text-xs text-gray-400 mt-1">Qty: ${item.quantity} x $${(item.price / 100).toFixed(2)}</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm font-black text-blue-500">$${((item.price * item.quantity) / 100).toFixed(2)}</span>
+                            <button onclick="window.Cart.removeItem('${item.id}')" class="text-red-400 hover:text-red-300 text-xs">Remove</button>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <span class="text-sm font-black text-blue-500">$${((item.price * item.quantity) / 100).toFixed(2)}</span>
-                        <button onclick="window.Cart.removeItem('${item.id}')" class="text-red-400 hover:text-red-300 text-xs">Remove</button>
-                    </div>
-                </div>
-            `).join('');
-
-            // Total
+                `).join('');
+            }
             const totalCents = this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            this.totalEl.textContent = '$' + (totalCents / 100).toFixed(2);
+            if(this.totalEl) this.totalEl.textContent = '$' + (totalCents / 100).toFixed(2);
         }
 
         async checkout() {
             const btn = document.getElementById('checkout-btn');
-            btn.innerHTML = 'Securely Routing...';
-            btn.disabled = true;
-
+            btn.innerHTML = 'Securely Routing...'; btn.disabled = true;
             try {
                 const response = await fetch('/.netlify/functions/create-checkout', {
-                    method: 'POST',
-                    body: JSON.stringify({ cartItems: this.items })
+                    method: 'POST', body: JSON.stringify({ cartItems: this.items })
                 });
-                
                 const data = await response.json();
-                if (data.url) {
-                    window.location.href = data.url; // Redirect to Square
-                } else {
-                    throw new Error('No checkout URL returned');
-                }
+                if (data.url) window.location.href = data.url;
+                else throw new Error('No checkout URL returned');
             } catch (err) {
-                console.error(err);
-                showToast('Checkout error. Please try again.');
-                btn.innerHTML = 'Proceed to Checkout';
-                btn.disabled = false;
+                console.error(err); showToast('Checkout error. Please try again.');
+                btn.innerHTML = 'Proceed to Checkout'; btn.disabled = false;
             }
         }
     }
 
-    // Bind to window so inline onclicks work
     window.Cart = new ShoppingCart();
 
-    // ── Fetch Dynamic Products ──
+    // ── Fetch LIVE Square Products ──
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
         const loader = document.getElementById('loading-products');
         
         try {
-            // Un-comment the line below when your get-products function is deployed
-            // const res = await fetch('/.netlify/functions/get-products');
-            // const products = await res.json();
+            // Live fetch to your Netlify function pulling from Square API
+            const res = await fetch('/.netlify/functions/get-products');
+            if (!res.ok) throw new Error('Network response was not ok');
+            const products = await res.json();
             
-            // Mock data for immediate front-end testing until Netlify function is live
-            const products = [
-                { id: 'item_1', name: 'Heritage Sublimated Hoodie', price: 6500, desc: 'Premium fleece with traditional geometric patterns.' },
-                { id: 'item_2', name: 'Ceremony Sherpa Blanket', price: 8000, desc: '60x80 plush sublimated throw.' },
-                { id: 'item_3', name: 'Indigipreneur Tumbler', price: 4800, desc: 'Insulated steel for the road.' }
-            ];
-
             if(loader) loader.style.display = 'none';
 
-            grid.innerHTML = products.map(p => `
+            if (!products || products.length === 0) {
+                grid.innerHTML = '<p class="text-gray-500 col-span-full text-center py-10">No active products found in Square catalog.</p>';
+                return;
+            }
+
+            grid.innerHTML = products.map(p => {
+                // Safeguard against missing strings to prevent JSON stringify breaks
+                const safeName = p.name ? p.name.replace(/'/g, "&#39;") : 'Item';
+                const safeDesc = p.description ? p.description : '';
+                
+                return `
                 <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl group hover:border-blue-500 transition duration-300 flex flex-col">
-                    <div class="h-48 bg-gray-800 rounded-lg mb-6 flex items-center justify-center text-gray-700">
-                        [Product Image Here]
+                    <div class="h-48 bg-gray-800 rounded-lg mb-6 flex items-center justify-center text-gray-600 font-bold tracking-widest uppercase text-xs border border-gray-700 overflow-hidden">
+                        ${p.imageUrl && p.imageUrl.startsWith('http') ? `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">` : 'RLP Dezines Product'}
                     </div>
-                    <h3 class="text-lg font-black uppercase tracking-widest text-white">${p.name}</h3>
-                    <p class="text-sm text-gray-400 mt-2 mb-6 flex-grow">${p.desc}</p>
+                    <h3 class="text-lg font-black uppercase tracking-widest text-white">${safeName}</h3>
+                    <p class="text-sm text-gray-400 mt-2 mb-6 flex-grow line-clamp-3">${safeDesc}</p>
                     <div class="flex items-center justify-between border-t border-gray-800 pt-4">
                         <span class="text-xl font-black text-blue-500">$${(p.price/100).toFixed(2)}</span>
-                        <button onclick='window.Cart.addItem(${JSON.stringify(p)})' class="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest rounded hover:bg-gray-200 transition">Add to Cart</button>
+                        <button onclick='window.Cart.addItem(${JSON.stringify(p).replace(/'/g, "&#39;")})' class="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest rounded hover:bg-gray-200 transition">Add to Cart</button>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
             
         } catch (e) {
-            console.error('Failed to load products', e);
-            loader.textContent = 'Failed to load collection. Please try again later.';
+            console.error('Failed to load products from Square', e);
+            if(loader) {
+                loader.innerHTML = `
+                    <svg class="w-8 h-8 mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <p class="text-gray-400">Unable to sync catalog at this time. Please check back shortly.</p>
+                `;
+            }
         }
     }
 
     loadProducts();
 });
 </script>
+
 </body>
 </html>
