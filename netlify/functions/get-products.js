@@ -1,4 +1,3 @@
-// netlify/functions/get-products.js
 const { Client, Environment } = require('square');
 
 const client = new Client({
@@ -12,17 +11,23 @@ exports.handler = async (event, context) => {
     try {
         const response = await client.catalogApi.listCatalog(null, 'ITEM');
         
-        // Map Square items to a clean JSON array for your frontend
-        const products = response.result.objects.map(obj => {
-            const itemData = obj.itemData;
-            const variation = itemData.variations[0].itemVariationData;
+        // 1. Safe fallback: If the catalog is completely empty, return an empty array instead of crashing
+        const objects = response.result.objects || [];
+        
+        // 2. Safe mapping: Check that pricing and variations actually exist before reading them
+        const products = objects.map(obj => {
+            const itemData = obj.itemData || {};
+            const variations = itemData.variations || [];
+            const variationData = variations.length > 0 ? variations[0].itemVariationData : {};
+            const priceMoney = variationData.priceMoney || { amount: 0 };
+            
             return {
                 id: obj.id,
-                name: itemData.name,
-                description: itemData.description,
-                price: Number(variation.priceMoney.amount), // Price in cents
+                name: itemData.name || 'Unnamed Item',
+                description: itemData.description || '',
+                price: Number(priceMoney.amount),
                 imageUrl: itemData.imageIds ? itemData.imageIds[0] : null,
-                sku: variation.sku // Important: Map this to your Printful Sync Variant ID
+                sku: variationData.sku || null
             };
         });
 
@@ -32,7 +37,13 @@ exports.handler = async (event, context) => {
             body: JSON.stringify(products)
         };
     } catch (error) {
-        console.error("Square Catalog Error:", error);
-        return { statusCode: 500, body: JSON.stringify({ error: 'Failed to fetch products' }) };
+        // This will print the exact reason to your Netlify Function Logs if it fails again
+        console.error("Square API Error:", error.message);
+        if(error.errors) console.error("Square Error Details:", JSON.stringify(error.errors));
+        
+        return { 
+            statusCode: 500, 
+            body: JSON.stringify({ error: 'Failed to fetch products', details: error.message }) 
+        };
     }
 };
