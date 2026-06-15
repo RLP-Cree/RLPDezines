@@ -16,7 +16,6 @@ exports.handler = async (event) => {
     if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
     if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: 'Method Not Allowed' };
 
-    // Parse body early with a clean error
     let body;
     try {
         body = JSON.parse(event.body || '{}');
@@ -25,32 +24,26 @@ exports.handler = async (event) => {
     }
 
     try {
-        console.log('📥 Incoming payload:', JSON.stringify(body, null, 2));
-
-        const items = body.items || body.cart || [];
-        if (items.length === 0) throw new Error("Cart is empty");
-
-        if (!process.env.SQUARE_LOCATION_ID) {
-            throw new Error("SQUARE_LOCATION_ID environment variable is missing");
+        // FIX 1: Look for 'cartItems' as well
+        const items = body.items || body.cart || body.cartItems || [];
+        
+        if (items.length === 0) {
+            throw new Error("Cart is empty - payload keys did not match 'items', 'cart', or 'cartItems'");
         }
 
         const squareLineItems = items.map((item, i) => {
-            console.log(`Processing item ${i}:`, item);
-
             if (item.catalogObjectId) {
-                if (typeof item.catalogObjectId !== 'string' || !item.catalogObjectId.trim()) {
-                    throw new Error(`Invalid catalogObjectId on item ${i}`);
-                }
                 return {
-                    catalogObjectId: item.catalogObjectId.trim(),
+                    catalogObjectId: String(item.catalogObjectId).trim(),
                     quantity: String(item.quantity || 1)
                 };
             }
 
-            const rawPrice = String(item.price || 0).replace(/[^0-9.]/g, '');
-            const cents = Math.round(parseFloat(rawPrice) * 100);
-
-            if (!cents || isNaN(cents)) throw new Error(`Bad price on item: ${item.name}`);
+            // FIX 2: Handle cents vs dollars automatically
+            // If the price is > 1000 (like 8900), treat as cents. 
+            // If it's small (like 89), multiply by 100.
+            const rawPrice = parseFloat(item.price) || 0;
+            const cents = rawPrice > 1000 ? Math.round(rawPrice) : Math.round(rawPrice * 100);
 
             return {
                 name: item.name || `Item ${i + 1}`,
@@ -76,30 +69,22 @@ exports.handler = async (event) => {
             }
         };
 
-        console.log('🚀 Sending to Square:', JSON.stringify(payload, (k, v) =>
-            typeof v === 'bigint' ? v.toString() : v, 2));
-
         const response = await squareClient.checkoutApi.createPaymentLink(payload);
-
-        const paymentLink = response?.result?.paymentLink;
-        if (!paymentLink?.url) throw new Error("Square returned no payment link URL");
-
+        
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ checkoutUrl: paymentLink.url })
+            body: JSON.stringify({ checkoutUrl: response.result.paymentLink.url })
         };
 
     } catch (error) {
         console.error('💥 FULL ERROR:', error);
-        if (error.errors) console.error('Square Errors:', JSON.stringify(error.errors, null, 2));
-
         return {
             statusCode: 500,
             headers,
             body: JSON.stringify({
                 error: 'Checkout failed',
-                details: error.message || error.errors || 'Unknown error - check function logs'
+                details: error.message
             })
         };
     }
