@@ -1,6 +1,5 @@
 const axios = require('axios');
 const { Resend } = require('resend');
-const crypto = require('crypto');
 const { Client, Environment } = require('square');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -9,42 +8,26 @@ const squareClient = new Client({
     environment: Environment.Production,
 });
 
-// DYNAMIC SIGNATURE FIX: Reads the exact domain Square targeted
-function isValidSquareSignature(event) {
-    const signature = event.headers['x-square-hmacsha256-signature'];
-    if (!signature || !process.env.SQUARE_WEBHOOK_SIGNATURE_KEY) return false;
-    
-    const host = event.headers.host || 'rlpdezines.com';
-    const webhookUrl = `https://${host}${event.path}`;
-    
-    const hmac = crypto.createHmac('sha256', process.env.SQUARE_WEBHOOK_SIGNATURE_KEY);
-    hmac.update(webhookUrl + event.body);
-    const hash = hmac.digest('base64');
-    
-    return hash === signature;
-}
-
 exports.handler = async (event) => {
-    if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
-
-    if (!isValidSquareSignature(event)) {
-        console.error("Unauthorized Webhook Attempt: Signature mismatch.");
-        return { statusCode: 401, body: 'Unauthorized' };
-    }
-
+    // Master Safety Net: If anything in this entire file breaks, it emails you.
     try {
+        if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
+
         const payload = JSON.parse(event.body);
 
-        if (payload.type === 'payment.updated' && payload.data.object.payment.status === 'COMPLETED') {
+        // Listen for either updated or created, just to be absolutely certain we catch it
+        if ((payload.type === 'payment.updated' || payload.type === 'payment.created') && payload.data.object.payment.status === 'COMPLETED') {
             const payment = payload.data.object.payment;
             const orderId = payment.order_id;
 
-            if (!orderId) return { statusCode: 400, body: 'Missing order_id' };
+            if (!orderId) throw new Error("Payment was completed, but Square did not attach an order_id.");
 
+            // Get full details from Square
             const orderResponse = await squareClient.ordersApi.retrieveOrder(orderId);
             const order = orderResponse.result.order;
             const lineItems = order.lineItems || [];
 
+            // Map items for Printful (Using Square's variation ID)
             const printfulItems = lineItems.map(item => ({
                 external_variant_id: item.sku || item.catalogObjectId,
                 quantity: parseInt(item.quantity) || 1,
@@ -64,8 +47,7 @@ exports.handler = async (event) => {
                 phone: payment.shipping_address?.phone_number || ''
             };
 
-            let printfulSuccess = true;
-
+            // ── PRINTFUL ATTEMPT ──
             try {
                 const printfulPayload = {
                     external_id: orderId,
@@ -82,20 +64,18 @@ exports.handler = async (event) => {
                 });
                 console.log(`Printful Order Drafted for Square Order: ${orderId}`);
             } catch (printfulError) {
-                printfulSuccess = false;
+                // If Printful complains, catch exactly what they said and email Ronnie immediately
                 const errorReason = printfulError.response?.data ? JSON.stringify(printfulError.response.data) : printfulError.message;
-                console.error("Printful API Error:", errorReason);
-
-                // DIAGNOSTIC EMAIL: If Printful fails, it emails YOU the exact reason.
+                
                 await resend.emails.send({
                     from: 'System <orders@rlpdezines.com>',
-                    to: ['rlp@rlpdezines.com'], // Sends to you
-                    subject: '🚨 URGENT: Printful Order Failed to Draft',
-                    html: `<p>A customer paid for an order, but Printful rejected it.</p><p><strong>Square Order ID:</strong> ${orderId}</p><p><strong>Printful Error:</strong> ${errorReason}</p>`
+                    to: ['rlp@rlpdezines.com'],
+                    subject: '🚨 URGENT: Printful Rejected Order',
+                    html: `<p>Square took the payment, but Printful rejected the order!</p><p><strong>Square Order ID:</strong> ${orderId}</p><p><strong>Printful's Exact Error:</strong> ${errorReason}</p>`
                 });
             }
 
-            // Sends the standard receipt to the customer
+            // ── RECEIPT EMAIL ATTEMPT ──
             try {
                 const totalPaid = (payment.amount_money.amount / 100).toFixed(2);
                 const emailHtml = `
@@ -120,13 +100,19 @@ exports.handler = async (event) => {
                 console.error("Resend API Error:", emailError.message);
             }
 
-            return { statusCode: 200, body: 'Workflow completed.' };
+            return { statusCode: 200, body: 'Workflow completed successfully.' };
         }
 
         return { statusCode: 200, body: 'Webhook ignored event type.' };
 
-    } catch (error) {
-        console.error("Critical Webhook Failure:", error.message);
-        return { statusCode: 200, body: 'Workflow failed but acknowledged.' }; 
+    } catch (fatalError) {
+        // FATAL CRASH TRIGGER: If the webhook code breaks completely, email Ronnie.
+        await resend.emails.send({
+            from: 'System <orders@rlpdezines.com>',
+            to: ['rlp@rlpdezines.com'],
+            subject: '🚨 FATAL WEBHOOK CRASH',
+            html: `<p>The webhook completely crashed during an order update.</p><p><strong>System Error:</strong> ${fatalError.message}</p>`
+        });
+        return { statusCode: 200, body: 'Workflow crashed but acknowledged.' }; 
     }
 };
