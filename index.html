@@ -15,10 +15,6 @@
     <meta property="og:url" content="https://rlpdezines.com">
     <meta property="og:image" content="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1200">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="RLP Dezines — Indigenous Art & Apparel">
-    <meta name="twitter:description" content="Premium apparel, custom ceremony blankets, and original NAC music rooted in Chippewa Cree culture.">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -62,6 +58,7 @@
 
         .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 11px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
         .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
+        
         .form-input { width: 100%; background: #000; border: 1px solid #374151; color: #fff; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s; font-size: 0.875rem; }
         .form-input:focus { border-color: var(--blue); }
         
@@ -76,14 +73,14 @@
         #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
         #mobile-menu.open { opacity: 1; visibility: visible; }
 
-        /* ── Clean Product Cards ── */
+        /* ── Product Cards (Clean Grid) ── */
         .product-card { display: flex; flex-direction: column; background: #0d0d0d; border: 1px solid #1f1f1f; border-radius: 12px; overflow: hidden; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; cursor: pointer; }
         .product-card:hover { border-color: #2563EB; transform: translateY(-3px); box-shadow: 0 0 28px rgba(37,99,235,0.12); }
         .product-card:hover .card-img { transform: scale(1.05); }
         .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: #161616; position: relative; }
         .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #333; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
-        .card-body { padding: 16px; flex-grow: 1; display: flex; flex-col; justify-content: space-between; }
+        .card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .view-btn-text { font-size: 10px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 12px; transition: color 0.2s; }
         .product-card:hover .view-btn-text { color: #fff; }
 
@@ -103,6 +100,12 @@
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #242424 50%, #1a1a1a 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* General UI Cards */
+        .price-card, .endorse-card { transition: border-color 0.3s, transform 0.3s, background 0.3s; }
+        .price-card:hover, .endorse-card:hover { border-color: var(--blue); transform: translateY(-3px); background: #0f172a; }
+
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .product-card, .price-card, .endorse-card { transition: none; } }
     </style>
 </head>
 <body class="bg-black text-white antialiased flex flex-col min-h-screen relative">
@@ -114,21 +117,22 @@
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 py-4">
         <a href="#top" class="text-2xl font-black italic tracking-widest text-white hover:text-blue-400 transition">RLP</a>
 
-        <nav class="hidden lg:flex items-center space-x-7 text-[13px] font-semibold text-gray-400">
+        <nav class="hidden lg:flex items-center space-x-6 text-[12px] font-semibold text-gray-400">
             <a href="#mission"   class="nav-link hover:text-white transition">Mission</a>
-            <a href="#apparel"   class="nav-link hover:text-white transition">Apparel</a>
+            <a href="#shop-live" class="nav-link hover:text-white transition">Apparel</a>
             <a href="#tunes"     class="nav-link hover:text-white transition">Music</a>
             <a href="#bundles"   class="nav-link hover:text-white transition">Bundles</a>
             <a href="#wholesale" class="nav-link hover:text-white transition">Wholesale</a>
             <a href="#services"  class="nav-link hover:text-white transition">Design</a>
-            <a href="mailto:rlp@rlpdezines.com" class="bg-white hover:bg-gray-200 text-black px-4 py-2 rounded-full font-bold text-[12px] tracking-widest uppercase transition">Contact</a>
-            <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition text-[12px] tracking-widest uppercase">
+            <a href="#info"      class="nav-link hover:text-white transition">FAQ</a>
+            <a href="mailto:rlp@rlpdezines.com" class="bg-white hover:bg-gray-200 text-black px-4 py-2 rounded-full font-bold tracking-widest uppercase transition">Contact</a>
+            
+            <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Cart (<span id="cart-count">0</span>)
             </button>
         </nav>
 
-        <!-- Mobile header right side -->
         <div class="flex items-center gap-3 lg:hidden">
             <button id="mobile-cart-btn" class="relative text-white hover:text-blue-400 transition p-1" aria-label="Open cart">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
@@ -150,7 +154,8 @@
     <a href="#bundles"   class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Ceremony Bundles</a>
     <a href="#wholesale" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Wholesale</a>
     <a href="#services"  class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Design Services</a>
-    <a href="#info"      class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Policies</a>
+    <a href="#endorsements" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Endorsements</a>
+    <a href="#info"      class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Policies & FAQ</a>
     <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px]">Start a Project</a>
 </div>
 
@@ -186,7 +191,7 @@
 ════════════════════════════════════════ -->
 <div id="product-modal-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[80] hidden opacity-0 transition-opacity duration-300"></div>
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] sm:w-[85%] max-w-4xl bg-gray-950 border border-gray-800 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
-    <!-- Modal content is injected via JavaScript -->
+    <!-- Modal content injected by JS -->
 </div>
 
 <!-- ════════════════════════════════════════
@@ -217,21 +222,68 @@
             <p class="section-label mb-5 justify-center">The Ethos</p>
             <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">Our <span class="text-blue-500">Story</span></h2>
         </div>
+
+        <div class="max-w-sm mx-auto mb-16 reveal">
+            <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden shadow-2xl">
+                <img class="w-full h-auto block" src="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1000" alt="Ronnie Lodgepole" loading="lazy">
+            </div>
+            <div class="text-center text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-4">
+                Photo by <span class="text-gray-300 font-black">Aaron Tsosie</span> | Indigenous Event Recordings
+            </div>
+        </div>
+
         <div class="text-center max-w-2xl mx-auto mb-14 reveal">
             <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-wide mb-5">What is an <span class="text-blue-500">Indigipreneur?</span></h3>
             <p class="text-gray-300 font-light leading-relaxed mb-4">An Indigipreneur is an Indigenous person who shares their resilience to create a meaningful life and clear a path for the next generation. It is a modern expression of the ingenuity that has always been in our DNA.</p>
             <p class="text-gray-300 font-light leading-relaxed mb-7">By utilizing modern tools and technology, we operate from our own perspective. Whether in design, education, or service, we see the world through an Indigenous lens, grounding our work in the values we were raised with.</p>
         </div>
+
         <div class="text-center max-w-2xl mx-auto mb-14 reveal">
             <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-wide mb-5">Art Born From <span class="text-blue-500">Experience</span></h3>
-            <p class="text-gray-300 font-light leading-relaxed mb-4">I found my way through our traditional ways. Through prayer, the sweat lodge, the discipline of training, the power of laughter, and the energy of the dance arena, I found healing.</p>
+            <p class="text-gray-300 font-light leading-relaxed mb-4">I did not start this just to create designs. I started this to contribute to the well-being of our community. I have walked through my own share of challenges and seen the struggles our people face.</p>
+            <p class="text-gray-300 font-light leading-relaxed mb-4">I found my way through our traditional ways. Through prayer, the sweat lodge, the discipline of training, the power of laughter, and the energy of the dance arena, I found healing. I learned how to channel that energy into something positive for my family and my community.</p>
             <p class="text-gray-300 font-light leading-relaxed mb-7"><strong class="text-white font-semibold">RLP Dezines</strong> is an expression of that journey. My hope is to share the strength and healing I have found with you.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-16 reveal">
+            <div class="bg-gray-900 border border-gray-800 border-l-4 border-l-blue-500 p-8 rounded-lg">
+                <h4 class="text-white font-black tracking-widest text-sm uppercase mb-4">The Mission</h4>
+                <p class="text-gray-300 font-light text-sm leading-relaxed">To offer a space of encouragement for the Indigenous spirit. Through the synergy of our traditional values and modern design, I aim to provide items that serve as a reminder of our collective strength.</p>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 border-l-4 border-l-blue-500 p-8 rounded-lg">
+                <h4 class="text-white font-black tracking-widest text-sm uppercase mb-4">The Vision</h4>
+                <p class="text-gray-300 font-light text-sm leading-relaxed">To see RLP Dezines worn as a reflection of <strong class="text-white font-semibold">health, happiness, and cultural pride</strong> across Indian Country. My vision is for our creative work to serve as a bridge, ensuring that our connection to our heritage remains vibrant.</p>
+            </div>
+        </div>
+
+        <div class="text-center max-w-2xl mx-auto border-t border-gray-800 pt-16 reveal">
+            <p class="text-xl italic text-white leading-relaxed mb-4">"In a timeline full of noise, we are focusing on what <span class="text-blue-500 font-bold not-italic">truly matters</span>."</p>
+            <div class="text-gray-500 text-[11px] font-black tracking-[0.2em] uppercase">— Ronnie Lodgepole, Founder</div>
         </div>
     </div>
 </section>
 
 <!-- ════════════════════════════════════════
-     LIVE STORE (ACCORDION + MODALS)
+     APPAREL / TUNES SPLIT
+════════════════════════════════════════ -->
+<section class="border-t border-gray-900 grid md:grid-cols-2" id="apparel">
+    <div class="py-20 px-8 flex flex-col items-center justify-center text-center bg-black hover:bg-[#0a0a0a] transition duration-500 group border-b md:border-b-0 border-gray-900">
+        <p class="section-label mb-5 justify-center reveal">Premium Apparel</p>
+        <h2 class="text-4xl font-black mb-4 uppercase group-hover:scale-[1.03] transition duration-500 reveal">The Collection</h2>
+        <p class="text-gray-400 max-w-sm mx-auto mb-8 text-base font-light leading-relaxed reveal">Browse our latest premium apparel, blankets, and everyday carry items — each one rooted in authentic Indigenous design.</p>
+        <a href="#shop-live" class="reveal inline-block border-2 border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-black transition text-sm uppercase tracking-widest w-full sm:w-auto">Shop the Store →</a>
+    </div>
+
+    <div id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-gray-950 md:border-l border-gray-900 hover:bg-[#0f0f17] transition duration-500 group">
+        <p class="section-label mb-5 justify-center reveal">Original NAC Music</p>
+        <h2 class="text-4xl font-black mb-4 text-blue-500 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
+        <p class="text-gray-400 max-w-sm mx-auto mb-8 text-base font-light leading-relaxed reveal">The soundtrack to the hustle. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
+        <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-sm uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     LIVE STORE (ACCORDION CATEGORIES)
 ════════════════════════════════════════ -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
     <div class="max-w-6xl mx-auto">
@@ -242,9 +294,131 @@
         </div>
         
         <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
-            <!-- Loading State -->
-            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 animate-pulse h-16"></div>
-            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 animate-pulse h-16"></div>
+            <!-- Loading Skeletons -->
+            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
+                <div class="flex items-center gap-3 w-1/2"><div class="h-5 w-5 bg-gray-800 rounded"></div><div class="h-5 bg-gray-800 rounded w-1/2"></div></div>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
+                <div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl"></div><div class="skeleton h-64 rounded-xl hidden lg:block"></div>
+            </div>
+            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
+                <div class="flex items-center gap-3 w-1/3"><div class="h-5 w-5 bg-gray-800 rounded"></div><div class="h-5 bg-gray-800 rounded w-full"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     BUNDLES
+════════════════════════════════════════ -->
+<section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-black border border-gray-800 p-6 sm:p-14 rounded-2xl">
+            <div class="text-center mb-10 reveal">
+                <p class="section-label mb-5 justify-center">A Special Gift for Your Guests</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5">Family Honoring Specials</h2>
+                <p class="text-gray-300 font-light leading-relaxed mb-4">When you're hosting, you want your relatives to feel truly taken care of. These bundles honor your guests with <strong class="text-blue-500 font-semibold">unmatched comfort and meaningful design.</strong></p>
+                <p class="text-gray-300 font-light leading-relaxed mb-8">Every blanket is a <strong class="text-white font-semibold">60″ × 80″</strong> Sublimated Sherpa Throw — fully customizable. Soft sublimated surface on one side, plush sherpa warmth on the reverse.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10 reveal">
+                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
+                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">5 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$85</div>
+                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                </div>
+                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
+                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">10 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$79</div>
+                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                </div>
+                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
+                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">15 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$76</div>
+                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                </div>
+                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
+                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">20 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$73</div>
+                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                </div>
+            </div>
+
+            <div class="text-center reveal">
+                <a href="mailto:rlp@rlpdezines.com?subject=Bundle%20Order%20Inquiry" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm transition">Order Your Bundle →</a>
+                <p class="text-gray-500 text-xs mt-4">Email us with your event date, quantity, and design preferences.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     WHOLESALE PORTAL
+════════════════════════════════════════ -->
+<section id="wholesale" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
+    <div class="max-w-4xl mx-auto space-y-8">
+        <div class="bg-gray-950 border border-gray-800 p-6 sm:p-14 rounded-2xl">
+            <div class="text-center mb-10 reveal">
+                <p class="section-label mb-5 justify-center">Retail Partners</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5">Wholesale Portal</h2>
+                <p class="text-gray-300 font-light leading-relaxed max-w-2xl mx-auto">I am honored to partner with boutiques and galleries to share this work with a wider audience.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-10 reveal">
+                <div>
+                    <h4 class="text-blue-500 font-bold uppercase tracking-widest text-xs mb-3">Order Requirements</h4>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">Opening Order MOQ: <strong class="text-white">15 total items</strong><br>Reorder MOQ: <strong class="text-white">10 total items</strong></p>
+                </div>
+                <div>
+                    <h4 class="text-blue-500 font-bold uppercase tracking-widest text-xs mb-3">Volume Tiers</h4>
+                    <p class="text-gray-300 font-light text-sm leading-relaxed">
+                        Tier 1: 15–29 items → <strong class="text-white">10% Off</strong><br>
+                        Tier 2: 30–49 items → <strong class="text-white">15% Off</strong><br>
+                        Tier 3: 50+ items → <strong class="text-white">25% Off</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-full overflow-x-auto table-scroll mb-10 rounded-xl border border-gray-800 reveal">
+                <table class="w-full min-w-[480px] text-center border-collapse bg-gray-900 text-sm">
+                    <thead>
+                        <tr class="bg-blue-700 text-white uppercase text-[11px] tracking-wider font-bold">
+                            <th class="p-3 text-left pl-5">Product</th>
+                            <th class="p-3">MSRP</th>
+                            <th class="p-3">Tier 1</th>
+                            <th class="p-3">Tier 2</th>
+                            <th class="p-3">Tier 3</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300 divide-y divide-gray-800">
+                        <tr><td class="p-3 text-left pl-5 font-semibold text-white">T-Shirt</td><td class="p-3">$35.00</td><td class="p-3">$31.50</td><td class="p-3">$29.75</td><td class="p-3">$26.25</td></tr>
+                        <tr><td class="p-3 text-left pl-5 font-semibold text-white">Sherpa Blanket</td><td class="p-3">$89.00</td><td class="p-3">$80.10</td><td class="p-3">$75.65</td><td class="p-3">$66.75</td></tr>
+                        <tr><td class="p-3 text-left pl-5 font-semibold text-white">Tumbler</td><td class="p-3">$48.00</td><td class="p-3">$43.20</td><td class="p-3">$40.80</td><td class="p-3">$36.00</td></tr>
+                        <tr><td class="p-3 text-left pl-5 font-semibold text-white">Tote Bag</td><td class="p-3">$65.00</td><td class="p-3">$58.50</td><td class="p-3">$55.25</td><td class="p-3">$48.75</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 class="text-blue-500 font-bold uppercase tracking-widest text-xs mb-5 reveal">How to Order</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-0 reveal">
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
+                    <div class="text-2xl font-black text-blue-500 mb-3">1</div>
+                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Browse:</strong> Select items from the public storefront.</p>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
+                    <div class="text-2xl font-black text-blue-500 mb-3">2</div>
+                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Compile:</strong> Email your list (Product, Design, Size, Qty) to <strong class="text-white">RLP@RLPDEZINES.COM</strong>.</p>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
+                    <div class="text-2xl font-black text-blue-500 mb-3">3</div>
+                    <p class="text-gray-300 font-light text-sm"><strong class="text-white">Invoice:</strong> I'll apply tier discounts and send a digital invoice. Production starts on payment.</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -253,11 +427,126 @@
      DESIGN SERVICES
 ════════════════════════════════════════ -->
 <section id="services" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
-    <div class="max-w-4xl mx-auto text-center reveal">
-        <p class="section-label mb-4 justify-center">B2B & Creative Services</p>
-        <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5 tracking-tight">Design <span class="text-blue-500">Services</span></h2>
-        <p class="text-gray-300 font-light leading-relaxed mb-8 max-w-2xl mx-auto">RLP Dezines provides bulk production and custom branding for organizations. Reach out with your project details.</p>
-        <a href="mailto:rlp@rlpdezines.com" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm transition">Start a Project</a>
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-black border border-gray-800 border-l-4 border-l-blue-500 p-6 sm:p-14 rounded-2xl">
+            <div class="mb-8 reveal">
+                <p class="section-label mb-5">B2B & Creative Services</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5 tracking-tight">Design <span class="text-blue-500">Services</span></h2>
+                <p class="text-gray-300 font-light leading-relaxed max-w-2xl">
+                    RLP Dezines is your full-stack design partner. We provide <strong class="text-white font-semibold">bulk production on all catalog items</strong> and <strong class="text-white font-semibold">custom design services</strong>. Fill out the form below with your project scope and budget.
+                </p>
+            </div>
+
+            <!-- Intake Form -->
+            <div id="intake-form-wrap" class="max-w-2xl mx-auto bg-gray-900 p-6 sm:p-8 rounded-xl border border-gray-800 reveal">
+                <form name="design-intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
+                    <input type="text" name="name">
+                    <input type="email" name="email">
+                    <select name="budget"></select>
+                    <textarea name="message"></textarea>
+                </form>
+
+                <div id="form-fields">
+                    <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-name">Name / Organization</label>
+                            <input class="form-input" type="text" id="intake-name" placeholder="Your name or org" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-email">Email Address</label>
+                            <input class="form-input" type="email" id="intake-email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-budget">Estimated Budget</label>
+                        <select class="form-input" id="intake-budget">
+                            <option value="Not Sure Yet">Not Sure Yet</option>
+                            <option value="Under $500">Under $500</option>
+                            <option value="$500 - $1,000">$500 – $1,000</option>
+                            <option value="$1,000 - $5,000">$1,000 – $5,000</option>
+                            <option value="$5,000+">$5,000+</option>
+                        </select>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
+                        <textarea class="form-input h-32 resize-y" id="intake-message" placeholder="Tell me what you're looking for..." required></textarea>
+                    </div>
+                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex items-center justify-center gap-2">
+                        <span id="btn-label">Submit Project Request</span>
+                        <svg id="btn-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                    </button>
+                    <p id="form-error" class="text-red-400 text-xs mt-3 hidden text-center">Please fill in all required fields before submitting.</p>
+                </div>
+
+                <div id="form-success" class="hidden text-center py-8">
+                    <div class="text-blue-500 text-5xl mb-4">✓</div>
+                    <h3 class="text-white font-black text-xl uppercase tracking-wide mb-2">Request Received</h3>
+                    <p class="text-gray-400 font-light text-sm">Thank you. I'll be in touch within 2 business days.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     ENDORSEMENTS
+════════════════════════════════════════ -->
+<section id="endorsements" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <p class="section-label mb-5 justify-center">Verified Partners</p>
+            <h2 class="text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">Client <span class="text-blue-500">Endorsements</span></h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="endorse-card bg-gray-900 border border-gray-800 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal">
+                <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
+                <p class="text-gray-300 font-light leading-relaxed mb-8 flex-grow relative z-10">
+                    "RLP Dezines provided us with incredible support. From our official organization logo to the banners and custom gear we use for our events, the quality is exceptional."
+                </p>
+                <div class="border-t border-gray-800 pt-5 mt-auto">
+                    <div class="text-white text-sm font-black uppercase mb-1">Executive Committee</div>
+                    <div class="text-blue-500 text-[11px] font-bold tracking-widest uppercase">Native American Church of North America</div>
+                </div>
+            </div>
+
+            <div class="endorse-card bg-gray-900 border border-gray-800 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal reveal-delay-2">
+                <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
+                <p class="text-gray-300 font-light leading-relaxed mb-8 flex-grow relative z-10">
+                    "Working with RLP Dezines has been a great experience. We needed high-quality gear for our health board and community events, and the final products were exactly what we were looking for."
+                </p>
+                <div class="border-t border-gray-800 pt-5 mt-auto">
+                    <div class="text-white text-sm font-black uppercase mb-1">Leadership Team</div>
+                    <div class="text-blue-500 text-[11px] font-bold tracking-widest uppercase">Rocky Boy Health Board</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     POLICIES / FAQ
+════════════════════════════════════════ -->
+<section id="info" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 flex-grow bg-gray-950">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-black border-t-4 border-t-blue-600 border border-gray-800 p-6 sm:p-14 rounded-2xl">
+            <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-10 text-center tracking-tight reveal">Store Policies & FAQ</h2>
+
+            <div class="space-y-8 divide-y divide-gray-900">
+                <div class="pt-0 reveal">
+                    <h3 class="text-blue-500 font-black tracking-widest text-xs uppercase mb-3">All Sales Are Final</h3>
+                    <p class="text-gray-300 font-light leading-relaxed text-sm">Every item is crafted specifically for you at the time of purchase. Because of this custom, print-on-demand model, <strong class="text-white font-semibold">I do not accept returns, exchanges, or offer cash refunds for buyer's remorse or incorrect size selections.</strong> Please review all product descriptions and size charts carefully before completing your purchase.</p>
+                </div>
+                <div class="pt-7 reveal">
+                    <h3 class="text-blue-500 font-black tracking-widest text-xs uppercase mb-3">Damaged or Defective Items</h3>
+                    <p class="text-gray-300 font-light leading-relaxed text-sm">I stand behind the quality of my designs and materials. In the rare event that your item arrives misprinted or defective, contact me at <strong class="text-white">rlp@rlpdezines.com</strong> within 7 days. I will make it right with a free replacement.</p>
+                </div>
+                <div class="pt-7 reveal">
+                    <h3 class="text-blue-500 font-black tracking-widest text-xs uppercase mb-3">Shipping & Taxes</h3>
+                    <p class="text-gray-300 font-light leading-relaxed text-sm">Shipping costs and applicable taxes are calculated automatically by Square at checkout based on your exact shipping address. Once shipped, you will automatically receive a tracking number via email.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -279,7 +568,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── Safe Body Scroll Lock ──
     const body = document.body;
     
     // ── Mobile menu ──
@@ -310,6 +598,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }});});
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+    // ── Design Form ──
+    const submitBtn = document.getElementById('form-submit-btn');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', async () => {
+            const name = document.getElementById('intake-name').value.trim();
+            const email = document.getElementById('intake-email').value.trim();
+            const budget = document.getElementById('intake-budget').value;
+            const message = document.getElementById('intake-message').value.trim();
+            const formError = document.getElementById('form-error'), btnLabel = document.getElementById('btn-label'), btnSpinner = document.getElementById('btn-spinner');
+
+            if (!name || !email || !message) { formError.classList.remove('hidden'); return; }
+            formError.classList.add('hidden'); btnLabel.textContent = 'Sending…'; btnSpinner.classList.remove('hidden'); submitBtn.disabled = true;
+
+            const bodyParams = new URLSearchParams({ 'form-name': 'design-intake', name, email, budget, message });
+            try {
+                const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: bodyParams.toString() });
+                if (res.ok) { document.getElementById('form-fields').classList.add('hidden'); document.getElementById('form-success').classList.remove('hidden'); showToast('Request received! Talk soon.'); } 
+                else throw new Error();
+            } catch {
+                window.location.href = `mailto:rlp@rlpdezines.com?subject=Design Inquiry&body=Name:%20${encodeURIComponent(name)}%0AEmail:%20${encodeURIComponent(email)}%0ABudget:%20${encodeURIComponent(budget)}%0A%0AProject:%0A${encodeURIComponent(message)}`;
+                document.getElementById('form-fields').classList.add('hidden'); document.getElementById('form-success').classList.remove('hidden');
+            } finally { btnLabel.textContent = 'Submit Project Request'; btnSpinner.classList.add('hidden'); submitBtn.disabled = false; }
+        });
+    }
+
     // ── Cart System ──
     class ShoppingCart {
         constructor() { this.items = JSON.parse(localStorage.getItem('rlp_cart') || '[]'); this.initDOM(); this.render(); }
@@ -328,10 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         close() { 
             this.drawer?.classList.remove('open'); this.overlay?.classList.remove('open'); 
-            // Only remove no-scroll if modal is not open
-            if(document.getElementById('product-modal').classList.contains('hidden')) {
-                body.classList.remove('no-scroll');
-            }
+            if(document.getElementById('product-modal').classList.contains('hidden')) body.classList.remove('no-scroll');
         }
         addItem(p) {
             const ex = this.items.find(i => i.id === p.id);
@@ -345,9 +655,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const cnt = document.getElementById('cart-count'), mCnt = document.getElementById('mobile-cart-count'), badge = document.getElementById('mobile-cart-badge');
             if(cnt) cnt.textContent = total; if(mCnt) mCnt.textContent = total; if(badge) badge.classList.toggle('hidden', total === 0);
             
-            const cont = document.getElementById('cart-items-container'), totEl = document.getElementById('cart-total'), btn = document.getElementById('checkout-btn');
+            const cont = document.getElementById('cart-items-container'), totEl = document.getElementById('cart-total'), btn = document.getElementById('checkout-btn'), lbl = document.getElementById('cart-item-count-label');
+            if(lbl) lbl.textContent = `${total} item${total !== 1 ? 's' : ''}`;
+
             if (this.items.length === 0) {
-                if(cont) cont.innerHTML = `<p class="text-gray-500 text-center text-sm mt-10">Your cart is empty.</p>`;
+                if(cont) cont.innerHTML = `<div class="flex flex-col items-center justify-center h-40 text-center"><svg class="w-10 h-10 text-gray-800 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg><p class="text-gray-600 text-sm font-semibold">Your cart is empty</p></div>`;
                 if(totEl) totEl.textContent = '$0.00'; if(btn) btn.disabled = true; return;
             }
             if(btn) btn.disabled = false;
@@ -359,7 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(totEl) totEl.textContent = `$${(this.items.reduce((s, i) => s + (i.price * i.quantity), 0)/100).toFixed(2)}`;
         }
         async checkout() {
-            const btn = document.getElementById('checkout-btn'); btn.textContent = 'Routing...'; btn.disabled = true;
+            const btn = document.getElementById('checkout-btn'); btn.innerHTML = 'Routing... <svg class="w-4 h-4 animate-spin ml-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>'; btn.disabled = true;
             try {
                 const res = await fetch('/.netlify/functions/create-checkout', { method: 'POST', body: JSON.stringify({ cartItems: this.items }) });
                 const data = await res.json();
@@ -371,100 +683,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Global Product Data for Modals ──
     window.globalProducts = {};
-
-    // ── Product Modal System ──
-    const pModal = document.getElementById('product-modal');
-    const pOverlay = document.getElementById('product-modal-overlay');
+    const pModal = document.getElementById('product-modal'), pOverlay = document.getElementById('product-modal-overlay');
 
     window.openProductModal = function(id) {
-        const p = window.globalProducts[id];
-        if(!p) return;
-
-        const safeName = (p.name || 'Item').replace(/'/g, "&#39;");
-        const safeDesc = p.description || 'No additional details available.';
+        const p = window.globalProducts[id]; if(!p) return;
+        const safeName = (p.name || 'Item').replace(/'/g, "&#39;"), safeDesc = p.description || 'No additional details available.';
         const opts = p.variations.map(v => `<option value="${v.id}" data-price="${v.price}" data-name="${(v.name||'Regular').replace(/'/g,"&#39;")}" data-sku="${v.sku||''}">${v.name||'Regular'} — $${(v.price/100).toFixed(2)}</option>`).join('');
-        const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-500 text-xs tracking-widest uppercase font-bold">RLP Dezines</div>`;
+        const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-500 text-xs tracking-widest uppercase font-bold">RLP</div>`;
 
         pModal.innerHTML = `
-            <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-black/60 hover:bg-black text-white p-2 rounded-full z-10 transition shadow-lg">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-            <div class="w-full md:w-1/2 h-72 md:h-auto bg-gray-900 relative shrink-0">
-                ${img}
-            </div>
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-black/60 hover:bg-black text-white p-2 rounded-full z-10 transition shadow-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            <div class="w-full md:w-1/2 h-64 sm:h-72 md:h-auto bg-gray-900 relative shrink-0 border-b md:border-b-0 md:border-r border-gray-800">${img}</div>
             <div class="w-full md:w-1/2 p-6 sm:p-8 flex flex-col overflow-y-auto" style="max-height: 70vh;">
-                <h2 class="text-xl sm:text-2xl font-black uppercase tracking-widest text-white mb-4 leading-tight">${safeName}</h2>
+                <h2 class="text-xl sm:text-2xl font-black uppercase tracking-widest text-white mb-3 leading-tight">${safeName}</h2>
                 <div class="text-[13px] sm:text-sm text-gray-400 leading-relaxed mb-6 whitespace-pre-wrap">${safeDesc}</div>
-
                 <div class="mt-auto pt-6 border-t border-gray-800">
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
-                    <select id="modal-variant" class="variant-select mb-5">
-                        ${opts}
-                    </select>
-
+                    <select id="modal-variant" class="variant-select mb-4">${opts}</select>
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
-                    <div class="flex gap-3 h-12">
-                        <div class="qty-wrap h-full">
-                            <button class="qty-btn w-10" onclick="stepModalQty(-1)">−</button>
-                            <input type="number" id="modal-qty" class="qty-num w-10" value="1" min="1" max="99">
-                            <button class="qty-btn w-10" onclick="stepModalQty(1)">+</button>
-                        </div>
-                        <button class="atc-btn h-full text-sm" onclick="addModalToCart('${p.id}', '${safeName}')">Add to Cart</button>
+                    <div class="flex gap-3 h-[44px]">
+                        <div class="qty-wrap h-full"><button class="qty-btn w-10" onclick="stepModalQty(-1)">−</button><input type="number" id="modal-qty" class="qty-num w-10" value="1" min="1" max="99"><button class="qty-btn w-10" onclick="stepModalQty(1)">+</button></div>
+                        <button class="atc-btn h-full text-[13px]" onclick="addModalToCart('${p.id}', '${safeName}')">Add to Cart</button>
                     </div>
                 </div>
-            </div>
-        `;
+            </div>`;
 
-        pOverlay.classList.remove('hidden');
-        pModal.classList.remove('hidden');
-        
-        // Force reflow for animation
-        void pModal.offsetWidth;
-        
-        pOverlay.classList.remove('opacity-0');
-        pModal.classList.remove('opacity-0', 'scale-95');
+        pOverlay.classList.remove('hidden'); pModal.classList.remove('hidden');
+        void pModal.offsetWidth; // force reflow
+        pOverlay.classList.remove('opacity-0'); pModal.classList.remove('opacity-0', 'scale-95');
         body.classList.add('no-scroll');
     };
 
     window.closeProductModal = function() {
-        pOverlay.classList.add('opacity-0');
-        pModal.classList.add('opacity-0', 'scale-95');
+        pOverlay.classList.add('opacity-0'); pModal.classList.add('opacity-0', 'scale-95');
         setTimeout(() => {
-            pOverlay.classList.add('hidden');
-            pModal.classList.add('hidden');
-            if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) {
-                body.classList.remove('no-scroll');
-            }
+            pOverlay.classList.add('hidden'); pModal.classList.add('hidden');
+            if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
         }, 300);
     };
 
     pOverlay.addEventListener('click', closeProductModal);
-
-    window.stepModalQty = function(delta) {
-        const input = document.getElementById('modal-qty');
-        if (input) input.value = Math.max(1, Math.min(99, parseInt(input.value || 1) + delta));
-    };
-
-    window.addModalToCart = function(productId, productName) {
-        const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty');
-        if (!sel || !qty) return;
-
+    window.stepModalQty = (delta) => { const el = document.getElementById('modal-qty'); if(el) el.value = Math.max(1, Math.min(99, parseInt(el.value || 1) + delta)); };
+    window.addModalToCart = (id, name) => {
+        const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); if(!sel || !qty) return;
         const opt = sel.options[sel.selectedIndex], vName = opt.getAttribute('data-name') || 'Regular';
-        const finalName = (vName === 'Regular' || vName === '') ? productName : `${productName} (${vName})`;
-
-        window.Cart.addItem({
-            id: opt.value,
-            name: finalName,
-            price: parseInt(opt.getAttribute('data-price')),
-            sku: opt.getAttribute('data-sku') || '',
-            quantity: parseInt(qty.value) || 1
-        });
-
+        window.Cart.addItem({ id: opt.value, name: (vName === 'Regular' || vName === '') ? name : `${name} (${vName})`, price: parseInt(opt.getAttribute('data-price')), sku: opt.getAttribute('data-sku') || '', quantity: parseInt(qty.value)||1 });
         closeProductModal();
     };
 
-
-    // ── Load Catalog with Clean Grid ──
+    // ── Load Catalog with Accordions ──
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
         const icons = {
@@ -481,14 +748,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const products = await res.json();
             grid.innerHTML = '';
 
-            if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found.</p>`; return; }
+            if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found in catalog.</p>`; return; }
 
             const catMap = {};
             products.forEach(p => {
-                window.globalProducts[p.id] = p; // Store globally for the modal
-                
-                const n = (p.name || '').toLowerCase();
-                let c = 'Other Goods';
+                window.globalProducts[p.id] = p; 
+                const n = (p.name || '').toLowerCase(); let c = 'Other Goods';
                 if (n.includes('blanket') || n.includes('throw') || n.includes('sherpa')) c = 'Blankets & Throws';
                 else if (n.includes('shirt') || n.includes('tee') || n.includes('hoodie') || n.includes('apparel')) c = 'Apparel';
                 else if (n.includes('tumbler') || n.includes('mug') || n.includes('cup')) c = 'Drinkware';
@@ -499,26 +764,19 @@ document.addEventListener('DOMContentLoaded', () => {
             ['Blankets & Throws', 'Apparel', 'Drinkware', 'Accessories', 'Other Goods'].forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
                 const minPrice = Math.min(...items.flatMap(p => p.variations.map(v => v.price)));
-                const priceLabel = `<span class="text-[11px] text-gray-500 font-medium ml-3 lowercase tracking-normal">from $${(minPrice/100).toFixed(2)}</span>`;
+                const priceLabel = `<span class="text-[11px] text-gray-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
 
                 const cards = items.map(p => {
                     const sName = (p.name || 'Item').replace(/'/g, "&#39;");
                     const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP</span></div>`;
-                    
                     const pMinPrice = Math.min(...p.variations.map(v => v.price));
                     
-                    // Simple, clean card that opens the modal
                     return `
                     <div class="product-card group" onclick="openProductModal('${p.id}')">
                         <div class="card-img-wrap">${img}</div>
                         <div class="card-body">
-                            <div>
-                                <h3 class="text-[11px] sm:text-sm font-black uppercase tracking-widest text-white leading-snug line-clamp-2">${sName}</h3>
-                                <p class="text-xs font-bold text-gray-400 mt-1.5">$${(pMinPrice/100).toFixed(2)}</p>
-                            </div>
-                            <div class="view-btn-text flex items-center gap-1">
-                                View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
-                            </div>
+                            <div><h3 class="text-[11px] sm:text-[13px] font-black uppercase tracking-widest text-white leading-snug line-clamp-2">${sName}</h3><p class="text-[11px] sm:text-xs font-bold text-gray-400 mt-1.5">$${(pMinPrice/100).toFixed(2)}</p></div>
+                            <div class="view-btn-text flex items-center gap-1">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
                         </div>
                     </div>`;
                 }).join('');
@@ -528,13 +786,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <summary class="flex justify-between items-center cursor-pointer bg-gray-900 p-4 sm:p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-gray-800 hover:border-blue-500 transition-colors select-none">
                         <div class="flex items-center gap-3">
                             ${icons[cat] || icons['Other Goods']}
-                            <h3 class="text-sm font-black uppercase tracking-widest text-white flex items-center">
-                                ${cat} <span class="bg-blue-900/40 border border-blue-500/30 text-blue-400 text-[10px] px-2 py-0.5 rounded-full ml-3">${items.length}</span> ${priceLabel}
+                            <h3 class="text-[13px] sm:text-sm font-black uppercase tracking-widest text-white flex items-center">
+                                ${cat} <span class="bg-blue-900/40 border border-blue-500/30 text-blue-400 text-[10px] px-2 py-0.5 rounded-full ml-2 sm:ml-3">${items.length}</span> ${priceLabel}
                             </h3>
                         </div>
-                        <span class="text-gray-500 group-hover:text-blue-500 transition-transform duration-300 group-open:rotate-180">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
-                        </span>
+                        <span class="text-gray-500 group-hover:text-blue-500 transition-transform duration-300 group-open:rotate-180"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
                     </summary>
                     <div class="accordion-content grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pt-4 pb-2">${cards}</div>
                 </details>`;
