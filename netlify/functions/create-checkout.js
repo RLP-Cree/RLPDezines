@@ -79,10 +79,17 @@ exports.handler = async (event) => {
         const paymentLink = response?.result?.paymentLink;
         if (!paymentLink?.url) throw new Error("Square returned no payment link URL");
 
+        // ── THE FRONTEND RESPONSE FIX ──
+        // Sending the link back under every common label so the frontend catches it
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ checkoutUrl: paymentLink.url })
+            body: JSON.stringify({ 
+                url: paymentLink.url,           
+                checkoutUrl: paymentLink.url,   
+                checkoutLink: paymentLink.url,
+                orderId: paymentLink.orderId
+            })
         };
 
     } catch (error) {
