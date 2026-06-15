@@ -1,50 +1,105 @@
 const { Client, Environment } = require('square');
-const crypto = require('crypto');
+const crypto = require('crypto'); // Built into Node to generate unique order keys
 
-const client = new Client({
+const squareClient = new Client({
     accessToken: process.env.SQUARE_ACCESS_TOKEN,
     environment: Environment.Production,
 });
 
 exports.handler = async (event) => {
-    if (event.httpMethod !== 'POST') return { statusCode: 405, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+    // ── CORS SETUP: Ensures your frontend website can safely talk to this backend ──
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+    };
+
+    // Handle preflight requests from browsers
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 200, headers, body: '' };
+    }
+
+    // Block non-POST requests
+    if (event.httpMethod !== 'POST') {
+        return { statusCode: 405, headers, body: 'Method Not Allowed' };
+    }
 
     try {
-        const { cartItems } = JSON.parse(event.body);
-        if (!cartItems || cartItems.length === 0) return { statusCode: 400, body: JSON.stringify({ error: 'Cart is empty' }) };
+        // Parse the cart items coming from your website
+        const body = JSON.parse(event.body);
+        const items = body.items || body.cart || [];
 
-        let totalItems = 0;
-        const lineItems = cartItems.map(item => {
-            totalItems += parseInt(item.quantity);
-            return { catalogObjectId: item.id, quantity: String(item.quantity) };
+        if (items.length === 0) {
+            throw new Error("The cart is empty. Cannot generate a checkout link.");
+        }
+
+        // Map your frontend cart items to Square's exact line-item format
+        const squareLineItems = items.map(item => {
+            // IF you are passing Square Catalog IDs from your get-products function:
+            if (item.catalogObjectId || item.id) {
+                return {
+                    catalogObjectId: item.catalogObjectId || item.id,
+                    quantity: item.quantity.toString()
+                };
+            }
+            
+            // IF you are passing raw custom/ad-hoc items (just name and price):
+            return {
+                name: item.name,
+                quantity: item.quantity.toString(),
+                basePriceMoney: {
+                    amount: Math.round(parseFloat(item.price) * 100), // Square requires cents (e.g., $28.50 = 2850)
+                    currency: 'USD'
+                }
+            };
         });
 
-        const baseShippingCents = 1350; 
-        const extraItemCents = 400;
-        const totalShippingCents = baseShippingCents + ((totalItems - 1) * extraItemCents);
-
-        const response = await client.checkoutApi.createPaymentLink({
-            idempotencyKey: crypto.randomUUID(),
+        // ── BUILD THE CHECKOUT PAYLOAD ──
+        const checkoutPayload = {
+            idempotencyKey: crypto.randomUUID(), // Prevents duplicate orders if a customer double-clicks
             order: {
                 locationId: process.env.SQUARE_LOCATION_ID,
-                lineItems: lineItems
+                lineItems: squareLineItems,
+                
+                // ── THE TAX FIX ──
+                // This forces Square to look at your dashboard rules and apply local sales tax
+                pricingOptions: {
+                    autoApplyTaxes: true
+                }
             },
             checkoutOptions: {
+                // ── THE SHIPPING PROTECTOR ──
+                // Forces the Square page to collect a physical address (Required for Printful!)
                 askForShippingAddress: true,
-                // THE REDIRECT FIX: Sends them immediately back to your site after payment
-                redirectUrl: "https://rlpdezines.com",
-                shippingFee: {
-                    charge: { amount: totalShippingCents, currency: 'USD' },
-                    name: "Standard Shipping"
-                },
-                acceptedPaymentMethods: { applePay: true, googlePay: true }
+                
+                // Bounces the customer straight back to your site after payment clears
+                redirectUrl: 'https://rlpdezines.com',
+                merchantSupportEmail: 'rlp@rlpdezines.com'
             }
-        });
+        };
 
-        return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: response.result.paymentLink.url }) };
+        // Fire the payload to Square and generate the secure checkout URL
+        const response = await squareClient.checkoutApi.createPaymentLink(checkoutPayload);
+
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+                checkoutUrl: response.result.paymentLink.url,
+                orderId: response.result.paymentLink.orderId
+            })
+        };
 
     } catch (error) {
-        console.error("Checkout Error:", error);
-        return { statusCode: 500, body: JSON.stringify({ error: 'Failed to create checkout' }) };
+        console.error('Checkout Generation Error:', error);
+        
+        // Drill down to get exact Square API errors if they exist
+        const errorMessage = error.errors ? JSON.stringify(error.errors) : error.message;
+        
+        return {
+            statusCode: 500,
+            headers,
+            body: JSON.stringify({ error: 'Failed to create checkout link', details: errorMessage })
+        };
     }
 };
