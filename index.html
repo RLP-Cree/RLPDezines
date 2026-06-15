@@ -172,9 +172,10 @@
             <span>Subtotal</span>
             <span id="cart-total" class="text-white font-black text-base">$0.00</span>
         </div>
-        <p class="text-[11px] text-gray-600 mb-4">Shipping & taxes calculated dynamically at checkout</p>
+        <p class="text-[11px] text-gray-600 mb-4">Shipping & taxes calculated dynamically at checkout.</p>
         <button id="checkout-btn" class="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex justify-center items-center gap-2 text-sm" disabled>
-            Checkout
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            Secure Checkout
         </button>
     </div>
 </div>
@@ -627,12 +628,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if(totEl) totEl.textContent = `$${(this.items.reduce((s, i) => s + (i.price * i.quantity), 0)/100).toFixed(2)}`;
         }
         async checkout() {
-            const btn = document.getElementById('checkout-btn'); btn.innerHTML = 'Routing... <svg class="w-4 h-4 animate-spin ml-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>'; btn.disabled = true;
+            const btn = document.getElementById('checkout-btn'); 
+            const originalBtnContent = btn.innerHTML;
+            btn.innerHTML = 'Routing... <svg class="w-4 h-4 animate-spin ml-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>'; 
+            btn.disabled = true;
             try {
                 const res = await fetch('/.netlify/functions/create-checkout', { method: 'POST', body: JSON.stringify({ cartItems: this.items }) });
                 const data = await res.json();
                 if (data.url) window.location.href = data.url; else throw new Error();
-            } catch { showToast('Checkout error.'); btn.textContent = 'Checkout'; btn.disabled = false; }
+            } catch { 
+                showToast('Connection issue. Please refresh and try again or contact rlp@rlpdezines.com.'); 
+                btn.innerHTML = originalBtnContent; 
+                btn.disabled = false; 
+            }
         }
     }
     window.Cart = new ShoppingCart();
@@ -665,8 +673,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
 
         pOverlay.classList.remove('hidden'); pModal.classList.remove('hidden');
-        void pModal.offsetWidth; // force reflow
-        pOverlay.classList.remove('opacity-0'); pModal.classList.remove('opacity-0', 'scale-95');
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                pOverlay.classList.remove('opacity-0'); 
+                pModal.classList.remove('opacity-0', 'scale-95');
+            });
+        });
         body.classList.add('no-scroll');
     };
 
