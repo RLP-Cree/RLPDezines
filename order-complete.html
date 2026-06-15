@@ -80,5 +80,12 @@
         <a href="/" class="btn">Return to Shop</a>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Clear the cart immediately so they start fresh
+            localStorage.removeItem('rlp_cart');
+        });
+    </script>
+
 </body>
 </html>
