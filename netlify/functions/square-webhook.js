@@ -9,12 +9,16 @@ const squareClient = new Client({
     environment: Environment.Production,
 });
 
-function isValidSquareSignature(signature, body) {
+// DYNAMIC SIGNATURE FIX: Reads the exact domain Square targeted
+function isValidSquareSignature(event) {
+    const signature = event.headers['x-square-hmacsha256-signature'];
     if (!signature || !process.env.SQUARE_WEBHOOK_SIGNATURE_KEY) return false;
     
-    const webhookUrl = process.env.URL + '/.netlify/functions/square-webhook';
+    const host = event.headers.host || 'rlpdezines.com';
+    const webhookUrl = `https://${host}${event.path}`;
+    
     const hmac = crypto.createHmac('sha256', process.env.SQUARE_WEBHOOK_SIGNATURE_KEY);
-    hmac.update(webhookUrl + body);
+    hmac.update(webhookUrl + event.body);
     const hash = hmac.digest('base64');
     
     return hash === signature;
@@ -23,8 +27,7 @@ function isValidSquareSignature(signature, body) {
 exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
-    const signature = event.headers['x-square-hmacsha256-signature'];
-    if (!isValidSquareSignature(signature, event.body)) {
+    if (!isValidSquareSignature(event)) {
         console.error("Unauthorized Webhook Attempt: Signature mismatch.");
         return { statusCode: 401, body: 'Unauthorized' };
     }
@@ -36,19 +39,12 @@ exports.handler = async (event) => {
             const payment = payload.data.object.payment;
             const orderId = payment.order_id;
 
-            if (!orderId) {
-                console.error("No Order ID associated with this payment.");
-                return { statusCode: 400, body: 'Missing order_id' };
-            }
+            if (!orderId) return { statusCode: 400, body: 'Missing order_id' };
 
             const orderResponse = await squareClient.ordersApi.retrieveOrder(orderId);
             const order = orderResponse.result.order;
             const lineItems = order.lineItems || [];
 
-            // ── THE PRINTFUL MAPPING FIX ──
-            // We omit sync_variant_id entirely. By passing external_variant_id, 
-            // Printful looks at its Square integration map and links either the SKU 
-            // or the Square Variation ID directly to your print files.
             const printfulItems = lineItems.map(item => ({
                 external_variant_id: item.sku || item.catalogObjectId,
                 quantity: parseInt(item.quantity) || 1,
@@ -68,6 +64,8 @@ exports.handler = async (event) => {
                 phone: payment.shipping_address?.phone_number || ''
             };
 
+            let printfulSuccess = true;
+
             try {
                 const printfulPayload = {
                     external_id: orderId,
@@ -84,29 +82,31 @@ exports.handler = async (event) => {
                 });
                 console.log(`Printful Order Drafted for Square Order: ${orderId}`);
             } catch (printfulError) {
-                console.error("Printful API Error:", printfulError.response?.data || printfulError.message);
+                printfulSuccess = false;
+                const errorReason = printfulError.response?.data ? JSON.stringify(printfulError.response.data) : printfulError.message;
+                console.error("Printful API Error:", errorReason);
+
+                // DIAGNOSTIC EMAIL: If Printful fails, it emails YOU the exact reason.
+                await resend.emails.send({
+                    from: 'System <orders@rlpdezines.com>',
+                    to: ['rlp@rlpdezines.com'], // Sends to you
+                    subject: '🚨 URGENT: Printful Order Failed to Draft',
+                    html: `<p>A customer paid for an order, but Printful rejected it.</p><p><strong>Square Order ID:</strong> ${orderId}</p><p><strong>Printful Error:</strong> ${errorReason}</p>`
+                });
             }
 
+            // Sends the standard receipt to the customer
             try {
                 const totalPaid = (payment.amount_money.amount / 100).toFixed(2);
                 const emailHtml = `
                     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #000; color: #fff; padding: 40px; border-radius: 12px; border: 1px solid #1f1f1f;">
                         <h1 style="font-size: 24px; font-weight: 900; letter-spacing: 2px; font-style: italic; margin-bottom: 30px; color:#fff;">RLP DEZINES</h1>
-                        <h2 style="font-size: 20px; font-weight: bold; color: #3B82F6; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 15px;">Order Confirmed</h2>
-                        <p style="color: #d1d5db; line-height: 1.6; font-size: 15px;">Your order has been successfully processed and is now entering production.</p>
+                        <h2 style="font-size: 20px; font-weight: bold; color: #3B82F6; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 15px;">Order Confirmed</h2>
+                        <p style="color: #d1d5db;">Your order has been successfully processed.</p>
                         <div style="background-color: #111; padding: 20px; border-radius: 8px; margin: 30px 0; border: 1px solid #222;">
-                            <p style="margin: 0 0 10px 0; color: #9ca3af; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Amount Paid</p>
-                            <p style="margin: 0; font-size: 28px; font-weight: bold; color: #fff;">$${totalPaid}</p>
+                            <p style="margin: 0 0 10px 0; color: #9ca3af; font-size: 12px; text-transform: uppercase;">Amount Paid</p>
+                            <p style="margin: 0; font-size: 28px; font-weight: bold;">$${totalPaid}</p>
                         </div>
-                        <h3 style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-top: 30px;">Shipping To:</h3>
-                        <p style="color: #fff; font-size: 14px; line-height: 1.5;">
-                            ${recipient.name}<br>
-                            ${recipient.address1}<br>
-                            ${recipient.city}, ${recipient.state_code} ${recipient.zip}
-                        </p>
-                        <p style="color: #d1d5db; line-height: 1.6; font-size: 13px; margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;">
-                            Once our fulfillment team packages your order, a tracking link will be automatically generated and emailed directly to your inbox.
-                        </p>
                     </div>
                 `;
 
@@ -116,12 +116,11 @@ exports.handler = async (event) => {
                     subject: 'Receipt from RLP Dezines',
                     html: emailHtml
                 });
-                console.log(`Receipt emailed to: ${recipient.email}`);
             } catch (emailError) {
                 console.error("Resend API Error:", emailError.message);
             }
 
-            return { statusCode: 200, body: 'Workflow completed successfully.' };
+            return { statusCode: 200, body: 'Workflow completed.' };
         }
 
         return { statusCode: 200, body: 'Webhook ignored event type.' };
