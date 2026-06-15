@@ -1,5 +1,5 @@
 const { Client, Environment } = require('square');
-const crypto = require('crypto'); // Built into Node to generate unique order keys
+const crypto = require('crypto');
 
 const squareClient = new Client({
     accessToken: process.env.SQUARE_ACCESS_TOKEN,
@@ -7,25 +7,22 @@ const squareClient = new Client({
 });
 
 exports.handler = async (event) => {
-    // ── CORS SETUP: Ensures your frontend website can safely talk to this backend ──
+    // ── CORS SETUP ──
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
     };
 
-    // Handle preflight requests from browsers
     if (event.httpMethod === 'OPTIONS') {
         return { statusCode: 200, headers, body: '' };
     }
 
-    // Block non-POST requests
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, headers, body: 'Method Not Allowed' };
     }
 
     try {
-        // Parse the cart items coming from your website
         const body = JSON.parse(event.body);
         const items = body.items || body.cart || [];
 
@@ -33,9 +30,8 @@ exports.handler = async (event) => {
             throw new Error("The cart is empty. Cannot generate a checkout link.");
         }
 
-        // Map your frontend cart items to Square's exact line-item format
         const squareLineItems = items.map(item => {
-            // IF you are passing Square Catalog IDs from your get-products function:
+            // If pulling from Square's item catalog:
             if (item.catalogObjectId || item.id) {
                 return {
                     catalogObjectId: item.catalogObjectId || item.id,
@@ -43,42 +39,37 @@ exports.handler = async (event) => {
                 };
             }
             
-            // IF you are passing raw custom/ad-hoc items (just name and price):
+            // If passing custom items from your frontend:
             return {
                 name: item.name,
                 quantity: item.quantity.toString(),
                 basePriceMoney: {
-                    amount: Math.round(parseFloat(item.price) * 100), // Square requires cents (e.g., $28.50 = 2850)
+                    // ── THE BIGINT FIX ── 
+                    // Square strictly requires money to be wrapped in a BigInt format
+                    amount: BigInt(Math.round(parseFloat(item.price) * 100)), 
                     currency: 'USD'
                 }
             };
         });
 
-        // ── BUILD THE CHECKOUT PAYLOAD ──
         const checkoutPayload = {
-            idempotencyKey: crypto.randomUUID(), // Prevents duplicate orders if a customer double-clicks
+            idempotencyKey: crypto.randomUUID(), 
             order: {
                 locationId: process.env.SQUARE_LOCATION_ID,
                 lineItems: squareLineItems,
                 
                 // ── THE TAX FIX ──
-                // This forces Square to look at your dashboard rules and apply local sales tax
                 pricingOptions: {
                     autoApplyTaxes: true
                 }
             },
             checkoutOptions: {
-                // ── THE SHIPPING PROTECTOR ──
-                // Forces the Square page to collect a physical address (Required for Printful!)
                 askForShippingAddress: true,
-                
-                // Bounces the customer straight back to your site after payment clears
                 redirectUrl: 'https://rlpdezines.com',
                 merchantSupportEmail: 'rlp@rlpdezines.com'
             }
         };
 
-        // Fire the payload to Square and generate the secure checkout URL
         const response = await squareClient.checkoutApi.createPaymentLink(checkoutPayload);
 
         return {
@@ -93,8 +84,10 @@ exports.handler = async (event) => {
     } catch (error) {
         console.error('Checkout Generation Error:', error);
         
-        // Drill down to get exact Square API errors if they exist
-        const errorMessage = error.errors ? JSON.stringify(error.errors) : error.message;
+        // Added a custom stringifier so BigInt errors don't crash the Netlify logs
+        const errorMessage = error.errors 
+            ? JSON.stringify(error.errors, (key, value) => typeof value === 'bigint' ? value.toString() : value) 
+            : error.message;
         
         return {
             statusCode: 500,
