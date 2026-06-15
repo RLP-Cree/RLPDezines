@@ -12,6 +12,8 @@ const squareClient = new Client({
 const processedOrders = new Map();
 
 exports.handler = async (event) => {
+    console.log("DEBUG - Signature Header received:", event.headers['x-square-hmacsha256-signature']);
+    
     try {
         if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
