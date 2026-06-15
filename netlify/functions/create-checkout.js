@@ -1,9 +1,9 @@
-const { SquareClient, SquareEnvironment } = require('square');
+const { Client, Environment } = require('square');
 const crypto = require('crypto');
 
-const squareClient = new SquareClient({
-    token: process.env.SQUARE_ACCESS_TOKEN,
-    environment: SquareEnvironment.Production,
+const squareClient = new Client({
+    accessToken: process.env.SQUARE_ACCESS_TOKEN,
+    environment: Environment.Production,
 });
 
 exports.handler = async (event) => {
@@ -56,7 +56,7 @@ exports.handler = async (event) => {
                 name: item.name || `Item ${i + 1}`,
                 quantity: String(item.quantity || 1),
                 basePriceMoney: {
-                    amount: BigInt(cents), // Use plain `cents` if square SDK < 35.x
+                    amount: BigInt(cents),
                     currency: 'USD'
                 }
             };
