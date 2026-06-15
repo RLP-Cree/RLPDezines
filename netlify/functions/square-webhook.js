@@ -14,7 +14,6 @@ exports.handler = async (event) => {
 
         // ── Verify Webhook Signature ──
         const signature = event.headers['x-square-hmacsha256-signature'];
-        // Updated to match your exact Square Dashboard Notification URL
         const webhookUrl = 'https://rlpdezines.netlify.app/.netlify/functions/square-webhook';
         const signatureKey = process.env.SQUARE_WEBHOOK_SIGNATURE_KEY;
 
@@ -36,7 +35,7 @@ exports.handler = async (event) => {
             const lineItems = order.lineItems || [];
 
             const printfulItems = lineItems.map(item => ({
-                external_variant_id: item.sku || item.catalogObjectId,
+                external_variant_id: item.sku || item.catalogObjectId || 'unknown-item',
                 quantity: parseInt(item.quantity) || 1,
                 name: item.name
             }));
@@ -108,7 +107,7 @@ exports.handler = async (event) => {
             if (firstHookProcessed || !event.headers['x-square-retry-count'] || event.headers['x-square-retry-count'] === '0') {
                 try {
                     const itemsHtml = lineItems.map(item => {
-                        const totalLinePrice = item.totalMoney ? (item.totalMoney.amount / 100).toFixed(2) : "0.00";
+                        const totalLinePrice = item.totalMoney ? (Number(item.totalMoney.amount) / 100).toFixed(2) : "0.00";
                         return `
                             <tr>
                                 <td style="padding: 12px 0; border-bottom: 1px solid #1f1f1f; color: #ffffff;">
@@ -119,17 +118,17 @@ exports.handler = async (event) => {
                             </tr>`;
                     }).join('');
 
-                    const totalTax = order.totalTaxMoney ? (order.totalTaxMoney.amount / 100).toFixed(2) : "0.00";
-                    const totalGross = order.totalMoney ? (order.totalMoney.amount / 100).toFixed(2) : "0.00";
-                    const totalServiceCharges = order.totalServiceChargeMoney ? order.totalServiceChargeMoney.amount : 0;
-                    const calculatedSubtotal = ((order.totalMoney?.amount || 0) - (order.totalTaxMoney?.amount || 0) - totalServiceCharges) / 100;
+                    const totalTax = order.totalTaxMoney ? (Number(order.totalTaxMoney.amount) / 100).toFixed(2) : "0.00";
+                    const totalGross = order.totalMoney ? (Number(order.totalMoney.amount) / 100).toFixed(2) : "0.00";
+                    const totalServiceCharges = order.totalServiceChargeMoney ? Number(order.totalServiceChargeMoney.amount) : 0;
+                    const calculatedSubtotal = ((Number(order.totalMoney?.amount) || 0) - (Number(order.totalTaxMoney?.amount) || 0) - totalServiceCharges) / 100;
                     const calculatedShipping = (totalServiceCharges / 100).toFixed(2);
 
                     await resend.emails.send({
                         from: 'RLP Dezines <orders@rlpdezines.com>',
                         to: [recipient.email],
                         subject: 'Order Confirmed - RLP Dezines',
-                        html: `<div style="background:#000; color:#fff; padding:20px;"><h1>RLP DEZINES</h1><p>Order Confirmed.</p><table>${itemsHtml}</table><p>Total: $${totalGross}</p></div>`
+                        html: `<div style="background:#000; color:#fff; padding:20px;"><h1>RLP DEZINES</h1><p>Order Confirmed.</p><table>${itemsHtml}</table><p>Subtotal: $${calculatedSubtotal.toFixed(2)}</p><p>Shipping: $${calculatedShipping}</p><p>Tax: $${totalTax}</p><p>Total: $${totalGross}</p></div>`
                     });
                 } catch (emailError) {
                     console.error("Resend API Error:", emailError.message);
