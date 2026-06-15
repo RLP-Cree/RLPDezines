@@ -29,8 +29,14 @@ exports.handler = async (event) => {
         const items = body.items || body.cart || body.cartItems || [];
         if (items.length === 0) throw new Error("Cart is empty");
 
+        // We will keep a running tally of how many total items are in the cart
+        let totalQuantity = 0;
+
         const squareLineItems = items.map((item, i) => {
             const squareId = item.catalogObjectId || item.id;
+            
+            // Add this item's quantity to our master shipping count
+            totalQuantity += parseInt(item.quantity || 1, 10);
 
             if (squareId) {
                 return {
@@ -52,12 +58,13 @@ exports.handler = async (event) => {
             };
         });
 
-        // ── THE SHIPPING CALCULATOR ──
-        // Grabs a shipping value from your frontend cart if it exists.
-        // If not, it safely defaults to a flat rate of $13.50. Change "13.50" to match your ideal rate!
-        const rawShippingStr = String(body.shipping || "13.50").replace(/[^0-9.]/g, '');
-        const rawShipping = parseFloat(rawShippingStr) || 13.50;
-        const shippingCents = rawShipping > 1000 ? Math.round(rawShipping) : Math.round(rawShipping * 100);
+        // ── THE DYNAMIC INCREMENTAL SHIPPING CALCULATOR ──
+        // Calculates $13.50 for the first item, plus $4.00 for every additional item.
+        let calculatedShippingDollars = 0;
+        if (totalQuantity > 0) {
+            calculatedShippingDollars = 13.50 + ((totalQuantity - 1) * 4.00);
+        }
+        const shippingCents = Math.round(calculatedShippingDollars * 100);
 
         const payload = {
             idempotencyKey: crypto.randomUUID(),
@@ -68,7 +75,7 @@ exports.handler = async (event) => {
             },
             checkoutOptions: {
                 askForShippingAddress: true,
-                redirectUrl: 'https://rlpdezines.com',
+                redirectUrl: 'https://rlpdezines.com/order-complete',
                 merchantSupportEmail: 'rlp@rlpdezines.com',
                 
                 // ── THE SHIPPING INJECTION ──
