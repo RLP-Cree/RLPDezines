@@ -140,10 +140,10 @@
         <a href="#top" class="text-2xl font-black italic tracking-widest text-white hover:text-blue-400 transition">RLP</a>
 
         <nav class="hidden lg:flex items-center space-x-6 text-[12px] font-semibold text-gray-400">
-            <a href="#mission"   class="nav-link hover:text-white transition">Mission</a>
             <a href="#shop-live" class="nav-link hover:text-white transition">Apparel</a>
-            <a href="#tunes"     class="nav-link hover:text-white transition">Music</a>
             <a href="#bundles"   class="nav-link hover:text-white transition">Bundles</a>
+            <a href="#mission"   class="nav-link hover:text-white transition">Mission</a>
+            <a href="#tunes"     class="nav-link hover:text-white transition">Music</a>
             <a href="#wholesale" class="nav-link hover:text-white transition">Wholesale</a>
             <a href="#services"  class="nav-link hover:text-white transition">Design</a>
             <a href="#info"      class="nav-link hover:text-white transition">FAQ</a>
@@ -169,10 +169,10 @@
 </header>
 
 <div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-black/98 backdrop-blur-xl border-b border-gray-900 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overflow-y-auto" style="height: calc(100vh - 69px);">
-    <a href="#mission"   class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">The Mission</a>
     <a href="#shop-live" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Shop Now</a>
-    <a href="#tunes"     class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">RLP Tunes</a>
     <a href="#bundles"   class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Ceremony Bundles</a>
+    <a href="#mission"   class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">The Mission</a>
+    <a href="#tunes"     class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">RLP Tunes</a>
     <a href="#wholesale" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Wholesale</a>
     <a href="#services"  class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Design Services</a>
     <a href="#endorsements" class="mobile-link text-white font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-900">Endorsements</a>
@@ -209,7 +209,7 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] sm:w-[85%] max-w-4xl bg-gray-950 border border-gray-800 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
     </div>
 
-<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-32 min-h-screen overflow-hidden">
+<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[85vh] overflow-hidden">
     <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px); background-size: 60px 60px;"></div>
     <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 65%);"></div>
 
@@ -219,13 +219,86 @@
         <p class="text-gray-400 max-w-lg mx-auto text-lg mb-4 font-light leading-relaxed reveal reveal-delay-2">It's good to have you here.<br>Make yourself comfortable.</p>
         <p class="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed font-light mb-12 reveal reveal-delay-3">Whether you're just looking to browse or need something specific for your walk, <strong class="text-white font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here.</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-delay-4">
-            <a href="#mission" class="bg-white text-black px-8 py-3.5 rounded-full font-bold hover:bg-gray-100 transition shadow-lg text-sm uppercase tracking-widest">Our Story</a>
             <a href="#shop-live" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Now</a>
+            <a href="#mission" class="bg-white text-black px-8 py-3.5 rounded-full font-bold hover:bg-gray-100 transition shadow-lg text-sm uppercase tracking-widest">Our Story</a>
         </div>
     </div>
 </section>
 
-<section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-900 bg-gray-950">
+<!-- MOVED UP: Live Storefront is now instantly accessible below the hero -->
+<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10 sm:mb-14 reveal">
+            <p class="section-label mb-4 justify-center">Live Catalog</p>
+            <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">The <span class="text-blue-500">Store</span></h2>
+            <p class="text-gray-500 mt-3 text-sm">Powered by Square Checkout</p>
+        </div>
+        
+        <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
+            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
+                <div class="flex items-center gap-3 w-1/2"><div class="h-5 w-5 bg-gray-800 rounded"></div><div class="h-5 bg-gray-800 rounded w-1/2"></div></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
+                <div class="skeleton h-64 rounded-xl"></div>
+                <div class="skeleton h-64 rounded-xl hidden sm:block"></div>
+                <div class="skeleton h-64 rounded-xl hidden lg:block"></div>
+            </div>
+            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
+                <div class="flex items-center gap-3 w-1/3"><div class="h-5 w-5 bg-gray-800 rounded"></div><div class="h-5 bg-gray-800 rounded w-full"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MOVED UP: Bundles immediately follow the store -->
+<section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-black border border-gray-800 p-6 sm:p-14 rounded-2xl">
+            <div class="text-center mb-10 reveal">
+                <p class="section-label mb-5 justify-center">A Special Gift for Your Guests</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5">Family Honoring Specials</h2>
+                <p class="text-gray-300 font-light leading-relaxed mb-4">When you're hosting, you want your relatives to feel truly taken care of. These bundles honor your guests with <strong class="text-blue-500 font-semibold">unmatched comfort and meaningful design.</strong></p>
+                <p class="text-gray-300 font-light leading-relaxed mb-8">Every blanket is a <strong class="text-white font-semibold">60″ × 80″</strong> Sublimated Sherpa Throw — fully customizable. Soft sublimated surface on one side, plush sherpa warmth on the reverse.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10 reveal">
+                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
+                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">5 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$85</div>
+                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                </div>
+                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
+                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">10 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$79</div>
+                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                </div>
+                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
+                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">15 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$76</div>
+                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                </div>
+                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
+                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">20 Throws</div>
+                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
+                    <div class="text-3xl font-black text-blue-500 leading-none">$73</div>
+                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                </div>
+            </div>
+
+            <div class="text-center reveal">
+                <a href="https://rlp-dezines.square.site" target="_blank" rel="noopener" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm transition">Order Your Bundle →</a>
+                <p class="text-gray-500 text-xs mt-4">Complete your custom bundle order on our dedicated Square site.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MOVED DOWN: The Ethos/Story -->
+<section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-900 bg-black">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12 reveal">
             <p class="section-label mb-5 justify-center">The Ethos</p>
@@ -272,12 +345,13 @@
     </div>
 </section>
 
+<!-- MOVED DOWN: Promo blocks -->
 <section class="border-t border-gray-900 grid md:grid-cols-2" id="apparel">
-    <div class="py-20 px-8 flex flex-col items-center justify-center text-center bg-black hover:bg-[#0a0a0a] transition duration-500 group border-b md:border-b-0 border-gray-900">
+    <div class="py-20 px-8 flex flex-col items-center justify-center text-center bg-gray-950 hover:bg-[#0a0a0a] transition duration-500 group border-b md:border-b-0 border-gray-900">
         <p class="section-label mb-5 justify-center reveal">Premium Apparel</p>
         <h2 class="text-4xl font-black mb-4 uppercase group-hover:scale-[1.03] transition duration-500 reveal">The Collection</h2>
         <p class="text-gray-400 max-w-sm mx-auto mb-8 text-base font-light leading-relaxed reveal">Browse our latest premium apparel, blankets, and everyday carry items — each one rooted in authentic Indigenous design.</p>
-        <a href="#shop-live" class="reveal inline-block border-2 border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-black transition text-sm uppercase tracking-widest w-full sm:w-auto">Shop the Store →</a>
+        <a href="#top" class="reveal inline-block border-2 border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-black transition text-sm uppercase tracking-widest w-full sm:w-auto">Back to Top ↑</a>
     </div>
 
     <div id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-gray-950 md:border-l border-gray-900 hover:bg-[#0f0f17] transition duration-500 group">
@@ -285,76 +359,6 @@
         <h2 class="text-4xl font-black mb-4 text-blue-500 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
         <p class="text-gray-400 max-w-sm mx-auto mb-8 text-base font-light leading-relaxed reveal">The soundtrack to the hustle. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
         <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-sm uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
-    </div>
-</section>
-
-<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
-    <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-10 sm:mb-14 reveal">
-            <p class="section-label mb-4 justify-center">Live Catalog</p>
-            <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">The <span class="text-blue-500">Store</span></h2>
-            <p class="text-gray-500 mt-3 text-sm">Powered by Square Checkout</p>
-        </div>
-        
-        <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
-            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/2"><div class="h-5 w-5 bg-gray-800 rounded"></div><div class="h-5 bg-gray-800 rounded w-1/2"></div></div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
-                <div class="skeleton h-64 rounded-xl"></div>
-                <div class="skeleton h-64 rounded-xl hidden sm:block"></div>
-                <div class="skeleton h-64 rounded-xl hidden lg:block"></div>
-            </div>
-            <div class="w-full bg-gray-900 p-5 rounded-xl border border-gray-800 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/3"><div class="h-5 w-5 bg-gray-800 rounded"></div><div class="h-5 bg-gray-800 rounded w-full"></div></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
-    <div class="max-w-4xl mx-auto">
-        <div class="bg-black border border-gray-800 p-6 sm:p-14 rounded-2xl">
-            <div class="text-center mb-10 reveal">
-                <p class="section-label mb-5 justify-center">A Special Gift for Your Guests</p>
-                <h2 class="text-3xl sm:text-4xl font-black text-white uppercase mb-5">Family Honoring Specials</h2>
-                <p class="text-gray-300 font-light leading-relaxed mb-4">When you're hosting, you want your relatives to feel truly taken care of. These bundles honor your guests with <strong class="text-blue-500 font-semibold">unmatched comfort and meaningful design.</strong></p>
-                <p class="text-gray-300 font-light leading-relaxed mb-8">Every blanket is a <strong class="text-white font-semibold">60″ × 80″</strong> Sublimated Sherpa Throw — fully customizable. Soft sublimated surface on one side, plush sherpa warmth on the reverse.</p>
-            </div>
-            
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10 reveal">
-                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
-                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">5 Throws</div>
-                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
-                    <div class="text-3xl font-black text-blue-500 leading-none">$85</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
-                </div>
-                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
-                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">10 Throws</div>
-                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
-                    <div class="text-3xl font-black text-blue-500 leading-none">$79</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
-                </div>
-                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
-                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">15 Throws</div>
-                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
-                    <div class="text-3xl font-black text-blue-500 leading-none">$76</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
-                </div>
-                <div class="price-card bg-gray-900 border border-gray-800 p-5 rounded-xl text-center">
-                    <div class="text-[11px] font-black text-white uppercase tracking-widest mb-3">20 Throws</div>
-                    <div class="text-xs text-gray-500 line-through mb-1">$89 ea.</div>
-                    <div class="text-3xl font-black text-blue-500 leading-none">$73</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
-                </div>
-            </div>
-
-            <div class="text-center reveal">
-                <a href="https://rlp-dezines.square.site" target="_blank" rel="noopener" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm transition">Order Your Bundle →</a>
-                <p class="text-gray-500 text-xs mt-4">Complete your custom bundle order on our dedicated Square site.</p>
-            </div>
-        </div>
     </div>
 </section>
 
