@@ -225,7 +225,6 @@
     </div>
 </section>
 
-<!-- MOVED UP: Live Storefront is now instantly accessible below the hero -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-black">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-10 sm:mb-14 reveal">
@@ -250,7 +249,6 @@
     </div>
 </section>
 
-<!-- MOVED UP: Bundles immediately follow the store -->
 <section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-900 bg-gray-950">
     <div class="max-w-4xl mx-auto">
         <div class="bg-black border border-gray-800 p-6 sm:p-14 rounded-2xl">
@@ -297,7 +295,6 @@
     </div>
 </section>
 
-<!-- MOVED DOWN: The Ethos/Story -->
 <section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-900 bg-black">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12 reveal">
@@ -345,7 +342,6 @@
     </div>
 </section>
 
-<!-- MOVED DOWN: Promo blocks -->
 <section class="border-t border-gray-900 grid md:grid-cols-2" id="apparel">
     <div class="py-20 px-8 flex flex-col items-center justify-center text-center bg-gray-950 hover:bg-[#0a0a0a] transition duration-500 group border-b md:border-b-0 border-gray-900">
         <p class="section-label mb-5 justify-center reveal">Premium Apparel</p>
@@ -800,7 +796,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).join('');
 
                 grid.innerHTML += `
-                <details class="group w-full">
+                <details class="group w-full" open>
                     <summary class="flex justify-between items-center cursor-pointer bg-gray-900 p-4 sm:p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-gray-800 hover:border-blue-500 transition-colors select-none">
                         <div class="flex items-center gap-3">
                             ${icons[cat] || icons['Other Goods']}
