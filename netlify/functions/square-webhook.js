@@ -8,7 +8,7 @@ const squareClient = new Client({
     environment: Environment.Production,
 });
 
-// Track processed orders to prevent duplicate fulfillments
+// Track processed orders to prevent duplicate fulfillments in warm server instances
 const processedOrders = new Map();
 
 exports.handler = async (event) => {
@@ -40,7 +40,7 @@ exports.handler = async (event) => {
 
             if (!orderId) throw new Error("Payment was completed, but Square did not attach an order_id.");
 
-            // Check for duplicate processing
+            // Check memory cache for fast duplicate rejection
             if (processedOrders.has(orderId)) {
                 console.log(`Order ${orderId} already processed in this function instance. Skipping.`);
                 return { statusCode: 200, body: 'Duplicate webhook ignored.' };
@@ -85,7 +85,7 @@ exports.handler = async (event) => {
                 phone: orderRecipient.phoneNumber || payAddress.phone_number || ''
             };
 
-            let firstHookProcessed = false;
+            let isFreshOrder = false;
 
             // ── SUBMIT & AUTO-FULFILL VIA PRINTFUL ──
             try {
@@ -113,7 +113,7 @@ exports.handler = async (event) => {
                         }
                     });
                     console.log(`Printful Order ${printfulOrderId} officially submitted to production for Square Order ${orderId}!`);
-                    firstHookProcessed = true;
+                    isFreshOrder = true; // Flag it as a brand new success so the email fires
                     processedOrders.set(orderId, { timestamp: Date.now(), printfulOrderId });
                 }
             } catch (printfulError) {
@@ -121,10 +121,14 @@ exports.handler = async (event) => {
                 const errorReason = JSON.stringify(errorData) || printfulError.message;
                 
                 if (errorReason.includes("already exists") || errorData.error?.message?.includes("already exists") || errorData.api_error_code === "OR-13") {
-                    console.log(`Duplicate event for Square Order ${orderId} ignored safely.`);
-                    firstHookProcessed = true; // Treat as success for email purposes
+                    console.log(`Duplicate event for Square Order ${orderId} detected. Exiting safely without sending duplicate emails.`);
+                    
+                    // EXIT THE FUNCTION ENTIRELY! This prevents the spam emails.
+                    return { statusCode: 200, body: 'Duplicate webhook ignored safely.' };
+                    
                 } else {
                     console.error(`Printful API Error for Order ${orderId}:`, errorReason);
+                    isFreshOrder = true; // It IS a new order, Printful just errored out (like the sync variant bug). We still want to email the customer their receipt!
                     
                     try {
                         await resend.emails.send({
@@ -150,7 +154,7 @@ exports.handler = async (event) => {
             }
 
             // ── PREMIUM CUSTOMER CONFIRMATION EMAIL ──
-            if (firstHookProcessed || !event.headers['x-square-retry-count'] || event.headers['x-square-retry-count'] === '0') {
+            if (isFreshOrder) {
                 try {
                     const itemsHtml = lineItems.map(item => {
                         const totalLinePrice = item.totalMoney ? (Number(item.totalMoney.amount) / 100).toFixed(2) : "0.00";
