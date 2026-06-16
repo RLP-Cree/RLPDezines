@@ -53,9 +53,7 @@ exports.handler = async (event) => {
                     sku: vData.sku || '',
                     price: Number(priceMoney.amount || 0)
                 };
-            })
-            // ── THE FIX: Filter out 0 price AND any variant containing "bundle" ──
-            .filter(v => v.price > 0 && !v.name.toLowerCase().includes('bundle'));
+            }).filter(v => v.price > 0);
             
             let categoryName = 'Other Goods';
             
@@ -77,7 +75,8 @@ exports.handler = async (event) => {
                 category: categoryName,
                 variations: mappedVariations
             };
-        }).filter(p => p.variations.length > 0); // Completely hides the product if NO variants pass the filter
+        // ── THE FIX: Filter out the Item itself if the name contains "bundle" ──
+        }).filter(p => p.variations.length > 0 && !p.name.toLowerCase().includes('bundle'));
 
         return {
             statusCode: 200,
