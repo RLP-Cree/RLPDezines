@@ -105,6 +105,29 @@
         .price-card, .endorse-card { transition: border-color 0.3s, transform 0.3s, background 0.3s; }
         .price-card:hover, .endorse-card:hover { border-color: var(--blue); transform: translateY(-3px); background: #0f172a; }
 
+        /* ── Image Gallery Modal Swipe Styles ── */
+        .scroll-gallery {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 12px;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            padding: 0 10px;
+        }
+        .scroll-gallery::-webkit-scrollbar { display: none; }
+        .scroll-gallery { -ms-overflow-style: none; scrollbar-width: none; }
+        .scroll-gallery img {
+            flex: 0 0 88%;
+            scroll-snap-align: center;
+            border-radius: 8px;
+            object-fit: cover;
+            max-height: 90%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
         @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .product-card, .price-card, .endorse-card { transition: none; } }
     </style>
 </head>
@@ -653,11 +676,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const p = window.globalProducts[id]; if(!p) return;
         const safeName = (p.name || 'Item').replace(/'/g, "&#39;"), safeDesc = p.description || 'No additional details available.';
         const opts = p.variations.map(v => `<option value="${v.id}" data-price="${v.price}" data-name="${(v.name||'Regular').replace(/'/g,"&#39;")}" data-sku="${v.sku||''}">${v.name||'Regular'} — $${(v.price/100).toFixed(2)}</option>`).join('');
-        const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-500 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
+        
+        let imgHtml = '';
+        if (p.imageUrls && p.imageUrls.length > 1) {
+            const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName}">`).join('');
+            imgHtml = `<div class="scroll-gallery">${imgTags}</div>`;
+        } else if (p.imageUrl && p.imageUrl.startsWith('http')) {
+            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">`;
+        } else {
+            imgHtml = `<div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-500 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
+        }
 
         pModal.innerHTML = `
             <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-black/60 hover:bg-black text-white p-2 rounded-full z-10 transition shadow-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-            <div class="w-full md:w-1/2 h-64 sm:h-72 md:h-auto bg-gray-900 relative shrink-0 border-b md:border-b-0 md:border-r border-gray-800">${img}</div>
+            <div class="w-full md:w-1/2 h-64 sm:h-72 md:h-auto bg-gray-900 relative shrink-0 border-b md:border-b-0 md:border-r border-gray-800 flex items-center overflow-hidden">${imgHtml}</div>
             <div class="w-full md:w-1/2 p-6 sm:p-8 flex flex-col overflow-y-auto" style="max-height: 70vh;">
                 <h2 class="text-xl sm:text-2xl font-black uppercase tracking-widest text-white mb-3 leading-tight">${safeName}</h2>
                 <div class="text-[13px] sm:text-sm text-gray-400 leading-relaxed mb-6 whitespace-pre-wrap">${safeDesc}</div>
