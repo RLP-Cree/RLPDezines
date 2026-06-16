@@ -53,11 +53,13 @@ exports.handler = async (event) => {
                     sku: vData.sku || '',
                     price: Number(priceMoney.amount || 0)
                 };
-            }).filter(v => v.price > 0);
+            })
+            // ── THE FIX: Filter out 0 price AND any variant containing "bundle" ──
+            .filter(v => v.price > 0 && !v.name.toLowerCase().includes('bundle'));
             
             let categoryName = 'Other Goods';
             
-            // THE FIX: Check both legacy and modern Square Category arrays
+            // Check both legacy and modern Square Category arrays
             if (itemData.categoryId && categoryMap[itemData.categoryId]) {
                 categoryName = categoryMap[itemData.categoryId];
             } else if (itemData.categories && itemData.categories.length > 0) {
@@ -75,7 +77,7 @@ exports.handler = async (event) => {
                 category: categoryName,
                 variations: mappedVariations
             };
-        }).filter(p => p.variations.length > 0);
+        }).filter(p => p.variations.length > 0); // Completely hides the product if NO variants pass the filter
 
         return {
             statusCode: 200,
