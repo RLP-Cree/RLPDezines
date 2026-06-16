@@ -123,9 +123,11 @@
             flex: 0 0 88%;
             scroll-snap-align: center;
             border-radius: 8px;
-            object-fit: cover;
+            object-fit: contain; /* Shows the whole image without cropping */
+            aspect-ratio: 1 / 1; /* Forces a perfect square */
             max-height: 90%;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            background: #0a0a0a; /* Gives the square a slight dark background to frame it */
         }
 
         @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .product-card, .price-card, .endorse-card { transition: none; } }
@@ -682,7 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName}">`).join('');
             imgHtml = `<div class="scroll-gallery">${imgTags}</div>`;
         } else if (p.imageUrl && p.imageUrl.startsWith('http')) {
-            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-cover">`;
+            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain aspect-square p-2">`;
         } else {
             imgHtml = `<div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-500 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
         }
