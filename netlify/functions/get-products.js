@@ -71,11 +71,14 @@ exports.handler = async (event) => {
                 id: obj.id,
                 name: itemData.name || 'Unnamed Item',
                 description: itemData.description || '',
+                // Keeps the single primary image for the fast-loading main feed
                 imageUrl: (itemData.imageIds && itemData.imageIds.length > 0) ? imageMap[itemData.imageIds[0]] : null,
+                // NEW: Pulls every single image attached to the item into an array for the swipe gallery
+                imageUrls: (itemData.imageIds || []).map(id => imageMap[id]).filter(url => url),
                 category: categoryName,
                 variations: mappedVariations
             };
-        // ── THE FIX: Filter out the Item itself if the name contains "bundle" ──
+        // Filters out 0-variation items AND any item with "bundle" in the title
         }).filter(p => p.variations.length > 0 && !p.name.toLowerCase().includes('bundle'));
 
         return {
