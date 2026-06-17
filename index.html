@@ -82,7 +82,6 @@
         .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
         .card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         
-        /* Updated view-btn-text without the margin-top so it aligns with the Add to Cart button */
         .view-btn-text { font-size: 10px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; transition: color 0.2s; }
         .product-card:hover .view-btn-text { color: #2563EB; }
 
@@ -649,6 +648,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ex) ex.quantity += (p.quantity || 1); else this.items.push({ ...p, quantity: p.quantity || 1 });
             this.save(); this.render(); showToast('Added to cart ✓');
         }
+        updateItemQty(id, delta) {
+            const ex = this.items.find(i => i.id === id);
+            if (ex) {
+                ex.quantity += delta;
+                if (ex.quantity <= 0) {
+                    this.removeItem(id);
+                } else {
+                    this.save();
+                    this.render();
+                }
+            }
+        }
         removeItem(id) { this.items = this.items.filter(i => i.id !== id); this.save(); this.render(); }
         save() { localStorage.setItem('rlp_cart', JSON.stringify(this.items)); }
         render() {
@@ -665,9 +676,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if(btn) btn.disabled = false;
             if(cont) cont.innerHTML = this.items.map(i => `
-                <div class="flex gap-3 bg-white border border-gray-200 p-4 rounded-xl items-start shadow-sm">
-                    <div class="flex-grow min-w-0"><h4 class="text-[12px] font-bold text-gray-900 leading-snug">${i.name}</h4><p class="text-xs text-gray-500 mt-1">Qty: ${i.quantity} × $${(i.price/100).toFixed(2)}</p></div>
-                    <div class="flex flex-col items-end gap-2 shrink-0"><span class="text-sm font-black text-blue-600">$${((i.price*i.quantity)/100).toFixed(2)}</span><button onclick="window.Cart.removeItem('${i.id}')" class="text-red-500 hover:text-red-600 text-[10px] uppercase font-bold tracking-widest">Remove</button></div>
+                <div class="flex gap-3 bg-white border border-gray-200 p-4 rounded-xl items-center shadow-sm">
+                    <div class="flex-grow min-w-0">
+                        <h4 class="text-[12px] font-bold text-gray-900 leading-snug">${i.name}</h4>
+                        <div class="text-sm font-black text-blue-600 mt-1">$${((i.price*i.quantity)/100).toFixed(2)}</div>
+                    </div>
+                    <div class="flex flex-col items-end gap-2 shrink-0">
+                        <button onclick="window.Cart.removeItem('${i.id}')" class="text-gray-400 hover:text-red-500 text-xs transition flex justify-end w-full"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                        <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg h-7 mt-1">
+                            <button onclick="window.Cart.updateItemQty('${i.id}', -1)" class="w-7 h-full flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition font-bold">−</button>
+                            <span class="w-6 text-center text-[11px] font-bold text-gray-900">${i.quantity}</span>
+                            <button onclick="window.Cart.updateItemQty('${i.id}', 1)" class="w-7 h-full flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition font-bold">+</button>
+                        </div>
+                    </div>
                 </div>`).join('');
             if(totEl) totEl.textContent = `$${(this.items.reduce((s, i) => s + (i.price * i.quantity), 0)/100).toFixed(2)}`;
         }
