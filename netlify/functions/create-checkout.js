@@ -78,6 +78,14 @@ exports.handler = async (event) => {
                 redirectUrl: 'https://rlpdezines.com/order-complete',
                 merchantSupportEmail: 'rlp@rlpdezines.com',
                 
+                // ── EXPLICITLY OPEN THE PAYMENT GATES ──
+                acceptedPaymentMethods: {
+                    applePay: true,
+                    googlePay: true,
+                    cashAppPay: true,
+                    afterpayClearpay: true
+                },
+                
                 // ── THE SHIPPING INJECTION ──
                 shippingFee: {
                     name: 'Standard Shipping',
