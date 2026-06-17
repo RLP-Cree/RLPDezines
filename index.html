@@ -25,7 +25,7 @@
         :root { --blue: #2563EB; --blue-light: #3B82F6; }
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111827; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111827; -webkit-font-smoothing: antialiased; font-size: 16px; }
         body.no-scroll { overflow: hidden !important; touch-action: none; }
 
         /* ── Hero Background ── */
@@ -53,17 +53,24 @@
         .reveal-delay-3 { transition-delay: 0.24s; }
         .reveal-delay-4 { transition-delay: 0.32s; }
 
-        #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
+        #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
         #toast.show { transform: translateX(-50%) translateY(0); }
 
-        .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 11px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
+        .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 13px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
         .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
         
-        .form-input { width: 100%; background: #f9fafb; border: 1px solid #e5e7eb; color: #111827; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 0.875rem; }
+        .form-input { width: 100%; background: #f9fafb; border: 1px solid #e5e7eb; color: #111827; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; }
         .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
         
         #back-top { opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; transform: translateY(8px); }
         #back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+        /* ── Custom Pulse Animation for CTA Buttons ── */
+        @keyframes subtle-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            50% { box-shadow: 0 0 10px 4px rgba(37, 99, 235, 0.2); }
+        }
+        .btn-pulse { animation: subtle-glow 2s infinite; }
 
         /* ── Cart Drawer & Mobile Menu ── */
         #cart-drawer { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -79,21 +86,21 @@
         .product-card:hover .card-img { transform: scale(1.05); }
         .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: #f9fafb; position: relative; }
         .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
+        .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 13px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
         .card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         
-        .view-btn-text { font-size: 10px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; transition: color 0.2s; }
+        .view-btn-text { font-size: 11px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; transition: color 0.2s; }
         .product-card:hover .view-btn-text { color: #2563EB; }
 
         /* ── Modal Styles ── */
-        .variant-select { appearance: none; -webkit-appearance: none; background: #f9fafb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid #e5e7eb; color: #111827; padding: 12px 36px 12px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; width: 100%; outline: none; transition: border-color 0.2s; }
+        .variant-select { appearance: none; -webkit-appearance: none; background: #f9fafb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid #e5e7eb; color: #111827; padding: 12px 36px 12px 14px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%; outline: none; transition: border-color 0.2s; }
         .variant-select:focus { border-color: #2563EB; outline: 2px solid rgba(37,99,235,0.1); }
         .qty-wrap { display: flex; align-items: center; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; height: 44px; flex-shrink: 0; }
         .qty-btn { width: 40px; height: 100%; background: transparent; color: #6b7280; border: none; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s, background 0.2s; }
         .qty-btn:hover { color: #111827; background: #f3f4f6; }
-        .qty-num { width: 40px; text-align: center; font-size: 14px; font-weight: 700; color: #111827; background: transparent; border: none; outline: none; -moz-appearance: textfield; }
+        .qty-num { width: 40px; text-align: center; font-size: 15px; font-weight: 700; color: #111827; background: transparent; border: none; outline: none; -moz-appearance: textfield; }
         .qty-num::-webkit-outer-spin-button, .qty-num::-webkit-inner-spin-button { -webkit-appearance: none; }
-        .atc-btn { flex-grow: 1; background: #2563EB; color: #fff; border: none; border-radius: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 16px; height: 44px; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+        .atc-btn { flex-grow: 1; background: #2563EB; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 16px; height: 44px; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
         .atc-btn:hover { background: #1d4ed8; }
         .atc-btn:active { transform: scale(0.98); }
 
@@ -116,20 +123,19 @@
             width: 100%;
             height: 100%;
             align-items: center;
-            padding: 0 10px;
+            padding: 0;
+            margin: 0;
         }
         .scroll-gallery::-webkit-scrollbar { display: none; }
         .scroll-gallery { -ms-overflow-style: none; scrollbar-width: none; }
         .scroll-gallery img {
-            flex: 0 0 88%;
+            flex: 0 0 100%;
             scroll-snap-align: center;
-            border-radius: 8px;
-            object-fit: contain;
+            object-fit: cover;
             aspect-ratio: 1 / 1; 
-            max-height: 90%;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            width: 100%;
+            height: 100%;
             background: #ffffff; 
-            border: 1px solid #f3f4f6;
         }
 
         @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .product-card, .price-card, .endorse-card { transition: none; } }
@@ -140,22 +146,21 @@
 <header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 py-4">
         
-        <!-- RLP DEZINES LOGO -->
         <a href="#top" class="flex items-center transition hover:opacity-80">
             <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w400" alt="RLP Dezines Logo" class="h-8 sm:h-10 w-auto object-contain">
         </a>
 
-        <nav class="hidden lg:flex items-center space-x-6 text-[12px] font-semibold text-gray-500">
-            <a href="#bundles"   class="nav-link hover:text-gray-900 transition">Bundles</a>
+        <nav class="hidden lg:flex items-center space-x-6 text-[13px] font-semibold text-gray-500">
             <a href="#shop-live" class="nav-link hover:text-gray-900 transition">Apparel</a>
+            <a href="#bundles"   class="nav-link hover:text-gray-900 transition">Bundles</a>
+            <a href="#tunes"     class="nav-link hover:text-gray-900 transition text-blue-600 font-bold">RLP Tunes</a>
             <a href="#mission"   class="nav-link hover:text-gray-900 transition">Mission</a>
-            <a href="#tunes"     class="nav-link hover:text-gray-900 transition">Music</a>
             <a href="#wholesale" class="nav-link hover:text-gray-900 transition">Wholesale</a>
             <a href="#services"  class="nav-link hover:text-gray-900 transition">Design</a>
             <a href="#info"      class="nav-link hover:text-gray-900 transition">FAQ</a>
             <a href="mailto:rlp@rlpdezines.com" class="bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-full font-bold tracking-widest uppercase transition">Contact</a>
             
-            <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase">
+            <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Cart (<span id="cart-count">0</span>)
             </button>
@@ -164,7 +169,7 @@
         <div class="flex items-center gap-3 lg:hidden">
             <button id="mobile-cart-btn" class="relative text-gray-900 hover:text-blue-600 transition p-1" aria-label="Open cart">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                <span id="mobile-cart-badge" class="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center hidden"><span id="mobile-cart-count">0</span></span>
+                <span id="mobile-cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center hidden shadow-sm"><span id="mobile-cart-count">0</span></span>
             </button>
             <button id="menu-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1" aria-label="Toggle menu">
                 <svg id="menu-icon-open"  class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -175,10 +180,10 @@
 </header>
 
 <div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-white/98 backdrop-blur-xl border-b border-gray-200 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overflow-y-auto" style="height: calc(100vh - 69px);">
-    <a href="#bundles"   class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Ceremony Bundles</a>
     <a href="#shop-live" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Shop Now</a>
+    <a href="#bundles"   class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Ceremony Bundles</a>
+    <a href="#tunes"     class="mobile-link text-blue-600 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">RLP Tunes</a>
     <a href="#mission"   class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">The Mission</a>
-    <a href="#tunes"     class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">RLP Tunes</a>
     <a href="#wholesale" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Wholesale</a>
     <a href="#services"  class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Design Services</a>
     <a href="#endorsements" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Endorsements</a>
@@ -190,8 +195,8 @@
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-50 border-l border-gray-200 z-[70] flex flex-col shadow-2xl">
     <div class="px-5 py-4 border-b border-gray-200 flex justify-between items-center bg-white flex-shrink-0">
         <div>
-            <h3 class="text-base font-black uppercase tracking-widest text-gray-900">Your Cart</h3>
-            <p id="cart-item-count-label" class="text-xs text-gray-500 mt-0.5">0 items</p>
+            <h3 class="text-lg font-black uppercase tracking-widest text-gray-900">Your Cart</h3>
+            <p id="cart-item-count-label" class="text-sm text-gray-500 mt-0.5">0 items</p>
         </div>
         <button id="close-cart-btn" class="text-gray-400 hover:text-gray-900 transition p-1">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -199,20 +204,21 @@
     </div>
     <div id="cart-items-container" class="flex-grow overflow-y-auto px-5 py-4 space-y-3"></div>
     <div class="px-5 py-5 bg-white border-t border-gray-200 flex-shrink-0">
-        <div class="flex justify-between text-sm text-gray-600 mb-1 font-semibold">
+        <div class="flex justify-between text-base text-gray-600 mb-2 font-semibold">
             <span>Subtotal</span>
-            <span id="cart-total" class="text-gray-900 font-black text-base">$0.00</span>
+            <span id="cart-total" class="text-gray-900 font-black text-lg">$0.00</span>
         </div>
-        <p class="text-[11px] text-gray-500 mb-4">Shipping & taxes calculated dynamically at checkout.</p>
-        <button id="checkout-btn" class="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex justify-center items-center gap-2 text-sm" disabled>
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        <p class="text-xs text-gray-500 mb-4">Shipping & taxes calculated dynamically at checkout.</p>
+        <button id="checkout-btn" class="btn-pulse w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:animation-none disabled:cursor-not-allowed text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex justify-center items-center gap-2 text-base" disabled>
+            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
             Secure Checkout
         </button>
     </div>
 </div>
 
 <div id="product-modal-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-md z-[80] hidden opacity-0 transition-opacity duration-300"></div>
-<div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
+
+<div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
 </div>
 
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[85vh] overflow-hidden">
@@ -223,19 +229,38 @@
         <p class="section-label mb-6 justify-center reveal">Welcome to the Lodgepole Home</p>
         
         <div class="w-full max-w-4xl mx-auto mb-12 reveal reveal-delay-1 px-2 sm:px-0">
-            <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-[0_0_40px_rgba(0,0,0,0.05)] group">
-                <img src="https://drive.google.com/thumbnail?id=1z1bLCx2lAemhyKXXYdR0KvxO_5X1ztwx&sz=w1600" alt="RLP Dezines Featured Art" class="w-full h-auto object-cover transform group-hover:scale-[1.02] transition duration-700 ease-in-out">
-                <div class="absolute inset-0 pointer-events-none rounded-2xl shadow-[inset_0_0_20px_rgba(0,0,0,0.05)]"></div>
+            <div class="relative group">
+                <img src="https://drive.google.com/thumbnail?id=1z1bLCx2lAemhyKXXYdR0KvxO_5X1ztwx&sz=w1600" alt="RLP Dezines Featured Art" class="w-full h-auto object-cover transform group-hover:scale-[1.02] transition duration-700 ease-in-out mix-blend-multiply">
             </div>
         </div>
 
         <h1 class="text-5xl sm:text-7xl font-black mb-6 text-gray-900 tracking-tight uppercase leading-none reveal reveal-delay-2">Come On In</h1>
-        <p class="text-gray-600 max-w-lg mx-auto text-lg mb-4 font-light leading-relaxed reveal reveal-delay-3">It's good to have you here.<br>Make yourself comfortable.</p>
-        <p class="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed font-light mb-12 reveal reveal-delay-4">Whether you're just looking to browse or need something specific for your walk, <strong class="text-gray-900 font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here.</p>
+        <p class="text-gray-600 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3">It's good to have you here.<br>Make yourself comfortable.</p>
+        <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4">Whether you're just looking to browse or need something specific for your walk, <strong class="text-gray-900 font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here.</p>
         
         <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-delay-4">
-            <a href="#bundles" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Bundles</a>
-            <a href="#shop-live" class="bg-gray-100 text-gray-900 px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 transition shadow-sm text-sm uppercase tracking-widest border border-gray-200">Shop Apparel</a>
+            <a href="#shop-live" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Apparel</a>
+            <a href="#bundles" class="bg-gray-100 text-gray-900 px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 transition shadow-sm text-sm uppercase tracking-widest border border-gray-200">Shop Bundles</a>
+        </div>
+    </div>
+</section>
+
+<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10 sm:mb-14 reveal">
+            <p class="section-label mb-4 justify-center">Live Catalog</p>
+            <h2 class="text-4xl sm:text-6xl font-black text-gray-900 uppercase tracking-tight">The <span class="text-blue-500">Store</span></h2>
+        </div>
+        
+        <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
+            <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
+                <div class="flex items-center gap-3 w-1/2"><div class="h-6 w-6 bg-gray-200 rounded"></div><div class="h-6 bg-gray-200 rounded w-1/2"></div></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
+                <div class="skeleton h-72 rounded-xl"></div>
+                <div class="skeleton h-72 rounded-xl hidden sm:block"></div>
+                <div class="skeleton h-72 rounded-xl hidden lg:block"></div>
+            </div>
         </div>
     </div>
 </section>
@@ -245,68 +270,52 @@
         <div class="bg-white border border-gray-200 p-6 sm:p-14 rounded-2xl shadow-sm">
             <div class="text-center mb-10 reveal">
                 <p class="section-label mb-5 justify-center">A Special Gift for Your Guests</p>
-                <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-5">RLP Family Honoring Specials</h2>
-                <p class="text-gray-600 font-light leading-relaxed mb-4">When you're hosting, you want your relatives to feel truly taken care of. These bundles honor your guests with <strong class="text-blue-600 font-semibold">unmatched comfort and meaningful design.</strong></p>
-                <p class="text-gray-600 font-light leading-relaxed mb-8">Every blanket is a <strong class="text-gray-900 font-semibold">60″ × 80″</strong> Sublimated Sherpa Throw — fully customizable. Soft sublimated surface on one side, plush sherpa warmth on the reverse.</p>
+                <h2 class="text-4xl font-black text-gray-900 uppercase mb-5">RLP Family Honoring Specials</h2>
+                <p class="text-gray-600 font-light leading-relaxed mb-4 text-lg">When you're hosting, you want your relatives to feel truly taken care of. These bundles honor your guests with <strong class="text-blue-600 font-semibold">unmatched comfort and meaningful design.</strong></p>
+                <p class="text-gray-600 font-light leading-relaxed mb-8 text-lg">Every blanket is a <strong class="text-gray-900 font-semibold">60″ × 80″</strong> Sublimated Sherpa Throw — fully customizable. Soft sublimated surface on one side, plush sherpa warmth on the reverse.</p>
             </div>
             
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10 reveal">
                 <div class="price-card bg-white border border-gray-200 p-5 rounded-xl text-center">
-                    <div class="text-[11px] font-black text-gray-900 uppercase tracking-widest mb-3">5 Throws</div>
-                    <div class="text-xs text-gray-400 line-through mb-1">$89 ea.</div>
-                    <div class="text-3xl font-black text-blue-600 leading-none">$85</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                    <div class="text-[12px] font-black text-gray-900 uppercase tracking-widest mb-3">5 Throws</div>
+                    <div class="text-sm text-gray-400 line-through mb-1">$89 ea.</div>
+                    <div class="text-4xl font-black text-blue-600 leading-none">$85</div>
+                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
                 </div>
                 <div class="price-card bg-white border border-gray-200 p-5 rounded-xl text-center">
-                    <div class="text-[11px] font-black text-gray-900 uppercase tracking-widest mb-3">10 Throws</div>
-                    <div class="text-xs text-gray-400 line-through mb-1">$89 ea.</div>
-                    <div class="text-3xl font-black text-blue-600 leading-none">$79</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                    <div class="text-[12px] font-black text-gray-900 uppercase tracking-widest mb-3">10 Throws</div>
+                    <div class="text-sm text-gray-400 line-through mb-1">$89 ea.</div>
+                    <div class="text-4xl font-black text-blue-600 leading-none">$79</div>
+                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
                 </div>
                 <div class="price-card bg-white border border-gray-200 p-5 rounded-xl text-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
-                    <div class="text-[11px] font-black text-gray-900 uppercase tracking-widest mb-3">15 Throws</div>
-                    <div class="text-xs text-gray-400 line-through mb-1">$89 ea.</div>
-                    <div class="text-3xl font-black text-blue-600 leading-none">$76</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
+                    <div class="text-[12px] font-black text-gray-900 uppercase tracking-widest mb-3">15 Throws</div>
+                    <div class="text-sm text-gray-400 line-through mb-1">$89 ea.</div>
+                    <div class="text-4xl font-black text-blue-600 leading-none">$76</div>
+                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
                 </div>
                 <div class="price-card bg-white border border-gray-200 p-5 rounded-xl text-center">
-                    <div class="text-[11px] font-black text-gray-900 uppercase tracking-widest mb-3">20 Throws</div>
-                    <div class="text-xs text-gray-400 line-through mb-1">$89 ea.</div>
-                    <div class="text-3xl font-black text-blue-600 leading-none">$73</div>
-                    <div class="text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">per throw</div>
+                    <div class="text-[12px] font-black text-gray-900 uppercase tracking-widest mb-3">20 Throws</div>
+                    <div class="text-sm text-gray-400 line-through mb-1">$89 ea.</div>
+                    <div class="text-4xl font-black text-blue-600 leading-none">$73</div>
+                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
                 </div>
             </div>
 
             <div class="text-center reveal">
-                <a href="https://rlp-dezines.square.site" target="_blank" rel="noopener" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm transition">Order Your Bundle →</a>
-                <p class="text-gray-500 text-xs mt-4">Complete your custom bundle order on our dedicated Square site.</p>
+                <a href="https://rlp-dezines.square.site" target="_blank" rel="noopener" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-base transition">Order Your Bundle →</a>
+                <p class="text-gray-500 text-sm mt-4">Complete your custom bundle order on our dedicated Square site.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
-    <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-10 sm:mb-14 reveal">
-            <p class="section-label mb-4 justify-center">Live Catalog</p>
-            <h2 class="text-3xl sm:text-5xl font-black text-gray-900 uppercase tracking-tight">The <span class="text-blue-500">Store</span></h2>
-        </div>
-        
-        <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
-            <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/2"><div class="h-5 w-5 bg-gray-200 rounded"></div><div class="h-5 bg-gray-200 rounded w-1/2"></div></div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
-                <div class="skeleton h-64 rounded-xl"></div>
-                <div class="skeleton h-64 rounded-xl hidden sm:block"></div>
-                <div class="skeleton h-64 rounded-xl hidden lg:block"></div>
-            </div>
-            <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/3"><div class="h-5 w-5 bg-gray-200 rounded"></div><div class="h-5 bg-gray-200 rounded w-full"></div></div>
-            </div>
-        </div>
-    </div>
+<section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-gray-50 border-t border-gray-200 hover:bg-gray-100 transition duration-500 group">
+    <p class="section-label mb-5 justify-center reveal">Original NAC Music</p>
+    <h2 class="text-5xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
+    <p class="text-gray-600 max-w-lg mx-auto mb-8 text-lg font-light leading-relaxed reveal">The soundtrack to the hustle. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
+    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
 </section>
 
 <section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-200 bg-white">
@@ -316,79 +325,63 @@
             <h2 class="text-4xl sm:text-6xl font-black text-gray-900 uppercase tracking-tight">Our <span class="text-blue-600">Story</span></h2>
         </div>
 
-        <div class="max-w-sm mx-auto mb-16 reveal">
+        <div class="max-w-md mx-auto mb-16 reveal">
             <div class="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden shadow-lg">
                 <img class="w-full h-auto block" src="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1000" alt="Ronnie Lodgepole" loading="lazy">
             </div>
-            <div class="text-center text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-4">
+            <div class="text-center text-gray-500 text-xs font-semibold tracking-widest uppercase mt-4">
                 Photo by <span class="text-gray-700 font-black">Aaron Tsosie</span> | Indigenous Event Recordings
             </div>
         </div>
 
-        <div class="text-center max-w-2xl mx-auto mb-14 reveal">
-            <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-wide text-gray-900 mb-5">What is an <span class="text-blue-600">Indigipreneur?</span></h3>
-            <p class="text-gray-600 font-light leading-relaxed mb-4">An Indigipreneur is an Indigenous person who shares their resilience to create a meaningful life and clear a path for the next generation. It is a modern expression of the ingenuity that has always been in our DNA.</p>
-            <p class="text-gray-600 font-light leading-relaxed mb-7">By utilizing modern tools and technology, we operate from our own perspective. Whether in design, education, or service, we see the world through an Indigenous lens, grounding our work in the values we were raised with.</p>
+        <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+            <h3 class="text-3xl sm:text-4xl font-black uppercase tracking-wide text-gray-900 mb-5">What is an <span class="text-blue-600">Indigipreneur?</span></h3>
+            <p class="text-gray-600 font-light leading-relaxed mb-4 text-lg">An Indigipreneur is an Indigenous person who shares their resilience to create a meaningful life and clear a path for the next generation. It is a modern expression of the ingenuity that has always been in our DNA.</p>
+            <p class="text-gray-600 font-light leading-relaxed mb-7 text-lg">By utilizing modern tools and technology, we operate from our own perspective. Whether in design, education, or service, we see the world through an Indigenous lens, grounding our work in the values we were raised with.</p>
         </div>
 
-        <div class="text-center max-w-2xl mx-auto mb-14 reveal">
-            <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-wide text-gray-900 mb-5">Art Born From <span class="text-blue-600">Experience</span></h3>
-            <p class="text-gray-600 font-light leading-relaxed mb-4">I did not start this just to create designs. I started this to contribute to the well-being of our community. I have walked through my own share of challenges and seen the struggles our people face.</p>
-            <p class="text-gray-600 font-light leading-relaxed mb-4">I found my way through our traditional ways. Through prayer, the sweat lodge, the discipline of training, the power of laughter, and the energy of the dance arena, I found healing. I learned how to channel that energy into something positive for my family and my community.</p>
-            <p class="text-gray-600 font-light leading-relaxed mb-7"><strong class="text-gray-900 font-semibold">RLP Dezines</strong> is an expression of that journey. My hope is to share the strength and healing I have found with you.</p>
+        <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+            <h3 class="text-3xl sm:text-4xl font-black uppercase tracking-wide text-gray-900 mb-5">Art Born From <span class="text-blue-600">Experience</span></h3>
+            <p class="text-gray-600 font-light leading-relaxed mb-4 text-lg">I did not start this just to create designs. I started this to contribute to the well-being of our community. I have walked through my own share of challenges and seen the struggles our people face.</p>
+            <p class="text-gray-600 font-light leading-relaxed mb-4 text-lg">I found my way through our traditional ways. Through prayer, the sweat lodge, the discipline of training, the power of laughter, and the energy of the dance arena, I found healing. I learned how to channel that energy into something positive for my family and my community.</p>
+            <p class="text-gray-600 font-light leading-relaxed mb-7 text-lg"><strong class="text-gray-900 font-semibold">RLP Dezines</strong> is an expression of that journey. My hope is to share the strength and healing I have found with you.</p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6 mb-16 reveal">
             <div class="bg-gray-50 border border-gray-200 border-l-4 border-l-blue-500 p-8 rounded-lg shadow-sm">
-                <h4 class="text-gray-900 font-black tracking-widest text-sm uppercase mb-4">The Mission</h4>
-                <p class="text-gray-600 font-light text-sm leading-relaxed">To offer a space of encouragement for the Indigenous spirit. Through the synergy of our traditional values and modern design, I aim to provide items that serve as a reminder of our collective strength.</p>
+                <h4 class="text-gray-900 font-black tracking-widest text-base uppercase mb-4">The Mission</h4>
+                <p class="text-gray-600 font-light text-base leading-relaxed">To offer a space of encouragement for the Indigenous spirit. Through the synergy of our traditional values and modern design, I aim to provide items that serve as a reminder of our collective strength.</p>
             </div>
             <div class="bg-gray-50 border border-gray-200 border-l-4 border-l-blue-500 p-8 rounded-lg shadow-sm">
-                <h4 class="text-gray-900 font-black tracking-widest text-sm uppercase mb-4">The Vision</h4>
-                <p class="text-gray-600 font-light text-sm leading-relaxed">To see RLP Dezines worn as a reflection of <strong class="text-gray-900 font-semibold">health, happiness, and cultural pride</strong> across Indian Country. My vision is for our creative work to serve as a bridge, ensuring that our connection to our heritage remains vibrant.</p>
+                <h4 class="text-gray-900 font-black tracking-widest text-base uppercase mb-4">The Vision</h4>
+                <p class="text-gray-600 font-light text-base leading-relaxed">To see RLP Dezines worn as a reflection of <strong class="text-gray-900 font-semibold">health, happiness, and cultural pride</strong> across Indian Country. My vision is for our creative work to serve as a bridge, ensuring that our connection to our heritage remains vibrant.</p>
             </div>
         </div>
 
         <div class="text-center max-w-2xl mx-auto border-t border-gray-200 pt-16 reveal">
-            <p class="text-xl italic text-gray-900 leading-relaxed mb-4">"In a timeline full of noise, we are focusing on what <span class="text-blue-600 font-bold not-italic">truly matters</span>."</p>
-            <div class="text-gray-500 text-[11px] font-black tracking-[0.2em] uppercase">— Ronnie Lodgepole, Founder</div>
+            <p class="text-2xl italic text-gray-900 leading-relaxed mb-4">"In a timeline full of noise, we are focusing on what <span class="text-blue-600 font-bold not-italic">truly matters</span>."</p>
+            <div class="text-gray-500 text-xs font-black tracking-[0.2em] uppercase">— Ronnie Lodgepole, Founder</div>
         </div>
     </div>
 </section>
 
-<section class="border-t border-gray-200 grid md:grid-cols-2" id="apparel">
-    <div class="py-20 px-8 flex flex-col items-center justify-center text-center bg-gray-50 hover:bg-gray-100 transition duration-500 group border-b md:border-b-0 border-gray-200">
-        <p class="section-label mb-5 justify-center reveal">Premium Apparel</p>
-        <h2 class="text-4xl font-black mb-4 uppercase text-gray-900 group-hover:scale-[1.03] transition duration-500 reveal">The Collection</h2>
-        <p class="text-gray-600 max-w-sm mx-auto mb-8 text-base font-light leading-relaxed reveal">Browse our latest premium apparel, blankets, and everyday carry items — each one rooted in authentic Indigenous design.</p>
-        <a href="#top" class="reveal inline-block border-2 border-gray-900 text-gray-900 px-10 py-4 rounded-full font-bold hover:bg-gray-900 hover:text-white transition text-sm uppercase tracking-widest w-full sm:w-auto">Back to Top ↑</a>
-    </div>
-
-    <div id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-gray-50 md:border-l border-gray-200 hover:bg-gray-100 transition duration-500 group">
-        <p class="section-label mb-5 justify-center reveal">Original NAC Music</p>
-        <h2 class="text-4xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
-        <p class="text-gray-600 max-w-sm mx-auto mb-8 text-base font-light leading-relaxed reveal">The soundtrack to the hustle. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
-        <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-sm uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
-    </div>
-</section>
-
 <section id="wholesale" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
-    <div class="max-w-4xl mx-auto space-y-8">
+    <div class="max-w-5xl mx-auto space-y-8">
         <div class="bg-gray-50 border border-gray-200 p-6 sm:p-14 rounded-2xl shadow-sm">
             <div class="text-center mb-10 reveal">
                 <p class="section-label mb-5 justify-center">Retail Partners</p>
-                <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-5">Wholesale Portal</h2>
-                <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto">I am honored to partner with boutiques and galleries to share this work with a wider audience.</p>
+                <h2 class="text-4xl font-black text-gray-900 uppercase mb-5">Wholesale Portal</h2>
+                <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto text-lg">I am honored to partner with boutiques and galleries to share this work with a wider audience.</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6 mb-10 reveal">
                 <div>
-                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-xs mb-3">Order Requirements</h4>
-                    <p class="text-gray-600 font-light text-sm leading-relaxed">Opening Order MOQ: <strong class="text-gray-900">15 total items</strong><br>Reorder MOQ: <strong class="text-gray-900">10 total items</strong></p>
+                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Order Requirements</h4>
+                    <p class="text-gray-600 font-light text-base leading-relaxed">Opening Order MOQ: <strong class="text-gray-900">15 total items</strong><br>Reorder MOQ: <strong class="text-gray-900">10 total items</strong></p>
                 </div>
                 <div>
-                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-xs mb-3">Volume Tiers</h4>
-                    <p class="text-gray-600 font-light text-sm leading-relaxed">
+                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Volume Tiers</h4>
+                    <p class="text-gray-600 font-light text-base leading-relaxed">
                         Tier 1: 15–29 items → <strong class="text-gray-900">10% Off</strong><br>
                         Tier 2: 30–49 items → <strong class="text-gray-900">15% Off</strong><br>
                         Tier 3: 50+ items → <strong class="text-gray-900">25% Off</strong>
@@ -397,38 +390,38 @@
             </div>
 
             <div class="w-full overflow-x-auto table-scroll mb-10 rounded-xl border border-gray-200 reveal">
-                <table class="w-full min-w-[480px] text-center border-collapse bg-white text-sm">
+                <table class="w-full min-w-[480px] text-center border-collapse bg-white text-base">
                     <thead>
-                        <tr class="bg-blue-600 text-white uppercase text-[11px] tracking-wider font-bold">
-                            <th class="p-3 text-left pl-5">Product</th>
-                            <th class="p-3">MSRP</th>
-                            <th class="p-3">Tier 1</th>
-                            <th class="p-3">Tier 2</th>
-                            <th class="p-3">Tier 3</th>
+                        <tr class="bg-blue-600 text-white uppercase text-xs tracking-wider font-bold">
+                            <th class="p-4 text-left pl-6">Product</th>
+                            <th class="p-4">MSRP</th>
+                            <th class="p-4">Tier 1</th>
+                            <th class="p-4">Tier 2</th>
+                            <th class="p-4">Tier 3</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 divide-y divide-gray-200">
-                        <tr><td class="p-3 text-left pl-5 font-semibold text-gray-900">T-Shirt</td><td class="p-3">$35.00</td><td class="p-3">$31.50</td><td class="p-3">$29.75</td><td class="p-3">$26.25</td></tr>
-                        <tr><td class="p-3 text-left pl-5 font-semibold text-gray-900">Sherpa Blanket</td><td class="p-3">$89.00</td><td class="p-3">$80.10</td><td class="p-3">$75.65</td><td class="p-3">$66.75</td></tr>
-                        <tr><td class="p-3 text-left pl-5 font-semibold text-gray-900">Tumbler</td><td class="p-3">$48.00</td><td class="p-3">$43.20</td><td class="p-3">$40.80</td><td class="p-3">$36.00</td></tr>
-                        <tr><td class="p-3 text-left pl-5 font-semibold text-gray-900">Tote Bag</td><td class="p-3">$65.00</td><td class="p-3">$58.50</td><td class="p-3">$55.25</td><td class="p-3">$48.75</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">T-Shirt</td><td class="p-4">$35.00</td><td class="p-4">$31.50</td><td class="p-4">$29.75</td><td class="p-4">$26.25</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Sherpa Blanket</td><td class="p-4">$89.00</td><td class="p-4">$80.10</td><td class="p-4">$75.65</td><td class="p-4">$66.75</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Tumbler</td><td class="p-4">$48.00</td><td class="p-4">$43.20</td><td class="p-4">$40.80</td><td class="p-4">$36.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Tote Bag</td><td class="p-4">$65.00</td><td class="p-4">$58.50</td><td class="p-4">$55.25</td><td class="p-4">$48.75</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <h4 class="text-blue-600 font-bold uppercase tracking-widest text-xs mb-5 reveal">How to Order</h4>
+            <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-5 reveal">How to Order</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-0 reveal">
                 <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
-                    <div class="text-2xl font-black text-blue-600 mb-3">1</div>
-                    <p class="text-gray-600 font-light text-sm"><strong class="text-gray-900">Browse:</strong> Select items from the public storefront.</p>
+                    <div class="text-3xl font-black text-blue-600 mb-3">1</div>
+                    <p class="text-gray-600 font-light text-base"><strong class="text-gray-900">Browse:</strong> Select items from the public storefront.</p>
                 </div>
                 <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
-                    <div class="text-2xl font-black text-blue-600 mb-3">2</div>
-                    <p class="text-gray-600 font-light text-sm"><strong class="text-gray-900">Compile:</strong> Email your list (Product, Design, Size, Qty) to <strong class="text-gray-900">RLP@RLPDEZINES.COM</strong>.</p>
+                    <div class="text-3xl font-black text-blue-600 mb-3">2</div>
+                    <p class="text-gray-600 font-light text-base"><strong class="text-gray-900">Compile:</strong> Email your list (Product, Design, Size, Qty) to <strong class="text-gray-900">RLP@RLPDEZINES.COM</strong>.</p>
                 </div>
                 <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
-                    <div class="text-2xl font-black text-blue-600 mb-3">3</div>
-                    <p class="text-gray-600 font-light text-sm"><strong class="text-gray-900">Invoice:</strong> I'll apply tier discounts and send a digital invoice. Production starts on payment.</p>
+                    <div class="text-3xl font-black text-blue-600 mb-3">3</div>
+                    <p class="text-gray-600 font-light text-base"><strong class="text-gray-900">Invoice:</strong> I'll apply tier discounts and send a digital invoice. Production starts on payment.</p>
                 </div>
             </div>
         </div>
@@ -440,13 +433,13 @@
         <div class="bg-white border border-gray-200 border-l-4 border-l-blue-500 p-6 sm:p-14 rounded-2xl shadow-sm">
             <div class="mb-8 reveal">
                 <p class="section-label mb-5">B2B & Creative Services</p>
-                <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-5 tracking-tight">Design <span class="text-blue-600">Services</span></h2>
-                <p class="text-gray-600 font-light leading-relaxed max-w-2xl">
+                <h2 class="text-4xl font-black text-gray-900 uppercase mb-5 tracking-tight">Design <span class="text-blue-600">Services</span></h2>
+                <p class="text-gray-600 font-light leading-relaxed max-w-2xl text-lg">
                     RLP Dezines is your full-stack design partner. We provide <strong class="text-gray-900 font-semibold">bulk production on all catalog items</strong> and <strong class="text-gray-900 font-semibold">custom design services</strong>. Fill out the form below with your project scope and budget.
                 </p>
             </div>
 
-            <div id="intake-form-wrap" class="max-w-2xl mx-auto bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200 reveal">
+            <div id="intake-form-wrap" class="max-w-3xl mx-auto bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200 reveal">
                 <form name="design-intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
                     <input type="text" name="name">
                     <input type="email" name="email">
@@ -457,16 +450,16 @@
                 <div id="form-fields">
                     <div class="grid sm:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-name">Name / Organization</label>
+                            <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-name">Name / Organization</label>
                             <input class="form-input" type="text" id="intake-name" placeholder="Your name or org" required>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-email">Email Address</label>
+                            <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-email">Email Address</label>
                             <input class="form-input" type="email" id="intake-email" placeholder="you@example.com" required>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-budget">Estimated Budget</label>
+                        <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-budget">Estimated Budget</label>
                         <select class="form-input" id="intake-budget">
                             <option value="Not Sure Yet">Not Sure Yet</option>
                             <option value="Under $500">Under $500</option>
@@ -476,20 +469,20 @@
                         </select>
                     </div>
                     <div class="mb-5">
-                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
+                        <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
                         <textarea class="form-input h-32 resize-y" id="intake-message" placeholder="Tell me what you're looking for..." required></textarea>
                     </div>
-                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-md">
+                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-md text-base">
                         <span id="btn-label">Submit Project Request</span>
-                        <svg id="btn-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                        <svg id="btn-spinner" class="w-5 h-5 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                     </button>
-                    <p id="form-error" class="text-red-500 text-xs mt-3 hidden text-center">Please fill in all required fields before submitting.</p>
+                    <p id="form-error" class="text-red-500 text-sm mt-3 hidden text-center">Please fill in all required fields before submitting.</p>
                 </div>
 
                 <div id="form-success" class="hidden text-center py-8">
-                    <div class="text-blue-600 text-5xl mb-4">✓</div>
-                    <h3 class="text-gray-900 font-black text-xl uppercase tracking-wide mb-2">Request Received</h3>
-                    <p class="text-gray-500 font-light text-sm">Thank you. I'll be in touch within 2 business days.</p>
+                    <div class="text-blue-600 text-6xl mb-4">✓</div>
+                    <h3 class="text-gray-900 font-black text-2xl uppercase tracking-wide mb-2">Request Received</h3>
+                    <p class="text-gray-500 font-light text-base">Thank you. I'll be in touch within 2 business days.</p>
                 </div>
             </div>
         </div>
@@ -506,23 +499,23 @@
         <div class="grid md:grid-cols-2 gap-8">
             <div class="endorse-card bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal shadow-sm">
                 <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
-                <p class="text-gray-600 font-light leading-relaxed mb-8 flex-grow relative z-10">
+                <p class="text-gray-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
                     "RLP Dezines provided us with incredible support. From our official organization logo to the banners and custom gear we use for our events, the quality is exceptional."
                 </p>
                 <div class="border-t border-gray-200 pt-5 mt-auto">
-                    <div class="text-gray-900 text-sm font-black uppercase mb-1">Executive Committee</div>
-                    <div class="text-blue-600 text-[11px] font-bold tracking-widest uppercase">Native American Church of North America</div>
+                    <div class="text-gray-900 text-base font-black uppercase mb-1">Executive Committee</div>
+                    <div class="text-blue-600 text-xs font-bold tracking-widest uppercase">Native American Church of North America</div>
                 </div>
             </div>
 
             <div class="endorse-card bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal reveal-delay-2 shadow-sm">
                 <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
-                <p class="text-gray-600 font-light leading-relaxed mb-8 flex-grow relative z-10">
+                <p class="text-gray-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
                     "Working with RLP Dezines has been a great experience. We needed high-quality gear for our health board and community events, and the final products were exactly what we were looking for."
                 </p>
                 <div class="border-t border-gray-200 pt-5 mt-auto">
-                    <div class="text-gray-900 text-sm font-black uppercase mb-1">Leadership Team</div>
-                    <div class="text-blue-600 text-[11px] font-bold tracking-widest uppercase">Rocky Boy Health Board</div>
+                    <div class="text-gray-900 text-base font-black uppercase mb-1">Leadership Team</div>
+                    <div class="text-blue-600 text-xs font-bold tracking-widest uppercase">Rocky Boy Health Board</div>
                 </div>
             </div>
         </div>
@@ -536,20 +529,20 @@
 
             <div class="space-y-8 divide-y divide-gray-100">
                 <div class="pt-0 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-xs uppercase mb-3">Online Only / Storefront</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-sm">RLP Dezines operates 100% online. I don't have a physical brick-and-mortar storefront right now—everything is run directly through this site so I can ship my custom drops directly to your door anywhere in Indian Country.</p>
+                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Online Only / Storefront</h3>
+                    <p class="text-gray-600 font-light leading-relaxed text-base">RLP Dezines operates 100% online. I don't have a physical brick-and-mortar storefront right now—everything is run directly through this site so I can ship my custom drops directly to your door anywhere in Indian Country.</p>
                 </div>
                 <div class="pt-7 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-xs uppercase mb-3">All Sales Are Final</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-sm">Every item is crafted specifically for you at the time of purchase. Because of this custom, print-on-demand model, <strong class="text-gray-900 font-semibold">I do not accept returns, exchanges, or offer cash refunds for buyer's remorse or incorrect size selections.</strong> Please review all product descriptions and size charts carefully before completing your purchase.</p>
+                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">All Sales Are Final</h3>
+                    <p class="text-gray-600 font-light leading-relaxed text-base">Every item is crafted specifically for you at the time of purchase. Because of this custom, print-on-demand model, <strong class="text-gray-900 font-semibold">I do not accept returns, exchanges, or offer cash refunds for buyer's remorse or incorrect size selections.</strong> Please review all product descriptions and size charts carefully before completing your purchase.</p>
                 </div>
                 <div class="pt-7 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-xs uppercase mb-3">Damaged or Defective Items</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-sm">I stand behind the quality of my designs and materials. In the rare event that your item arrives misprinted or defective, contact me at <strong class="text-gray-900">rlp@rlpdezines.com</strong> within 7 days. I will make it right with a free replacement.</p>
+                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Damaged or Defective Items</h3>
+                    <p class="text-gray-600 font-light leading-relaxed text-base">I stand behind the quality of my designs and materials. In the rare event that your item arrives misprinted or defective, contact me at <strong class="text-gray-900">rlp@rlpdezines.com</strong> within 7 days. I will make it right with a free replacement.</p>
                 </div>
                 <div class="pt-7 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-xs uppercase mb-3">Shipping & Taxes</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-sm">Shipping costs and applicable taxes are calculated automatically by Square at checkout based on your exact shipping address. Once shipped, you will automatically receive a tracking number via email.</p>
+                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Shipping & Taxes</h3>
+                    <p class="text-gray-600 font-light leading-relaxed text-base">Shipping costs and applicable taxes are calculated automatically by Square at checkout based on your exact shipping address. Once shipped, you will automatically receive a tracking number via email.</p>
                 </div>
             </div>
         </div>
@@ -557,7 +550,7 @@
 </section>
 
 <footer class="border-t border-gray-200 bg-white py-16 px-5">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500 gap-4">
         <div>© 2026 RLP Dezines. Indigenous-owned &amp; operated.</div>
         <div><a href="mailto:rlp@rlpdezines.com" class="hover:text-gray-900">rlp@rlpdezines.com</a></div>
     </div>
@@ -678,15 +671,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if(cont) cont.innerHTML = this.items.map(i => `
                 <div class="flex gap-3 bg-white border border-gray-200 p-4 rounded-xl items-center shadow-sm">
                     <div class="flex-grow min-w-0">
-                        <h4 class="text-[12px] font-bold text-gray-900 leading-snug">${i.name}</h4>
-                        <div class="text-sm font-black text-blue-600 mt-1">$${((i.price*i.quantity)/100).toFixed(2)}</div>
+                        <h4 class="text-sm font-bold text-gray-900 leading-snug">${i.name}</h4>
+                        <div class="text-base font-black text-blue-600 mt-1">$${((i.price*i.quantity)/100).toFixed(2)}</div>
                     </div>
                     <div class="flex flex-col items-end gap-2 shrink-0">
-                        <button onclick="window.Cart.removeItem('${i.id}')" class="text-gray-400 hover:text-red-500 text-xs transition flex justify-end w-full"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-                        <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg h-7 mt-1">
-                            <button onclick="window.Cart.updateItemQty('${i.id}', -1)" class="w-7 h-full flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition font-bold">−</button>
-                            <span class="w-6 text-center text-[11px] font-bold text-gray-900">${i.quantity}</span>
-                            <button onclick="window.Cart.updateItemQty('${i.id}', 1)" class="w-7 h-full flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition font-bold">+</button>
+                        <button onclick="window.Cart.removeItem('${i.id}')" class="text-gray-400 hover:text-red-500 text-sm transition flex justify-end w-full"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                        <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg h-8 mt-1">
+                            <button onclick="window.Cart.updateItemQty('${i.id}', -1)" class="w-8 h-full flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition font-bold text-lg">−</button>
+                            <span class="w-8 text-center text-sm font-bold text-gray-900">${i.quantity}</span>
+                            <button onclick="window.Cart.updateItemQty('${i.id}', 1)" class="w-8 h-full flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition font-bold text-lg">+</button>
                         </div>
                     </div>
                 </div>`).join('');
@@ -695,7 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
         async checkout() {
             const btn = document.getElementById('checkout-btn'); 
             const originalBtnContent = btn.innerHTML;
-            btn.innerHTML = 'Routing... <svg class="w-4 h-4 animate-spin ml-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>'; 
+            btn.innerHTML = 'Routing... <svg class="w-5 h-5 animate-spin ml-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>'; 
             btn.disabled = true;
             try {
                 const res = await fetch('/.netlify/functions/create-checkout', { method: 'POST', body: JSON.stringify({ cartItems: this.items }) });
@@ -755,6 +748,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // ── REBUILT MODAL UX ──
     window.openProductModal = function(id) {
         const p = window.globalProducts[id]; if(!p) return;
         const safeName = (p.name || 'Item').replace(/'/g, "&#39;"), safeDesc = p.description || 'No additional details available.';
@@ -765,24 +759,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName}">`).join('');
             imgHtml = `<div class="scroll-gallery">${imgTags}</div>`;
         } else if (p.imageUrl && p.imageUrl.startsWith('http')) {
-            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain aspect-square p-2">`;
+            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain aspect-square">`;
         } else {
             imgHtml = `<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
         }
 
+        // Structure: Header anchored top, Image left, Scrollable Desc, Footer anchored bottom
         pModal.innerHTML = `
-            <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-900 p-2 rounded-full z-10 transition shadow-md"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-            <div class="w-full md:w-1/2 h-64 sm:h-72 md:h-auto bg-gray-50 relative shrink-0 border-b md:border-b-0 md:border-r border-gray-200 flex items-center overflow-hidden">${imgHtml}</div>
-            <div class="w-full md:w-1/2 p-6 sm:p-8 flex flex-col overflow-y-auto" style="max-height: 70vh;">
-                <h2 class="text-xl sm:text-2xl font-black uppercase tracking-widest text-gray-900 mb-3 leading-tight">${safeName}</h2>
-                <div class="text-[13px] sm:text-sm text-gray-600 leading-relaxed mb-6 whitespace-pre-wrap">${safeDesc}</div>
-                <div class="mt-auto pt-6 border-t border-gray-200">
-                    <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2 rounded-full z-[100] transition shadow-md border border-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            
+            <div class="w-full md:w-1/2 bg-white relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 p-0 md:p-6 lg:p-8">
+                <div class="w-full max-w-sm aspect-square relative">
+                    ${imgHtml}
+                </div>
+            </div>
+            
+            <div class="w-full md:w-1/2 flex flex-col h-[65vh] md:h-auto max-h-[85vh]">
+                <div class="p-6 pb-4 border-b border-gray-100 flex-shrink-0 bg-white z-10">
+                    <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight pr-10">${safeName}</h2>
+                </div>
+                
+                <div class="p-6 overflow-y-auto flex-grow bg-white">
+                    <div class="text-base text-gray-600 leading-relaxed whitespace-pre-wrap">${safeDesc}</div>
+                </div>
+                
+                <div class="p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
                     <select id="modal-variant" class="variant-select mb-4">${opts}</select>
-                    <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
-                    <div class="flex gap-3 h-[44px]">
-                        <div class="qty-wrap h-full"><button class="qty-btn w-10" onclick="stepModalQty(-1)">−</button><input type="number" id="modal-qty" class="qty-num w-10" value="1" min="1" max="99"><button class="qty-btn w-10" onclick="stepModalQty(1)">+</button></div>
-                        <button class="atc-btn h-full text-[13px]" onclick="addModalToCart('${p.id}', '${safeName}')">Add to Cart</button>
+                    
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
+                    <div class="flex gap-4 h-[50px]">
+                        <div class="qty-wrap h-full bg-white"><button class="qty-btn w-12" onclick="stepModalQty(-1)">−</button><input type="number" id="modal-qty" class="qty-num w-12 text-lg" value="1" min="1" max="99"><button class="qty-btn w-12" onclick="stepModalQty(1)">+</button></div>
+                        <button class="atc-btn btn-pulse h-full text-sm flex-grow shadow-md" onclick="addModalToCart('${p.id}', '${safeName}')">Add to Cart</button>
                     </div>
                 </div>
             </div>`;
@@ -819,17 +827,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const grid = document.getElementById('product-grid');
         
         const icons = {
-            'Sherpa Throws': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
-            'Hoodies': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
-            'T Shirts': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
-            'Mugs': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
-            'Tumblers': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
-            'Totes': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
-            'Towels': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
-            'Hand Towels': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
-            'Phone Cases': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
-            'Design Services': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`,
-            'Other Goods': `<svg class="w-5 h-5 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`
+            'Sherpa Throws': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
+            'Hoodies': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
+            'T Shirts': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
+            'Mugs': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
+            'Tumblers': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
+            'Totes': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+            'Towels': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
+            'Hand Towels': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
+            'Phone Cases': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+            'Design Services': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`,
+            'Other Goods': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`
         };
 
         try {
@@ -859,7 +867,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sortedCats.forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
                 const minPrice = Math.min(...items.flatMap(p => p.variations.map(v => v.price)));
-                const priceLabel = `<span class="text-[11px] text-gray-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
+                const priceLabel = `<span class="text-[12px] text-gray-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
 
                 const cards = items.map(p => {
                     const sName = (p.name || 'Item').replace(/'/g, "&#39;");
@@ -871,16 +879,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="card-img-wrap">${img}</div>
                         <div class="card-body">
                             <div>
-                                <h3 class="text-[11px] sm:text-[13px] font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
-                                <p class="text-[11px] sm:text-xs font-bold text-gray-500 mt-1.5">$${(pMinPrice/100).toFixed(2)}</p>
+                                <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
+                                <p class="text-[12px] sm:text-sm font-bold text-gray-500 mt-2">$${(pMinPrice/100).toFixed(2)}</p>
                             </div>
-                            <div class="mt-4 flex items-center justify-between">
-                                <div class="view-btn-text flex items-center gap-1 m-0">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
+                            <div class="mt-5 flex items-center justify-between">
+                                <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
                                 <div class="flex items-center gap-2">
                                     <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="shareProduct(event, '${p.id}', '${sName}')" aria-label="Share">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
                                     </button>
-                                    <button class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest px-3 py-2 rounded shadow-sm transition-transform active:scale-95" onclick="quickAdd(event, '${p.id}')">Add to Cart</button>
+                                    <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="quickAdd(event, '${p.id}')">Add to Cart</button>
                                 </div>
                             </div>
                         </div>
@@ -889,19 +897,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 grid.innerHTML += `
                 <details class="group w-full" open>
-                    <summary class="flex justify-between items-center cursor-pointer bg-white p-4 sm:p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-gray-200 hover:border-blue-500 transition-colors select-none shadow-sm">
+                    <summary class="flex justify-between items-center cursor-pointer bg-white p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-gray-200 hover:border-blue-500 transition-colors select-none shadow-sm">
                         <div class="flex items-center gap-3">
                             ${icons[cat] || icons['Other Goods']}
-                            <h3 class="text-[13px] sm:text-sm font-black uppercase tracking-widest text-gray-900 flex items-center">
-                                ${cat} <span class="bg-blue-50 border border-blue-200 text-blue-600 text-[10px] px-2 py-0.5 rounded-full ml-2 sm:ml-3">${items.length}</span> ${priceLabel}
+                            <h3 class="text-[14px] sm:text-base font-black uppercase tracking-widest text-gray-900 flex items-center">
+                                ${cat} <span class="bg-blue-50 border border-blue-200 text-blue-600 text-[11px] px-2 py-0.5 rounded-full ml-3">${items.length}</span> ${priceLabel}
                             </h3>
                         </div>
-                        <span class="text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-open:rotate-180"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        <span class="text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-open:rotate-180"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
                     </summary>
-                    <div class="accordion-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pt-4 pb-2">${cards}</div>
+                    <div class="accordion-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-5 pb-3">${cards}</div>
                 </details>`;
             });
-        } catch { grid.innerHTML = `<p class="text-red-500 text-sm text-center">Failed to sync catalog.</p>`; }
+        } catch { grid.innerHTML = `<p class="text-red-500 text-base text-center">Failed to sync catalog.</p>`; }
     }
     loadProducts();
 });
