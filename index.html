@@ -138,11 +138,14 @@
 
 <header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 py-4">
-        <a href="#top" class="text-2xl font-black italic tracking-widest text-gray-900 hover:text-blue-600 transition">RLP</a>
+        
+        <a href="#top" class="flex items-center transition hover:opacity-80">
+            <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w400" alt="RLP Dezines Logo" class="h-8 sm:h-10 w-auto object-contain">
+        </a>
 
         <nav class="hidden lg:flex items-center space-x-6 text-[12px] font-semibold text-gray-500">
-            <a href="#shop-live" class="nav-link hover:text-gray-900 transition">Apparel</a>
             <a href="#bundles"   class="nav-link hover:text-gray-900 transition">Bundles</a>
+            <a href="#shop-live" class="nav-link hover:text-gray-900 transition">Apparel</a>
             <a href="#mission"   class="nav-link hover:text-gray-900 transition">Mission</a>
             <a href="#tunes"     class="nav-link hover:text-gray-900 transition">Music</a>
             <a href="#wholesale" class="nav-link hover:text-gray-900 transition">Wholesale</a>
@@ -170,8 +173,8 @@
 </header>
 
 <div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-white/98 backdrop-blur-xl border-b border-gray-200 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overflow-y-auto" style="height: calc(100vh - 69px);">
-    <a href="#shop-live" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Shop Now</a>
     <a href="#bundles"   class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Ceremony Bundles</a>
+    <a href="#shop-live" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Shop Now</a>
     <a href="#mission"   class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">The Mission</a>
     <a href="#tunes"     class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">RLP Tunes</a>
     <a href="#wholesale" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Wholesale</a>
@@ -217,11 +220,9 @@
     <div class="relative z-10 max-w-4xl mx-auto w-full">
         <p class="section-label mb-6 justify-center reveal">Welcome to the Lodgepole Home</p>
         
-        <!-- NEW FEATURED ARTWORK HERO BLOCK -->
         <div class="w-full max-w-4xl mx-auto mb-12 reveal reveal-delay-1 px-2 sm:px-0">
             <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-[0_0_40px_rgba(0,0,0,0.05)] group">
-                <img src="https://drive.google.com/thumbnail?id=1D0XSMowJ_KMstNUR7as4fce_67SUtC12&sz=w1600" alt="RLP Dezines Featured Art" class="w-full h-auto object-cover transform group-hover:scale-[1.02] transition duration-700 ease-in-out">
-                <!-- Subtle inner shadow to frame the art -->
+                <img src="https://drive.google.com/thumbnail?id=1z1bLCx2lAemhyKXXYdR0KvxO_5X1ztwx&sz=w1600" alt="RLP Dezines Featured Art" class="w-full h-auto object-cover transform group-hover:scale-[1.02] transition duration-700 ease-in-out">
                 <div class="absolute inset-0 pointer-events-none rounded-2xl shadow-[inset_0_0_20px_rgba(0,0,0,0.05)]"></div>
             </div>
         </div>
@@ -231,32 +232,8 @@
         <p class="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed font-light mb-12 reveal reveal-delay-4">Whether you're just looking to browse or need something specific for your walk, <strong class="text-gray-900 font-semibold">I'm glad you stopped by.</strong> Take your time, look around, and if you need anything at all, I'm right here.</p>
         
         <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-delay-4">
-            <a href="#shop-live" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Now</a>
-            <a href="#mission" class="bg-gray-100 text-gray-900 px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 transition shadow-sm text-sm uppercase tracking-widest border border-gray-200">Our Story</a>
-        </div>
-    </div>
-</section>
-
-<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
-    <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-10 sm:mb-14 reveal">
-            <p class="section-label mb-4 justify-center">Live Catalog</p>
-            <h2 class="text-3xl sm:text-5xl font-black text-gray-900 uppercase tracking-tight">The <span class="text-blue-500">Store</span></h2>
-            <p class="text-gray-500 mt-3 text-sm">Powered by Square Checkout</p>
-        </div>
-        
-        <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
-            <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/2"><div class="h-5 w-5 bg-gray-200 rounded"></div><div class="h-5 bg-gray-200 rounded w-1/2"></div></div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
-                <div class="skeleton h-64 rounded-xl"></div>
-                <div class="skeleton h-64 rounded-xl hidden sm:block"></div>
-                <div class="skeleton h-64 rounded-xl hidden lg:block"></div>
-            </div>
-            <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/3"><div class="h-5 w-5 bg-gray-200 rounded"></div><div class="h-5 bg-gray-200 rounded w-full"></div></div>
-            </div>
+            <a href="#bundles" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Shop Bundles</a>
+            <a href="#shop-live" class="bg-gray-100 text-gray-900 px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 transition shadow-sm text-sm uppercase tracking-widest border border-gray-200">Shop Apparel</a>
         </div>
     </div>
 </section>
@@ -266,7 +243,7 @@
         <div class="bg-white border border-gray-200 p-6 sm:p-14 rounded-2xl shadow-sm">
             <div class="text-center mb-10 reveal">
                 <p class="section-label mb-5 justify-center">A Special Gift for Your Guests</p>
-                <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-5">Family Honoring Specials</h2>
+                <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-5">RLP Family Honoring Specials</h2>
                 <p class="text-gray-600 font-light leading-relaxed mb-4">When you're hosting, you want your relatives to feel truly taken care of. These bundles honor your guests with <strong class="text-blue-600 font-semibold">unmatched comfort and meaningful design.</strong></p>
                 <p class="text-gray-600 font-light leading-relaxed mb-8">Every blanket is a <strong class="text-gray-900 font-semibold">60″ × 80″</strong> Sublimated Sherpa Throw — fully customizable. Soft sublimated surface on one side, plush sherpa warmth on the reverse.</p>
             </div>
@@ -302,6 +279,30 @@
             <div class="text-center reveal">
                 <a href="https://rlp-dezines.square.site" target="_blank" rel="noopener" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-sm transition">Order Your Bundle →</a>
                 <p class="text-gray-500 text-xs mt-4">Complete your custom bundle order on our dedicated Square site.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10 sm:mb-14 reveal">
+            <p class="section-label mb-4 justify-center">Live Catalog</p>
+            <h2 class="text-3xl sm:text-5xl font-black text-gray-900 uppercase tracking-tight">The <span class="text-blue-500">Store</span></h2>
+            <p class="text-gray-500 mt-3 text-sm">Powered by Square Checkout</p>
+        </div>
+        
+        <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
+            <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
+                <div class="flex items-center gap-3 w-1/2"><div class="h-5 w-5 bg-gray-200 rounded"></div><div class="h-5 bg-gray-200 rounded w-1/2"></div></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
+                <div class="skeleton h-64 rounded-xl"></div>
+                <div class="skeleton h-64 rounded-xl hidden sm:block"></div>
+                <div class="skeleton h-64 rounded-xl hidden lg:block"></div>
+            </div>
+            <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
+                <div class="flex items-center gap-3 w-1/3"><div class="h-5 w-5 bg-gray-200 rounded"></div><div class="h-5 bg-gray-200 rounded w-full"></div></div>
             </div>
         </div>
     </div>
@@ -533,7 +534,13 @@
             <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-10 text-center tracking-tight reveal">Store Policies & FAQ</h2>
 
             <div class="space-y-8 divide-y divide-gray-100">
+                
                 <div class="pt-0 reveal">
+                    <h3 class="text-blue-600 font-black tracking-widest text-xs uppercase mb-3">Online Only / Storefront</h3>
+                    <p class="text-gray-600 font-light leading-relaxed text-sm">RLP Dezines operates 100% online. I don't have a physical brick-and-mortar storefront right now—everything is run directly through this site so I can ship my custom drops directly to your door anywhere in Indian Country.</p>
+                </div>
+
+                <div class="pt-7 reveal">
                     <h3 class="text-blue-600 font-black tracking-widest text-xs uppercase mb-3">All Sales Are Final</h3>
                     <p class="text-gray-600 font-light leading-relaxed text-sm">Every item is crafted specifically for you at the time of purchase. Because of this custom, print-on-demand model, <strong class="text-gray-900 font-semibold">I do not accept returns, exchanges, or offer cash refunds for buyer's remorse or incorrect size selections.</strong> Please review all product descriptions and size charts carefully before completing your purchase.</p>
                 </div>
