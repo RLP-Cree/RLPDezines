@@ -647,7 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addItem(p) {
             const ex = this.items.find(i => i.id === p.id);
             if (ex) ex.quantity += (p.quantity || 1); else this.items.push({ ...p, quantity: p.quantity || 1 });
-            this.save(); this.render(); this.open(); showToast('Added to cart ✓');
+            this.save(); this.render(); showToast('Added to cart ✓');
         }
         removeItem(id) { this.items = this.items.filter(i => i.id !== id); this.save(); this.render(); }
         save() { localStorage.setItem('rlp_cart', JSON.stringify(this.items)); }
