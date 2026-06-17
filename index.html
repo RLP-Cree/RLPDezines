@@ -81,7 +81,9 @@
         .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
         .card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .view-btn-text { font-size: 10px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 12px; transition: color 0.2s; }
+        
+        /* Updated view-btn-text without the margin-top so it aligns with the Add to Cart button */
+        .view-btn-text { font-size: 10px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; transition: color 0.2s; }
         .product-card:hover .view-btn-text { color: #2563EB; }
 
         /* ── Modal Styles ── */
@@ -139,7 +141,7 @@
 <header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 py-4">
         
-        <!-- NEW RLP DEZINES LOGO -->
+        <!-- RLP DEZINES LOGO -->
         <a href="#top" class="flex items-center transition hover:opacity-80">
             <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w400" alt="RLP Dezines Logo" class="h-8 sm:h-10 w-auto object-contain">
         </a>
@@ -221,11 +223,9 @@
     <div class="relative z-10 max-w-4xl mx-auto w-full">
         <p class="section-label mb-6 justify-center reveal">Welcome to the Lodgepole Home</p>
         
-        <!-- UPDATED FEATURED ARTWORK HERO BLOCK -->
         <div class="w-full max-w-4xl mx-auto mb-12 reveal reveal-delay-1 px-2 sm:px-0">
             <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-[0_0_40px_rgba(0,0,0,0.05)] group">
                 <img src="https://drive.google.com/thumbnail?id=1z1bLCx2lAemhyKXXYdR0KvxO_5X1ztwx&sz=w1600" alt="RLP Dezines Featured Art" class="w-full h-auto object-cover transform group-hover:scale-[1.02] transition duration-700 ease-in-out">
-                <!-- Subtle inner shadow to frame the art -->
                 <div class="absolute inset-0 pointer-events-none rounded-2xl shadow-[inset_0_0_20px_rgba(0,0,0,0.05)]"></div>
             </div>
         </div>
@@ -241,7 +241,6 @@
     </div>
 </section>
 
-<!-- MOVED UP: Bundles immediately follow the hero section -->
 <section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
         <div class="bg-white border border-gray-200 p-6 sm:p-14 rounded-2xl shadow-sm">
@@ -288,7 +287,6 @@
     </div>
 </section>
 
-<!-- Live Storefront now sits below the bundles -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-10 sm:mb-14 reveal">
@@ -538,13 +536,10 @@
             <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-10 text-center tracking-tight reveal">Store Policies & FAQ</h2>
 
             <div class="space-y-8 divide-y divide-gray-100">
-                
-                <!-- NEW ONLINE ONLY FAQ BLOCK -->
                 <div class="pt-0 reveal">
                     <h3 class="text-blue-600 font-black tracking-widest text-xs uppercase mb-3">Online Only / Storefront</h3>
                     <p class="text-gray-600 font-light leading-relaxed text-sm">RLP Dezines operates 100% online. I don't have a physical brick-and-mortar storefront right now—everything is run directly through this site so I can ship my custom drops directly to your door anywhere in Indian Country.</p>
                 </div>
-
                 <div class="pt-7 reveal">
                     <h3 class="text-blue-600 font-black tracking-widest text-xs uppercase mb-3">All Sales Are Final</h3>
                     <p class="text-gray-600 font-light leading-relaxed text-sm">Every item is crafted specifically for you at the time of purchase. Because of this custom, print-on-demand model, <strong class="text-gray-900 font-semibold">I do not accept returns, exchanges, or offer cash refunds for buyer's remorse or incorrect size selections.</strong> Please review all product descriptions and size charts carefully before completing your purchase.</p>
@@ -694,9 +689,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.Cart = new ShoppingCart();
 
-    // ── Global Product Data for Modals ──
+    // ── Global Product Data & Smart Routing ──
     window.globalProducts = {};
     const pModal = document.getElementById('product-modal'), pOverlay = document.getElementById('product-modal-overlay');
+
+    window.quickAdd = function(event, id) {
+        event.stopPropagation(); // Prevents the card's modal from opening if we don't need it
+        const p = window.globalProducts[id];
+        if (!p) return;
+        
+        // If it only has 1 variant (e.g. standard mug/tote), add directly!
+        if (p.variations && p.variations.length === 1) {
+            const v = p.variations[0];
+            const safeName = (p.name || 'Item').replace(/'/g, "&#39;");
+            const vName = v.name || 'Regular';
+            const finalName = (vName === 'Regular' || vName === '') ? safeName : `${safeName} (${vName})`;
+            window.Cart.addItem({ id: v.id, name: finalName, price: parseInt(v.price), sku: v.sku || '', quantity: 1 });
+        } else {
+            // It has sizes/options. Open the modal!
+            openProductModal(id);
+        }
+    };
 
     window.openProductModal = function(id) {
         const p = window.globalProducts[id]; if(!p) return;
@@ -813,8 +826,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="product-card group" onclick="openProductModal('${p.id}')">
                         <div class="card-img-wrap">${img}</div>
                         <div class="card-body">
-                            <div><h3 class="text-[11px] sm:text-[13px] font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3><p class="text-[11px] sm:text-xs font-bold text-gray-500 mt-1.5">$${(pMinPrice/100).toFixed(2)}</p></div>
-                            <div class="view-btn-text flex items-center gap-1">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
+                            <div>
+                                <h3 class="text-[11px] sm:text-[13px] font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
+                                <p class="text-[11px] sm:text-xs font-bold text-gray-500 mt-1.5">$${(pMinPrice/100).toFixed(2)}</p>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between">
+                                <div class="view-btn-text flex items-center gap-1 m-0">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
+                                <button class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest px-3 py-2 rounded shadow-sm transition-transform active:scale-95" onclick="quickAdd(event, '${p.id}')">Add to Cart</button>
+                            </div>
                         </div>
                     </div>`;
                 }).join('');
