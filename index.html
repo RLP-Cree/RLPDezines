@@ -123,8 +123,7 @@
             width: 100%;
             height: 100%;
             align-items: center;
-            padding: 0;
-            margin: 0;
+            padding: 0 10px;
         }
         .scroll-gallery::-webkit-scrollbar { display: none; }
         .scroll-gallery { -ms-overflow-style: none; scrollbar-width: none; }
@@ -146,6 +145,7 @@
 <header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 py-4">
         
+        <!-- RLP DEZINES LOGO -->
         <a href="#top" class="flex items-center transition hover:opacity-80">
             <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w400" alt="RLP Dezines Logo" class="h-8 sm:h-10 w-auto object-contain">
         </a>
@@ -169,6 +169,7 @@
         <div class="flex items-center gap-3 lg:hidden">
             <button id="mobile-cart-btn" class="relative text-gray-900 hover:text-blue-600 transition p-1" aria-label="Open cart">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                <!-- RED NOTIFICATION DOT FOR CART -->
                 <span id="mobile-cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center hidden shadow-sm"><span id="mobile-cart-count">0</span></span>
             </button>
             <button id="menu-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1" aria-label="Toggle menu">
@@ -218,7 +219,8 @@
 
 <div id="product-modal-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-md z-[80] hidden opacity-0 transition-opacity duration-300"></div>
 
-<div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
+<!-- COMPLETELY RE-ENGINEERED MODAL LAYOUT -->
+<div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-auto max-h-[90vh]">
 </div>
 
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[85vh] overflow-hidden">
@@ -748,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // ── REBUILT MODAL UX ──
+    // ── REBUILT MODAL UX: FULLY RESPONSIVE FLEXBOX ──
     window.openProductModal = function(id) {
         const p = window.globalProducts[id]; if(!p) return;
         const safeName = (p.name || 'Item').replace(/'/g, "&#39;"), safeDesc = p.description || 'No additional details available.';
@@ -757,37 +759,41 @@ document.addEventListener('DOMContentLoaded', () => {
         let imgHtml = '';
         if (p.imageUrls && p.imageUrls.length > 1) {
             const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName}">`).join('');
-            imgHtml = `<div class="scroll-gallery">${imgTags}</div>`;
+            imgHtml = `<div class="scroll-gallery w-full h-full">${imgTags}</div>`;
         } else if (p.imageUrl && p.imageUrl.startsWith('http')) {
-            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain aspect-square">`;
+            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain">`;
         } else {
             imgHtml = `<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
         }
 
-        // Structure: Header anchored top, Image left, Scrollable Desc, Footer anchored bottom
+        // Structure: Main modal forced to h-[90vh], splits into image and text columns.
         pModal.innerHTML = `
-            <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2 rounded-full z-[100] transition shadow-md border border-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            <button onclick="closeProductModal()" class="absolute top-3 right-3 bg-white hover:bg-gray-100 text-gray-900 p-2 rounded-full z-[100] transition shadow-md border border-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             
-            <div class="w-full md:w-1/2 bg-white relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 p-0 md:p-6 lg:p-8">
-                <div class="w-full max-w-sm aspect-square relative">
+            <div class="w-full md:w-1/2 bg-white relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 p-2 sm:p-6 h-[40vh] md:h-auto">
+                <div class="w-full h-full aspect-square relative flex items-center justify-center">
                     ${imgHtml}
                 </div>
             </div>
             
-            <div class="w-full md:w-1/2 flex flex-col h-[65vh] md:h-auto max-h-[85vh]">
-                <div class="p-6 pb-4 border-b border-gray-100 flex-shrink-0 bg-white z-10">
-                    <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight pr-10">${safeName}</h2>
+            <!-- Magic Flex Properties: flex-grow min-h-0 ensures it sizes correctly -->
+            <div class="w-full md:w-1/2 flex flex-col flex-grow min-h-0">
+                <!-- Anchored Header -->
+                <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex-shrink-0 bg-white z-10">
+                    <h2 class="text-xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight pr-8">${safeName}</h2>
                 </div>
                 
-                <div class="p-6 overflow-y-auto flex-grow bg-white">
-                    <div class="text-base text-gray-600 leading-relaxed whitespace-pre-wrap">${safeDesc}</div>
+                <!-- Scrollable Description -->
+                <div class="p-5 sm:p-6 overflow-y-auto flex-grow min-h-0 bg-white">
+                    <div class="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-wrap">${safeDesc}</div>
                 </div>
                 
-                <div class="p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
-                    <select id="modal-variant" class="variant-select mb-4">${opts}</select>
+                <!-- Anchored Action Footer with Pulse -->
+                <div class="p-5 sm:p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
+                    <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
+                    <select id="modal-variant" class="variant-select mb-3">${opts}</select>
                     
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
+                    <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
                     <div class="flex gap-4 h-[50px]">
                         <div class="qty-wrap h-full bg-white"><button class="qty-btn w-12" onclick="stepModalQty(-1)">−</button><input type="number" id="modal-qty" class="qty-num w-12 text-lg" value="1" min="1" max="99"><button class="qty-btn w-12" onclick="stepModalQty(1)">+</button></div>
                         <button class="atc-btn btn-pulse h-full text-sm flex-grow shadow-md" onclick="addModalToCart('${p.id}', '${safeName}')">Add to Cart</button>
