@@ -189,28 +189,15 @@
 </button>
 
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
-<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-50 border-l border-gray-200 z-[70] flex flex-col shadow-2xl">
-    <div class="px-5 py-4 border-b border-gray-200 flex justify-between items-center bg-white flex-shrink-0">
-        <div>
-            <h3 class="text-lg font-black uppercase tracking-widest text-gray-900">Your Cart</h3>
-            <p id="cart-item-count-label" class="text-sm text-gray-500 mt-0.5">0 items</p>
-        </div>
-        <button id="close-cart-btn" class="text-gray-400 hover:text-gray-900 transition p-1">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl transition-transform transform translate-x-full">
+    <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
+        <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
+        <h2 class="text-[15px] font-black uppercase tracking-widest text-blue-600">RLP Dezines</h2>
     </div>
-    <div id="cart-items-container" class="flex-grow overflow-y-auto px-5 py-4 space-y-3"></div>
-    <div class="px-5 py-5 bg-white border-t border-gray-200 flex-shrink-0">
-        <div class="flex justify-between text-base text-gray-600 mb-2 font-semibold">
-            <span>Subtotal</span>
-            <span id="cart-total" class="text-gray-900 font-black text-lg">$0.00</span>
-        </div>
-        <p class="text-xs text-gray-500 mb-4">Shipping & taxes calculated dynamically at checkout.</p>
-        <button id="checkout-btn" class="btn-pulse w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:animation-none disabled:cursor-not-allowed text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex justify-center items-center gap-2 text-base" disabled>
-            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-            Secure Checkout
-        </button>
-    </div>
+    <div id="cart-content" class="flex-grow overflow-y-auto bg-white"></div>
 </div>
 
 <div id="product-modal-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-md z-[80] hidden opacity-0 transition-opacity duration-300"></div>
@@ -613,7 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── Cart System ──
+    // ── Rebuilt Custom Square-Invoice Style Cart System ──
     class ShoppingCart {
         constructor() { this.items = JSON.parse(localStorage.getItem('rlp_cart') || '[]'); this.initDOM(); this.render(); }
         initDOM() {
@@ -622,15 +609,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('floating-cart-btn')?.addEventListener('click', () => this.open());
             document.getElementById('close-cart-btn')?.addEventListener('click', () => this.close());
             this.overlay?.addEventListener('click', () => this.close());
-            document.getElementById('checkout-btn')?.addEventListener('click', () => this.checkout());
         }
         open() { 
-            this.drawer?.classList.add('open'); this.overlay?.classList.add('open'); 
+            this.drawer?.classList.remove('translate-x-full'); this.overlay?.classList.add('open'); 
             body.classList.add('no-scroll');
             if (mobileMenu.classList.contains('open')) toggleMobileMenu(false);
         }
         close() { 
-            this.drawer?.classList.remove('open'); this.overlay?.classList.remove('open'); 
+            this.drawer?.classList.add('translate-x-full'); this.overlay?.classList.remove('open'); 
             if(!document.getElementById('product-modal').classList.contains('hidden')) return;
             body.classList.remove('no-scroll');
         }
@@ -656,6 +642,7 @@ document.addEventListener('DOMContentLoaded', () => {
         render() {
             const total = this.items.reduce((s, i) => s + i.quantity, 0);
             
+            // Sync all Notification Badges
             const cnt = document.getElementById('cart-count');
             const fCnt = document.getElementById('floating-cart-count');
             const fBadge = document.getElementById('floating-cart-badge');
@@ -664,30 +651,112 @@ document.addEventListener('DOMContentLoaded', () => {
             if(fCnt) fCnt.textContent = total;
             if(fBadge) fBadge.classList.toggle('hidden', total === 0);
             
-            const cont = document.getElementById('cart-items-container'), totEl = document.getElementById('cart-total'), btn = document.getElementById('checkout-btn'), lbl = document.getElementById('cart-item-count-label');
-            if(lbl) lbl.textContent = `${total} item${total !== 1 ? 's' : ''}`;
+            const cont = document.getElementById('cart-content');
+            if (!cont) return;
 
+            // Empty State
             if (this.items.length === 0) {
-                if(cont) cont.innerHTML = `<div class="flex flex-col items-center justify-center h-40 text-center"><svg class="w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg><p class="text-gray-500 text-sm font-semibold">Your cart is empty</p></div>`;
-                if(totEl) totEl.textContent = '$0.00'; if(btn) btn.disabled = true; return;
+                cont.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full p-8 text-center pb-32">
+                        <h1 class="text-3xl font-black text-blue-600 mb-2">Your cart</h1>
+                        <p class="text-gray-500 mb-8">Your cart is currently empty.</p>
+                        <button onclick="window.Cart.close()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-10 rounded-full transition w-full max-w-[250px]">Continue shopping</button>
+                    </div>`;
+                return;
             }
-            if(btn) btn.disabled = false;
-            if(cont) cont.innerHTML = this.items.map(i => `
-                <div class="flex gap-3 bg-white border border-gray-200 p-4 rounded-xl items-center shadow-sm">
-                    <div class="flex-grow min-w-0">
-                        <h4 class="text-sm font-bold text-gray-900 leading-snug">${i.name}</h4>
-                        <div class="text-base font-black text-blue-600 mt-1">$${((i.price*i.quantity)/100).toFixed(2)}</div>
-                    </div>
-                    <div class="flex flex-col items-end gap-2 shrink-0">
-                        <button onclick="window.Cart.removeItem('${i.id}')" class="text-gray-400 hover:text-red-500 text-sm transition flex justify-end w-full"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-                        <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg h-8 mt-1">
-                            <button onclick="window.Cart.updateItemQty('${i.id}', -1)" class="w-8 h-full flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition font-bold text-lg">−</button>
-                            <span class="w-8 text-center text-sm font-bold text-gray-900">${i.quantity}</span>
-                            <button onclick="window.Cart.updateItemQty('${i.id}', 1)" class="w-8 h-full flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition font-bold text-lg">+</button>
+
+            // Filled State (Invoice Style)
+            let html = `<div class="px-5 sm:px-8 py-8"><h1 class="text-3xl sm:text-4xl font-black text-blue-600 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
+            
+            this.items.forEach(i => {
+                // Parse "Base Name (Variant)" structure if present
+                const nameParts = i.name.match(/(.*)\\s\\((.*)\\)$/);
+                const baseName = nameParts ? nameParts[1] : i.name;
+                const vName = nameParts ? nameParts[2] : '';
+                
+                // Fetch dynamic image from global state based on item variation ID
+                let pImg = '';
+                for(let pid in window.globalProducts) {
+                    if(window.globalProducts[pid].variations.some(v => v.id === i.id)) {
+                        pImg = window.globalProducts[pid].imageUrl; break;
+                    }
+                }
+                const imgHtml = (pImg && pImg.startsWith('http')) ? `<img src="${pImg}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-gray-100 flex items-center justify-center text-[10px] text-gray-400 font-bold">RLP</div>`;
+
+                html += `
+                <div class="flex gap-4">
+                    <div class="w-[85px] h-[85px] bg-gray-50 rounded-md overflow-hidden flex-shrink-0 border border-gray-100">${imgHtml}</div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="w-full flex justify-between gap-3">
+                            <div>
+                                <h4 class="text-[15px] font-bold text-blue-600 leading-snug">${baseName}</h4>
+                                <p class="text-sm text-blue-600 mt-0.5">$${((i.price)/100).toFixed(2)}</p>
+                                ${vName ? `<p class="text-sm text-blue-600 mt-1.5 opacity-80">Size: ${vName}</p>` : ''}
+                            </div>
+                            <span class="text-[15px] font-bold text-blue-600 flex-shrink-0">$${((i.price*i.quantity)/100).toFixed(2)}</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="flex items-center bg-white border border-gray-200 rounded-full h-9 overflow-hidden w-[100px]">
+                                <button onclick="window.Cart.updateItemQty('${i.id}', -1)" class="w-10 h-full flex items-center justify-center text-gray-400 hover:bg-gray-50 transition font-medium text-lg">−</button>
+                                <input type="number" value="${i.quantity}" class="w-8 text-center text-sm font-semibold text-gray-900 border-none outline-none p-0 bg-transparent" readonly>
+                                <button onclick="window.Cart.updateItemQty('${i.id}', 1)" class="w-10 h-full flex items-center justify-center text-gray-400 hover:bg-gray-50 transition font-medium text-lg">+</button>
+                            </div>
+                            <button onclick="window.Cart.removeItem('${i.id}')" class="text-blue-600 hover:text-blue-800 p-2 -mr-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
                         </div>
                     </div>
-                </div>`).join('');
-            if(totEl) totEl.textContent = `$${(this.items.reduce((s, i) => s + (i.price * i.quantity), 0)/100).toFixed(2)}`;
+                </div>`;
+            });
+            html += `</div>`; // end items wrapper
+
+            html += `
+                <div class="mt-8 mb-6 border-b border-gray-200 pb-6">
+                    <button onclick="window.Cart.close()" class="w-full py-3.5 bg-white border border-blue-600 hover:bg-blue-50 text-blue-600 font-semibold rounded-full text-[15px] transition">Add more items</button>
+                </div>`;
+
+            // Faux Promo Code UI
+            html += `
+                <div class="border border-gray-400 rounded py-3.5 px-4 mb-6 flex items-center text-gray-500 text-[15px]">
+                    <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                    Add coupon or gift card
+                </div>`;
+
+            // Totals Breakdowns
+            const subtotal = (this.items.reduce((s, i) => s + (i.price * i.quantity), 0) / 100).toFixed(2);
+            const shipping = 6.50; // Reflecting your updated rate
+            const estimatedTotal = (parseFloat(subtotal) + shipping).toFixed(2);
+
+            html += `
+                <div class="space-y-3 mb-6 text-[15px]">
+                    <div class="flex justify-between text-blue-600"><span class="font-medium opacity-90">Subtotal</span><span>$${subtotal}</span></div>
+                    <div class="flex justify-between text-blue-600"><span class="font-medium opacity-90">Estimated shipping</span><span>$${shipping.toFixed(2)}</span></div>
+                    <div class="flex justify-between text-blue-600"><span class="font-medium opacity-90">Estimated taxes</span><span>Calculated at checkout</span></div>
+                </div>
+                
+                <div class="border-t border-dashed border-gray-200 pt-5 mb-8">
+                    <div class="flex justify-between text-blue-600 font-black text-lg tracking-tight"><span>Estimated order total</span><span>$${estimatedTotal}</span></div>
+                    <p class="text-[11px] text-blue-600 mt-2 opacity-80">Additional taxes and fees will be calculated at checkout</p>
+                </div>`;
+
+            // Trusted Footer Badges & Checkout Button
+            html += `
+                <div class="text-center pb-8">
+                    <div class="flex flex-col items-center justify-center mb-3 text-gray-900 font-semibold text-[15px]">
+                        <svg class="w-6 h-6 mb-1" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zm-3.5 14h-7c-.827 0-1.5-.673-1.5-1.5v-7c0-.827.673-1.5 1.5-1.5h7c.827 0 1.5.673 1.5 1.5v7c0 .827-.673 1.5-1.5 1.5z"/></svg>
+                        Secure checkout by Square
+                    </div>
+                    <div class="flex justify-center gap-1.5 mb-6">
+                        <div class="px-2 py-1 bg-[#00D632] text-white text-[9px] font-bold rounded tracking-wider">CASH APP</div>
+                        <div class="px-2 py-1 bg-black text-white text-[9px] font-bold rounded tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.3 48.6-.6 86.8-82.6 102.3-120.4-44.8-18.4-61.6-54.8-61.4-90.2zM153.6 30.1c17-21.4 40.2-30.1 63.6-30.1-2.6 23.4-12.7 44.9-28.7 61.2-16.1 16.5-38.3 26.6-60.8 24.3 1.6-21.7 10.3-40.5 25.9-55.4z"/></svg>Pay</div>
+                        <div class="px-2 py-1 bg-white border border-gray-200 text-gray-600 text-[9px] font-bold rounded tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 488 512" fill="currentColor"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>Pay</div>
+                        <div class="px-2 py-1 bg-[#1A1F71] text-white text-[9px] font-bold rounded tracking-wider italic">VISA</div>
+                    </div>
+                    
+                    <button id="checkout-btn" class="w-full btn-pulse bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-full transition duration-200 flex justify-center items-center text-[15px] tracking-wide" onclick="window.Cart.checkout()">
+                        Continue to payment
+                    </button>
+                </div>
+                </div> `;
+            cont.innerHTML = html;
         }
         async checkout() {
             const btn = document.getElementById('checkout-btn'); 
@@ -793,10 +862,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <select id="modal-variant" class="variant-select mb-3">${opts}</select>
                     
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
-                    <div class="flex gap-4 h-[50px]">
+                    <div class="flex gap-4 h-[50px] mb-3">
                         <div class="qty-wrap h-full bg-white"><button class="qty-btn w-12" onclick="window.stepModalQty(-1)">−</button><input type="number" id="modal-qty" class="qty-num w-12 text-lg" value="1" min="1" max="99"><button class="qty-btn w-12" onclick="window.stepModalQty(1)">+</button></div>
                         <button class="atc-btn btn-pulse h-full text-sm flex-grow shadow-md" onclick="window.addModalToCart('${p.id}', '${safeName.replace(/'/g, "\\'")}')">Add to Cart</button>
                     </div>
+                    <p class="text-center text-[11px] text-gray-500 mt-4 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
             </div>`;
 
@@ -814,7 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pOverlay.classList.add('opacity-0'); pModal.classList.add('opacity-0', 'scale-95');
         setTimeout(() => {
             pOverlay.classList.add('hidden'); pModal.classList.add('hidden');
-            if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
+            if(!document.getElementById('cart-drawer').classList.contains('translate-x-full') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
         }, 300);
     };
 
