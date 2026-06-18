@@ -2,12 +2,11 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Indigenous Art & Apparel</title>
 
-    <meta name="description" content="RLP Dezines is an Indigenous-owned creative studio offering premium apparel, custom blankets, and original NAC music by Ronnie Lodgepole, Chippewa Cree.">
+    <meta name="description" content="RLP Dezines is an Indigenous-owned creative studio offering premium apparel, custom blankets, and original NAC music by Ronnie Lodgepole.">
     <meta name="author" content="Ronnie Lodgepole">
-    <meta name="keywords" content="Indigenous apparel, Native American design, powwow blankets, NAC music, Chippewa Cree, RLP Dezines, Indigipreneur">
 
     <meta property="og:title" content="RLP Dezines — Indigenous Art & Apparel">
     <meta property="og:description" content="Premium apparel, custom ceremony blankets, and original NAC music rooted in Chippewa Cree culture.">
@@ -17,13 +16,13 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         :root { --blue: #2563EB; --blue-light: #3B82F6; }
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111827; -webkit-font-smoothing: antialiased; font-size: 16px; }
         body.no-scroll { overflow: hidden !important; touch-action: none; }
@@ -53,8 +52,8 @@
         .reveal-delay-3 { transition-delay: 0.24s; }
         .reveal-delay-4 { transition-delay: 0.32s; }
 
-        #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
-        #toast.show { transform: translateX(-50%) translateY(0); }
+        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
 
         .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 13px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
         .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
@@ -62,9 +61,6 @@
         .form-input { width: 100%; background: #f9fafb; border: 1px solid #e5e7eb; color: #111827; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; }
         .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
         
-        #back-top { opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; transform: translateY(8px); }
-        #back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-
         /* ── Custom Pulse Animation for CTA Buttons ── */
         @keyframes subtle-glow {
             0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
@@ -80,7 +76,7 @@
         #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
         #mobile-menu.open { opacity: 1; visibility: visible; }
 
-        /* ── Product Cards (Clean Grid) ── */
+        /* ── Product Cards ── */
         .product-card { display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; cursor: pointer; }
         .product-card:hover { border-color: #2563EB; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(37,99,235,0.08); }
         .product-card:hover .card-img { transform: scale(1.05); }
@@ -88,7 +84,6 @@
         .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 13px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
         .card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        
         .view-btn-text { font-size: 11px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; transition: color 0.2s; }
         .product-card:hover .view-btn-text { color: #2563EB; }
 
@@ -145,7 +140,6 @@
 <header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 h-[69px]">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 h-full">
         
-        <!-- RLP DEZINES LOGO -->
         <a href="#top" class="flex items-center transition hover:opacity-80">
             <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w400" alt="RLP Dezines Logo" class="h-8 sm:h-10 w-auto object-contain">
         </a>
@@ -187,7 +181,6 @@
     <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px]">Start a Project</a>
 </div>
 
-<!-- FLOATING CART BUTTON (Mobile Only) -->
 <button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-[0_10px_40px_rgba(37,99,235,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
     <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center hidden shadow-md border-2 border-white">
@@ -786,19 +779,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             
-            <!-- Magic Flex Properties: flex-grow min-h-0 ensures it sizes correctly -->
             <div class="w-full md:w-1/2 flex flex-col flex-grow min-h-0 bg-white">
-                <!-- Anchored Header -->
                 <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex-shrink-0 bg-white z-10">
                     <h2 class="text-xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight pr-8">${safeName}</h2>
                 </div>
                 
-                <!-- Scrollable Description -->
                 <div class="p-5 sm:p-6 overflow-y-auto flex-grow min-h-0 bg-white">
                     <div class="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-wrap">${safeDesc}</div>
                 </div>
                 
-                <!-- Anchored Action Footer with Pulse -->
                 <div class="p-5 sm:p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
                     <select id="modal-variant" class="variant-select mb-3">${opts}</select>
@@ -893,7 +882,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const pMinPrice = Math.min(...p.variations.map(v => v.price));
                     
                     return `
-                    <div class="product-card group" onclick="openProductModal('${p.id}')">
+                    <div class="product-card group" onclick="window.openModal('${p.id}')">
                         <div class="card-img-wrap">${img}</div>
                         <div class="card-body">
                             <div>
@@ -903,10 +892,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="mt-5 flex items-center justify-between">
                                 <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
                                 <div class="flex items-center gap-2">
-                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="shareProduct(event, '${p.id}', '${sName}')" aria-label="Share">
+                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="window.shareProduct(event, '${p.id}', '${sName}')" aria-label="Share">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
                                     </button>
-                                    <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="quickAdd(event, '${p.id}')">Add to Cart</button>
+                                    <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">Add to Cart</button>
                                 </div>
                             </div>
                         </div>
