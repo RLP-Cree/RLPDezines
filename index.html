@@ -145,6 +145,7 @@
 <header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 h-[69px]">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 h-full">
         
+        <!-- RLP DEZINES LOGO -->
         <a href="#top" class="flex items-center transition hover:opacity-80">
             <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w400" alt="RLP Dezines Logo" class="h-8 sm:h-10 w-auto object-contain">
         </a>
@@ -166,10 +167,6 @@
         </nav>
 
         <div class="flex items-center gap-3 lg:hidden">
-            <button id="mobile-cart-btn" class="relative text-gray-900 hover:text-blue-600 transition p-1" aria-label="Open cart">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                <span id="mobile-cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center hidden shadow-sm"><span id="mobile-cart-count">0</span></span>
-            </button>
             <button id="menu-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1" aria-label="Toggle menu">
                 <svg id="menu-icon-open"  class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -190,7 +187,8 @@
     <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px]">Start a Project</a>
 </div>
 
-<button id="floating-cart-btn" class="fixed bottom-6 right-6 z-[55] bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-[0_10px_40px_rgba(37,99,235,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
+<!-- FLOATING CART BUTTON (Mobile Only) -->
+<button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-[0_10px_40px_rgba(37,99,235,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
     <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center hidden shadow-md border-2 border-white">
         <span id="floating-cart-count">0</span>
@@ -628,7 +626,6 @@ document.addEventListener('DOMContentLoaded', () => {
         initDOM() {
             this.drawer = document.getElementById('cart-drawer'); this.overlay = document.getElementById('cart-overlay');
             document.getElementById('nav-cart-btn')?.addEventListener('click', () => this.open());
-            document.getElementById('mobile-cart-btn')?.addEventListener('click', () => this.open());
             document.getElementById('floating-cart-btn')?.addEventListener('click', () => this.open());
             document.getElementById('close-cart-btn')?.addEventListener('click', () => this.close());
             this.overlay?.addEventListener('click', () => this.close());
@@ -667,14 +664,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const total = this.items.reduce((s, i) => s + i.quantity, 0);
             
             const cnt = document.getElementById('cart-count');
-            const mCnt = document.getElementById('mobile-cart-count');
-            const badge = document.getElementById('mobile-cart-badge');
             const fCnt = document.getElementById('floating-cart-count');
             const fBadge = document.getElementById('floating-cart-badge');
             
             if(cnt) cnt.textContent = total; 
-            if(mCnt) mCnt.textContent = total; 
-            if(badge) badge.classList.toggle('hidden', total === 0);
             if(fCnt) fCnt.textContent = total;
             if(fBadge) fBadge.classList.toggle('hidden', total === 0);
             
@@ -793,15 +786,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             
+            <!-- Magic Flex Properties: flex-grow min-h-0 ensures it sizes correctly -->
             <div class="w-full md:w-1/2 flex flex-col flex-grow min-h-0 bg-white">
+                <!-- Anchored Header -->
                 <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex-shrink-0 bg-white z-10">
                     <h2 class="text-xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight pr-8">${safeName}</h2>
                 </div>
                 
+                <!-- Scrollable Description -->
                 <div class="p-5 sm:p-6 overflow-y-auto flex-grow min-h-0 bg-white">
                     <div class="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-wrap">${safeDesc}</div>
                 </div>
                 
+                <!-- Anchored Action Footer with Pulse -->
                 <div class="p-5 sm:p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
                     <select id="modal-variant" class="variant-select mb-3">${opts}</select>
@@ -896,7 +893,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const pMinPrice = Math.min(...p.variations.map(v => v.price));
                     
                     return `
-                    <div class="product-card group" onclick="window.openModal('${p.id}')">
+                    <div class="product-card group" onclick="openProductModal('${p.id}')">
                         <div class="card-img-wrap">${img}</div>
                         <div class="card-body">
                             <div>
@@ -906,10 +903,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="mt-5 flex items-center justify-between">
                                 <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
                                 <div class="flex items-center gap-2">
-                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="window.shareProduct(event, '${p.id}', '${sName}')" aria-label="Share">
+                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="shareProduct(event, '${p.id}', '${sName}')" aria-label="Share">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
                                     </button>
-                                    <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">Add to Cart</button>
+                                    <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="quickAdd(event, '${p.id}')">Add to Cart</button>
                                 </div>
                             </div>
                         </div>
