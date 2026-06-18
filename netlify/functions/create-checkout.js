@@ -59,10 +59,10 @@ exports.handler = async (event) => {
         });
 
         // ── THE DYNAMIC INCREMENTAL SHIPPING CALCULATOR ──
-        // Calculates $13.50 for the first item, plus $4.00 for every additional item.
+        // Calculates $6.50 for the first item, plus $4.00 for every additional item.
         let calculatedShippingDollars = 0;
         if (totalQuantity > 0) {
-            calculatedShippingDollars = 13.50 + ((totalQuantity - 1) * 4.00);
+            calculatedShippingDollars = 6.50 + ((totalQuantity - 1) * 4.00);
         }
         const shippingCents = Math.round(calculatedShippingDollars * 100);
 
