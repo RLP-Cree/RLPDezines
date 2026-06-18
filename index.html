@@ -131,7 +131,7 @@
         .scroll-gallery img {
             flex: 0 0 100%;
             scroll-snap-align: center;
-            object-fit: contain; /* Ensures the image is never cropped */
+            object-fit: contain; 
             width: 100%;
             height: 100%;
             background: #ffffff; 
@@ -142,10 +142,9 @@
 </head>
 <body class="bg-white text-gray-900 antialiased flex flex-col min-h-screen relative">
 
-<header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center px-5 py-4">
+<header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 h-[69px]">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-5 h-full">
         
-        <!-- RLP DEZINES LOGO -->
         <a href="#top" class="flex items-center transition hover:opacity-80">
             <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w400" alt="RLP Dezines Logo" class="h-8 sm:h-10 w-auto object-contain">
         </a>
@@ -169,7 +168,6 @@
         <div class="flex items-center gap-3 lg:hidden">
             <button id="mobile-cart-btn" class="relative text-gray-900 hover:text-blue-600 transition p-1" aria-label="Open cart">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                <!-- RED NOTIFICATION DOT FOR CART -->
                 <span id="mobile-cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center hidden shadow-sm"><span id="mobile-cart-count">0</span></span>
             </button>
             <button id="menu-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1" aria-label="Toggle menu">
@@ -191,6 +189,13 @@
     <a href="#info"      class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Policies & FAQ</a>
     <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px]">Start a Project</a>
 </div>
+
+<button id="floating-cart-btn" class="fixed bottom-6 right-6 z-[55] bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-[0_10px_40px_rgba(37,99,235,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
+    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center hidden shadow-md border-2 border-white">
+        <span id="floating-cart-count">0</span>
+    </span>
+</button>
 
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-gray-50 border-l border-gray-200 z-[70] flex flex-col shadow-2xl">
@@ -219,7 +224,6 @@
 
 <div id="product-modal-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-md z-[80] hidden opacity-0 transition-opacity duration-300"></div>
 
-<!-- MODAL LAYOUT FIXED FOR UN-CROPPED IMAGES -->
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-auto max-h-[90vh]">
 </div>
 
@@ -625,6 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.drawer = document.getElementById('cart-drawer'); this.overlay = document.getElementById('cart-overlay');
             document.getElementById('nav-cart-btn')?.addEventListener('click', () => this.open());
             document.getElementById('mobile-cart-btn')?.addEventListener('click', () => this.open());
+            document.getElementById('floating-cart-btn')?.addEventListener('click', () => this.open());
             document.getElementById('close-cart-btn')?.addEventListener('click', () => this.close());
             this.overlay?.addEventListener('click', () => this.close());
             document.getElementById('checkout-btn')?.addEventListener('click', () => this.checkout());
@@ -636,7 +641,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         close() { 
             this.drawer?.classList.remove('open'); this.overlay?.classList.remove('open'); 
-            if(document.getElementById('product-modal').classList.contains('hidden')) body.classList.remove('no-scroll');
+            if(!document.getElementById('product-modal').classList.contains('hidden')) return;
+            body.classList.remove('no-scroll');
         }
         addItem(p) {
             const ex = this.items.find(i => i.id === p.id);
@@ -659,8 +665,18 @@ document.addEventListener('DOMContentLoaded', () => {
         save() { localStorage.setItem('rlp_cart', JSON.stringify(this.items)); }
         render() {
             const total = this.items.reduce((s, i) => s + i.quantity, 0);
-            const cnt = document.getElementById('cart-count'), mCnt = document.getElementById('mobile-cart-count'), badge = document.getElementById('mobile-cart-badge');
-            if(cnt) cnt.textContent = total; if(mCnt) mCnt.textContent = total; if(badge) badge.classList.toggle('hidden', total === 0);
+            
+            const cnt = document.getElementById('cart-count');
+            const mCnt = document.getElementById('mobile-cart-count');
+            const badge = document.getElementById('mobile-cart-badge');
+            const fCnt = document.getElementById('floating-cart-count');
+            const fBadge = document.getElementById('floating-cart-badge');
+            
+            if(cnt) cnt.textContent = total; 
+            if(mCnt) mCnt.textContent = total; 
+            if(badge) badge.classList.toggle('hidden', total === 0);
+            if(fCnt) fCnt.textContent = total;
+            if(fBadge) fBadge.classList.toggle('hidden', total === 0);
             
             const cont = document.getElementById('cart-items-container'), totEl = document.getElementById('cart-total'), btn = document.getElementById('checkout-btn'), lbl = document.getElementById('cart-item-count-label');
             if(lbl) lbl.textContent = `${total} item${total !== 1 ? 's' : ''}`;
@@ -746,57 +762,54 @@ document.addEventListener('DOMContentLoaded', () => {
             window.Cart.addItem({ id: v.id, name: finalName, price: parseInt(v.price), sku: v.sku || '', quantity: 1 });
         } else {
             // It has sizes/options. Open the modal!
-            openProductModal(id);
+            window.openModal(id);
         }
     };
 
     // ── REBUILT MODAL UX: FULLY RESPONSIVE FLEXBOX ──
-    window.openProductModal = function(id) {
+    window.openModal = function(id) {
         const p = window.globalProducts[id]; if(!p) return;
         const safeName = (p.name || 'Item').replace(/'/g, "&#39;"), safeDesc = p.description || 'No additional details available.';
         const opts = p.variations.map(v => `<option value="${v.id}" data-price="${v.price}" data-name="${(v.name||'Regular').replace(/'/g,"&#39;")}" data-sku="${v.sku||''}">${v.name||'Regular'} — $${(v.price/100).toFixed(2)}</option>`).join('');
         
         let imgHtml = '';
         if (p.imageUrls && p.imageUrls.length > 1) {
-            const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName}">`).join('');
+            const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName.replace(/'/g, "&#39;")}" class="w-full h-full object-contain p-2 sm:p-4">`).join('');
             imgHtml = `<div class="scroll-gallery w-full h-full">${imgTags}</div>`;
         } else if (p.imageUrl && p.imageUrl.startsWith('http')) {
-            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain">`;
+            // Apply heavy padding and strict max-heights so the image is fully contained with breathing room
+            imgHtml = `<img src="${p.imageUrl}" alt="${safeName.replace(/'/g, "&#39;")}" class="w-full h-full object-contain p-4 sm:p-8 drop-shadow-sm max-h-[35vh] md:max-h-full">`;
         } else {
             imgHtml = `<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
         }
 
         // Structure: Main modal forced to h-[90vh], splits into image and text columns.
         pModal.innerHTML = `
-            <button onclick="closeProductModal()" class="absolute top-3 right-3 bg-white hover:bg-gray-100 text-gray-900 p-2 rounded-full z-[100] transition shadow-md border border-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            <button onclick="window.closeModal()" class="absolute top-3 right-3 bg-white hover:bg-gray-100 text-gray-900 p-2 rounded-full z-[100] transition shadow-md border border-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             
-            <div class="w-full md:w-1/2 bg-white relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 p-2 sm:p-6 h-[40vh] md:h-auto">
+            <div class="w-full md:w-1/2 bg-gray-50 relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 h-[40vh] md:h-auto">
                 <div class="w-full h-full relative flex items-center justify-center overflow-hidden">
                     ${imgHtml}
                 </div>
             </div>
             
-            <!-- Magic Flex Properties: flex-grow min-h-0 ensures it sizes correctly -->
-            <div class="w-full md:w-1/2 flex flex-col flex-grow min-h-0">
-                <!-- Anchored Header -->
+            <div class="w-full md:w-1/2 flex flex-col flex-grow min-h-0 bg-white">
                 <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex-shrink-0 bg-white z-10">
                     <h2 class="text-xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight pr-8">${safeName}</h2>
                 </div>
                 
-                <!-- Scrollable Description -->
                 <div class="p-5 sm:p-6 overflow-y-auto flex-grow min-h-0 bg-white">
                     <div class="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-wrap">${safeDesc}</div>
                 </div>
                 
-                <!-- Anchored Action Footer with Pulse -->
                 <div class="p-5 sm:p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
                     <select id="modal-variant" class="variant-select mb-3">${opts}</select>
                     
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
                     <div class="flex gap-4 h-[50px]">
-                        <div class="qty-wrap h-full bg-white"><button class="qty-btn w-12" onclick="stepModalQty(-1)">−</button><input type="number" id="modal-qty" class="qty-num w-12 text-lg" value="1" min="1" max="99"><button class="qty-btn w-12" onclick="stepModalQty(1)">+</button></div>
-                        <button class="atc-btn btn-pulse h-full text-sm flex-grow shadow-md" onclick="addModalToCart('${p.id}', '${safeName}')">Add to Cart</button>
+                        <div class="qty-wrap h-full bg-white"><button class="qty-btn w-12" onclick="window.stepModalQty(-1)">−</button><input type="number" id="modal-qty" class="qty-num w-12 text-lg" value="1" min="1" max="99"><button class="qty-btn w-12" onclick="window.stepModalQty(1)">+</button></div>
+                        <button class="atc-btn btn-pulse h-full text-sm flex-grow shadow-md" onclick="window.addModalToCart('${p.id}', '${safeName.replace(/'/g, "\\'")}')">Add to Cart</button>
                     </div>
                 </div>
             </div>`;
@@ -811,7 +824,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.add('no-scroll');
     };
 
-    window.closeProductModal = function() {
+    window.closeModal = function() {
         pOverlay.classList.add('opacity-0'); pModal.classList.add('opacity-0', 'scale-95');
         setTimeout(() => {
             pOverlay.classList.add('hidden'); pModal.classList.add('hidden');
@@ -819,13 +832,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     };
 
-    pOverlay.addEventListener('click', closeProductModal);
+    pOverlay.addEventListener('click', window.closeModal);
     window.stepModalQty = (delta) => { const el = document.getElementById('modal-qty'); if(el) el.value = Math.max(1, Math.min(99, parseInt(el.value || 1) + delta)); };
+    
     window.addModalToCart = (id, name) => {
         const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); if(!sel || !qty) return;
         const opt = sel.options[sel.selectedIndex], vName = opt.getAttribute('data-name') || 'Regular';
-        window.Cart.addItem({ id: opt.value, name: (vName === 'Regular' || vName === '') ? name : `${name} (${vName})`, price: parseInt(opt.getAttribute('data-price')), sku: opt.getAttribute('data-sku') || '', quantity: parseInt(qty.value)||1 });
-        closeProductModal();
+        const finalName = (vName === 'Regular' || vName === '') ? name : `${name} (${vName})`;
+        window.Cart.addItem({ id: opt.value, name: finalName, price: parseInt(opt.getAttribute('data-price')), sku: opt.getAttribute('data-sku') || '', quantity: parseInt(qty.value)||1 });
+        window.closeModal();
     };
 
     // ── Load Catalog mapped to Square Categories (1-col mobile grid) ──
@@ -881,7 +896,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const pMinPrice = Math.min(...p.variations.map(v => v.price));
                     
                     return `
-                    <div class="product-card group" onclick="openProductModal('${p.id}')">
+                    <div class="product-card group" onclick="window.openModal('${p.id}')">
                         <div class="card-img-wrap">${img}</div>
                         <div class="card-body">
                             <div>
@@ -891,10 +906,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="mt-5 flex items-center justify-between">
                                 <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
                                 <div class="flex items-center gap-2">
-                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="shareProduct(event, '${p.id}', '${sName}')" aria-label="Share">
+                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="window.shareProduct(event, '${p.id}', '${sName}')" aria-label="Share">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
                                     </button>
-                                    <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="quickAdd(event, '${p.id}')">Add to Cart</button>
+                                    <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">Add to Cart</button>
                                 </div>
                             </div>
                         </div>
