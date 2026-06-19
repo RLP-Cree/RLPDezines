@@ -601,14 +601,12 @@ document.addEventListener('DOMContentLoaded', () => {
             this.overlay?.addEventListener('click', () => this.close());
         }
         open() { 
-            this.drawer?.classList.add('open'); 
-            this.overlay?.classList.add('open'); 
+            this.drawer?.classList.remove('translate-x-full'); this.overlay?.classList.add('open'); 
             body.classList.add('no-scroll');
             if (mobileMenu.classList.contains('open')) toggleMobileMenu(false);
         }
         close() { 
-            this.drawer?.classList.remove('open'); 
-            this.overlay?.classList.remove('open'); 
+            this.drawer?.classList.add('translate-x-full'); this.overlay?.classList.remove('open'); 
             if(!document.getElementById('product-modal').classList.contains('hidden')) return;
             body.classList.remove('no-scroll');
         }
@@ -774,8 +772,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const pModal = document.getElementById('product-modal'), pOverlay = document.getElementById('product-modal-overlay');
 
     // ── Native Share Function ──
-    window.shareProduct = async function(event, id, name) {
+    window.shareProduct = async function(event, id) {
         event.stopPropagation(); // Stop the modal from opening when clicking share
+        const p = window.globalProducts[id];
+        if (!p) return;
+        const name = p.name || 'Item';
         const url = window.location.origin + window.location.pathname + '#shop-live';
         const shareData = {
             title: name + ' | RLP Dezines',
@@ -804,7 +805,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // If it only has 1 variant (e.g. standard mug/tote), add directly!
         if (p.variations && p.variations.length === 1) {
             const v = p.variations[0];
-            const safeName = (p.name || 'Item').replace(/'/g, "&#39;");
+            const safeName = p.name || 'Item';
             const vName = v.name || 'Regular';
             const finalName = (vName === 'Regular' || vName === '') ? safeName : `${safeName} (${vName})`;
             window.Cart.addItem({ id: v.id, name: finalName, price: parseInt(v.price), sku: v.sku || '', quantity: 1 });
@@ -817,16 +818,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── REBUILT MODAL UX: FULLY RESPONSIVE FLEXBOX ──
     window.openModal = function(id) {
         const p = window.globalProducts[id]; if(!p) return;
-        const safeName = (p.name || 'Item').replace(/'/g, "&#39;"), safeDesc = p.description || 'No additional details available.';
+        const safeName = (p.name || 'Item').replace(/'/g, "&#39;"); // Safe for displaying in HTML only
+        const safeDesc = p.description || 'No additional details available.';
         const opts = p.variations.map(v => `<option value="${v.id}" data-price="${v.price}" data-name="${(v.name||'Regular').replace(/'/g,"&#39;")}" data-sku="${v.sku||''}">${v.name||'Regular'} — $${(v.price/100).toFixed(2)}</option>`).join('');
         
         let imgHtml = '';
         if (p.imageUrls && p.imageUrls.length > 1) {
-            const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName.replace(/'/g, "&#39;")}" class="w-full h-full object-contain p-2 sm:p-4">`).join('');
+            const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName}" class="w-full h-full object-contain p-2 sm:p-4">`).join('');
             imgHtml = `<div class="scroll-gallery w-full h-full">${imgTags}</div>`;
         } else if (p.imageUrl && p.imageUrl.startsWith('http')) {
             // Apply heavy padding and strict max-heights so the image is fully contained with breathing room
-            imgHtml = `<img src="${p.imageUrl}" alt="${safeName.replace(/'/g, "&#39;")}" class="w-full h-full object-contain p-4 sm:p-8 drop-shadow-sm max-h-[35vh] md:max-h-full">`;
+            imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain p-4 sm:p-8 drop-shadow-sm max-h-[35vh] md:max-h-full">`;
         } else {
             imgHtml = `<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
         }
@@ -857,7 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
                     <div class="flex gap-4 h-[50px] mb-3">
                         <div class="qty-wrap h-full bg-white"><button class="qty-btn w-12" onclick="window.stepModalQty(-1)">−</button><input type="number" id="modal-qty" class="qty-num w-12 text-lg" value="1" min="1" max="99"><button class="qty-btn w-12" onclick="window.stepModalQty(1)">+</button></div>
-                        <button class="atc-btn btn-pulse h-full text-sm flex-grow shadow-md" onclick="window.addModalToCart('${p.id}', '${safeName.replace(/'/g, "\\'")}')">Add to Cart</button>
+                        <button class="atc-btn btn-pulse h-full text-sm flex-grow shadow-md" onclick="window.addModalToCart('${p.id}')">Add to Cart</button>
                     </div>
                     <p class="text-center text-[11px] text-gray-500 mt-4 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
@@ -877,17 +879,21 @@ document.addEventListener('DOMContentLoaded', () => {
         pOverlay.classList.add('opacity-0'); pModal.classList.add('opacity-0', 'scale-95');
         setTimeout(() => {
             pOverlay.classList.add('hidden'); pModal.classList.add('hidden');
-            if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
+            if(document.getElementById('cart-drawer').classList.contains('translate-x-full') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
         }, 300);
     };
 
     pOverlay.addEventListener('click', window.closeModal);
     window.stepModalQty = (delta) => { const el = document.getElementById('modal-qty'); if(el) el.value = Math.max(1, Math.min(99, parseInt(el.value || 1) + delta)); };
     
-    window.addModalToCart = (id, name) => {
+    // Safely look up name from ID database instead of passing via HTML string
+    window.addModalToCart = (id) => {
         const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); if(!sel || !qty) return;
         const opt = sel.options[sel.selectedIndex], vName = opt.getAttribute('data-name') || 'Regular';
-        const finalName = (vName === 'Regular' || vName === '') ? name : `${name} (${vName})`;
+        const p = window.globalProducts[id];
+        const baseName = p ? (p.name || 'Item') : 'Item';
+        const finalName = (vName === 'Regular' || vName === '') ? baseName : `${baseName} (${vName})`;
+        
         window.Cart.addItem({ id: opt.value, name: finalName, price: parseInt(opt.getAttribute('data-price')), sku: opt.getAttribute('data-sku') || '', quantity: parseInt(qty.value)||1 });
         window.closeModal();
     };
@@ -956,7 +962,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="mt-5 flex items-center justify-between">
                                 <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
                                 <div class="flex items-center gap-2">
-                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="window.shareProduct(event, '${p.id}', '${sName}')" aria-label="Share">
+                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="window.shareProduct(event, '${p.id}')" aria-label="Share">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
                                     </button>
                                     <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">Add to Cart</button>
