@@ -76,14 +76,17 @@
         #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
         #mobile-menu.open { opacity: 1; visibility: visible; }
 
-        /* ── Product Cards ── */
-        .product-card { display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; cursor: pointer; }
-        .product-card:hover { border-color: #2563EB; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(37,99,235,0.08); }
-        .product-card:hover .card-img { transform: scale(1.05); }
-        .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: #f9fafb; position: relative; }
-        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 13px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
-        .card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        /* ── Floating Product Cards (Unboxed) ── */
+        .product-card { display: flex; flex-direction: column; background: transparent; border: none; overflow: hidden; transition: transform 0.3s ease; cursor: pointer; }
+        .product-card:hover { transform: translateY(-4px); }
+        .product-card:hover .card-img { transform: scale(1.04); }
+        .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: transparent; position: relative; }
+        
+        /* mix-blend-mode makes white backgrounds disappear, letting the item float */
+        .card-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease; mix-blend-mode: multiply; }
+        
+        .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 13px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; background: #f9fafb; border-radius: 12px; }
+        .card-body { padding: 16px 8px 8px 8px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .view-btn-text { font-size: 11px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; transition: color 0.2s; }
         .product-card:hover .view-btn-text { color: #2563EB; }
 
@@ -190,8 +193,7 @@
 
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
 
-<!-- REBUILT "SQUARE INVOICE" STYLE CART DRAWER -->
-<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl transition-transform transform translate-x-full">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
         <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -252,58 +254,44 @@
 
 <section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white border border-gray-200 p-6 sm:p-14 rounded-2xl shadow-sm">
-            <div class="text-center mb-10 reveal">
-                <p class="section-label mb-5 justify-center">Share a Good Blessing</p>
-                <h2 class="text-4xl font-black text-gray-900 uppercase mb-5">RLP Family Honoring Specials Bundles</h2>
-                <p class="text-gray-600 font-light leading-relaxed mb-4 text-lg">When you're hosting, you want your relatives to feel truly taken care of. These bundles honor your guests with <strong class="text-blue-600 font-semibold">prayerful design and unmatched comfort.</strong></p>
-                <p class="text-gray-600 font-light leading-relaxed mb-8 text-lg">Every blanket is a <strong class="text-gray-900 font-semibold">60″ × 80″</strong> Sublimated Sherpa Throw — fully customizable. Soft sublimated surface on one side, plush sherpa warmth on the reverse, intended to wrap your guests in good energy.</p>
-            </div>
+        <div class="bg-white border border-gray-200 p-8 sm:p-16 rounded-3xl shadow-sm text-center">
+            <p class="section-label mb-5 justify-center reveal">Returning Design to the Community</p>
+            <h2 class="text-4xl font-black text-gray-900 uppercase mb-6 reveal">The RLP Family Honoring Specials Bundles</h2>
             
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10 reveal">
-                <div class="price-card bg-white border border-gray-200 p-5 rounded-xl text-center">
-                    <div class="text-[12px] font-black text-gray-900 uppercase tracking-widest mb-3">5 Throws</div>
-                    <div class="text-sm text-gray-400 line-through mb-1">$89 ea.</div>
-                    <div class="text-4xl font-black text-blue-600 leading-none">$85</div>
-                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
+            <p class="text-gray-600 font-light leading-relaxed mb-6 text-lg max-w-3xl mx-auto reveal">At RLP Dezines, the goal has always been to provide premium, authentic artwork that serves our people first. Preparing for a family special shouldn't mean turning to massive commercial corporations just to afford the items you need to honor your loved ones.</p>
+            <p class="text-gray-600 font-light leading-relaxed mb-10 text-lg max-w-3xl mx-auto reveal">To better serve the community, we are proud to offer a new, permanent bulk rate for our 60" × 80" Sherpa Blankets.</p>
+            
+            <div class="grid sm:grid-cols-3 gap-4 mb-10 text-left max-w-3xl mx-auto reveal">
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    <div class="text-blue-600 font-black tracking-widest text-xs uppercase mb-2">The Bundle</div>
+                    <div class="text-xl font-bold text-gray-900">10 Custom Sherpa Blankets</div>
                 </div>
-                <div class="price-card bg-white border border-gray-200 p-5 rounded-xl text-center">
-                    <div class="text-[12px] font-black text-gray-900 uppercase tracking-widest mb-3">10 Throws</div>
-                    <div class="text-sm text-gray-400 line-through mb-1">$89 ea.</div>
-                    <div class="text-4xl font-black text-blue-600 leading-none">$79</div>
-                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    <div class="text-blue-600 font-black tracking-widest text-xs uppercase mb-2">The Price</div>
+                    <div class="text-xl font-bold text-gray-900">$500 total <span class="text-sm font-medium text-gray-500 block mt-1">($50 per blanket)</span></div>
                 </div>
-                <div class="price-card bg-white border border-gray-200 p-5 rounded-xl text-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black tracking-widest uppercase px-2 py-1 rounded-bl">Popular</div>
-                    <div class="text-[12px] font-black text-gray-900 uppercase tracking-widest mb-3">15 Throws</div>
-                    <div class="text-sm text-gray-400 line-through mb-1">$89 ea.</div>
-                    <div class="text-4xl font-black text-blue-600 leading-none">$76</div>
-                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
-                </div>
-                <div class="price-card bg-white border border-gray-200 p-5 rounded-xl text-center">
-                    <div class="text-[12px] font-black text-gray-900 uppercase tracking-widest mb-3">20 Throws</div>
-                    <div class="text-sm text-gray-400 line-through mb-1">$89 ea.</div>
-                    <div class="text-4xl font-black text-blue-600 leading-none">$73</div>
-                    <div class="text-[11px] text-gray-500 mt-2 uppercase tracking-wider">per throw</div>
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    <div class="text-blue-600 font-black tracking-widest text-xs uppercase mb-2">The Purpose</div>
+                    <div class="text-base font-medium text-gray-700 leading-snug">Accessible, premium items designed specifically for giveaways, specials, and family events.</div>
                 </div>
             </div>
 
             <div class="text-center reveal">
-                <a href="https://rlp-dezines.square.site" target="_blank" rel="noopener" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-base transition">Order Your Bundle →</a>
-                <p class="text-gray-500 text-sm mt-4">Complete your custom bundle order on our dedicated Square site.</p>
+                <p class="text-gray-900 font-bold text-lg mb-6 italic">Thank you for supporting community-owned design.</p>
+                <a href="mailto:rlp@rlpdezines.com?subject=Family%20Honoring%20Special%20Quote" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black tracking-widest uppercase shadow-lg text-base transition btn-pulse">Email for custom quote →</a>
             </div>
         </div>
     </div>
 </section>
 
-<section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-gray-50 border-t border-gray-200 hover:bg-gray-100 transition duration-500 group">
+<section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-white border-t border-gray-200 transition duration-500 group">
     <p class="section-label mb-5 justify-center reveal">Original NAC Prayers & Music</p>
     <h2 class="text-5xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
     <p class="text-gray-600 max-w-lg mx-auto mb-8 text-lg font-light leading-relaxed reveal">The soundtrack to the journey. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
     <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
 </section>
 
-<section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-200 bg-white">
+<section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12 reveal">
             <p class="section-label mb-5 justify-center">The Intent</p>
@@ -311,7 +299,7 @@
         </div>
 
         <div class="max-w-md mx-auto mb-16 reveal">
-            <div class="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden shadow-lg">
+            <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg">
                 <img class="w-full h-auto block" src="https://drive.google.com/thumbnail?id=1-Kpx4e-nS-FPNHpdSRIWKOqQdW3PJWBz&sz=w1000" alt="Ronnie Lodgepole" loading="lazy">
             </div>
             <div class="text-center text-gray-500 text-xs font-semibold tracking-widest uppercase mt-4">
@@ -333,11 +321,11 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-6 mb-16 reveal">
-            <div class="bg-gray-50 border border-gray-200 border-l-4 border-l-blue-500 p-8 rounded-lg shadow-sm">
+            <div class="bg-white border border-gray-200 border-l-4 border-l-blue-500 p-8 rounded-lg shadow-sm">
                 <h4 class="text-gray-900 font-black tracking-widest text-base uppercase mb-4">The Mission</h4>
                 <p class="text-gray-600 font-light text-base leading-relaxed">To offer an act of service to the Indigenous spirit. Through prayerful art and traditional geometry, I aim to provide everyday items that serve as a reminder of our collective strength and connection to the Creator's cosmos.</p>
             </div>
-            <div class="bg-gray-50 border border-gray-200 border-l-4 border-l-blue-500 p-8 rounded-lg shadow-sm">
+            <div class="bg-white border border-gray-200 border-l-4 border-l-blue-500 p-8 rounded-lg shadow-sm">
                 <h4 class="text-gray-900 font-black tracking-widest text-base uppercase mb-4">The Vision</h4>
                 <p class="text-gray-600 font-light text-base leading-relaxed">To see these designs carried as a reflection of <strong class="text-gray-900 font-semibold">health, happiness, and cultural pride</strong>. My vision is for our creative work to serve as a bridge, ensuring that the light and beautiful colors of our heritage continue to shine through.</p>
             </div>
@@ -352,11 +340,11 @@
 
 <section id="wholesale" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
     <div class="max-w-5xl mx-auto space-y-8">
-        <div class="bg-gray-50 border border-gray-200 p-6 sm:p-14 rounded-2xl shadow-sm">
+        <div class="bg-gray-50 border border-gray-200 p-6 sm:p-14 rounded-3xl shadow-sm">
             <div class="text-center mb-10 reveal">
                 <p class="section-label mb-5 justify-center">Community Partners</p>
-                <h2 class="text-4xl font-black text-gray-900 uppercase mb-5">Partner Portal</h2>
-                <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto text-lg">I am honored to partner with boutiques, galleries, and organizations to share these prayers and designs with a wider audience.</p>
+                <h2 class="text-4xl font-black text-gray-900 uppercase mb-5">Community Wholesale</h2>
+                <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto text-lg">Just like our Family Honoring Bundles, our wholesale program is designed to keep authentic, premium design within the community. We partner with Indigenous boutiques, programs, and organizations to provide accessible bulk pricing.</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6 mb-10 reveal">
@@ -415,7 +403,7 @@
 
 <section id="services" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white border border-gray-200 border-l-4 border-l-blue-500 p-6 sm:p-14 rounded-2xl shadow-sm">
+        <div class="bg-white border border-gray-200 border-l-4 border-l-blue-500 p-6 sm:p-14 rounded-3xl shadow-sm">
             <div class="mb-8 reveal">
                 <p class="section-label mb-5">B2B & Creative Services</p>
                 <h2 class="text-4xl font-black text-gray-900 uppercase mb-5 tracking-tight">Design <span class="text-blue-600">Services</span></h2>
@@ -482,7 +470,7 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
-            <div class="endorse-card bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal shadow-sm">
+            <div class="endorse-card bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-3xl relative flex flex-col h-full reveal shadow-sm">
                 <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
                 <p class="text-gray-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
                     "RLP Dezines provided us with incredible support. From our official organization logo to the banners and custom gear we use for our events, the quality is exceptional."
@@ -493,7 +481,7 @@
                 </div>
             </div>
 
-            <div class="endorse-card bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-2xl relative flex flex-col h-full reveal reveal-delay-2 shadow-sm">
+            <div class="endorse-card bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-3xl relative flex flex-col h-full reveal reveal-delay-2 shadow-sm">
                 <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
                 <p class="text-gray-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
                     "Working with RLP Dezines has been a great experience. We needed high-quality gear for our health board and community events, and the final products were exactly what we were looking for."
@@ -509,7 +497,7 @@
 
 <section id="info" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 flex-grow bg-gray-50">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white border-t-4 border-t-blue-600 border border-gray-200 p-6 sm:p-14 rounded-2xl shadow-sm">
+        <div class="bg-white border-t-4 border-t-blue-600 border border-gray-200 p-6 sm:p-14 rounded-3xl shadow-sm">
             <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-10 text-center tracking-tight reveal">Store Policies & FAQ</h2>
 
             <div class="space-y-8 divide-y divide-gray-100">
@@ -612,14 +600,12 @@ document.addEventListener('DOMContentLoaded', () => {
             this.overlay?.addEventListener('click', () => this.close());
         }
         open() { 
-            this.drawer?.classList.add('open'); 
-            this.overlay?.classList.add('open'); 
+            this.drawer?.classList.remove('translate-x-full'); this.overlay?.classList.add('open'); 
             body.classList.add('no-scroll');
             if (mobileMenu.classList.contains('open')) toggleMobileMenu(false);
         }
         close() { 
-            this.drawer?.classList.remove('open'); 
-            this.overlay?.classList.remove('open'); 
+            this.drawer?.classList.add('translate-x-full'); this.overlay?.classList.remove('open'); 
             if(!document.getElementById('product-modal').classList.contains('hidden')) return;
             body.classList.remove('no-scroll');
         }
@@ -758,8 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         Continue to payment
                     </button>
                 </div>
-                </div> <!-- End padding wrapper -->
-            `;
+                </div> `;
             cont.innerHTML = html;
         }
         async checkout() {
@@ -888,7 +873,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pOverlay.classList.add('opacity-0'); pModal.classList.add('opacity-0', 'scale-95');
         setTimeout(() => {
             pOverlay.classList.add('hidden'); pModal.classList.add('hidden');
-            if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
+            if(!document.getElementById('cart-drawer').classList.contains('translate-x-full') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
         }, 300);
     };
 
@@ -939,7 +924,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Specific order based on Square Dashboard
-            const categoryOrder = ['Sherpa Throws', 'T Shirts', 'Hoodies', 'Tumblers', 'Mugs', 'Totes', 'Towels', 'Hand Towels', 'Phone Cases', 'Design Services'];
+            const categoryOrder = ['Sherpa Throws', 'T Shirts', 'Hoodies', 'Totes', 'Tumblers', 'Mugs', 'Phone Cases', 'Towels', 'Hand Towels', 'Design Services'];
             
             const existingCats = Object.keys(catMap);
             const sortedCats = categoryOrder.filter(c => existingCats.includes(c));
