@@ -198,7 +198,7 @@
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
 
 <!-- REBUILT "SQUARE INVOICE" STYLE CART DRAWER -->
-<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl transition-transform transform translate-x-full">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
         <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -230,9 +230,10 @@
         <p class="text-gray-600 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
         <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
         
-        <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-delay-4">
-            <a href="#shop-live" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-full font-bold transition shadow-lg text-sm uppercase tracking-widest">Explore the Art</a>
-            <a href="#bundles" class="bg-gray-100 text-gray-900 px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 transition shadow-sm text-sm uppercase tracking-widest border border-gray-200">Ceremony Bundles</a>
+        <div class="flex justify-center mt-12 reveal reveal-delay-4">
+            <a href="#shop-live" class="text-gray-400 hover:text-blue-600 transition duration-300 animate-bounce p-2" aria-label="Scroll down">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </a>
         </div>
     </div>
 </section>
@@ -315,7 +316,7 @@
         <div class="text-center max-w-3xl mx-auto mb-14 reveal">
             <h3 class="text-3xl sm:text-4xl font-black uppercase tracking-wide text-gray-900 mb-5">Beautifying the <span class="text-blue-600">World</span></h3>
             <p class="text-gray-600 font-light leading-relaxed mb-4 text-lg">My creative process is an act of service. When I design, I am channeling prayer into form—creating symbols of resilience, health, and happiness that you can carry with you.</p>
-            <p class="text-gray-600 font-light leading-relaxed mb-7 text-lg">Whether it's a tumbler, a blanket, or a tote, these everyday items are vessels for that energy. This isnt about volume; it's about making a way to share a good vibe, a good prayer, and a more beautiful perspective with anyone who needs it.</p>
+            <p class="text-gray-600 font-light leading-relaxed mb-7 text-lg">Whether it's a tumbler, a blanket, or a tote, these everyday items are vessels for that energy. This isn't about volume; it's about making a way to share a good vibe, a good prayer, and a more beautiful perspective with anyone who needs it.</p>
         </div>
 
         <div class="text-center max-w-3xl mx-auto mb-14 reveal">
@@ -605,14 +606,12 @@ document.addEventListener('DOMContentLoaded', () => {
             this.overlay?.addEventListener('click', () => this.close());
         }
         open() { 
-            this.drawer?.classList.add('open'); 
-            this.overlay?.classList.add('open'); 
+            this.drawer?.classList.remove('translate-x-full'); this.overlay?.classList.add('open'); 
             body.classList.add('no-scroll');
             if (mobileMenu.classList.contains('open')) toggleMobileMenu(false);
         }
         close() { 
-            this.drawer?.classList.remove('open'); 
-            this.overlay?.classList.remove('open'); 
+            this.drawer?.classList.add('translate-x-full'); this.overlay?.classList.remove('open'); 
             if(!document.getElementById('product-modal').classList.contains('hidden')) return;
             body.classList.remove('no-scroll');
         }
@@ -885,7 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pOverlay.classList.add('opacity-0'); pModal.classList.add('opacity-0', 'scale-95');
         setTimeout(() => {
             pOverlay.classList.add('hidden'); pModal.classList.add('hidden');
-            if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
+            if(!document.getElementById('cart-drawer').classList.contains('translate-x-full') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
         }, 300);
     };
 
