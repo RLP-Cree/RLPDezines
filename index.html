@@ -194,7 +194,7 @@
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
 
 <!-- REBUILT "SQUARE INVOICE" STYLE CART DRAWER -->
-<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl transition-transform transform translate-x-full">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
         <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -345,21 +345,17 @@
             <div class="text-center mb-10 reveal">
                 <p class="section-label mb-5 justify-center">Community Partners</p>
                 <h2 class="text-4xl font-black text-gray-900 uppercase mb-5">Community Wholesale</h2>
-                <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto text-lg">Just like our Family Honoring Bundles, our wholesale program is designed to keep authentic, premium design within the community. We partner with Indigenous boutiques, programs, and organizations to provide accessible bulk pricing.</p>
+                <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto text-lg">Just like our Family Honoring Bundles, our wholesale program is designed to keep authentic, premium design within the community. We partner with Indigenous boutiques, programs, and organizations to provide accessible, flat-rate bulk pricing.</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6 mb-10 reveal">
                 <div>
                     <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Order Requirements</h4>
-                    <p class="text-gray-600 font-light text-base leading-relaxed">Opening Order MOQ: <strong class="text-gray-900">15 total items</strong><br>Reorder MOQ: <strong class="text-gray-900">10 total items</strong></p>
+                    <p class="text-gray-600 font-light text-base leading-relaxed">Standard MOQ: <strong class="text-gray-900">10 total items</strong><br>Reorder MOQ: <strong class="text-gray-900">10 total items</strong></p>
                 </div>
                 <div>
-                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Volume Tiers</h4>
-                    <p class="text-gray-600 font-light text-base leading-relaxed">
-                        Tier 1: 15–29 items → <strong class="text-gray-900">10% Off</strong><br>
-                        Tier 2: 30–49 items → <strong class="text-gray-900">15% Off</strong><br>
-                        Tier 3: 50+ items → <strong class="text-gray-900">25% Off</strong>
-                    </p>
+                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Community Rate</h4>
+                    <p class="text-gray-600 font-light text-base leading-relaxed">All wholesale orders of 10 or more items automatically unlock our Community Bulk Rate.</p>
                 </div>
             </div>
 
@@ -368,17 +364,21 @@
                     <thead>
                         <tr class="bg-blue-600 text-white uppercase text-xs tracking-wider font-bold">
                             <th class="p-4 text-left pl-6">Product</th>
-                            <th class="p-4">MSRP</th>
-                            <th class="p-4">Tier 1</th>
-                            <th class="p-4">Tier 2</th>
-                            <th class="p-4">Tier 3</th>
+                            <th class="p-4">New MSRP (Retail)</th>
+                            <th class="p-4">Community Bulk Rate (10+ Items)</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 divide-y divide-gray-200">
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">T-Shirt</td><td class="p-4">$35.00</td><td class="p-4">$31.50</td><td class="p-4">$29.75</td><td class="p-4">$26.25</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Sherpa Blanket</td><td class="p-4">$89.00</td><td class="p-4">$80.10</td><td class="p-4">$75.65</td><td class="p-4">$66.75</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Tumbler</td><td class="p-4">$48.00</td><td class="p-4">$43.20</td><td class="p-4">$40.80</td><td class="p-4">$36.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Tote Bag</td><td class="p-4">$65.00</td><td class="p-4">$58.50</td><td class="p-4">$55.25</td><td class="p-4">$48.75</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">T-Shirt (Standard S-XL)</td><td class="p-4">$20.00</td><td class="p-4 font-bold text-blue-600">$15.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">T-Shirt (Extended 2XL-5XL)</td><td class="p-4">$28.00</td><td class="p-4 font-bold text-blue-600">$23.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Sherpa Blanket</td><td class="p-4">$78.00</td><td class="p-4 font-bold text-blue-600">$50.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Hoodie (Standard S-XL)</td><td class="p-4">$45.00</td><td class="p-4 font-bold text-blue-600">$35.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Hoodie (Extended 2XL-5XL)</td><td class="p-4">$50.00</td><td class="p-4 font-bold text-blue-600">$40.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Tote Bag</td><td class="p-4">$45.00</td><td class="p-4 font-bold text-blue-600">$36.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Tumbler</td><td class="p-4">$35.00</td><td class="p-4 font-bold text-blue-600">$26.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">iPhone Case</td><td class="p-4">$24.00</td><td class="p-4 font-bold text-blue-600">$19.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Hand Towel</td><td class="p-4">$18.00</td><td class="p-4 font-bold text-blue-600">$14.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Mug</td><td class="p-4">$15.00</td><td class="p-4 font-bold text-blue-600">$12.00</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -395,7 +395,7 @@
                 </div>
                 <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
                     <div class="text-3xl font-black text-blue-600 mb-3">3</div>
-                    <p class="text-gray-600 font-light text-base"><strong class="text-gray-900">Invoice:</strong> I'll apply tier discounts and send a digital invoice. Production starts on payment.</p>
+                    <p class="text-gray-600 font-light text-base"><strong class="text-gray-900">Invoice:</strong> I'll apply the Community Bulk Rate and send a digital invoice. Production starts on payment.</p>
                 </div>
             </div>
         </div>
