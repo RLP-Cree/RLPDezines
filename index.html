@@ -357,7 +357,7 @@
     </div>
 </section>
 
-<!-- LIVE BUNDLES SECTION -->
+<!-- THE NEW BULLETPROOF BUNDLES SECTION -->
 <section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
     <div class="max-w-5xl mx-auto">
         <div class="bg-white border border-gray-200 p-8 sm:p-16 rounded-3xl shadow-sm text-center">
@@ -372,12 +372,57 @@
                 <p class="text-blue-700 text-sm mt-2 font-medium">To ensure full production and delivery, your event must be scheduled at least 2 weeks from the date of your paid order.</p>
             </div>
             
-            <!-- Live Square Bundles Inject Here -->
-            <div id="bundles-grid" class="grid sm:grid-cols-3 gap-4 mb-8 text-left max-w-4xl mx-auto reveal">
-                <div class="col-span-full text-center py-10 text-gray-400 animate-pulse">Loading Custom Bundles...</div>
+            <!-- HARDCODED SQUARE LINK CARDS -->
+            <div class="grid sm:grid-cols-3 gap-6 mb-10 text-left max-w-5xl mx-auto reveal">
+                
+                <!-- 10 Piece Bundle -->
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                    <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
+                        <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="10 Piece Bundle">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $280</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">10-Piece Sherpa Throw Blanket Bundle</h3>
+                            <p class="text-[15px] font-bold text-gray-500 mb-6">$500.00 <span class="font-medium text-xs">($50/ea)</span></p>
+                        </div>
+                        <a href="https://square.link/u/kyUiJFJ2" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Select Designs & Checkout</a>
+                    </div>
+                </div>
+
+                <!-- 15 Piece Bundle -->
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                    <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
+                        <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="15 Piece Bundle">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $420</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">15-Piece Sherpa Throw Blanket Bundle</h3>
+                            <p class="text-[15px] font-bold text-gray-500 mb-6">$750.00 <span class="font-medium text-xs">($50/ea)</span></p>
+                        </div>
+                        <a href="https://square.link/u/jknBi1Td" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Select Designs & Checkout</a>
+                    </div>
+                </div>
+
+                <!-- 20 Piece Bundle -->
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                    <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
+                        <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="20 Piece Bundle">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $560</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">20-Piece Sherpa Throw Blanket Bundle</h3>
+                            <p class="text-[15px] font-bold text-gray-500 mb-6">$1,000.00 <span class="font-medium text-xs">($50/ea)</span></p>
+                        </div>
+                        <a href="https://square.link/u/SlIIQZLC" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Select Designs & Checkout</a>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="text-center reveal mt-10">
+            <div class="text-center reveal mt-4">
                 <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">* Important Note</p>
                 <p class="text-sm text-gray-500 max-w-2xl mx-auto">Sales tax and shipping are not included in the base bundle prices. These will be calculated and added automatically at checkout based on your exact delivery address.</p>
             </div>
@@ -732,7 +777,6 @@ document.addEventListener('DOMContentLoaded', () => {
         render() {
             const total = this.items.reduce((s, i) => s + i.quantity, 0);
             
-            // Sync all Notification Badges
             const cnt = document.getElementById('cart-count');
             const fCnt = document.getElementById('floating-cart-count');
             const fBadge = document.getElementById('floating-cart-badge');
@@ -744,7 +788,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const cont = document.getElementById('cart-content');
             if (!cont) return;
 
-            // Empty State
             if (this.items.length === 0) {
                 cont.innerHTML = `
                     <div class="flex flex-col items-center justify-center h-full p-8 text-center pb-32">
@@ -755,7 +798,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Filled State (Invoice Style)
             let html = `<div class="px-5 sm:px-8 py-8"><h1 class="text-3xl sm:text-4xl font-black text-blue-600 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
             
             this.items.forEach(i => {
@@ -983,7 +1025,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     window.addModalToCart = (id) => {
         const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); if(!sel || !qty) return;
-        if(sel.value === 'none') return; // Prevent adding invalid items
+        if(sel.value === 'none') return; 
         const opt = sel.options[sel.selectedIndex], vName = opt.getAttribute('data-name') || 'Regular';
         const p = window.globalProducts[id];
         const baseName = p ? (p.name || 'Item') : 'Item';
@@ -1028,7 +1070,6 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
         const featuredContainer = document.getElementById('featured-container');
-        const bundlesGrid = document.getElementById('bundles-grid');
         
         const icons = {
             'Sherpa Throws - 60” x 80”': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
@@ -1055,40 +1096,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found in catalog.</p>`; return; }
 
             const catMap = {};
-            const bundleItems = [];
 
-            products.forEach(p => {
-                window.globalProducts[p.id] = p; 
-                const c = p.category || 'Other Goods';
-                
-                // ── THE BULLDOZER BUNDLE FILTER ──
-                // Converts the entire raw item into a string to ensure we never miss it
-                const rawString = JSON.stringify(p).toLowerCase();
-                const isBundle = rawString.includes('bundle') || rawString.includes('10-piece') || rawString.includes('15-piece') || rawString.includes('20-piece');
-
-                if (isBundle) {
-                    bundleItems.push(p);
-                } else {
-                    if (!catMap[c]) catMap[c] = []; 
-                    catMap[c].push(p);
-                }
-            });
-
-            // ── Inject Bundle Items into Bundles Section ──
-            if (bundlesGrid) {
-                if (bundleItems.length > 0) {
-                    // Sort securely by price
-                    bundleItems.sort((a,b) => getSafeMinPrice(a) - getSafeMinPrice(b));
-                    bundlesGrid.innerHTML = bundleItems.map(p => generateCardHTML(p)).join('');
-                } else {
-                    bundlesGrid.innerHTML = `<p class="col-span-full text-center text-gray-500 font-semibold py-8">Bundles are currently being updated. Check back soon!</p>`;
-                }
-            }
-
-            // ── Extract Featured Items (Excluding Bundles) ──
+            // ── Extract Non-Bundle Items ──
             const nonBundleProducts = products.filter(p => {
                 const rawString = JSON.stringify(p).toLowerCase();
                 return !(rawString.includes('bundle') || rawString.includes('-piece'));
+            });
+
+            nonBundleProducts.forEach(p => {
+                window.globalProducts[p.id] = p; 
+                const c = p.category || 'Other Goods';
+                if (!catMap[c]) catMap[c] = []; 
+                catMap[c].push(p);
             });
 
             const categoryOrder = ['Sherpa Throws - 60” x 80”', 'Sherpa Throws', 'T Shirts', 'Hoodies', 'Totes', 'Tumblers', 'Mugs', 'Phone Cases', 'Towels', 'Hand Towels', 'Design Services'];
@@ -1165,7 +1184,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const sort = document.getElementById('filter-sort').value;
         const grid = document.getElementById('product-grid');
         
-        // Exclude bundle items from the main search results
         let products = Object.values(window.globalProducts).filter(p => {
             const rawString = JSON.stringify(p).toLowerCase();
             const isBundle = rawString.includes('bundle') || rawString.includes('-piece');
