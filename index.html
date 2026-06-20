@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6S9ZFXSQL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -14,6 +15,7 @@
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
+    <!-- Google SEO Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -26,6 +28,7 @@
     }
     </script>
 
+    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -266,6 +269,7 @@
 
 <section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto" id="featured-container">
+        <!-- Skeleton Loader -->
         <div class="animate-pulse">
             <div class="flex justify-center md:justify-start mb-6">
                 <div class="h-4 bg-gray-200 rounded w-48"></div>
@@ -353,6 +357,7 @@
     </div>
 </section>
 
+<!-- LIVE BUNDLES SECTION -->
 <section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
     <div class="max-w-5xl mx-auto">
         <div class="bg-white border border-gray-200 p-8 sm:p-16 rounded-3xl shadow-sm text-center">
@@ -367,6 +372,7 @@
                 <p class="text-blue-700 text-sm mt-2 font-medium">To ensure full production and delivery, your event must be scheduled at least 2 weeks from the date of your paid order.</p>
             </div>
             
+            <!-- Live Square Bundles Inject Here -->
             <div id="bundles-grid" class="grid sm:grid-cols-3 gap-4 mb-8 text-left max-w-4xl mx-auto reveal">
                 <div class="col-span-full text-center py-10 text-gray-400 animate-pulse">Loading Custom Bundles...</div>
             </div>
@@ -563,6 +569,7 @@
     </div>
 </section>
 
+<!-- "Join the Circle" Email Capture Section -->
 <section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
@@ -586,6 +593,7 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
+<!-- THE SEARCH MODAL -->
 <div id="filter-modal" class="fixed inset-0 bg-white z-[99] hidden p-6 overflow-y-auto transition-opacity">
     <div class="max-w-xl mx-auto mt-10">
         <div class="flex justify-between items-center mb-8">
@@ -757,7 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 let pImg = '';
                 for(let pid in window.globalProducts) {
-                    if(window.globalProducts[pid].variations.some(v => v.id === i.id)) {
+                    if(window.globalProducts[pid].variations && window.globalProducts[pid].variations.some(v => v.id === i.id)) {
                         pImg = window.globalProducts[pid].imageUrl; break;
                     }
                 }
@@ -896,7 +904,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const p = window.globalProducts[id]; if(!p) return;
         const safeName = (p.name || 'Item').replace(/'/g, "&#39;"); 
         const safeDesc = p.description || 'No additional details available.';
-        const opts = p.variations.map(v => `<option value="${v.id}" data-price="${v.price}" data-name="${(v.name||'Regular').replace(/'/g,"&#39;")}" data-sku="${v.sku||''}">${v.name||'Regular'} — $${(v.price/100).toFixed(2)}</option>`).join('');
+        
+        let opts = '';
+        if (p.variations && p.variations.length > 0) {
+            opts = p.variations.map(v => `<option value="${v.id}" data-price="${v.price}" data-name="${(v.name||'Regular').replace(/'/g,"&#39;")}" data-sku="${v.sku||''}">${v.name||'Regular'} — $${(v.price/100).toFixed(2)}</option>`).join('');
+        } else {
+            opts = `<option value="none">Item unavailable</option>`;
+        }
         
         let imgHtml = '';
         if (p.imageUrls && p.imageUrls.length > 1) {
@@ -969,6 +983,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     window.addModalToCart = (id) => {
         const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); if(!sel || !qty) return;
+        if(sel.value === 'none') return; // Prevent adding invalid items
         const opt = sel.options[sel.selectedIndex], vName = opt.getAttribute('data-name') || 'Regular';
         const p = window.globalProducts[id];
         const baseName = p ? (p.name || 'Item') : 'Item';
@@ -978,10 +993,16 @@ document.addEventListener('DOMContentLoaded', () => {
         window.closeModal();
     };
 
+    const getSafeMinPrice = (p) => {
+        if (!p.variations || p.variations.length === 0) return 0;
+        const prices = p.variations.map(v => parseInt(v.price) || 0);
+        return Math.min(...prices);
+    };
+
     const generateCardHTML = (p) => {
         const sName = (p.name || 'Item').replace(/'/g, "&#39;");
         const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP DEZINES</span></div>`;
-        const pMinPrice = Math.min(...p.variations.map(v => v.price));
+        const pMinPrice = getSafeMinPrice(p);
         
         return `
         <div class="product-card group" onclick="window.openModal('${p.id}')">
@@ -1039,11 +1060,13 @@ document.addEventListener('DOMContentLoaded', () => {
             products.forEach(p => {
                 window.globalProducts[p.id] = p; 
                 const c = p.category || 'Other Goods';
-                const nameLower = (p.name || '').toLowerCase();
-                const catLower = c.toLowerCase();
                 
-                // Bulletproof check: Look for the word "bundle" anywhere in the name or category
-                if (nameLower.includes('bundle') || catLower.includes('bundle')) {
+                // ── THE BULLDOZER BUNDLE FILTER ──
+                // Converts the entire raw item into a string to ensure we never miss it
+                const rawString = JSON.stringify(p).toLowerCase();
+                const isBundle = rawString.includes('bundle') || rawString.includes('10-piece') || rawString.includes('15-piece') || rawString.includes('20-piece');
+
+                if (isBundle) {
                     bundleItems.push(p);
                 } else {
                     if (!catMap[c]) catMap[c] = []; 
@@ -1054,7 +1077,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // ── Inject Bundle Items into Bundles Section ──
             if (bundlesGrid) {
                 if (bundleItems.length > 0) {
-                    bundleItems.sort((a,b) => Math.min(...a.variations.map(v=>v.price)) - Math.min(...b.variations.map(v=>v.price)));
+                    // Sort securely by price
+                    bundleItems.sort((a,b) => getSafeMinPrice(a) - getSafeMinPrice(b));
                     bundlesGrid.innerHTML = bundleItems.map(p => generateCardHTML(p)).join('');
                 } else {
                     bundlesGrid.innerHTML = `<p class="col-span-full text-center text-gray-500 font-semibold py-8">Bundles are currently being updated. Check back soon!</p>`;
@@ -1063,9 +1087,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // ── Extract Featured Items (Excluding Bundles) ──
             const nonBundleProducts = products.filter(p => {
-                const n = (p.name || '').toLowerCase();
-                const c = (p.category || '').toLowerCase();
-                return !(n.includes('bundle') || c.includes('bundle'));
+                const rawString = JSON.stringify(p).toLowerCase();
+                return !(rawString.includes('bundle') || rawString.includes('-piece'));
             });
 
             const categoryOrder = ['Sherpa Throws - 60” x 80”', 'Sherpa Throws', 'T Shirts', 'Hoodies', 'Totes', 'Tumblers', 'Mugs', 'Phone Cases', 'Towels', 'Hand Towels', 'Design Services'];
@@ -1100,7 +1123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let htmlOutput = '';
             sortedCats.forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
-                const minPrice = Math.min(...items.flatMap(p => p.variations.map(v => v.price)));
+                const minPrice = Math.min(...items.map(p => getSafeMinPrice(p)));
                 const priceLabel = `<span class="text-[12px] text-gray-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
                 const cards = items.map(p => generateCardHTML(p)).join('');
 
@@ -1144,15 +1167,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Exclude bundle items from the main search results
         let products = Object.values(window.globalProducts).filter(p => {
-            const nameLower = (p.name || '').toLowerCase();
-            const catLower = (p.category || '').toLowerCase();
-            const isBundle = nameLower.includes('bundle') || catLower.includes('bundle');
-            const matchesTerm = nameLower.includes(term);
+            const rawString = JSON.stringify(p).toLowerCase();
+            const isBundle = rawString.includes('bundle') || rawString.includes('-piece');
+            const matchesTerm = (p.name || '').toLowerCase().includes(term);
             return matchesTerm && !isBundle;
         });
         
-        if(sort === 'price-low') products.sort((a,b) => Math.min(...a.variations.map(v=>v.price)) - Math.min(...b.variations.map(v=>v.price)));
-        if(sort === 'price-high') products.sort((a,b) => Math.min(...b.variations.map(v=>v.price)) - Math.min(...a.variations.map(v=>v.price)));
+        if(sort === 'price-low') products.sort((a,b) => getSafeMinPrice(a) - getSafeMinPrice(b));
+        if(sort === 'price-high') products.sort((a,b) => getSafeMinPrice(b) - getSafeMinPrice(a));
         
         grid.innerHTML = products.length > 0 
             ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">` + products.map(p => generateCardHTML(p)).join('') + `</div>`
