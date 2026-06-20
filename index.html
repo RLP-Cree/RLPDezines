@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
-    <!-- App & Browser Icons -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "RLP Dezines",
+      "url": "https://rlpdezines.com",
+      "founder": "Ronald Lodgepole",
+      "description": "Prayerful art, custom ceremony vessels, and original NAC music rooted in Indigenous culture.",
+      "image": "https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w1200"
+    }
+    </script>
+
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -197,8 +208,7 @@
 
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
 
-<!-- REBUILT "SQUARE INVOICE" STYLE CART DRAWER -->
-<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl transition-transform transform translate-x-full">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
         <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -528,10 +538,21 @@
     </div>
 </section>
 
-<footer class="border-t border-gray-200 bg-white py-16 px-5">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500 gap-4">
+<section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
+    <div class="max-w-2xl mx-auto reveal">
+        <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
+        <p class="text-blue-100 mb-8 text-lg font-light leading-relaxed">Be the first to know about new custom drops, RLP Family Honoring Specials Bundles, and original NAC music releases.</p>
+        <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="event.preventDefault(); window.showToast('Welcome to the circle! ✓'); this.reset();">
+            <input type="email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-blue-400 font-medium border-none">
+            <button type="submit" class="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded-full font-black uppercase tracking-widest transition shadow-lg text-sm">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<footer class="border-t border-blue-700 bg-gray-900 py-16 px-5 text-gray-400">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm gap-4">
         <div>© 2026 RLP Dezines. Indigenous-owned &amp; operated.</div>
-        <div><a href="mailto:rlp@rlpdezines.com" class="hover:text-gray-900">rlp@rlpdezines.com</a></div>
+        <div><a href="mailto:rlp@rlpdezines.com" class="hover:text-white transition">rlp@rlpdezines.com</a></div>
     </div>
 </footer>
 
@@ -564,8 +585,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ── Toast & Reveal ──
-    const toast = document.getElementById('toast');
-    function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3500); }
+    window.showToast = function(msg) { 
+        const toast = document.getElementById('toast');
+        toast.textContent = msg; 
+        toast.classList.add('show'); 
+        setTimeout(() => toast.classList.remove('show'), 3500); 
+    };
 
     const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }});});
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
@@ -586,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const bodyParams = new URLSearchParams({ 'form-name': 'design-intake', name, email, budget, message });
             try {
                 const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: bodyParams.toString() });
-                if (res.ok) { document.getElementById('form-fields').classList.add('hidden'); document.getElementById('form-success').classList.remove('hidden'); showToast('Request received! Talk soon.'); } 
+                if (res.ok) { document.getElementById('form-fields').classList.add('hidden'); document.getElementById('form-success').classList.remove('hidden'); window.showToast('Request received! Talk soon.'); } 
                 else throw new Error();
             } catch {
                 window.location.href = `mailto:rlp@rlpdezines.com?subject=Design Inquiry&body=Name:%20${encodeURIComponent(name)}%0AEmail:%20${encodeURIComponent(email)}%0ABudget:%20${encodeURIComponent(budget)}%0A%0AProject:%0A${encodeURIComponent(message)}`;
@@ -606,21 +631,19 @@ document.addEventListener('DOMContentLoaded', () => {
             this.overlay?.addEventListener('click', () => this.close());
         }
         open() { 
-            this.drawer?.classList.add('open'); 
-            this.overlay?.classList.add('open'); 
+            this.drawer?.classList.remove('translate-x-full'); this.overlay?.classList.add('open'); 
             body.classList.add('no-scroll');
             if (mobileMenu.classList.contains('open')) toggleMobileMenu(false);
         }
         close() { 
-            this.drawer?.classList.remove('open'); 
-            this.overlay?.classList.remove('open'); 
+            this.drawer?.classList.add('translate-x-full'); this.overlay?.classList.remove('open'); 
             if(!document.getElementById('product-modal').classList.contains('hidden')) return;
             body.classList.remove('no-scroll');
         }
         addItem(p) {
             const ex = this.items.find(i => i.id === p.id);
             if (ex) ex.quantity += (p.quantity || 1); else this.items.push({ ...p, quantity: p.quantity || 1 });
-            this.save(); this.render(); showToast('Added to cart ✓');
+            this.save(); this.render(); window.showToast('Added to cart ✓');
         }
         updateItemQty(id, delta) {
             const ex = this.items.find(i => i.id === id);
@@ -752,8 +775,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         Continue to payment
                     </button>
                 </div>
-                </div> <!-- End padding wrapper -->
-            `;
+                </div> `;
             cont.innerHTML = html;
         }
         async checkout() {
@@ -766,7 +788,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await res.json();
                 if (data.url) window.location.href = data.url; else throw new Error();
             } catch { 
-                showToast('Connection issue. Please refresh and try again or contact rlp@rlpdezines.com.'); 
+                window.showToast('Connection issue. Please refresh and try again or contact rlp@rlpdezines.com.'); 
                 btn.innerHTML = originalBtnContent; 
                 btn.disabled = false; 
             }
@@ -800,7 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Fallback for desktop browsers without native share
             navigator.clipboard.writeText(url);
-            showToast('Link copied to clipboard!');
+            window.showToast('Link copied to clipboard!');
         }
     };
 
@@ -860,6 +882,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 
                 <div class="p-5 sm:p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
+                    <div class="flex flex-wrap justify-center gap-3 sm:gap-6 mb-5 text-[10px] sm:text-[11px] font-black text-gray-500 uppercase tracking-widest">
+                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Indigenous Owned</span>
+                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Made-to-Order</span>
+                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Secure Checkout</span>
+                    </div>
+
                     <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
                     <select id="modal-variant" class="variant-select mb-3">${opts}</select>
                     
@@ -905,6 +933,33 @@ document.addEventListener('DOMContentLoaded', () => {
         window.closeModal();
     };
 
+    // ── Helper Function to Build Product Cards ──
+    const generateCardHTML = (p) => {
+        const sName = (p.name || 'Item').replace(/'/g, "&#39;");
+        const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP DEZINES</span></div>`;
+        const pMinPrice = Math.min(...p.variations.map(v => v.price));
+        
+        return `
+        <div class="product-card group" onclick="window.openModal('${p.id}')">
+            <div class="card-img-wrap">${img}</div>
+            <div class="card-body">
+                <div>
+                    <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
+                    <p class="text-[12px] sm:text-sm font-bold text-gray-500 mt-2">$${(pMinPrice/100).toFixed(2)}</p>
+                </div>
+                <div class="mt-5 flex items-center justify-between">
+                    <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
+                    <div class="flex items-center gap-2">
+                        <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="window.shareProduct(event, '${p.id}')" aria-label="Share">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                        </button>
+                        <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    };
+
     // ── Load Catalog mapped to Square Categories (1-col mobile grid) ──
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
@@ -948,39 +1003,42 @@ document.addEventListener('DOMContentLoaded', () => {
             const sortedCats = categoryOrder.filter(c => existingCats.includes(c));
             existingCats.forEach(c => { if(!sortedCats.includes(c)) sortedCats.push(c); });
 
+            let htmlOutput = '';
+
+            // 10/10 UPGRADE: Featured Products Section
+            const featuredItems = [];
+            if(products.length > 0) {
+                const findCat = (keywords) => products.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
+                let p1 = findCat(['Sherpa']);
+                let p2 = findCat(['Hoodie', 'Shirt']);
+                let p3 = findCat(['Tumbler', 'Tote', 'Mug']);
+                if(p1) featuredItems.push(p1);
+                if(p2) featuredItems.push(p2);
+                if(p3) featuredItems.push(p3);
+                for(let p of products) { if(featuredItems.length >= 3) break; if(!featuredItems.includes(p)) featuredItems.push(p); }
+            }
+
+            if (featuredItems.length > 0) {
+                const featuredCards = featuredItems.map(p => generateCardHTML(p)).join('');
+                htmlOutput += `
+                <div class="mb-10 sm:mb-14">
+                    <h3 class="text-[14px] sm:text-base font-black uppercase tracking-widest text-blue-600 mb-5 flex items-center gap-3 ml-2">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.898 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                        Featured Vessels
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">${featuredCards}</div>
+                </div>`;
+            }
+
             sortedCats.forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
                 const minPrice = Math.min(...items.flatMap(p => p.variations.map(v => v.price)));
                 const priceLabel = `<span class="text-[12px] text-gray-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
 
-                const cards = items.map(p => {
-                    const sName = (p.name || 'Item').replace(/'/g, "&#39;");
-                    const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP DEZINES</span></div>`;
-                    const pMinPrice = Math.min(...p.variations.map(v => v.price));
-                    
-                    return `
-                    <div class="product-card group" onclick="window.openModal('${p.id}')">
-                        <div class="card-img-wrap">${img}</div>
-                        <div class="card-body">
-                            <div>
-                                <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
-                                <p class="text-[12px] sm:text-sm font-bold text-gray-500 mt-2">$${(pMinPrice/100).toFixed(2)}</p>
-                            </div>
-                            <div class="mt-5 flex items-center justify-between">
-                                <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
-                                <div class="flex items-center gap-2">
-                                    <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="window.shareProduct(event, '${p.id}')" aria-label="Share">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
-                                    </button>
-                                    <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">Add to Cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-                }).join('');
+                const cards = items.map(p => generateCardHTML(p)).join('');
 
-                grid.innerHTML += `
-                <details class="group w-full" open>
+                htmlOutput += `
+                <details class="group w-full mb-4" ${idx === 0 ? 'open' : ''}>
                     <summary class="flex justify-between items-center cursor-pointer bg-white p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-gray-200 hover:border-blue-500 transition-colors select-none shadow-sm">
                         <div class="flex items-center gap-3">
                             ${icons[cat] || icons['Other Goods']}
@@ -993,6 +1051,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="accordion-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-5 pb-3">${cards}</div>
                 </details>`;
             });
+
+            grid.innerHTML = htmlOutput;
+
         } catch { grid.innerHTML = `<p class="text-red-500 text-base text-center">Failed to sync catalog.</p>`; }
     }
     loadProducts();
