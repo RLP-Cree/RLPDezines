@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6S9ZFXSQL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -14,6 +15,7 @@
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
+    <!-- Google SEO Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -26,6 +28,7 @@
     }
     </script>
 
+    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -217,6 +220,7 @@
 
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
 
+<!-- REBUILT "SQUARE INVOICE" STYLE CART DRAWER -->
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
         <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
@@ -249,6 +253,7 @@
         <p class="text-gray-600 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
         <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
         
+        <!-- Arrow now points directly to the newly moved Featured section -->
         <div class="flex justify-center mt-12 reveal reveal-delay-4">
             <a href="#featured" class="text-gray-400 hover:text-blue-600 transition duration-300 animate-bounce p-2" aria-label="Scroll down">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
@@ -257,11 +262,24 @@
     </div>
 </section>
 
+<!-- 10/10 UPGRADE: Dedicated Featured Vessels Section (THE HOOK) -->
 <section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto" id="featured-container">
+        <!-- Skeleton Loader so it never looks blank while waiting for Square -->
+        <div class="animate-pulse">
+            <div class="flex justify-center md:justify-start mb-6">
+                <div class="h-4 bg-gray-200 rounded w-48"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2 pb-8 border-b border-gray-100">
+                <div class="bg-gray-100 rounded-xl h-72"></div>
+                <div class="bg-gray-100 rounded-xl h-72 hidden sm:block"></div>
+                <div class="bg-gray-100 rounded-xl h-72 hidden lg:block"></div>
+            </div>
         </div>
+    </div>
 </section>
 
+<!-- THE MISSION (THE STORY) -->
 <section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12 reveal">
@@ -309,6 +327,7 @@
     </div>
 </section>
 
+<!-- RLP TUNES -->
 <section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-white border-t border-gray-200 transition duration-500 group">
     <p class="section-label mb-5 justify-center reveal">Original NAC Prayers & Music</p>
     <h2 class="text-5xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
@@ -316,6 +335,7 @@
     <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
 </section>
 
+<!-- THE MERCH (THE REEL) -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-10 sm:mb-14 reveal">
@@ -336,6 +356,7 @@
     </div>
 </section>
 
+<!-- BUNDLES -->
 <section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
         <div class="bg-white border border-gray-200 p-8 sm:p-16 rounded-3xl shadow-sm text-center">
@@ -368,6 +389,7 @@
     </div>
 </section>
 
+<!-- WHOLESALE -->
 <section id="wholesale" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
     <div class="max-w-5xl mx-auto space-y-8">
         <div class="bg-gray-50 border border-gray-200 p-6 sm:p-14 rounded-3xl shadow-sm">
@@ -552,6 +574,7 @@
     </div>
 </section>
 
+<!-- "Join the Circle" Email Capture Section -->
 <section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
@@ -999,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sortedCats = categoryOrder.filter(c => existingCats.includes(c));
             existingCats.forEach(c => { if(!sortedCats.includes(c)) sortedCats.push(c); });
 
-            // ── Inject Featured Vessels into the dedicated hook section ──
+            // ── Inject Featured Vessels without the broken observer class ──
             const featuredItems = [];
             if(products.length > 0) {
                 const findCat = (keywords) => products.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
@@ -1015,7 +1038,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (featuredItems.length > 0) {
                 const featuredCards = featuredItems.map(p => generateCardHTML(p)).join('');
                 featuredContainer.innerHTML = `
-                <div class="reveal">
+                <div style="animation: fadeInDown 0.5s ease-out forwards;">
                     <p class="section-label mb-4 justify-center md:justify-start">Featured</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2 pb-8 border-b border-gray-100">${featuredCards}</div>
                 </div>`;
