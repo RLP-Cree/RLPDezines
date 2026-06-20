@@ -258,12 +258,6 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-6 text-gray-900 tracking-tight uppercase leading-none reveal reveal-delay-2">Artistry in Prayer</h1>
         <p class="text-gray-600 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
         <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
-        
-        <div class="flex justify-center mt-12 reveal reveal-delay-4">
-            <a href="#featured" class="text-gray-400 hover:text-blue-600 transition duration-300 animate-bounce p-2" aria-label="Scroll down">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-            </a>
-        </div>
     </div>
 </section>
 
@@ -598,8 +592,13 @@
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
         <p class="text-blue-100 mb-8 text-lg font-light leading-relaxed">Be the first to know about new custom drops, RLP Family Honoring Specials Bundles, and original NAC music releases.</p>
         
-        <form id="newsletter-form" name="newsletter" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input type="email" id="newsletter-email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-blue-400 font-medium border-none">
+        <!-- HIDDEN FORM FOR NETLIFY BOTS -->
+        <form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
+            <input type="email" name="email">
+        </form>
+
+        <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-blue-400 font-medium border-none">
             <button type="submit" id="newsletter-submit-btn" class="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded-full font-black uppercase tracking-widest transition shadow-lg text-sm flex items-center justify-center gap-2">
                 <span>Subscribe</span>
                 <svg id="newsletter-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
@@ -727,7 +726,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
             spinner.classList.remove('hidden');
 
-            // Hardcoding the URLSearchParams directly prevents Mobile Safari FormData bugs
             const bodyParams = new URLSearchParams({
                 'form-name': 'newsletter',
                 'email': emailVal
