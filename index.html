@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6S9ZFXSQL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -15,7 +14,6 @@
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
-    <!-- Google SEO Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,7 +26,6 @@
     }
     </script>
 
-    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -184,6 +181,10 @@
             <a href="#info"      class="nav-link hover:text-gray-900 transition">FAQ</a>
             <a href="mailto:rlp@rlpdezines.com" class="bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-full font-bold tracking-widest uppercase transition">Contact</a>
             
+            <button id="nav-search-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none" aria-label="Search">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </button>
+
             <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Cart (<span id="cart-count">0</span>)
@@ -191,6 +192,9 @@
         </nav>
 
         <div class="flex items-center gap-3 lg:hidden">
+            <button id="search-trigger" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1" aria-label="Search">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </button>
             <button id="menu-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1" aria-label="Toggle menu">
                 <svg id="menu-icon-open"  class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -218,9 +222,8 @@
     </span>
 </button>
 
-<div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
+<div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 z-[60]"></div>
 
-<!-- REBUILT "SQUARE INVOICE" STYLE CART DRAWER -->
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
         <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
@@ -231,7 +234,7 @@
     <div id="cart-content" class="flex-grow overflow-y-auto bg-white"></div>
 </div>
 
-<div id="product-modal-overlay" class="fixed inset-0 bg-gray-900/60 backdrop-blur-md z-[80] hidden opacity-0 transition-opacity duration-300"></div>
+<div id="product-modal-overlay" class="fixed inset-0 bg-gray-900/60 z-[80] hidden opacity-0 transition-opacity duration-300"></div>
 
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-auto max-h-[90vh]">
 </div>
@@ -253,7 +256,6 @@
         <p class="text-gray-600 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
         <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
         
-        <!-- Arrow now points directly to the newly moved Featured section -->
         <div class="flex justify-center mt-12 reveal reveal-delay-4">
             <a href="#featured" class="text-gray-400 hover:text-blue-600 transition duration-300 animate-bounce p-2" aria-label="Scroll down">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
@@ -262,10 +264,8 @@
     </div>
 </section>
 
-<!-- 10/10 UPGRADE: Dedicated Featured Vessels Section (THE HOOK) -->
 <section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto" id="featured-container">
-        <!-- Skeleton Loader so it never looks blank while waiting for Square -->
         <div class="animate-pulse">
             <div class="flex justify-center md:justify-start mb-6">
                 <div class="h-4 bg-gray-200 rounded w-48"></div>
@@ -279,7 +279,6 @@
     </div>
 </section>
 
-<!-- THE MISSION (THE STORY) -->
 <section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12 reveal">
@@ -327,7 +326,6 @@
     </div>
 </section>
 
-<!-- RLP TUNES -->
 <section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-white border-t border-gray-200 transition duration-500 group">
     <p class="section-label mb-5 justify-center reveal">Original NAC Prayers & Music</p>
     <h2 class="text-5xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
@@ -335,7 +333,6 @@
     <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
 </section>
 
-<!-- THE MERCH (THE REEL) -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-10 sm:mb-14 reveal">
@@ -356,7 +353,6 @@
     </div>
 </section>
 
-<!-- BUNDLES -->
 <section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
         <div class="bg-white border border-gray-200 p-8 sm:p-16 rounded-3xl shadow-sm text-center">
@@ -389,7 +385,6 @@
     </div>
 </section>
 
-<!-- WHOLESALE -->
 <section id="wholesale" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
     <div class="max-w-5xl mx-auto space-y-8">
         <div class="bg-gray-50 border border-gray-200 p-6 sm:p-14 rounded-3xl shadow-sm">
@@ -574,7 +569,6 @@
     </div>
 </section>
 
-<!-- "Join the Circle" Email Capture Section -->
 <section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
@@ -598,6 +592,35 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
+<div id="filter-modal" class="fixed inset-0 bg-white z-[99] hidden p-6 overflow-y-auto transition-opacity">
+    <div class="max-w-xl mx-auto mt-10">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-black uppercase text-blue-600 tracking-tight">Search & Filter</h2>
+            <button id="close-filter-modal" class="text-gray-400 hover:text-gray-900 p-2 transition" aria-label="Close search">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        
+        <div class="space-y-6">
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3" for="filter-search">Find a Vessel</label>
+                <input type="text" id="filter-search" placeholder="Search blankets, hoodies, designs..." class="w-full p-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-4 focus:ring-blue-100 transition shadow-sm text-lg">
+            </div>
+            
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3" for="filter-sort">Sort By</label>
+                <select id="filter-sort" class="w-full p-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-4 focus:ring-blue-100 transition shadow-sm text-lg appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23111827%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;">
+                    <option value="default">Featured Collection</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+        
+        <button id="apply-filters" class="w-full mt-10 bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-xl font-black uppercase tracking-widest transition shadow-lg btn-pulse">Show Results</button>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -617,16 +640,17 @@ document.addEventListener('DOMContentLoaded', () => {
         else body.classList.remove('no-scroll');
     }
 
-    menuBtn.addEventListener('click', () => toggleMobileMenu());
+    if(menuBtn) menuBtn.addEventListener('click', () => toggleMobileMenu());
     document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => toggleMobileMenu(false)));
 
     window.addEventListener('resize', () => {
-        if (window.innerWidth >= 1024 && mobileMenu.classList.contains('open')) toggleMobileMenu(false);
+        if (window.innerWidth >= 1024 && mobileMenu && mobileMenu.classList.contains('open')) toggleMobileMenu(false);
     });
 
     // ── Toast & Reveal ──
     window.showToast = function(msg) { 
         const toast = document.getElementById('toast');
+        if(!toast) return;
         toast.textContent = msg; 
         toast.classList.add('show'); 
         setTimeout(() => toast.classList.remove('show'), 3500); 
@@ -674,12 +698,14 @@ document.addEventListener('DOMContentLoaded', () => {
             this.drawer?.classList.add('open'); 
             this.overlay?.classList.add('open'); 
             body.classList.add('no-scroll');
-            if (mobileMenu.classList.contains('open')) toggleMobileMenu(false);
+            if (mobileMenu && mobileMenu.classList.contains('open')) toggleMobileMenu(false);
         }
         close() { 
             this.drawer?.classList.remove('open'); 
             this.overlay?.classList.remove('open'); 
-            if(!document.getElementById('product-modal').classList.contains('hidden')) return;
+            const pModal = document.getElementById('product-modal');
+            const fModal = document.getElementById('filter-modal');
+            if((pModal && !pModal.classList.contains('hidden')) || (fModal && !fModal.classList.contains('hidden'))) return;
             body.classList.remove('no-scroll');
         }
         addItem(p) {
@@ -937,7 +963,10 @@ document.addEventListener('DOMContentLoaded', () => {
         pOverlay.classList.add('opacity-0'); pModal.classList.add('opacity-0', 'scale-95');
         setTimeout(() => {
             pOverlay.classList.add('hidden'); pModal.classList.add('hidden');
-            if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll');
+            const cDrawer = document.getElementById('cart-drawer');
+            const fModal = document.getElementById('filter-modal');
+            if((cDrawer && cDrawer.classList.contains('open')) || (fModal && !fModal.classList.contains('hidden')) || (mobileMenu && mobileMenu.classList.contains('open'))) return;
+            body.classList.remove('no-scroll');
         }, 300);
     };
 
@@ -1073,6 +1102,40 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch { grid.innerHTML = `<p class="text-red-500 text-base text-center">Failed to sync catalog.</p>`; }
     }
     loadProducts();
+
+    // ── Search & Filter Logic ──
+    const filterModal = document.getElementById('filter-modal');
+    const searchTrigger = document.getElementById('search-trigger');
+    const navSearchBtn = document.getElementById('nav-search-btn');
+    const closeFilterBtn = document.getElementById('close-filter-modal');
+
+    const openFilter = () => { filterModal.classList.remove('hidden'); body.classList.add('no-scroll'); };
+    const closeFilter = () => { filterModal.classList.add('hidden'); if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) body.classList.remove('no-scroll'); };
+
+    if(searchTrigger) searchTrigger.addEventListener('click', openFilter);
+    if(navSearchBtn) navSearchBtn.addEventListener('click', openFilter);
+    if(closeFilterBtn) closeFilterBtn.addEventListener('click', closeFilter);
+
+    document.getElementById('apply-filters').addEventListener('click', () => {
+        const term = document.getElementById('filter-search').value.toLowerCase();
+        const sort = document.getElementById('filter-sort').value;
+        const grid = document.getElementById('product-grid');
+        
+        let products = Object.values(window.globalProducts).filter(p => (p.name || '').toLowerCase().includes(term));
+        
+        if(sort === 'price-low') products.sort((a,b) => Math.min(...a.variations.map(v=>v.price)) - Math.min(...b.variations.map(v=>v.price)));
+        if(sort === 'price-high') products.sort((a,b) => Math.min(...b.variations.map(v=>v.price)) - Math.min(...a.variations.map(v=>v.price)));
+        
+        grid.innerHTML = products.length > 0 
+            ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">` + products.map(p => generateCardHTML(p)).join('') + `</div>`
+            : `<p class="text-center py-10 text-gray-500 w-full col-span-full font-semibold">No items match your search.</p>`;
+            
+        closeFilter();
+        window.showToast('Results updated ✓');
+        
+        document.getElementById('shop-live').scrollIntoView({ behavior: 'smooth' });
+    });
+
 });
 </script>
 </body>
