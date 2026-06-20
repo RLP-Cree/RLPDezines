@@ -10,6 +10,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
@@ -1038,9 +1039,11 @@ document.addEventListener('DOMContentLoaded', () => {
             products.forEach(p => {
                 window.globalProducts[p.id] = p; 
                 const c = p.category || 'Other Goods';
+                const nameLower = (p.name || '').toLowerCase();
+                const catLower = c.toLowerCase();
                 
-                // Isolate the Bundle Items
-                if (c.includes('Sherpa Throw Bundles') || c.includes('Sherpa Throw Bundle')) {
+                // Bulletproof check: Look for the word "bundle" anywhere in the name or category
+                if (nameLower.includes('bundle') || catLower.includes('bundle')) {
                     bundleItems.push(p);
                 } else {
                     if (!catMap[c]) catMap[c] = []; 
@@ -1059,7 +1062,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // ── Extract Featured Items (Excluding Bundles) ──
-            const nonBundleProducts = products.filter(p => !(p.category || '').includes('Sherpa Throw Bundle'));
+            const nonBundleProducts = products.filter(p => {
+                const n = (p.name || '').toLowerCase();
+                const c = (p.category || '').toLowerCase();
+                return !(n.includes('bundle') || c.includes('bundle'));
+            });
+
             const categoryOrder = ['Sherpa Throws - 60” x 80”', 'Sherpa Throws', 'T Shirts', 'Hoodies', 'Totes', 'Tumblers', 'Mugs', 'Phone Cases', 'Towels', 'Hand Towels', 'Design Services'];
             const existingCats = Object.keys(catMap);
             const sortedCats = categoryOrder.filter(c => existingCats.includes(c));
@@ -1136,8 +1144,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Exclude bundle items from the main search results
         let products = Object.values(window.globalProducts).filter(p => {
-            const isBundle = (p.category || '').includes('Sherpa Throw Bundle');
-            const matchesTerm = (p.name || '').toLowerCase().includes(term);
+            const nameLower = (p.name || '').toLowerCase();
+            const catLower = (p.category || '').toLowerCase();
+            const isBundle = nameLower.includes('bundle') || catLower.includes('bundle');
+            const matchesTerm = nameLower.includes(term);
             return matchesTerm && !isBundle;
         });
         
