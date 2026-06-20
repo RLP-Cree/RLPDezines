@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
-    <!-- Google SEO Structured Data -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6S9ZFXSQL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S6S9ZFXSQL');
+    </script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -18,7 +26,6 @@
     }
     </script>
 
-    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -210,7 +217,6 @@
 
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
 
-<!-- REBUILT "SQUARE INVOICE" STYLE CART DRAWER (Scrubbed of conflicting Tailwind transform classes) -->
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
         <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
@@ -243,7 +249,6 @@
         <p class="text-gray-600 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
         <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
         
-        <!-- Clean Bouncing Arrow instead of bulky buttons -->
         <div class="flex justify-center mt-12 reveal reveal-delay-4">
             <a href="#shop-live" class="text-gray-400 hover:text-blue-600 transition duration-300 animate-bounce p-2" aria-label="Scroll down">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
@@ -542,7 +547,6 @@
     </div>
 </section>
 
-<!-- 10/10 UPGRADE: "Join the Circle" Email Capture Section -->
 <section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
@@ -873,7 +877,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 
                 <div class="p-5 sm:p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
-                    <!-- 10/10 UPGRADE: Trust Signals Point of Purchase -->
                     <div class="flex flex-wrap justify-center gap-3 sm:gap-6 mb-5 text-[10px] sm:text-[11px] font-black text-gray-500 uppercase tracking-widest border-b border-gray-200 pb-4">
                         <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Indigenous Owned</span>
                         <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Made-to-Order</span>
@@ -991,7 +994,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let htmlOutput = '';
 
-            // 10/10 UPGRADE: Automatic Featured Products Section
             const featuredItems = [];
             if(products.length > 0) {
                 const findCat = (keywords) => products.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
