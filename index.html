@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
+    <!-- Google SEO Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -17,6 +18,7 @@
     }
     </script>
 
+    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -83,9 +85,9 @@
         }
         .btn-pulse { animation: subtle-glow 2s infinite; }
 
-        /* ── Cart Drawer & Mobile Menu ── */
-        #cart-drawer { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        #cart-drawer.open { transform: translateX(0); }
+        /* ── BULLETPROOF CART STATE ENGINE ── */
+        #cart-drawer { transform: translateX(100%) !important; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; }
+        #cart-drawer.open { transform: translateX(0) !important; }
         .cart-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .cart-overlay.open { opacity: 1; pointer-events: auto; }
         #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
@@ -208,7 +210,8 @@
 
 <div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[60]"></div>
 
-<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl transition-transform transform translate-x-full">
+<!-- REBUILT "SQUARE INVOICE" STYLE CART DRAWER (Scrubbed of conflicting Tailwind transform classes) -->
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
         <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -240,6 +243,7 @@
         <p class="text-gray-600 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
         <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
         
+        <!-- Clean Bouncing Arrow instead of bulky buttons -->
         <div class="flex justify-center mt-12 reveal reveal-delay-4">
             <a href="#shop-live" class="text-gray-400 hover:text-blue-600 transition duration-300 animate-bounce p-2" aria-label="Scroll down">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
@@ -519,7 +523,7 @@
             <div class="space-y-8 divide-y divide-gray-100">
                 <div class="pt-0 reveal">
                     <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Online Only / Storefront</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-base">RLP Dezines operates 100% online. I don't have a physical brick-and-mortar storefront right now—everything is run directly through this site so I can ship my custom drops directly to your door anywhere in Indian Country.</p>
+                    <p class="text-gray-600 font-light leading-relaxed text-base">RLP Dezines operates 100% online. I don't have a physical brick-and-mortar storefront right now—everything is run directly through this site so I can ship my custom drops directly to your door anywhere in Indian Country. Town of Gilbert Business License: <strong class="text-gray-900">BUSLIC001339-05-2024</strong></p>
                 </div>
                 <div class="pt-7 reveal">
                     <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Crafted Specifically For You (Final Sale)</h3>
@@ -538,6 +542,7 @@
     </div>
 </section>
 
+<!-- 10/10 UPGRADE: "Join the Circle" Email Capture Section -->
 <section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
@@ -551,7 +556,10 @@
 
 <footer class="border-t border-blue-700 bg-gray-900 py-16 px-5 text-gray-400">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm gap-4">
-        <div>© 2026 RLP Dezines. Indigenous-owned &amp; operated.</div>
+        <div class="text-center sm:text-left">
+            <p>© 2026 RLP Dezines. Indigenous-owned &amp; operated.</p>
+            <p class="text-xs text-gray-500 mt-1">Town of Gilbert Bus. License: BUSLIC001339-05-2024</p>
+        </div>
         <div><a href="mailto:rlp@rlpdezines.com" class="hover:text-white transition">rlp@rlpdezines.com</a></div>
     </div>
 </footer>
@@ -631,12 +639,14 @@ document.addEventListener('DOMContentLoaded', () => {
             this.overlay?.addEventListener('click', () => this.close());
         }
         open() { 
-            this.drawer?.classList.remove('translate-x-full'); this.overlay?.classList.add('open'); 
+            this.drawer?.classList.add('open'); 
+            this.overlay?.classList.add('open'); 
             body.classList.add('no-scroll');
             if (mobileMenu.classList.contains('open')) toggleMobileMenu(false);
         }
         close() { 
-            this.drawer?.classList.add('translate-x-full'); this.overlay?.classList.remove('open'); 
+            this.drawer?.classList.remove('open'); 
+            this.overlay?.classList.remove('open'); 
             if(!document.getElementById('product-modal').classList.contains('hidden')) return;
             body.classList.remove('no-scroll');
         }
@@ -689,12 +699,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let html = `<div class="px-5 sm:px-8 py-8"><h1 class="text-3xl sm:text-4xl font-black text-blue-600 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
             
             this.items.forEach(i => {
-                // Parse "Base Name (Variant)" structure if present
                 const nameParts = i.name.match(/(.*)\s\((.*)\)$/);
                 const baseName = nameParts ? nameParts[1] : i.name;
                 const vName = nameParts ? nameParts[2] : '';
                 
-                // Fetch dynamic image from global state based on item variation ID
                 let pImg = '';
                 for(let pid in window.globalProducts) {
                     if(window.globalProducts[pid].variations.some(v => v.id === i.id)) {
@@ -726,23 +734,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>`;
             });
-            html += `</div>`; // end items wrapper
+            html += `</div>`;
 
             html += `
                 <div class="mt-8 mb-6 border-b border-gray-200 pb-6">
                     <button onclick="window.Cart.close()" class="w-full py-3.5 bg-white border border-blue-600 hover:bg-blue-50 text-blue-600 font-semibold rounded-full text-[15px] transition">Add more items</button>
                 </div>`;
 
-            // Faux Promo Code UI
             html += `
                 <div class="border border-gray-400 rounded py-3.5 px-4 mb-6 flex items-center text-gray-500 text-[15px]">
                     <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                     Add coupon or gift card
                 </div>`;
 
-            // Totals Breakdowns
             const subtotal = (this.items.reduce((s, i) => s + (i.price * i.quantity), 0) / 100).toFixed(2);
-            const shipping = 6.50; // Reflecting your updated rate
+            const shipping = 6.50; 
             const estimatedTotal = (parseFloat(subtotal) + shipping).toFixed(2);
 
             html += `
@@ -757,9 +763,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="text-[11px] text-blue-600 mt-2 opacity-80">Additional taxes and fees will be calculated at checkout</p>
                 </div>`;
 
-            // Trusted Footer Badges & Checkout Button
             html += `
                 <div class="text-center pb-8">
+                    <div class="flex flex-col items-center justify-center mb-5 text-gray-900 font-black tracking-widest text-[10px] uppercase gap-2 border-b border-gray-100 pb-4">
+                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Indigenous Owned</span>
+                    </div>
                     <div class="flex flex-col items-center justify-center mb-3 text-gray-900 font-semibold text-[15px]">
                         <svg class="w-6 h-6 mb-1" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zm-3.5 14h-7c-.827 0-1.5-.673-1.5-1.5v-7c0-.827.673-1.5 1.5-1.5h7c.827 0 1.5.673 1.5 1.5v7c0 .827-.673 1.5-1.5 1.5z"/></svg>
                         Secure checkout by Square
@@ -775,7 +783,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         Continue to payment
                     </button>
                 </div>
-                </div> `;
+                </div>
+            `;
             cont.innerHTML = html;
         }
         async checkout() {
@@ -796,42 +805,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.Cart = new ShoppingCart();
 
-    // ── Global Product Data & Smart Routing ──
     window.globalProducts = {};
     const pModal = document.getElementById('product-modal'), pOverlay = document.getElementById('product-modal-overlay');
 
-    // ── Native Share Function ──
     window.shareProduct = async function(event, id) {
-        event.stopPropagation(); // Stop the modal from opening when clicking share
+        event.stopPropagation(); 
         const p = window.globalProducts[id];
         if (!p) return;
         const name = p.name || 'Item';
         const url = window.location.origin + window.location.pathname + '#shop-live';
-        const shareData = {
-            title: name + ' | RLP Dezines',
-            text: 'Check out this ' + name + ' from RLP Dezines!',
-            url: url
-        };
+        const shareData = { title: name + ' | RLP Dezines', text: 'Check out this ' + name + ' from RLP Dezines!', url: url };
         
         if (navigator.share) {
-            try {
-                await navigator.share(shareData);
-            } catch (err) {
-                // User cancelled share, fail silently
-            }
+            try { await navigator.share(shareData); } catch (err) {}
         } else {
-            // Fallback for desktop browsers without native share
             navigator.clipboard.writeText(url);
             window.showToast('Link copied to clipboard!');
         }
     };
 
     window.quickAdd = function(event, id) {
-        event.stopPropagation(); // Prevents the card's modal from opening if we don't need it
+        event.stopPropagation(); 
         const p = window.globalProducts[id];
         if (!p) return;
         
-        // If it only has 1 variant (e.g. standard mug/tote), add directly!
         if (p.variations && p.variations.length === 1) {
             const v = p.variations[0];
             const safeName = p.name || 'Item';
@@ -839,15 +836,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const finalName = (vName === 'Regular' || vName === '') ? safeName : `${safeName} (${vName})`;
             window.Cart.addItem({ id: v.id, name: finalName, price: parseInt(v.price), sku: v.sku || '', quantity: 1 });
         } else {
-            // It has sizes/options. Open the modal!
             window.openModal(id);
         }
     };
 
-    // ── REBUILT MODAL UX: FULLY RESPONSIVE FLEXBOX ──
     window.openModal = function(id) {
         const p = window.globalProducts[id]; if(!p) return;
-        const safeName = (p.name || 'Item').replace(/'/g, "&#39;"); // Safe for displaying in HTML only
+        const safeName = (p.name || 'Item').replace(/'/g, "&#39;"); 
         const safeDesc = p.description || 'No additional details available.';
         const opts = p.variations.map(v => `<option value="${v.id}" data-price="${v.price}" data-name="${(v.name||'Regular').replace(/'/g,"&#39;")}" data-sku="${v.sku||''}">${v.name||'Regular'} — $${(v.price/100).toFixed(2)}</option>`).join('');
         
@@ -856,20 +851,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const imgTags = p.imageUrls.map(url => `<img src="${url}" alt="${safeName}" class="w-full h-full object-contain p-2 sm:p-4">`).join('');
             imgHtml = `<div class="scroll-gallery w-full h-full">${imgTags}</div>`;
         } else if (p.imageUrl && p.imageUrl.startsWith('http')) {
-            // Apply heavy padding and strict max-heights so the image is fully contained with breathing room
             imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain p-4 sm:p-8 drop-shadow-sm max-h-[35vh] md:max-h-full">`;
         } else {
             imgHtml = `<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
         }
 
-        // Structure: Main modal forced to h-[90vh], splits into image and text columns.
         pModal.innerHTML = `
             <button onclick="window.closeModal()" class="absolute top-3 right-3 bg-white hover:bg-gray-100 text-gray-900 p-2 rounded-full z-[100] transition shadow-md border border-gray-200"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             
             <div class="w-full md:w-1/2 bg-gray-50 relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 h-[40vh] md:h-auto">
-                <div class="w-full h-full relative flex items-center justify-center overflow-hidden">
-                    ${imgHtml}
-                </div>
+                <div class="w-full h-full relative flex items-center justify-center overflow-hidden">${imgHtml}</div>
             </div>
             
             <div class="w-full md:w-1/2 flex flex-col flex-grow min-h-0 bg-white">
@@ -882,7 +873,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 
                 <div class="p-5 sm:p-6 bg-gray-50 border-t border-gray-200 flex-shrink-0">
-                    <div class="flex flex-wrap justify-center gap-3 sm:gap-6 mb-5 text-[10px] sm:text-[11px] font-black text-gray-500 uppercase tracking-widest">
+                    <!-- 10/10 UPGRADE: Trust Signals Point of Purchase -->
+                    <div class="flex flex-wrap justify-center gap-3 sm:gap-6 mb-5 text-[10px] sm:text-[11px] font-black text-gray-500 uppercase tracking-widest border-b border-gray-200 pb-4">
                         <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Indigenous Owned</span>
                         <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Made-to-Order</span>
                         <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Secure Checkout</span>
@@ -921,7 +913,6 @@ document.addEventListener('DOMContentLoaded', () => {
     pOverlay.addEventListener('click', window.closeModal);
     window.stepModalQty = (delta) => { const el = document.getElementById('modal-qty'); if(el) el.value = Math.max(1, Math.min(99, parseInt(el.value || 1) + delta)); };
     
-    // Safely look up name from ID database instead of passing via HTML string
     window.addModalToCart = (id) => {
         const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); if(!sel || !qty) return;
         const opt = sel.options[sel.selectedIndex], vName = opt.getAttribute('data-name') || 'Regular';
@@ -933,7 +924,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.closeModal();
     };
 
-    // ── Helper Function to Build Product Cards ──
     const generateCardHTML = (p) => {
         const sName = (p.name || 'Item').replace(/'/g, "&#39;");
         const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP DEZINES</span></div>`;
@@ -960,7 +950,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>`;
     };
 
-    // ── Load Catalog mapped to Square Categories (1-col mobile grid) ──
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
         
@@ -987,7 +976,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found in catalog.</p>`; return; }
 
-            // Group strictly by reportingCategory as mapped by the backend
             const catMap = {};
             products.forEach(p => {
                 window.globalProducts[p.id] = p; 
@@ -996,16 +984,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 catMap[c].push(p);
             });
 
-            // Specific order based on Square Dashboard
             const categoryOrder = ['Sherpa Throws - 60” x 80”', 'Sherpa Throws', 'T Shirts', 'Hoodies', 'Totes', 'Tumblers', 'Mugs', 'Phone Cases', 'Towels', 'Hand Towels', 'Design Services'];
-            
             const existingCats = Object.keys(catMap);
             const sortedCats = categoryOrder.filter(c => existingCats.includes(c));
             existingCats.forEach(c => { if(!sortedCats.includes(c)) sortedCats.push(c); });
 
             let htmlOutput = '';
 
-            // 10/10 UPGRADE: Featured Products Section
+            // 10/10 UPGRADE: Automatic Featured Products Section
             const featuredItems = [];
             if(products.length > 0) {
                 const findCat = (keywords) => products.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
@@ -1021,9 +1007,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (featuredItems.length > 0) {
                 const featuredCards = featuredItems.map(p => generateCardHTML(p)).join('');
                 htmlOutput += `
-                <div class="mb-10 sm:mb-14">
+                <div class="mb-10 sm:mb-14 border border-blue-100 rounded-3xl p-5 bg-blue-50/20">
                     <h3 class="text-[14px] sm:text-base font-black uppercase tracking-widest text-blue-600 mb-5 flex items-center gap-3 ml-2">
-                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.898 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                        <svg class="w-5 h-5 text-blue-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.898 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
                         Featured Vessels
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">${featuredCards}</div>
@@ -1034,7 +1020,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const items = catMap[cat]; if (!items) return;
                 const minPrice = Math.min(...items.flatMap(p => p.variations.map(v => v.price)));
                 const priceLabel = `<span class="text-[12px] text-gray-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
-
                 const cards = items.map(p => generateCardHTML(p)).join('');
 
                 htmlOutput += `
@@ -1053,7 +1038,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             grid.innerHTML = htmlOutput;
-
         } catch { grid.innerHTML = `<p class="text-red-500 text-base text-center">Failed to sync catalog.</p>`; }
     }
     loadProducts();
