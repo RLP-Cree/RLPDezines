@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6S9ZFXSQL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -15,7 +14,6 @@
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
-    <!-- Google SEO Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,7 +26,6 @@
     }
     </script>
 
-    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -263,7 +260,6 @@
 
 <section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto" id="featured-container">
-        <!-- Skeleton Loader -->
         <div class="animate-pulse">
             <div class="flex justify-center md:justify-start mb-6">
                 <div class="h-4 bg-gray-200 rounded w-48"></div>
@@ -277,7 +273,6 @@
     </div>
 </section>
 
-<!-- UPDATED MISSION SECTION -->
 <section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-200 bg-gray-50">
     <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12 reveal">
@@ -344,10 +339,8 @@
                 <p class="text-blue-700 text-sm mt-2 font-medium">To ensure full production and delivery, your event must be scheduled at least 2 weeks from the date of your paid order.</p>
             </div>
             
-            <!-- HARDCODED SQUARE LINK CARDS -->
             <div class="grid sm:grid-cols-3 gap-6 mb-10 text-left max-w-5xl mx-auto reveal">
                 
-                <!-- 10 Piece Bundle -->
                 <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
                     <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
                         <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="10 Piece Bundle">
@@ -362,7 +355,6 @@
                     </div>
                 </div>
 
-                <!-- 15 Piece Bundle -->
                 <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
                     <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
                         <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="15 Piece Bundle">
@@ -377,7 +369,6 @@
                     </div>
                 </div>
 
-                <!-- 20 Piece Bundle -->
                 <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
                     <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
                         <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="20 Piece Bundle">
@@ -586,13 +577,11 @@
     </div>
 </section>
 
-<!-- UPDATED NETLIFY NEWSLETTER FORM -->
 <section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
         <p class="text-blue-100 mb-8 text-lg font-light leading-relaxed">Be the first to know about new custom drops, RLP Family Honoring Specials Bundles, and original NAC music releases.</p>
         
-        <!-- HIDDEN FORM FOR NETLIFY BOTS -->
         <form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
             <input type="email" name="email">
         </form>
@@ -619,7 +608,6 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
-<!-- THE SEARCH MODAL -->
 <div id="filter-modal" class="fixed inset-0 bg-white z-[99] hidden p-6 overflow-y-auto transition-opacity">
     <div class="max-w-xl mx-auto mt-10">
         <div class="flex justify-between items-center mb-8">
@@ -1136,14 +1124,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const featuredItems = [];
             if(nonBundleProducts.length > 0) {
+                // 1. THE VIP OVERRIDE: Hunt for the meme shirt and force it to spot #1
+                // Note: Make sure "Farmer" is somewhere in the product name in Printful!
+                const viralShirt = nonBundleProducts.find(p => (p.name || '').toLowerCase().includes("farmer"));
+                if (viralShirt) featuredItems.push(viralShirt);
+
+                // 2. Dynamically fill the remaining 2 spots 
                 const findCat = (keywords) => nonBundleProducts.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
-                let p1 = findCat(['Sherpa']);
-                let p2 = findCat(['Hoodie', 'Shirt']);
-                let p3 = findCat(['Tumbler', 'Tote', 'Mug']);
-                if(p1) featuredItems.push(p1);
-                if(p2) featuredItems.push(p2);
-                if(p3) featuredItems.push(p3);
-                for(let p of nonBundleProducts) { if(featuredItems.length >= 3) break; if(!featuredItems.includes(p)) featuredItems.push(p); }
+                
+                if (featuredItems.length < 3) { 
+                    let p1 = findCat(['Sherpa']); 
+                    if(p1) featuredItems.push(p1); 
+                }
+                if (featuredItems.length < 3) { 
+                    let p2 = findCat(['Hoodie', 'Shirt']); 
+                    if(p2 && p2 !== viralShirt) featuredItems.push(p2); 
+                }
+                if (featuredItems.length < 3) { 
+                    let p3 = findCat(['Tumbler', 'Tote', 'Mug']); 
+                    if(p3) featuredItems.push(p3); 
+                }
+                
+                // 3. Fallback to fill any empty spaces just in case
+                for(let p of nonBundleProducts) { 
+                    if(featuredItems.length >= 3) break; 
+                    if(!featuredItems.includes(p)) featuredItems.push(p); 
+                }
             }
 
             if (featuredItems.length > 0) {
