@@ -1132,28 +1132,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const featuredItems = [];
             if(nonBundleProducts.length > 0) {
-                // 1. THE VIP OVERRIDE: Hunt for the meme shirt and force it to spot #1
-                // Note: Make sure "Farmer" is somewhere in the product name in Printful!
-                const viralShirt = nonBundleProducts.find(p => (p.name || '').toLowerCase().includes("farmer"));
-                if (viralShirt) featuredItems.push(viralShirt);
-
-                // 2. Dynamically fill the remaining 2 spots 
+                // Dynamically fill the 3 featured spots 
                 const findCat = (keywords) => nonBundleProducts.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
                 
                 if (featuredItems.length < 3) { 
                     let p1 = findCat(['Sherpa']); 
-                    if(p1 && p1 !== viralShirt) featuredItems.push(p1); 
+                    if(p1) featuredItems.push(p1); 
                 }
                 if (featuredItems.length < 3) { 
                     let p2 = findCat(['Hoodie', 'Shirt']); 
-                    if(p2 && p2 !== viralShirt) featuredItems.push(p2); 
+                    if(p2) featuredItems.push(p2); 
                 }
                 if (featuredItems.length < 3) { 
                     let p3 = findCat(['Tumbler', 'Tote', 'Mug']); 
-                    if(p3 && p3 !== viralShirt) featuredItems.push(p3); 
+                    if(p3) featuredItems.push(p3); 
                 }
                 
-                // 3. Fallback to fill any empty spaces just in case
+                // Fallback to fill any empty spaces just in case
                 for(let p of nonBundleProducts) { 
                     if(featuredItems.length >= 3) break; 
                     if(!featuredItems.includes(p)) featuredItems.push(p); 
