@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6S9ZFXSQL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -15,7 +14,6 @@
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
-    <!-- Google SEO Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,7 +26,6 @@
     }
     </script>
 
-    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -619,7 +616,6 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
-<!-- THE SEARCH MODAL -->
 <div id="filter-modal" class="fixed inset-0 bg-white z-[99] hidden p-6 overflow-y-auto transition-opacity">
     <div class="max-w-xl mx-auto mt-10">
         <div class="flex justify-between items-center mb-8">
@@ -777,6 +773,16 @@ document.addEventListener('DOMContentLoaded', () => {
         addItem(p) {
             const ex = this.items.find(i => i.id === p.id);
             if (ex) ex.quantity += (p.quantity || 1); else this.items.push({ ...p, quantity: p.quantity || 1 });
+            
+            // GA4 Event Tracking Code
+            if (typeof gtag === 'function') {
+                gtag('event', 'add_to_cart', {
+                    currency: 'USD',
+                    value: (p.price / 100) * (p.quantity || 1),
+                    items: [{ item_id: p.id, item_name: p.name, quantity: p.quantity || 1 }]
+                });
+            }
+
             this.save(); this.render(); window.showToast('Added to cart ✓');
         }
         updateItemQty(id, delta) {
@@ -883,9 +889,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="flex justify-between text-blue-600 font-black text-lg tracking-tight"><span>Estimated order total</span><span>$${estimatedTotal}</span></div>
                     <p class="text-[11px] text-blue-600 mt-2 opacity-80">Additional taxes and fees will be calculated at checkout</p>
                 </div>
-            </div>`; // End of scrollable area
+            </div>`; 
             
-            // Sticky Footer Area with Notification Badge
             html += `
             <div class="flex-shrink-0 bg-white border-t border-gray-200 p-4 sm:p-6 z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.04)] pb-8 sm:pb-6 relative">
                 <div class="flex flex-col items-center justify-center mb-3 text-gray-900 font-semibold text-[13px]">
@@ -963,6 +968,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const getSafeMinPrice = (p) => {
+        if (!p.variations || p.variations.length === 0) return 0;
+        const prices = p.variations.map(v => parseInt(v.price) || 0);
+        return Math.min(...prices);
+    };
+
     // --- NEW MODAL PRICE UPDATE LOGIC ---
     window.updateModalPrice = function() {
         const sel = document.getElementById('modal-variant');
@@ -996,6 +1007,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.openModal = function(id) {
         const p = window.globalProducts[id]; if(!p) return;
+        
+        // GA4 Event Tracking Code
+        if (typeof gtag === 'function') {
+            gtag('event', 'view_item', {
+                currency: 'USD',
+                value: (getSafeMinPrice(p) / 100),
+                items: [{ item_id: p.id, item_name: p.name }]
+            });
+        }
+
         const safeName = (p.name || 'Item').replace(/'/g, "&#39;"); 
         const safeDesc = p.description || 'No additional details available.';
         
@@ -1019,24 +1040,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialPrice = p.variations && p.variations.length > 0 ? (p.variations[0].price / 100).toFixed(2) : '0.00';
 
         pModal.innerHTML = `
-            <!-- Desktop Only Close Button (Absolute Top Right) -->
             <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2.5 rounded-full z-[100] transition shadow-md border border-gray-200" aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             
-            <!-- Image Area (Left on Desktop, Top on Mobile) -->
             <div class="w-full md:w-1/2 bg-[#f4f4f4] relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 h-[50vh] md:h-full overflow-hidden group">
-                <!-- Mobile Close Button -->
                 <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full z-[100] shadow-sm border border-gray-200" aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
                 <div class="w-full h-full relative flex items-center justify-center p-0 sm:p-6">${imgHtml}</div>
             </div>
             
-            <!-- Content Area (Right on Desktop, Bottom on Mobile) - Full scroll with sticky footer -->
             <div class="w-full md:w-1/2 flex flex-col relative bg-white flex-grow min-h-0 md:h-full">
                 
-                <!-- Scrollable Description Body -->
                 <div class="flex-grow overflow-y-auto p-5 sm:p-8 pb-28 md:pb-32 bg-white">
                     <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight mb-2 pr-4">${safeName}</h2>
                     <div id="modal-price-display" class="text-xl font-bold text-blue-600 mb-6">$${initialPrice}</div>
@@ -1065,7 +1081,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="text-[11px] text-gray-500 mt-6 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
 
-                <!-- Square-Style Sticky Bottom Bar -->
                 <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-gray-200 p-4 sm:p-5 flex items-center gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
                     <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-full flex items-center justify-center shadow-sm text-gray-900 transition duration-200" aria-label="Close">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -1110,12 +1125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         window.Cart.addItem({ id: opt.value, name: finalName, price: parseInt(opt.getAttribute('data-price')), sku: opt.getAttribute('data-sku') || '', quantity: parseInt(qty.value)||1 });
         window.closeModal();
-    };
-
-    const getSafeMinPrice = (p) => {
-        if (!p.variations || p.variations.length === 0) return 0;
-        const prices = p.variations.map(v => parseInt(v.price) || 0);
-        return Math.min(...prices);
     };
 
     const generateCardHTML = (p) => {
@@ -1237,7 +1246,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cards = items.map(p => generateCardHTML(p)).join('');
 
                 htmlOutput += `
-                <details class="group w-full mb-4" ${idx === 0 ? 'open' : ''}>
+                <details class="group w-full mb-4" open>
                     <summary class="flex justify-between items-center cursor-pointer bg-white p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-gray-200 hover:border-blue-500 transition-colors select-none shadow-sm">
                         <div class="flex items-center gap-3">
                             ${icons[cat] || icons['Other Goods']}
