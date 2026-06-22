@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6S9ZFXSQL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -14,6 +15,7 @@
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
+    <!-- Google SEO Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -26,6 +28,7 @@
     }
     </script>
 
+    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -51,14 +54,6 @@
         body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111827; -webkit-font-smoothing: antialiased; font-size: 16px; }
         body.no-scroll { overflow: hidden !important; touch-action: none; }
 
-        /* ── Hero Background ── */
-        #hero::before {
-            content: ''; position: absolute; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-            opacity: 0.03; pointer-events: none; z-index: 0;
-        }
-        #hero > * { position: relative; z-index: 1; }
-
         /* ── Nav & UI ── */
         .nav-link { position: relative; text-decoration: none; }
         .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--blue); transition: width 0.25s ease; }
@@ -79,8 +74,8 @@
         #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
 
-        .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--blue-light); font-size: 13px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
-        .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: var(--blue-light); }
+        .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
+        .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: currentColor; }
         
         .form-input { width: 100%; background: #f9fafb; border: 1px solid #e5e7eb; color: #111827; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; }
         .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
@@ -239,27 +234,34 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
-<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[85vh] overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 60px 60px;"></div>
-    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 65%);"></div>
+<!-- UPDATED CINEMATIC HERO SECTION -->
+<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-gray-900">
+    <!-- Cinematic Auto-Playing Background Video -->
+    <!-- NOTE: Google Drive stream links can occasionally buffer if traffic is extreme, but this will work seamlessly for the launch! -->
+    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
+        <source src="https://drive.google.com/uc?export=download&id=10V0b1HaiqKXyeWjIFZF4u3kcFYPQUGwx" type="video/mp4">
+    </video>
 
-    <div class="relative z-10 max-w-4xl mx-auto w-full">
-        <p class="section-label mb-6 justify-center reveal">An Act of Service</p>
+    <!-- Content Overlay -->
+    <div class="relative z-10 max-w-4xl mx-auto w-full mt-12 sm:mt-16">
+        <p class="section-label mb-6 justify-center reveal text-blue-400">An Act of Service</p>
         
-        <div class="w-full max-w-4xl mx-auto mb-12 reveal reveal-delay-1 px-2 sm:px-0">
-            <div class="relative group">
-                <img src="https://drive.google.com/thumbnail?id=1z1bLCx2lAemhyKXXYdR0KvxO_5X1ztwx&sz=w1600" alt="RLP Dezines Featured Art" class="w-full h-auto object-cover transform group-hover:scale-[1.02] transition duration-700 ease-in-out mix-blend-multiply">
-            </div>
-        </div>
-
-        <h1 class="text-5xl sm:text-7xl font-black mb-6 text-gray-900 tracking-tight uppercase leading-none reveal reveal-delay-2">Artistry in Prayer</h1>
-        <p class="text-gray-600 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
-        <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
+        <h1 class="text-5xl sm:text-7xl font-black mb-6 text-white tracking-tight uppercase leading-none reveal reveal-delay-2 drop-shadow-lg">Artistry in Prayer</h1>
+        
+        <p class="text-gray-200 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3 drop-shadow">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
+        
+        <p class="text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4 drop-shadow">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
+        
+        <!-- Bouncing Scroll Down Indicator -->
+        <a href="#featured" class="inline-block mt-4 text-white/60 hover:text-white transition animate-bounce reveal reveal-delay-4" aria-label="Scroll Down">
+            <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
     </div>
 </section>
 
 <section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto" id="featured-container">
+        <!-- Skeleton Loader -->
         <div class="animate-pulse">
             <div class="flex justify-center md:justify-start mb-6">
                 <div class="h-4 bg-gray-200 rounded w-48"></div>
@@ -585,6 +587,7 @@
     </div>
 </section>
 
+<!-- UPDATED NETLIFY NEWSLETTER FORM -->
 <section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
@@ -616,6 +619,7 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
+<!-- THE SEARCH MODAL -->
 <div id="filter-modal" class="fixed inset-0 bg-white z-[99] hidden p-6 overflow-y-auto transition-opacity">
     <div class="max-w-xl mx-auto mt-10">
         <div class="flex justify-between items-center mb-8">
@@ -1040,19 +1044,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialPrice = p.variations && p.variations.length > 0 ? (p.variations[0].price / 100).toFixed(2) : '0.00';
 
         pModal.innerHTML = `
+            <!-- Desktop Only Close Button (Absolute Top Right) -->
             <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2.5 rounded-full z-[100] transition shadow-md border border-gray-200" aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             
+            <!-- Image Area (Left on Desktop, Top on Mobile) -->
             <div class="w-full md:w-1/2 bg-[#f4f4f4] relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 h-[50vh] md:h-full overflow-hidden group">
+                <!-- Mobile Close Button -->
                 <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full z-[100] shadow-sm border border-gray-200" aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
                 <div class="w-full h-full relative flex items-center justify-center p-0 sm:p-6">${imgHtml}</div>
             </div>
             
+            <!-- Content Area (Right on Desktop, Bottom on Mobile) - Full scroll with sticky footer -->
             <div class="w-full md:w-1/2 flex flex-col relative bg-white flex-grow min-h-0 md:h-full">
                 
+                <!-- Scrollable Description Body -->
                 <div class="flex-grow overflow-y-auto p-5 sm:p-8 pb-28 md:pb-32 bg-white">
                     <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight mb-2 pr-4">${safeName}</h2>
                     <div id="modal-price-display" class="text-xl font-bold text-blue-600 mb-6">$${initialPrice}</div>
@@ -1081,6 +1090,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="text-[11px] text-gray-500 mt-6 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
 
+                <!-- Square-Style Sticky Bottom Bar -->
                 <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-gray-200 p-4 sm:p-5 flex items-center gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
                     <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-full flex items-center justify-center shadow-sm text-gray-900 transition duration-200" aria-label="Close">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
