@@ -234,25 +234,18 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
-<!-- UPDATED CINEMATIC HERO SECTION -->
+<!-- NATIVE HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-gray-900">
-    <!-- Cinematic Auto-Playing Background Video -->
-    <!-- NOTE: Google Drive stream links can occasionally buffer if traffic is extreme, but this will work seamlessly for the launch! -->
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
-        <source src="https://drive.google.com/uc?export=download&id=10V0b1HaiqKXyeWjIFZF4u3kcFYPQUGwx" type="video/mp4">
+        <source src="/hero-bg.mp4" type="video/mp4">
     </video>
 
-    <!-- Content Overlay -->
     <div class="relative z-10 max-w-4xl mx-auto w-full mt-12 sm:mt-16">
         <p class="section-label mb-6 justify-center reveal text-blue-400">An Act of Service</p>
-        
         <h1 class="text-5xl sm:text-7xl font-black mb-6 text-white tracking-tight uppercase leading-none reveal reveal-delay-2 drop-shadow-lg">Artistry in Prayer</h1>
-        
         <p class="text-gray-200 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3 drop-shadow">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
-        
         <p class="text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4 drop-shadow">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
         
-        <!-- Bouncing Scroll Down Indicator -->
         <a href="#featured" class="inline-block mt-4 text-white/60 hover:text-white transition animate-bounce reveal reveal-delay-4" aria-label="Scroll Down">
             <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
         </a>
@@ -261,7 +254,6 @@
 
 <section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10">
     <div class="max-w-6xl mx-auto" id="featured-container">
-        <!-- Skeleton Loader -->
         <div class="animate-pulse">
             <div class="flex justify-center md:justify-start mb-6">
                 <div class="h-4 bg-gray-200 rounded w-48"></div>
@@ -587,7 +579,6 @@
     </div>
 </section>
 
-<!-- UPDATED NETLIFY NEWSLETTER FORM -->
 <section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
@@ -1213,7 +1204,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const featuredItems = [];
             if(nonBundleProducts.length > 0) {
-                // Dynamically fill the 3 featured spots 
                 const findCat = (keywords) => nonBundleProducts.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
                 
                 if (featuredItems.length < 3) { 
@@ -1229,7 +1219,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     if(p3) featuredItems.push(p3); 
                 }
                 
-                // Fallback to fill any empty spaces just in case
                 for(let p of nonBundleProducts) { 
                     if(featuredItems.length >= 3) break; 
                     if(!featuredItems.includes(p)) featuredItems.push(p); 
@@ -1247,7 +1236,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('featured').classList.add('hidden');
             }
 
-            // ── Inject the rest of the catalog into #product-grid ──
+            // ── Inject rest of catalog ──
             let htmlOutput = '';
             sortedCats.forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
