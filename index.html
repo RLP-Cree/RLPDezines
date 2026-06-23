@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RLP Dezines — Prayerful Indigenous Art</title>
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S6S9ZFXSQL"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -15,7 +14,6 @@
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
-    <!-- Google SEO Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,7 +26,6 @@
     }
     </script>
 
-    <!-- App & Browser Icons -->
     <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
     <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w200">
 
@@ -229,7 +226,6 @@
     <div id="cart-content" class="flex-grow flex flex-col overflow-hidden bg-white"></div>
 </div>
 
-<!-- Privacy Policy Modal -->
 <div id="privacy-modal-overlay" class="fixed inset-0 bg-gray-900/60 z-[110] hidden opacity-0 transition-opacity duration-300"></div>
 <div id="privacy-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-2xl bg-white border border-gray-200 rounded-2xl z-[120] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
     <div class="flex justify-between items-center p-5 sm:p-6 border-b border-gray-100 bg-gray-50 flex-shrink-0">
@@ -251,7 +247,6 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
-<!-- NATIVE HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-gray-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
@@ -627,7 +622,6 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
-<!-- Cookie Banner -->
 <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-gray-900 border-t border-gray-800 p-4 sm:p-6 z-[100] transform translate-y-full transition-transform duration-500 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl">
     <div class="text-gray-300 text-sm font-light leading-relaxed max-w-4xl text-center sm:text-left">
         We use cookies (like Google Analytics) to understand site traffic and improve your experience. By continuing to use our site, you agree to our <button onclick="window.openPrivacyModal()" class="text-blue-400 hover:text-blue-300 underline underline-offset-2 font-medium">Privacy Policy</button>.
@@ -637,7 +631,6 @@
     </button>
 </div>
 
-<!-- THE SEARCH MODAL -->
 <div id="filter-modal" class="fixed inset-0 bg-white z-[99] hidden p-6 overflow-y-auto transition-opacity">
     <div class="max-w-xl mx-auto mt-10">
         <div class="flex justify-between items-center mb-8">
@@ -1096,24 +1089,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialPrice = p.variations && p.variations.length > 0 ? (p.variations[0].price / 100).toFixed(2) : '0.00';
 
         pModal.innerHTML = `
-            <!-- Desktop Only Close Button (Absolute Top Right) -->
             <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2.5 rounded-full z-[100] transition shadow-md border border-gray-200" aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             
-            <!-- Image Area (Left on Desktop, Top on Mobile) -->
             <div class="w-full md:w-1/2 bg-[#f4f4f4] relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 h-[50vh] md:h-full overflow-hidden group">
-                <!-- Mobile Close Button -->
                 <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full z-[100] shadow-sm border border-gray-200" aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
                 <div class="w-full h-full relative flex items-center justify-center p-0 sm:p-6">${imgHtml}</div>
             </div>
             
-            <!-- Content Area (Right on Desktop, Bottom on Mobile) - Full scroll with sticky footer -->
             <div class="w-full md:w-1/2 flex flex-col relative bg-white flex-grow min-h-0 md:h-full">
                 
-                <!-- Scrollable Description Body -->
                 <div class="flex-grow overflow-y-auto p-5 sm:p-8 pb-28 md:pb-32 bg-white">
                     <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight mb-2 pr-4">${safeName}</h2>
                     <div id="modal-price-display" class="text-xl font-bold text-blue-600 mb-6">$${initialPrice}</div>
@@ -1142,7 +1130,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="text-[11px] text-gray-500 mt-6 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
 
-                <!-- Square-Style Sticky Bottom Bar -->
                 <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-gray-200 p-4 sm:p-5 flex items-center gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
                     <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-full flex items-center justify-center shadow-sm text-gray-900 transition duration-200" aria-label="Close">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -1265,14 +1252,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const featuredItems = [];
             if(nonBundleProducts.length > 0) {
+                // 1. FORCE TARGET ITEM TO SPOT #1
+                let targetShirt = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes('GEOMETRIC STAR GRAPHIC T-SHIRT') || (p.name || '').toUpperCase().includes('GEOMETRIC STAR'));
+                if(targetShirt) featuredItems.push(targetShirt);
+
                 const findCat = (keywords) => nonBundleProducts.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
                 
+                // 2. FILL REMAINING SPOTS WITH VARIETY
                 if (featuredItems.length < 3) { 
                     let p1 = findCat(['Sherpa']); 
                     if(p1) featuredItems.push(p1); 
                 }
                 if (featuredItems.length < 3) { 
-                    let p2 = findCat(['Hoodie', 'Shirt']); 
+                    let p2 = findCat(['Hoodie']); 
                     if(p2) featuredItems.push(p2); 
                 }
                 if (featuredItems.length < 3) { 
