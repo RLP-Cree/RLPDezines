@@ -10,7 +10,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-S6S9ZFXSQL');
     </script>
 
@@ -40,7 +39,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <!-- Optimized, non-blocking font load -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Outfit:wght@700;800;900&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Outfit:wght@700;800;900&display=swap">
+    </noscript>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -98,7 +101,6 @@
         .product-card:hover .card-img { transform: scale(1.04); }
         .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: transparent; position: relative; }
         
-        /* mix-blend-mode makes white backgrounds disappear, letting the item float */
         .card-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease; mix-blend-mode: multiply; }
         
         .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 13px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; background: #f9fafb; border-radius: 12px; }
@@ -255,11 +257,16 @@
     <div class="relative z-10 max-w-4xl mx-auto w-full mt-12 sm:mt-16">
         <p class="section-label mb-6 justify-center reveal text-blue-400">An Act of Service</p>
         <h1 class="text-5xl sm:text-7xl font-black mb-6 text-white tracking-tight uppercase leading-none reveal reveal-delay-2 drop-shadow-lg">Artistry in Prayer</h1>
-        <p class="text-gray-200 max-w-lg mx-auto text-xl mb-4 font-light leading-relaxed reveal reveal-delay-3 drop-shadow">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
-        <p class="text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed font-light mb-12 reveal reveal-delay-4 drop-shadow">I share these creations to bring a good feeling, good energy, and spiritual alignment into your daily life. Take your time, look around, and if you need anything at all, I'm right here.</p>
+        <p class="text-gray-200 max-w-lg mx-auto text-xl mb-8 font-light leading-relaxed reveal reveal-delay-3 drop-shadow">Every design is a prayer.<br>Every item, an act of beautifying the world.</p>
+
+        <!-- ADDED VISIBLE CTA FOR CONVERSION -->
+        <a href="#shop-live" class="reveal reveal-delay-4 inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse mb-8">Browse the Collection</a>
         
-        <a href="#featured" class="inline-block mt-4 text-white/60 hover:text-white transition animate-bounce reveal reveal-delay-4" aria-label="Scroll Down">
-            <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        <br>
+        
+        <a href="#featured" class="inline-flex flex-col items-center text-white/60 hover:text-white transition group reveal reveal-delay-4" aria-label="Scroll Down">
+            <svg class="w-8 h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-2 opacity-0 group-hover:opacity-100 transition-opacity">See the Collection</span>
         </a>
     </div>
 </section>
@@ -365,7 +372,7 @@
                             <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">10-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-gray-500 mb-6">$600.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/10-piece-sherpa-throw-blanket-bundle/MHSESFUUPQR65SMNTLWYWGLR?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Purchase Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/10-piece-sherpa-throw-blanket-bundle/MHSESFUUPQR65SMNTLWYWGLR?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Reserve This Bundle</a>
                     </div>
                 </div>
 
@@ -379,7 +386,7 @@
                             <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">15-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-gray-500 mb-6">$900.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/15-piece-sherpa-throw-blanket-bundle/OCEXPFGH74XF2OZ5B7GRTKCY?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Purchase Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/15-piece-sherpa-throw-blanket-bundle/OCEXPFGH74XF2OZ5B7GRTKCY?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Reserve This Bundle</a>
                     </div>
                 </div>
 
@@ -393,7 +400,7 @@
                             <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">20-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-gray-500 mb-6">$1,200.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/20-piece-sherpa-throw-blanket-bundle/HPFODJHOEWCSXMPP6KC5YXVS?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Purchase Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/20-piece-sherpa-throw-blanket-bundle/HPFODJHOEWCSXMPP6KC5YXVS?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Reserve This Bundle</a>
                     </div>
                 </div>
 
@@ -511,7 +518,7 @@
                         <textarea class="form-input h-32 resize-y" id="intake-message" placeholder="Tell me what you're looking for..." required></textarea>
                     </div>
                     <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-md text-base">
-                        <span id="btn-label">Submit Project Request</span>
+                        <span id="btn-label">Send My Project Details</span>
                         <svg id="btn-spinner" class="w-5 h-5 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                     </button>
                     <p id="form-error" class="text-red-500 text-sm mt-3 hidden text-center">Please fill in all required fields before submitting.</p>
@@ -599,7 +606,7 @@
         <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-blue-400 font-medium border-none">
             <button type="submit" id="newsletter-submit-btn" class="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded-full font-black uppercase tracking-widest transition shadow-lg text-sm flex items-center justify-center gap-2">
-                <span>Subscribe</span>
+                <span>Join the Circle</span>
                 <svg id="newsletter-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
             </button>
         </form>
@@ -627,7 +634,7 @@
         We use cookies (like Google Analytics) to understand site traffic and improve your experience. By continuing to use our site, you agree to our <button onclick="window.openPrivacyModal()" class="text-blue-400 hover:text-blue-300 underline underline-offset-2 font-medium">Privacy Policy</button>.
     </div>
     <button id="accept-cookies" class="w-full sm:w-auto flex-shrink-0 bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-black uppercase tracking-widest transition text-xs shadow-lg btn-pulse">
-        Accept & Close
+        Sounds Good
     </button>
 </div>
 
@@ -719,7 +726,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch {
                 window.location.href = `mailto:rlp@rlpdezines.com?subject=Design Inquiry&body=Name:%20${encodeURIComponent(name)}%0AEmail:%20${encodeURIComponent(email)}%0ABudget:%20${encodeURIComponent(budget)}%0A%0AProject:%0A${encodeURIComponent(message)}`;
                 document.getElementById('form-fields').classList.add('hidden'); document.getElementById('form-success').classList.remove('hidden');
-            } finally { btnLabel.textContent = 'Submit Project Request'; btnSpinner.classList.add('hidden'); submitBtn.disabled = false; }
+            } finally { btnLabel.textContent = 'Send My Project Details'; btnSpinner.classList.add('hidden'); submitBtn.disabled = false; }
         });
     }
 
@@ -1023,7 +1030,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.min(...prices);
     };
 
-    // --- NEW MODAL PRICE UPDATE LOGIC ---
     window.updateModalPrice = function() {
         const sel = document.getElementById('modal-variant');
         const qty = document.getElementById('modal-qty');
@@ -1057,7 +1063,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openModal = function(id) {
         const p = window.globalProducts[id]; if(!p) return;
         
-        // GA4 Event Tracking Code
         if (typeof gtag === 'function') {
             gtag('event', 'view_item', {
                 currency: 'USD',
@@ -1232,7 +1237,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const catMap = {};
 
-            // ── Extract Non-Bundle Items ──
             const nonBundleProducts = products.filter(p => {
                 const rawString = JSON.stringify(p).toLowerCase();
                 return !(rawString.includes('bundle') || rawString.includes('-piece'));
@@ -1252,28 +1256,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const featuredItems = [];
             if(nonBundleProducts.length > 0) {
-                // 1. FORCE TARGET ITEM TO SPOT #1
-                let targetShirt = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes('GEOMETRIC STAR GRAPHIC T-SHIRT') || (p.name || '').toUpperCase().includes('GEOMETRIC STAR'));
-                if(targetShirt) featuredItems.push(targetShirt);
+                // EXPLICIT TARGET LIST FOR FEATURED SECTION
+                const targetNames = [
+                    "GEOMETRIC STAR GRAPHIC T-SHIRT",
+                    "TURQUOISE & MAGENTA FLORAL SHERPA BLANKET",
+                    "MEN'S BLACK GEOMETRIC INDIGENOUS PRINT HOODIE",
+                    "THE GRAND ENTRY WEEKENDER TOTE",
+                    "LINEAGE LINK"
+                ];
 
-                const findCat = (keywords) => nonBundleProducts.find(p => keywords.some(k => (p.category||'').includes(k)) && !featuredItems.includes(p));
-                
-                // 2. FILL REMAINING SPOTS WITH VARIETY
-                if (featuredItems.length < 3) { 
-                    let p1 = findCat(['Sherpa']); 
-                    if(p1) featuredItems.push(p1); 
-                }
-                if (featuredItems.length < 3) { 
-                    let p2 = findCat(['Hoodie']); 
-                    if(p2) featuredItems.push(p2); 
-                }
-                if (featuredItems.length < 3) { 
-                    let p3 = findCat(['Tumbler', 'Tote', 'Mug']); 
-                    if(p3) featuredItems.push(p3); 
-                }
-                
+                targetNames.forEach(target => {
+                    let found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes(target.toUpperCase()));
+                    
+                    if (!found && target.includes("GEOMETRIC STAR")) {
+                        found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("GEOMETRIC STAR"));
+                    }
+                    if (!found && target.includes("HOODIE")) {
+                        found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("GEOMETRIC INDIGENOUS PRINT HOODIE"));
+                    }
+                    if (!found) {
+                        const cleanTarget = target.replace(/['&]/g, '').replace(/\s+/g, ' ').toUpperCase();
+                        found = nonBundleProducts.find(p => (p.name || '').replace(/['&]/g, '').replace(/\s+/g, ' ').toUpperCase().includes(cleanTarget));
+                    }
+
+                    if (found && !featuredItems.includes(found)) {
+                        featuredItems.push(found);
+                    }
+                });
+
+                // FILL REMAINING SPOTS WITH VARIETY IF ANY TARGETS ARE MISSING (Max 5)
                 for(let p of nonBundleProducts) { 
-                    if(featuredItems.length >= 3) break; 
+                    if(featuredItems.length >= 5) break; 
                     if(!featuredItems.includes(p)) featuredItems.push(p); 
                 }
             }
@@ -1289,7 +1302,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('featured').classList.add('hidden');
             }
 
-            // ── Inject rest of catalog ──
             let htmlOutput = '';
             sortedCats.forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
@@ -1317,7 +1329,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     loadProducts();
 
-    // ── Search & Filter Logic ──
     const filterModal = document.getElementById('filter-modal');
     const searchTrigger = document.getElementById('search-trigger');
     const navSearchBtn = document.getElementById('nav-search-btn');
