@@ -1206,6 +1206,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const sName = (p.name || 'Item').replace(/'/g, "&#39;");
         const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP DEZINES</span></div>`;
         const pMinPrice = getSafeMinPrice(p);
+        // Items with more than one variation (e.g. shirts with color/size) require the customer to choose options.
+        const needsOptions = !!(p.variations && p.variations.length > 1);
         
         return `
         <div class="product-card group" onclick="window.openModal('${p.id}')">
@@ -1215,14 +1217,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
                     ${buildPriceHTML(p, pMinPrice)}
                 </div>
-                <div class="mt-5 flex items-center justify-between">
-                    <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
-                    <div class="flex items-center gap-2">
-                        <button class="text-gray-400 hover:text-blue-600 transition-colors p-1" onclick="window.shareProduct(event, '${p.id}')" aria-label="Share">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
-                        </button>
-                        <button class="btn-pulse bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">Add to Cart</button>
-                    </div>
+                <div class="mt-4 flex items-stretch gap-2">
+                    <button class="btn-pulse flex-grow bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black uppercase tracking-widest py-3 rounded-lg shadow-md transition-transform active:scale-95 flex items-center justify-center gap-1.5" onclick="window.quickAdd(event, '${p.id}')">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        ${needsOptions ? 'Choose Options' : 'Add to Cart'}
+                    </button>
+                    <button class="flex-shrink-0 w-11 flex items-center justify-center text-gray-400 hover:text-blue-600 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors" onclick="window.shareProduct(event, '${p.id}')" aria-label="Share">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                    </button>
                 </div>
             </div>
         </div>`;
