@@ -48,6 +48,19 @@ exports.handler = async (event) => {
 
             const orderResponse = await squareClient.ordersApi.retrieveOrder(orderId);
             const order = orderResponse.result.order;
+            
+            // ── NEW FIX: THE STATUTE OF LIMITATIONS ──
+            // Calculate how old the order is. If it's older than 2 hours, it's a historical sync ghost. Ignore it!
+            const orderCreatedAt = new Date(order.createdAt).getTime();
+            const now = Date.now();
+            const hoursSinceCreation = (now - orderCreatedAt) / (1000 * 60 * 60);
+
+            if (hoursSinceCreation > 2) {
+                console.log(`⚠️ GHOST ORDER BLOCKED: Order ${orderId} is ${hoursSinceCreation.toFixed(2)} hours old. Ignoring to prevent duplicate fulfillment.`);
+                return { statusCode: 200, body: 'Historical order safely ignored.' };
+            }
+            // ─────────────────────────────────────────
+
             const lineItems = order.lineItems || [];
 
             // Validate that we have items to fulfill
