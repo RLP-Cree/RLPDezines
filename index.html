@@ -256,6 +256,7 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Artistry in Prayer</h1>
         <p class="text-gray-200 max-w-lg mx-auto text-xl mb-8 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Every design is a prayer. Every item is an act of beautifying the world.</p>
 
+        <!-- INSTANT, VALUE-DRIVEN CTA -->
         <a href="#shop-live" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Explore the Collection</a>
     </div>
 </section>
@@ -1161,8 +1162,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Layer 3: Total Fallback (Neutral Grey dot instead of text chip)
-        return { hex: '#d1d5db', label: cleanName }; 
+        // If we don't confidently know it's a color, don't show a dot at all.
+        return null; 
     };
 
     // Build the row of color swatches for a product card.
