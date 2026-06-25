@@ -257,14 +257,7 @@
         <p class="text-gray-200 max-w-lg mx-auto text-xl mb-8 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Every design is a prayer. Every item is an act of beautifying the world.</p>
 
         <!-- INSTANT, VALUE-DRIVEN CTA -->
-        <a href="#shop-live" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse mb-8">Explore the Collection</a>
-        
-        <br>
-        
-        <a href="#featured" class="inline-flex flex-col items-center text-white/60 hover:text-white transition group reveal reveal-delay-4" aria-label="Scroll Down">
-            <svg class="w-8 h-8 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-            <span class="text-[10px] font-bold uppercase tracking-widest mt-2 opacity-0 group-hover:opacity-100 transition-opacity">See the Collection</span>
-        </a>
+        <a href="#shop-live" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Explore the Collection</a>
     </div>
 </section>
 
@@ -274,9 +267,9 @@
             <div class="flex justify-center md:justify-start mb-6">
                 <div class="h-4 bg-gray-200 rounded w-48"></div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2 pb-8 border-b border-gray-100">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2 pb-8 border-b border-gray-100">
                 <div class="bg-gray-100 rounded-xl h-72"></div>
-                <div class="bg-gray-100 rounded-xl h-72 hidden sm:block"></div>
+                <div class="bg-gray-100 rounded-xl h-72"></div>
                 <div class="bg-gray-100 rounded-xl h-72 hidden lg:block"></div>
             </div>
         </div>
@@ -334,9 +327,9 @@
             <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
                 <div class="flex items-center gap-3 w-1/2"><div class="h-6 w-6 bg-gray-200 rounded"></div><div class="h-6 bg-gray-200 rounded w-1/2"></div></div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
                 <div class="skeleton h-72 rounded-xl"></div>
-                <div class="skeleton h-72 rounded-xl hidden sm:block"></div>
+                <div class="skeleton h-72 rounded-xl"></div>
                 <div class="skeleton h-72 rounded-xl hidden lg:block"></div>
             </div>
         </div>
@@ -1021,6 +1014,43 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.min(...prices);
     };
 
+    // ── HONEST ANCHOR PRICING ──
+    // Maps real, previously-charged regular prices (in cents) by product category.
+    // Strikethrough only renders when the former price is genuinely higher than
+    // the current price. These are documented past selling prices (receipts on file).
+    const FORMER_PRICES = {
+        'Sherpa Throws - 60” x 80”': 8900,
+        'Sherpa Throws': 8900,
+        'T Shirts': 3500,
+        'Hoodies': 5500,
+        'Tumblers': 4800,
+        'Mugs': 2000,
+        'Totes': 6500,
+        'Phone Cases': 3000
+    };
+
+    // Returns the honest former price (cents) for a product, or 0 if none/invalid.
+    const getFormerPrice = (p, currentCents) => {
+        const former = FORMER_PRICES[p.category];
+        if (!former || !currentCents || former <= currentCents) return 0;
+        return former;
+    };
+
+    // Builds the price HTML block: shows struck-through former price + current price + % off when applicable.
+    const buildPriceHTML = (p, currentCents) => {
+        const former = getFormerPrice(p, currentCents);
+        if (!former) {
+            return `<p class="text-[12px] sm:text-sm font-bold text-gray-900 mt-2">$${(currentCents/100).toFixed(2)}</p>`;
+        }
+        const pct = Math.round((1 - currentCents / former) * 100);
+        return `
+            <div class="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                <span class="text-[12px] sm:text-sm font-medium text-gray-400 line-through">$${(former/100).toFixed(2)}</span>
+                <span class="text-[13px] sm:text-base font-black text-blue-600">$${(currentCents/100).toFixed(2)}</span>
+            </div>
+            <p class="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-red-600 mt-1">${pct}% Off</p>`;
+    };
+
     window.updateModalPrice = function() {
         const sel = document.getElementById('modal-variant');
         const qty = document.getElementById('modal-qty');
@@ -1183,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="card-body">
                 <div>
                     <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
-                    <p class="text-[12px] sm:text-sm font-bold text-gray-500 mt-2">$${(pMinPrice/100).toFixed(2)}</p>
+                    ${buildPriceHTML(p, pMinPrice)}
                 </div>
                 <div class="mt-5 flex items-center justify-between">
                     <div class="view-btn-text flex items-center gap-1 m-0 text-[11px]">View Details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg></div>
@@ -1287,7 +1317,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 featuredContainer.innerHTML = `
                 <div style="animation: fadeInDown 0.5s ease-out forwards;">
                     <p class="section-label mb-4 justify-center md:justify-start">Featured</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2 pb-8 border-b border-gray-100">${featuredCards}</div>
+                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2 pb-8 border-b border-gray-100">${featuredCards}</div>
                 </div>`;
             } else {
                 document.getElementById('featured').classList.add('hidden');
@@ -1311,7 +1341,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <span class="text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-open:rotate-180"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
                     </summary>
-                    <div class="accordion-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-5 pb-3">${cards}</div>
+                    <div class="accordion-content grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-5 pb-3">${cards}</div>
                 </details>`;
             });
 
@@ -1348,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(sort === 'price-high') products.sort((a,b) => getSafeMinPrice(b) - getSafeMinPrice(a));
         
         grid.innerHTML = products.length > 0 
-            ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">` + products.map(p => generateCardHTML(p)).join('') + `</div>`
+            ? `<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">` + products.map(p => generateCardHTML(p)).join('') + `</div>`
             : `<p class="text-center py-10 text-gray-500 w-full col-span-full font-semibold">No items match your search.</p>`;
             
         closeFilter();
@@ -1361,4 +1391,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
