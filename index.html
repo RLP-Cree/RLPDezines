@@ -150,6 +150,13 @@
             background: #ffffff; 
         }
 
+        /* Dedicated NACNA Vault Styles */
+        .nacna-bg { background: radial-gradient(circle at top right, #1e3a8a, #111827); border-top: 2px solid #2563eb; }
+        .nacna-card * { color: white !important; }
+        .nacna-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #6b7280 !important; }
+        .nacna-card .atc-btn { background: #3b82f6 !important; color: white !important; }
+        .nacna-card .atc-btn:hover { background: #60a5fa !important; }
+
         @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .product-card, .price-card, .endorse-card { transition: none; } }
     </style>
 </head>
@@ -258,6 +265,34 @@
 
         <!-- INSTANT, VALUE-DRIVEN CTA -->
         <a href="#shop-live" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Explore the Collection</a>
+    </div>
+</section>
+
+<!-- NACNA VAULT SECTION -->
+<section id="nacna-vault" class="hidden nacna-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
+    <div class="max-w-6xl mx-auto relative z-10 text-center">
+        <div class="inline-block bg-red-600 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(220,38,38,0.6)]">Retiring Soon</div>
+        <h2 class="text-4xl sm:text-6xl font-black uppercase tracking-tight mb-5 text-white">Official NACNA Apparel</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto mb-10 font-light text-lg">By official request, the Native American Church of North America collection is entering the vault. Grab your gear before production officially closes.</p>
+        
+        <div class="flex justify-center gap-3 sm:gap-6 mb-14">
+            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="cd-hours" class="text-3xl sm:text-5xl font-black text-blue-400">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Hours</div>
+            </div>
+            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="cd-minutes" class="text-3xl sm:text-5xl font-black text-blue-400">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Mins</div>
+            </div>
+            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="cd-seconds" class="text-3xl sm:text-5xl font-black text-blue-400">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Secs</div>
+            </div>
+        </div>
+
+        <div id="nacna-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 text-left">
+            <!-- NACNA items populate here dynamically -->
+        </div>
     </div>
 </section>
 
@@ -668,6 +703,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const body = document.body;
     
+    // ── Timer Logic for NACNA Vault ──
+    // Deadline: June 27, 2026, 11:59:59 PM
+    const NACNA_DEADLINE = new Date("2026-06-27T23:59:59").getTime();
+    
+    const cdHours = document.getElementById('cd-hours');
+    const cdMins = document.getElementById('cd-minutes');
+    const cdSecs = document.getElementById('cd-seconds');
+    const nacnaVault = document.getElementById('nacna-vault');
+
+    const updateTimer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = NACNA_DEADLINE - now;
+
+        if (distance < 0) {
+            clearInterval(updateTimer);
+            if (nacnaVault) nacnaVault.classList.add('hidden');
+            // Re-render catalog to ensure NACNA items stay hidden
+            if (typeof loadProducts === 'function') loadProducts();
+        } else {
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24 * 99)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (cdHours) cdHours.innerText = hours.toString().padStart(2, '0');
+            if (cdMins) cdMins.innerText = minutes.toString().padStart(2, '0');
+            if (cdSecs) cdSecs.innerText = seconds.toString().padStart(2, '0');
+        }
+    }, 1000);
+
     // ── Mobile menu ──
     const menuBtn = document.getElementById('menu-btn'), mobileMenu = document.getElementById('mobile-menu');
     const openIcon = document.getElementById('menu-icon-open'), closeIcon = document.getElementById('menu-icon-close');
@@ -1384,6 +1448,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadProducts() {
         const grid = document.getElementById('product-grid');
         const featuredContainer = document.getElementById('featured-container');
+        const nacnaGrid = document.getElementById('nacna-grid');
+        const nacnaVault = document.getElementById('nacna-vault');
         
         const icons = {
             'Sherpa Throws - 60” x 80”': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
@@ -1406,10 +1472,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const products = await res.json();
             grid.innerHTML = '';
             featuredContainer.innerHTML = '';
+            nacnaGrid.innerHTML = '';
 
             if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found in catalog.</p>`; return; }
 
             const catMap = {};
+            const nacnaItems = [];
+            
+            // Check if the vault is still active
+            const now = new Date().getTime();
+            const isNacnaActive = now < NACNA_DEADLINE;
 
             const nonBundleProducts = products.filter(p => {
                 const rawString = JSON.stringify(p).toLowerCase();
@@ -1418,10 +1490,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
             nonBundleProducts.forEach(p => {
                 window.globalProducts[p.id] = p; 
+                
+                // Route NACNA items to the vault
+                const isNacnaItem = (p.name || '').toUpperCase().includes('NACNA');
+                if (isNacnaItem) {
+                    if (isNacnaActive) nacnaItems.push(p);
+                    return; // Skip adding to the regular catalog
+                }
+                
                 const c = p.category || 'Other Goods';
                 if (!catMap[c]) catMap[c] = []; 
                 catMap[c].push(p);
             });
+
+            // ── Render NACNA Vault ──
+            if (isNacnaActive && nacnaItems.length > 0) {
+                nacnaVault.classList.remove('hidden');
+                // Wrap cards in a div that overrides some styles for dark mode
+                nacnaGrid.innerHTML = nacnaItems.map(p => `
+                    <div class="nacna-card">
+                        ${generateCardHTML(p)}
+                    </div>
+                `).join('');
+            } else {
+                nacnaVault.classList.add('hidden');
+            }
 
             const categoryOrder = ['Sherpa Throws - 60” x 80”', 'Sherpa Throws', 'T Shirts', 'Hoodies', 'Totes', 'Tumblers', 'Mugs', 'Phone Cases', 'Towels', 'Hand Towels', 'Design Services'];
             const existingCats = Object.keys(catMap);
@@ -1453,7 +1546,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         found = nonBundleProducts.find(p => (p.name || '').replace(/['&]/g, '').replace(/\s+/g, ' ').toUpperCase().includes(cleanTarget));
                     }
 
-                    if (found && !featuredItems.includes(found)) {
+                    if (found && !featuredItems.includes(found) && !found.name.toUpperCase().includes('NACNA')) {
                         featuredItems.push(found);
                     }
                 });
@@ -1461,7 +1554,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // FILL REMAINING SPOTS WITH VARIETY IF ANY TARGETS ARE MISSING (Max 5)
                 for(let p of nonBundleProducts) { 
                     if(featuredItems.length >= 5) break; 
-                    if(!featuredItems.includes(p)) featuredItems.push(p); 
+                    if(!featuredItems.includes(p) && !p.name.toUpperCase().includes('NACNA')) featuredItems.push(p); 
                 }
             }
 
@@ -1524,6 +1617,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const rawString = JSON.stringify(p).toLowerCase();
             const isBundle = rawString.includes('bundle') || rawString.includes('-piece');
             const matchesTerm = (p.name || '').toLowerCase().includes(term);
+            // Hide NACNA from search if expired
+            const isNacnaItem = (p.name || '').toUpperCase().includes('NACNA');
+            const now = new Date().getTime();
+            if (isNacnaItem && now > NACNA_DEADLINE) return false;
+            
             return matchesTerm && !isBundle;
         });
         
