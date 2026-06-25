@@ -141,7 +141,7 @@ exports.handler = async (event) => {
                     
                 } else {
                     console.error(`Printful API Error for Order ${orderId}:`, errorReason);
-                    isFreshOrder = true; // It IS a new order, Printful just errored out (like the sync variant bug). We still want to email the customer their receipt!
+                    isFreshOrder = true; // It IS a new order, Printful just errored out. Email the customer their receipt!
                     
                     try {
                         await resend.emails.send({
@@ -166,18 +166,19 @@ exports.handler = async (event) => {
                 }
             }
 
-            // ── PREMIUM CUSTOMER CONFIRMATION EMAIL ──
+            // ── PREMIUM CUSTOMER CONFIRMATION EMAIL (NEW DESIGN) ──
             if (isFreshOrder) {
                 try {
+                    // Generate light-mode item rows
                     const itemsHtml = lineItems.map(item => {
                         const totalLinePrice = item.totalMoney ? (Number(item.totalMoney.amount) / 100).toFixed(2) : "0.00";
                         return `
                             <tr>
-                                <td style="padding: 12px 0; border-bottom: 1px solid #1f1f1f; color: #ffffff;">
-                                    <strong style="color: #ffffff;">${item.name}</strong>
-                                    <div style="color: #9ca3af; font-size: 12px;">Qty: ${item.quantity}</div>
+                                <td style="padding: 16px 0; border-bottom: 1px solid #e5e7eb; text-align: left;">
+                                    <strong style="color: #111827; font-size: 14px; font-weight: 700;">${item.name}</strong>
+                                    <div style="color: #6b7280; font-size: 13px; margin-top: 4px;">Qty: ${item.quantity}</div>
                                 </td>
-                                <td style="padding: 12px 0; border-bottom: 1px solid #1f1f1f; color: #ffffff; text-align: right;">$${totalLinePrice}</td>
+                                <td style="padding: 16px 0; border-bottom: 1px solid #e5e7eb; color: #111827; text-align: right; font-weight: 600; font-size: 14px;">$${totalLinePrice}</td>
                             </tr>`;
                     }).join('');
 
@@ -192,38 +193,70 @@ exports.handler = async (event) => {
                         to: [recipient.email],
                         subject: 'Order Confirmed - RLP Dezines',
                         html: `
-                            <div style="background:#000; color:#fff; padding:20px; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                                <h1 style="margin: 0 0 20px 0; color: #fff;">RLP DEZINES</h1>
-                                <p style="font-size: 16px; margin: 0 0 20px 0;">Your order has been confirmed and is being prepared for shipment.</p>
-                                
-                                <table style="width: 100%; border-collapse: collapse;">
-                                    <thead>
-                                        <tr style="border-bottom: 2px solid #fff;">
-                                            <th style="padding: 12px 0; text-align: left; color: #fff;">Item</th>
-                                            <th style="padding: 12px 0; text-align: right; color: #fff;">Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${itemsHtml}
-                                    </tbody>
-                                </table>
-                                
-                                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #333;">
-                                    <p style="margin: 8px 0; display: flex; justify-content: space-between;"><span>Subtotal:</span> <span>$${calculatedSubtotal.toFixed(2)}</span></p>
-                                    <p style="margin: 8px 0; display: flex; justify-content: space-between;"><span>Shipping:</span> <span>$${calculatedShipping}</span></p>
-                                    <p style="margin: 8px 0; display: flex; justify-content: space-between;"><span>Tax:</span> <span>$${totalTax}</span></p>
-                                    <p style="margin: 16px 0; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between;"><span>Total:</span> <span>$${totalGross}</span></p>
+                            <div style="background-color: #f9fafb; padding: 40px 15px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                                <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 40px 30px; border: 1px solid #e5e7eb; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+                                    
+                                    <h1 style="font-size: 28px; font-weight: 900; letter-spacing: 4px; font-style: italic; text-transform: uppercase; margin: 0 0 10px 0; color: #111827;">RLP DEZINES</h1>
+                                    <div style="color: #2563eb; font-size: 14px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px;">Order Confirmed</div>
+                                    
+                                    <p style="color: #4b5563; font-size: 15px; line-height: 1.6; margin: 0 0 20px 0;">
+                                        Ahoooo!! for supporting authentic design. Your payment has cleared successfully, and your custom gear has officially entered production.
+                                    </p>
+                                    <p style="color: #4b5563; font-size: 15px; line-height: 1.6; margin: 0 0 25px 0;">
+                                        A detailed, itemized receipt is below. Because our drops are custom-produced specifically for you, the factory floor has already started spinning up your order.
+                                        <span style="display: block; font-size: 12px; color: #9ca3af; margin-top: 8px;">(Please refer to your receipt for our custom-order return policies.)</span>
+                                    </p>
+
+                                    <!-- ITEM RECEIPT SECTION -->
+                                    <div style="text-align: left; margin: 35px 0; border-top: 1px solid #e5e7eb; padding-top: 25px;">
+                                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 5px;">
+                                            <tbody>
+                                                ${itemsHtml}
+                                            </tbody>
+                                        </table>
+                                        
+                                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                                            <tr>
+                                                <td style="padding: 6px 0; color: #4b5563; font-size: 14px; text-align: left;">Subtotal:</td>
+                                                <td style="padding: 6px 0; color: #111827; font-size: 14px; text-align: right; font-weight: 600;">$${calculatedSubtotal.toFixed(2)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 6px 0; color: #4b5563; font-size: 14px; text-align: left;">Shipping:</td>
+                                                <td style="padding: 6px 0; color: #111827; font-size: 14px; text-align: right; font-weight: 600;">$${calculatedShipping}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 6px 0; color: #4b5563; font-size: 14px; text-align: left;">Tax:</td>
+                                                <td style="padding: 6px 0; color: #111827; font-size: 14px; text-align: right; font-weight: 600;">$${totalTax}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 16px 0 0 0; color: #111827; font-size: 15px; font-weight: 800; text-align: left; text-transform: uppercase;">Total:</td>
+                                                <td style="padding: 16px 0 0 0; color: #2563eb; font-size: 20px; font-weight: 900; text-align: right;">$${totalGross}</td>
+                                            </tr>
+                                        </table>
+
+                                        <div style="margin-top: 30px; padding: 20px; background-color: #f9fafb; border-radius: 12px; border: 1px solid #e5e7eb;">
+                                            <p style="margin: 0 0 10px 0; font-weight: 800; color: #111827; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Shipping To:</p>
+                                            <p style="margin: 0 0 4px 0; color: #4b5563; font-size: 14px;">${recipient.name}</p>
+                                            <p style="margin: 0 0 4px 0; color: #4b5563; font-size: 14px;">${recipient.address1}</p>
+                                            <p style="margin: 0 0 4px 0; color: #4b5563; font-size: 14px;">${recipient.city}, ${recipient.state_code} ${recipient.zip}</p>
+                                            <p style="margin: 0; color: #4b5563; font-size: 14px;">${recipient.country_code}</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Community Callout -->
+                                    <div style="background-color: #f9fafb; border: 1px solid #f3f4f6; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+                                        <div style="font-weight: 800; font-size: 13px; color: #111827; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Rep Your Culture</div>
+                                        <div style="font-size: 13px; color: #6b7280; line-height: 1.5;">
+                                            When your package lands, tag us on Facebook or Instagram <strong style="color: #2563eb;">@rlp_cree</strong> so we can share it with the community!
+                                        </div>
+                                    </div>
+
+                                    <a href="https://rlpdezines.com" style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 8px; font-weight: 900; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; width: 100%; box-sizing: border-box; text-align: center;">Return to Shop</a>
+                                    
                                 </div>
-                                
-                                <div style="margin-top: 20px; padding: 15px; background: #1f1f1f; border-radius: 5px;">
-                                    <p style="margin: 0 0 8px 0;"><strong>Shipping To:</strong></p>
-                                    <p style="margin: 0; color: #9ca3af;">${recipient.name}</p>
-                                    <p style="margin: 0; color: #9ca3af;">${recipient.address1}</p>
-                                    <p style="margin: 0; color: #9ca3af;">${recipient.city}, ${recipient.state_code} ${recipient.zip}</p>
-                                    <p style="margin: 0; color: #9ca3af;">${recipient.country_code}</p>
+                                <div style="text-align: center; margin-top: 20px; color: #9ca3af; font-size: 11px;">
+                                    © 2026 RLP Dezines. Indigenous-owned & operated.
                                 </div>
-                                
-                                <p style="margin-top: 20px; font-size: 12px; color: #9ca3af;">Thank you for your purchase! You'll receive a tracking number via email once your order ships.</p>
                             </div>
                         `
                     });
