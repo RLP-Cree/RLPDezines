@@ -1051,6 +1051,72 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-red-600 mt-1">${pct}% Off</p>`;
     };
 
+    // ── COLOR SWATCHES ──
+    // Square gives variation names as text (e.g. "Black", "Red / L", "Color: Navy").
+    // We map known color words to display colors; unknown names fall back to a text chip.
+    const COLOR_MAP = {
+        'black': '#111111', 'white': '#ffffff', 'ivory': '#fffff0', 'cream': '#fdf6e3', 'natural': '#f0e6d2', 'beige': '#e8d9b5', 'tan': '#d2b48c', 'khaki': '#c3b091', 'sand': '#e3cda4',
+        'grey': '#9ca3af', 'gray': '#9ca3af', 'charcoal': '#36454f', 'silver': '#c0c0c0', 'slate': '#708090', 'heather grey': '#b2beb5', 'heather gray': '#b2beb5',
+        'red': '#dc2626', 'crimson': '#b91c1c', 'maroon': '#7f1d1d', 'burgundy': '#7b1f2a', 'wine': '#722f37', 'rust': '#b7410e',
+        'orange': '#ea580c', 'burnt orange': '#cc5500', 'coral': '#ff7f50', 'peach': '#ffcba4',
+        'yellow': '#facc15', 'gold': '#d4af37', 'mustard': '#d4a017',
+        'green': '#16a34a', 'olive': '#708238', 'forest': '#228b22', 'forest green': '#228b22', 'army': '#4b5320', 'military green': '#4b5320', 'sage': '#9caf88', 'mint': '#98ff98', 'kelly green': '#4cbb17', 'teal': '#0d9488',
+        'blue': '#2563eb', 'navy': '#1e3a5f', 'royal': '#1d4ed8', 'royal blue': '#1d4ed8', 'sky': '#38bdf8', 'sky blue': '#38bdf8', 'light blue': '#7dd3fc', 'turquoise': '#30d5c8', 'aqua': '#22d3ee', 'denim': '#3b5b7c', 'indigo': '#4f46e5',
+        'purple': '#7e22ce', 'violet': '#8b5cf6', 'lavender': '#c4b5fd', 'plum': '#8e4585',
+        'pink': '#ec4899', 'magenta': '#d6219b', 'hot pink': '#ff69b4', 'rose': '#f43f5e', 'fuchsia': '#d946ef', 'blush': '#f7cad0',
+        'brown': '#7c4a2d', 'chocolate': '#5c4033', 'coffee': '#6f4e37', 'mocha': '#967259', 'camel': '#c19a6b'
+    };
+
+    // Words that are sizes/qualifiers, not colors — these should never render as a swatch.
+    const NON_COLOR_WORDS = new Set([
+        'regular','default','standard','one size','os','small','medium','large','x-large','xl','xxl','xxxl',
+        's','m','l','xs','2xl','3xl','4xl','5xl','size','oz','ml','inch','in','"','title'
+    ]);
+
+    // Pull the color word from a variation name like "Black", "Red / L", "Color: Navy", "Black - Small".
+    const extractColor = (vName) => {
+        if (!vName) return '';
+        let s = String(vName).toLowerCase().trim();
+        // Drop common option labels.
+        s = s.replace(/^color\s*[:\-]\s*/i, '');
+        const part = s.split(/\s*[\/|,\-]\s*/)[0].trim(); // take first segment (color usually leads)
+        if (!part || NON_COLOR_WORDS.has(part)) return ''; // size-only / generic → not a color
+        return part;
+    };
+
+    // Build the row of color swatches for a product card. Returns '' if 0 or 1 distinct color.
+    const buildSwatchesHTML = (p) => {
+        if (!p.variations || p.variations.length < 2) return '';
+        const seen = new Set();
+        const colors = [];
+        p.variations.forEach(v => {
+            const c = extractColor(v.name);
+            if (!c || seen.has(c)) return;
+            seen.add(c);
+            colors.push(c);
+        });
+        if (colors.length < 2) return ''; // not a multi-color product
+
+        const MAX = 5;
+        const shown = colors.slice(0, MAX);
+        const extra = colors.length - shown.length;
+
+        const dots = shown.map(c => {
+            const hex = COLOR_MAP[c];
+            const label = c.charAt(0).toUpperCase() + c.slice(1);
+            if (hex) {
+                // Light colors get a slightly darker ring so white/ivory stay visible.
+                const ring = ['#ffffff','#fffff0','#fdf6e3','#f0e6d2'].includes(hex) ? 'border-gray-300' : 'border-black/10';
+                return `<span class="inline-block w-4 h-4 rounded-full border ${ring} shadow-sm" style="background:${hex}" title="${label}"></span>`;
+            }
+            // Fallback: tiny text chip for unrecognized color names.
+            return `<span class="inline-block px-1.5 h-4 leading-4 rounded-full border border-gray-300 bg-gray-50 text-[8px] font-bold text-gray-600 uppercase" title="${label}">${label.slice(0,6)}</span>`;
+        }).join('');
+
+        const more = extra > 0 ? `<span class="text-[10px] font-bold text-gray-400 ml-0.5">+${extra}</span>` : '';
+        return `<div class="flex items-center gap-1.5 mt-2.5" aria-label="Available colors">${dots}${more}</div>`;
+    };
+
     window.updateModalPrice = function() {
         const sel = document.getElementById('modal-variant');
         const qty = document.getElementById('modal-qty');
@@ -1216,6 +1282,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div>
                     <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
                     ${buildPriceHTML(p, pMinPrice)}
+                    ${buildSwatchesHTML(p)}
                 </div>
                 <div class="mt-4">
                     <button class="btn-pulse w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3 rounded-lg shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
