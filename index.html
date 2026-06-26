@@ -1518,8 +1518,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const isNacnaActive = now < NACNA_DEADLINE;
 
             const nonBundleProducts = products.filter(p => {
-                const rawString = JSON.stringify(p).toLowerCase();
-                return !(rawString.includes('bundle') || rawString.includes('-piece'));
+                const pName = (p.name || '').toLowerCase();
+                return !(pName.includes('bundle') || pName.includes('-piece'));
             });
 
             nonBundleProducts.forEach(p => {
@@ -1652,9 +1652,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const grid = document.getElementById('product-grid');
         
         let products = Object.values(window.globalProducts).filter(p => {
-            const rawString = JSON.stringify(p).toLowerCase();
-            const isBundle = rawString.includes('bundle') || rawString.includes('-piece');
-            const matchesTerm = (p.name || '').toLowerCase().includes(term);
+            const pName = (p.name || '').toLowerCase();
+            const isBundle = pName.includes('bundle') || pName.includes('-piece');
+            const matchesTerm = pName.includes(term);
             // Hide NACNA from search if expired
             const isNacnaItem = (p.name || '').toUpperCase().includes('NACNA');
             const now = new Date().getTime();
