@@ -13,13 +13,19 @@ exports.handler = async (event) => {
         let related = [];
         let cursor = undefined;
 
-        // Fetch all pages of the catalog
+        // Fetch all pages of the catalog safely
         do {
-            const response = await client.catalogApi.searchCatalogObjects({
+            const searchReq = {
                 objectTypes: ['ITEM'],
-                includeRelatedObjects: true,
-                cursor: cursor
-            });
+                includeRelatedObjects: true
+            };
+            
+            // Explicitly only add cursor if it exists to prevent API glitches
+            if (cursor) {
+                searchReq.cursor = cursor;
+            }
+
+            const response = await client.catalogApi.searchCatalogObjects(searchReq);
             
             if (response.result.objects) objects.push(...response.result.objects);
             if (response.result.relatedObjects) related.push(...response.result.relatedObjects);
@@ -57,7 +63,6 @@ exports.handler = async (event) => {
             
             let categoryName = 'Other Goods';
             
-            // Check both legacy and modern Square Category arrays
             if (itemData.categoryId && categoryMap[itemData.categoryId]) {
                 categoryName = categoryMap[itemData.categoryId];
             } else if (itemData.categories && itemData.categories.length > 0) {
@@ -70,16 +75,15 @@ exports.handler = async (event) => {
             return {
                 id: obj.id,
                 name: itemData.name || 'Unnamed Item',
-                description: itemData.description || '',
-                // Keeps the single primary image for the fast-loading main feed
+                // FIX: Change "bundle" to "wrap" in the description so the frontend doesn't accidentally hide it!
+                description: (itemData.description || '').replace(/\bbundle\b/gi, 'wrap'),
                 imageUrl: (itemData.imageIds && itemData.imageIds.length > 0) ? imageMap[itemData.imageIds[0]] : null,
-                // NEW: Pulls every single image attached to the item into an array for the swipe gallery
                 imageUrls: (itemData.imageIds || []).map(id => imageMap[id]).filter(url => url),
                 category: categoryName,
                 variations: mappedVariations
             };
-        // Filters out 0-variation items AND any item with "bundle" in the title
-        }).filter(p => p.variations.length > 0 && !p.name.toLowerCase().includes('bundle'));
+        // Filter out 0-variation items AND any actual bulk items by checking the TITLE specifically
+        }).filter(p => p.variations.length > 0 && !p.name.toLowerCase().includes('bundle') && !p.name.toLowerCase().includes('-piece'));
 
         return {
             statusCode: 200,
