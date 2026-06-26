@@ -263,12 +263,10 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Artistry in Prayer</h1>
         <p class="text-gray-200 max-w-lg mx-auto text-xl mb-8 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Every design is a prayer. Every item is an act of beautifying the world.</p>
 
-        <!-- INSTANT, VALUE-DRIVEN CTA -->
         <a href="#shop-live" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Explore the Collection</a>
     </div>
 </section>
 
-<!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-red-600 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(220,38,38,0.6)]">Retiring Soon</div>
@@ -291,8 +289,7 @@
         </div>
 
         <div id="nacna-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 text-left">
-            <!-- NACNA items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
@@ -1109,11 +1106,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const pct = Math.round((1 - currentCents / former) * 100);
         return `
-            <div class="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <span class="text-[12px] sm:text-sm font-medium text-gray-400 line-through">$${(former/100).toFixed(2)}</span>
-                <span class="text-[13px] sm:text-base font-black text-blue-600">$${(currentCents/100).toFixed(2)}</span>
+            <div class="mt-2.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                <span class="text-[13px] sm:text-[15px] font-medium text-gray-400 line-through">$${(former/100).toFixed(2)}</span>
+                <span class="text-[16px] sm:text-lg font-black text-blue-600">$${(currentCents/100).toFixed(2)}</span>
             </div>
-            <p class="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-red-600 mt-1">${pct}% Off</p>`;
+            <p class="text-[11px] sm:text-[12px] font-black uppercase tracking-wider text-red-600 mt-1">${pct}% Off</p>`;
     };
 
     // ── 1. COMPREHENSIVE EXACT-MATCH DICTIONARY ──
@@ -1274,22 +1271,16 @@ document.addEventListener('DOMContentLoaded', () => {
     window.updateModalPrice = function() {
         const sel = document.getElementById('modal-variant');
         const qty = document.getElementById('modal-qty');
-        const btnPrice = document.getElementById('modal-btn-price');
         const topPrice = document.getElementById('modal-price-display');
 
-        if(!sel || !qty || !btnPrice) return;
+        if(!sel || !qty) return;
         if(sel.value === 'none') {
-            btnPrice.textContent = '';
             if(topPrice) topPrice.textContent = 'Unavailable';
             return;
         }
 
         const opt = sel.options[sel.selectedIndex];
         const price = parseInt(opt.getAttribute('data-price') || 0);
-        const q = parseInt(qty.value) || 1;
-        const total = ((price * q) / 100).toFixed(2);
-
-        btnPrice.textContent = `$${total}`;
         if(topPrice) topPrice.textContent = `$${(price / 100).toFixed(2)}`;
     };
 
@@ -1376,14 +1367,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="text-[11px] text-gray-500 mt-6 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
 
-                <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-gray-200 p-4 sm:p-5 flex items-center gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
-                    <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-full flex items-center justify-center shadow-sm text-gray-900 transition duration-200" aria-label="Close">
+                <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-gray-200 p-3 sm:p-5 flex items-center gap-2 sm:gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+                    <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-full hidden sm:flex items-center justify-center shadow-sm text-gray-900 transition duration-200" aria-label="Close">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
-                    <button class="atc-btn btn-pulse flex-grow h-[52px] rounded-full text-[15px] shadow-lg flex items-center justify-center gap-2" onclick="window.addModalToCart('${p.id}')">
-                        <span>Add to Cart</span>
-                        <span id="modal-btn-price" class="font-medium opacity-90">$${initialPrice}</span>
-                    </button>
+                    <div class="flex-grow flex gap-2 sm:gap-3 h-[52px]">
+                        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition flex items-center justify-center" onclick="window.addModalToCart('${p.id}')">
+                            Add to Cart
+                        </button>
+                        <button id="modal-buy-now-btn" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition btn-pulse flex items-center justify-center" onclick="window.buyNow('${p.id}')">
+                            Buy Now
+                        </button>
+                    </div>
                 </div>
             </div>`;
 
@@ -1420,6 +1415,45 @@ document.addEventListener('DOMContentLoaded', () => {
         
         window.Cart.addItem({ id: opt.value, name: finalName, price: parseInt(opt.getAttribute('data-price')), sku: opt.getAttribute('data-sku') || '', quantity: parseInt(qty.value)||1 });
         window.closeModal();
+    };
+
+    // ── DIRECT BUY NOW LOGIC ──
+    window.buyNow = async (id) => {
+        const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); 
+        if(!sel || !qty) return;
+        if(sel.value === 'none') return; 
+        
+        const opt = sel.options[sel.selectedIndex], vName = opt.getAttribute('data-name') || 'Regular';
+        const p = window.globalProducts[id];
+        const baseName = p ? (p.name || 'Item') : 'Item';
+        const finalName = (vName === 'Regular' || vName === '') ? baseName : `${baseName} (${vName})`;
+        
+        const singleItem = [{ 
+            id: opt.value, 
+            name: finalName, 
+            price: parseInt(opt.getAttribute('data-price')), 
+            sku: opt.getAttribute('data-sku') || '', 
+            quantity: parseInt(qty.value)||1 
+        }];
+
+        const btn = document.getElementById('modal-buy-now-btn');
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = '<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/.netlify/functions/create-checkout', { 
+                method: 'POST', 
+                body: JSON.stringify({ cartItems: singleItem }) 
+            });
+            const data = await res.json();
+            if (data.url) window.location.href = data.url; 
+            else throw new Error();
+        } catch { 
+            window.showToast('Connection issue. Please refresh and try again.'); 
+            btn.innerHTML = originalContent; 
+            btn.disabled = false; 
+        }
     };
 
     const generateCardHTML = (p) => {
@@ -1525,6 +1559,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(nonBundleProducts.length > 0) {
                 // EXPLICIT TARGET LIST FOR FEATURED SECTION
                 const targetNames = [
+                    "HONOR THE MATRIARCH RESPECT THE FUTURE",
                     "GEOMETRIC STAR GRAPHIC T-SHIRT",
                     "TURQUOISE & MAGENTA FLORAL SHERPA BLANKET",
                     "MEN'S BLACK GEOMETRIC INDIGENOUS PRINT HOODIE",
@@ -1535,6 +1570,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetNames.forEach(target => {
                     let found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes(target.toUpperCase()));
                     
+                    if (!found && target.includes("MATRIARCH")) {
+                        found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("MATRIARCH"));
+                    }
                     if (!found && target.includes("GEOMETRIC STAR")) {
                         found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("GEOMETRIC STAR"));
                     }
