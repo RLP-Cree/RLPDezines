@@ -97,6 +97,7 @@
         .product-card:hover { transform: translateY(-4px); }
         .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: transparent; position: relative; }
         
+        /* Transparent Image Drop Shadows */
         .product-card:hover .card-img { transform: scale(1.04) translateY(-2px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.18)); }
         .card-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease, filter 0.5s ease; mix-blend-mode: multiply; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08)); }
         
@@ -157,7 +158,7 @@
         .nacna-card .atc-btn { background: #3b82f6 !important; color: white !important; }
         .nacna-card .atc-btn:hover { background: #60a5fa !important; }
 
-        /* Dedicated Lodgepole Fundraiser Styles */
+        /* ── Dedicated Lodgepole Fundraiser Styles ── */
         .fundraiser-bg { background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 100%); border-top: 4px solid #f97316; }
         .fundraiser-card * { color: white !important; }
         .fundraiser-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #9ca3af !important; }
@@ -179,6 +180,7 @@
         .flash-card .text-gray-900 { color: #ffffff !important; }
         .flash-card .border-gray-100 { border-color: rgba(255,255,255,0.1) !important; }
         
+        /* Glowing light shadow for items on dark backgrounds */
         .fundraiser-card .card-img, .nacna-card .card-img, .flash-card .card-img { mix-blend-mode: normal; filter: drop-shadow(0 4px 15px rgba(255,255,255,0.15)); }
         .fundraiser-card:hover .card-img, .nacna-card:hover .card-img, .flash-card:hover .card-img { filter: drop-shadow(0 8px 25px rgba(255,255,255,0.25)); transform: scale(1.04) translateY(-2px); }
 
@@ -278,6 +280,7 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
+<!-- HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-gray-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
@@ -296,8 +299,66 @@
     </div>
 </section>
 
+<!-- FEATURED ITEMS -->
+<section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10 border-b border-gray-200">
+    <div class="max-w-6xl mx-auto" id="featured-container">
+        <div class="animate-pulse">
+            <div class="flex justify-center md:justify-start mb-6">
+                <div class="h-4 bg-gray-200 rounded w-48"></div>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2 pb-8 border-b border-gray-100">
+                <div class="bg-gray-100 rounded-xl h-72"></div>
+                <div class="bg-gray-100 rounded-xl h-72"></div>
+                <div class="bg-gray-100 rounded-xl h-72 hidden lg:block"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- THE INTENT / MISSION -->
+<section id="mission" class="py-20 sm:py-28 px-5 bg-gray-50 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12 reveal">
+            <p class="section-label mb-5 justify-center">The Intent</p>
+            <h2 class="text-4xl sm:text-6xl font-black text-gray-900 uppercase tracking-tight">Art as <span class="text-blue-600">Service</span></h2>
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center gap-10 reveal">
+            <div class="w-full md:w-1/3 flex justify-center">
+                <div class="w-64 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+                    <img src="https://drive.google.com/thumbnail?id=14D7LENEECaJWErykSmojWsybv14Bl8Cp&sz=w1000" alt="Ronnie Lodgepole" class="w-full h-full object-cover">
+                </div>
+            </div>
+            
+            <div class="w-full md:w-2/3 text-center md:text-left">
+                <p class="text-gray-600 font-light leading-relaxed mb-6 text-lg">
+                    RLP Dezines is rooted in my identity as a member of the Chippewa Cree Tribe of Rocky Boy, Montana. As a pre-American Indigenous inhabitant of Turtle Island, my perspective is informed by ancestral and genealogical roots spanning from northern Alberta down to Crow country.
+                </p>
+                <p class="text-gray-600 font-light leading-relaxed mb-6 text-lg">
+                    My designs are expressions of the traditional upbringing, Cree language, and ceremonies I was raised in—from the Sundance and sweat lodge to our round and horse dances. Every pattern I create is a prayer for strength, carried forward from 35 years of traditional life.
+                </p>
+                <p class="text-gray-600 font-bold leading-relaxed mb-8 text-lg">
+                    But I also know that laughter is some of the strongest medicine we have. If you know me from my viral memes, satire, and parody videos online, you know I don't take myself too seriously. I'm not trying to portray myself as some untouchable holy man—I'm just a human being who loves to pray, but loves to laugh just as much.
+                </p>
+                <p class="text-gray-600 font-light leading-relaxed text-lg italic">
+                    "My goal is to share these colors, prayers, and good energy as a badge of spiritual, mental, and emotional strength for our community."
+                </p>
+                <div class="text-gray-500 text-xs font-black tracking-[0.2em] uppercase mt-4">— Ronnie Lodgepole, Founder</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RLP TUNES -->
+<section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-white border-b border-gray-200 transition duration-500 group">
+    <p class="section-label mb-5 justify-center reveal">Original NAC Prayers & Music</p>
+    <h2 class="text-5xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
+    <p class="text-gray-600 max-w-lg mx-auto mb-8 text-lg font-light leading-relaxed reveal">The soundtrack to the journey. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
+    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
+</section>
+
 <!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
-<section id="lodgepole-special" class="hidden fundraiser-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
+<section id="lodgepole-special" class="hidden fundraiser-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl border-b border-gray-900">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-orange-500 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(249,115,22,0.6)]">Official Fundraiser</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">Men's Grass vs Women's Jingle</h2>
@@ -310,7 +371,7 @@
 </section>
 
 <!-- 72 HOUR FLASH DROP SECTION -->
-<section id="flash-drop" class="hidden flash-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
+<section id="flash-drop" class="hidden flash-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl border-b border-gray-900">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-yellow-400 text-gray-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-[0_0_15px_rgba(250,204,21,0.6)]">Limited Vault Release</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">72-Hour Blanket Drop</h2>
@@ -365,6 +426,7 @@
     </div>
 </section>
 
+<!-- THE FULL CATALOG -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-10 sm:mb-14 reveal">
@@ -380,21 +442,6 @@
                 <div class="skeleton h-72 rounded-xl"></div>
                 <div class="skeleton h-72 rounded-xl"></div>
                 <div class="skeleton h-72 rounded-xl hidden lg:block"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10 border-t border-gray-200">
-    <div class="max-w-6xl mx-auto" id="featured-container">
-        <div class="animate-pulse">
-            <div class="flex justify-center md:justify-start mb-6">
-                <div class="h-4 bg-gray-200 rounded w-48"></div>
-            </div>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2 pb-8 border-b border-gray-100">
-                <div class="bg-gray-100 rounded-xl h-72"></div>
-                <div class="bg-gray-100 rounded-xl h-72"></div>
-                <div class="bg-gray-100 rounded-xl h-72 hidden lg:block"></div>
             </div>
         </div>
     </div>
