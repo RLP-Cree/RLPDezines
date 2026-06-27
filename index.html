@@ -97,7 +97,6 @@
         .product-card:hover { transform: translateY(-4px); }
         .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: transparent; position: relative; }
         
-        /* NEW: Soft shadow and scale up on hover for transparent images */
         .product-card:hover .card-img { transform: scale(1.04) translateY(-2px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.18)); }
         .card-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease, filter 0.5s ease; mix-blend-mode: multiply; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08)); }
         
@@ -158,7 +157,7 @@
         .nacna-card .atc-btn { background: #3b82f6 !important; color: white !important; }
         .nacna-card .atc-btn:hover { background: #60a5fa !important; }
 
-        /* ── Dedicated Lodgepole Fundraiser Styles ── */
+        /* Dedicated Lodgepole Fundraiser Styles */
         .fundraiser-bg { background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 100%); border-top: 4px solid #f97316; }
         .fundraiser-card * { color: white !important; }
         .fundraiser-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #9ca3af !important; }
@@ -168,10 +167,20 @@
         .fundraiser-card .text-blue-600 { color: #93c5fd !important; }
         .fundraiser-card .text-gray-900 { color: #ffffff !important; }
         .fundraiser-card .border-gray-100 { border-color: rgba(255,255,255,0.1) !important; }
+
+        /* ── Dedicated 72-Hour Flash Drop Styles ── */
+        .flash-bg { background: #111827; border-top: 4px solid #facc15; }
+        .flash-card * { color: white !important; }
+        .flash-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #9ca3af !important; }
+        .flash-card .btn-pulse { background-color: #facc15 !important; color: #111827 !important; }
+        .flash-card .btn-pulse:hover { background-color: #eab308 !important; }
+        .flash-card .text-gray-400 { color: #cbd5e1 !important; }
+        .flash-card .text-blue-600 { color: #fde047 !important; }
+        .flash-card .text-gray-900 { color: #ffffff !important; }
+        .flash-card .border-gray-100 { border-color: rgba(255,255,255,0.1) !important; }
         
-        /* NEW: Give transparent images in dark sections a glowing light shadow instead of a dark shadow */
-        .fundraiser-card .card-img, .nacna-card .card-img { mix-blend-mode: normal; filter: drop-shadow(0 4px 15px rgba(255,255,255,0.15)); }
-        .fundraiser-card:hover .card-img, .nacna-card:hover .card-img { filter: drop-shadow(0 8px 25px rgba(255,255,255,0.25)); transform: scale(1.04) translateY(-2px); }
+        .fundraiser-card .card-img, .nacna-card .card-img, .flash-card .card-img { mix-blend-mode: normal; filter: drop-shadow(0 4px 15px rgba(255,255,255,0.15)); }
+        .fundraiser-card:hover .card-img, .nacna-card:hover .card-img, .flash-card:hover .card-img { filter: drop-shadow(0 8px 25px rgba(255,255,255,0.25)); transform: scale(1.04) translateY(-2px); }
 
         @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .product-card, .price-card, .endorse-card { transition: none; } }
     </style>
@@ -279,6 +288,7 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Artistry in Prayer</h1>
         <p class="text-gray-200 max-w-lg mx-auto text-xl mb-8 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Every design is a prayer. Every item is an act of beautifying the world.</p>
 
+        <!-- INSTANT, VALUE-DRIVEN CTA -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 reveal reveal-delay-3">
             <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Support the Special</a>
             <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition">Full Collection</a>
@@ -286,61 +296,7 @@
     </div>
 </section>
 
-<section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10">
-    <div class="max-w-6xl mx-auto" id="featured-container">
-        <div class="animate-pulse">
-            <div class="flex justify-center md:justify-start mb-6">
-                <div class="h-4 bg-gray-200 rounded w-48"></div>
-            </div>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2 pb-8 border-b border-gray-100">
-                <div class="bg-gray-100 rounded-xl h-72"></div>
-                <div class="bg-gray-100 rounded-xl h-72"></div>
-                <div class="bg-gray-100 rounded-xl h-72 hidden lg:block"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="mission" class="py-20 sm:py-28 px-5 border-t border-gray-200 bg-gray-50">
-    <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-12 reveal">
-            <p class="section-label mb-5 justify-center">The Intent</p>
-            <h2 class="text-4xl sm:text-6xl font-black text-gray-900 uppercase tracking-tight">Art as <span class="text-blue-600">Service</span></h2>
-        </div>
-
-        <div class="flex flex-col md:flex-row items-center gap-10 reveal">
-            <div class="w-full md:w-1/3 flex justify-center">
-                <div class="w-64 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-gray-200">
-                    <img src="https://drive.google.com/thumbnail?id=14D7LENEECaJWErykSmojWsybv14Bl8Cp&sz=w1000" alt="Ronnie Lodgepole" class="w-full h-full object-cover">
-                </div>
-            </div>
-            
-            <div class="w-full md:w-2/3 text-center md:text-left">
-                <p class="text-gray-600 font-light leading-relaxed mb-6 text-lg">
-                    RLP Dezines is rooted in my identity as a member of the Chippewa Cree Tribe of Rocky Boy, Montana. As a pre-American Indigenous inhabitant of Turtle Island, my perspective is informed by ancestral and genealogical roots spanning from northern Alberta down to Crow country.
-                </p>
-                <p class="text-gray-600 font-light leading-relaxed mb-6 text-lg">
-                    My designs are expressions of the traditional upbringing, Cree language, and ceremonies I was raised in—from the Sundance and sweat lodge to our round and horse dances. Every pattern I create is a prayer for strength, carried forward from 35 years of traditional life.
-                </p>
-                <p class="text-gray-600 font-bold leading-relaxed mb-8 text-lg">
-                    But I also know that laughter is some of the strongest medicine we have. If you know me from my viral memes, satire, and parody videos online, you know I don't take myself too seriously. I'm not trying to portray myself as some untouchable holy man—I'm just a human being who loves to pray, but loves to laugh just as much.
-                </p>
-                <p class="text-gray-600 font-light leading-relaxed text-lg italic">
-                    "My goal is to share these colors, prayers, and good energy as a badge of spiritual, mental, and emotional strength for our community."
-                </p>
-                <div class="text-gray-500 text-xs font-black tracking-[0.2em] uppercase mt-4">— Ronnie Lodgepole, Founder</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-white border-t border-gray-200 transition duration-500 group">
-    <p class="section-label mb-5 justify-center reveal">Original NAC Prayers & Music</p>
-    <h2 class="text-5xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
-    <p class="text-gray-600 max-w-lg mx-auto mb-8 text-lg font-light leading-relaxed reveal">The soundtrack to the journey. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
-    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
-</section>
-
+<!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
 <section id="lodgepole-special" class="hidden fundraiser-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-orange-500 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(249,115,22,0.6)]">Official Fundraiser</div>
@@ -348,10 +304,40 @@
         <p class="text-gray-300 max-w-2xl mx-auto mb-10 font-light text-lg">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
         
         <div id="lodgepole-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-left">
-            </div>
+            <!-- Lodgepole items populate here dynamically -->
+        </div>
     </div>
 </section>
 
+<!-- 72 HOUR FLASH DROP SECTION -->
+<section id="flash-drop" class="hidden flash-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
+    <div class="max-w-6xl mx-auto relative z-10 text-center">
+        <div class="inline-block bg-yellow-400 text-gray-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-[0_0_15px_rgba(250,204,21,0.6)]">Limited Vault Release</div>
+        <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">72-Hour Blanket Drop</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto mb-10 font-light text-lg">We are opening the vault. These premium Sherpa throws are only available for the next 72 hours. Once the clock hits zero, they go back in the vault and a new rotation begins.</p>
+        
+        <div class="flex justify-center gap-3 sm:gap-6 mb-14">
+            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="fd-hours" class="text-3xl sm:text-5xl font-black text-yellow-400">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Hours</div>
+            </div>
+            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="fd-minutes" class="text-3xl sm:text-5xl font-black text-yellow-400">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Mins</div>
+            </div>
+            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="fd-seconds" class="text-3xl sm:text-5xl font-black text-yellow-400">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Secs</div>
+            </div>
+        </div>
+
+        <div id="flash-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-left">
+            <!-- Flash items populate here dynamically -->
+        </div>
+    </div>
+</section>
+
+<!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-red-600 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(220,38,38,0.6)]">Retiring Soon</div>
@@ -374,7 +360,8 @@
         </div>
 
         <div id="nacna-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 text-left">
-            </div>
+            <!-- NACNA items populate here dynamically -->
+        </div>
     </div>
 </section>
 
@@ -393,6 +380,21 @@
                 <div class="skeleton h-72 rounded-xl"></div>
                 <div class="skeleton h-72 rounded-xl"></div>
                 <div class="skeleton h-72 rounded-xl hidden lg:block"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10 border-t border-gray-200">
+    <div class="max-w-6xl mx-auto" id="featured-container">
+        <div class="animate-pulse">
+            <div class="flex justify-center md:justify-start mb-6">
+                <div class="h-4 bg-gray-200 rounded w-48"></div>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2 pb-8 border-b border-gray-100">
+                <div class="bg-gray-100 rounded-xl h-72"></div>
+                <div class="bg-gray-100 rounded-xl h-72"></div>
+                <div class="bg-gray-100 rounded-xl h-72 hidden lg:block"></div>
             </div>
         </div>
     </div>
@@ -730,32 +732,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const body = document.body;
     
-    // ── Timer Logic for NACNA Vault ──
-    // Deadline: June 27, 2026, 11:59:59 PM
+    // ── Timer Logic for Vaults ──
     const NACNA_DEADLINE = new Date("2026-06-27T23:59:59").getTime();
     
-    const cdHours = document.getElementById('cd-hours');
-    const cdMins = document.getElementById('cd-minutes');
-    const cdSecs = document.getElementById('cd-seconds');
-    const nacnaVault = document.getElementById('nacna-vault');
-
+    // 72 Hours from Saturday, June 27, 2026 at 1:28 PM MST
+    const FLASH_DEADLINE = new Date("2026-06-30T13:28:00-07:00").getTime(); 
+    
     const updateTimer = setInterval(() => {
         const now = new Date().getTime();
-        const distance = NACNA_DEADLINE - now;
-
-        if (distance < 0) {
-            clearInterval(updateTimer);
-            if (nacnaVault) nacnaVault.classList.add('hidden');
-            // Re-render catalog to ensure NACNA items stay hidden
-            if (typeof loadProducts === 'function') loadProducts();
+        
+        // NACNA Timer
+        const nacnaDistance = NACNA_DEADLINE - now;
+        if (nacnaDistance < 0) {
+            document.getElementById('nacna-vault')?.classList.add('hidden');
         } else {
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24 * 99)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const h = Math.floor((nacnaDistance % (1000 * 60 * 60 * 24 * 99)) / (1000 * 60 * 60));
+            const m = Math.floor((nacnaDistance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((nacnaDistance % (1000 * 60)) / 1000);
+            if(document.getElementById('cd-hours')) document.getElementById('cd-hours').innerText = h.toString().padStart(2, '0');
+            if(document.getElementById('cd-minutes')) document.getElementById('cd-minutes').innerText = m.toString().padStart(2, '0');
+            if(document.getElementById('cd-seconds')) document.getElementById('cd-seconds').innerText = s.toString().padStart(2, '0');
+        }
 
-            if (cdHours) cdHours.innerText = hours.toString().padStart(2, '0');
-            if (cdMins) cdMins.innerText = minutes.toString().padStart(2, '0');
-            if (cdSecs) cdSecs.innerText = seconds.toString().padStart(2, '0');
+        // Flash Drop Timer
+        const flashDistance = FLASH_DEADLINE - now;
+        if (flashDistance < 0) {
+            document.getElementById('flash-drop')?.classList.add('hidden');
+        } else {
+            const fh = Math.floor((flashDistance % (1000 * 60 * 60 * 24 * 99)) / (1000 * 60 * 60));
+            const fm = Math.floor((flashDistance % (1000 * 60 * 60)) / (1000 * 60));
+            const fs = Math.floor((flashDistance % (1000 * 60)) / 1000);
+            if(document.getElementById('fd-hours')) document.getElementById('fd-hours').innerText = fh.toString().padStart(2, '0');
+            if(document.getElementById('fd-minutes')) document.getElementById('fd-minutes').innerText = fm.toString().padStart(2, '0');
+            if(document.getElementById('fd-seconds')) document.getElementById('fd-seconds').innerText = fs.toString().padStart(2, '0');
+        }
+
+        if (nacnaDistance < 0 && flashDistance < 0) {
+            clearInterval(updateTimer);
+            if (typeof loadProducts === 'function') loadProducts();
         }
     }, 1000);
 
@@ -1355,6 +1369,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const initialPrice = p.variations && p.variations.length > 0 ? (p.variations[0].price / 100).toFixed(2) : '0.00';
 
+        // UPSELL LOGIC: Find a random Tumbler, Tote, or T-Shirt to recommend
+        const upsellCandidates = Object.values(window.globalProducts).filter(prod => 
+            prod.id !== id && 
+            (prod.category === 'Totes' || prod.category === 'Tumblers' || prod.category === 'T Shirts')
+        );
+        const upsellItem = upsellCandidates.length > 0 ? upsellCandidates[Math.floor(Math.random() * upsellCandidates.length)] : null;
+        
+        let upsellHtml = '';
+        if(upsellItem && upsellItem.variations && upsellItem.variations.length > 0) {
+            const upV = upsellItem.variations[0];
+            const upPrice = (upV.price / 100).toFixed(2);
+            const upImg = upsellItem.imageUrl || '';
+            const upSafeName = upsellItem.name.replace(/'/g,"&#39;");
+            
+            upsellHtml = `
+            <div class="mt-5 mb-2 bg-gray-50 border border-blue-200 rounded-xl p-3 flex items-center gap-3 shadow-sm cursor-pointer hover:bg-blue-50 transition group" onclick="document.getElementById('upsell-check').click()">
+                <img src="${upImg}" class="w-14 h-14 object-contain bg-white rounded border border-gray-200 p-1 flex-shrink-0">
+                <div class="flex-grow">
+                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-0.5">Frequently Bought Together</p>
+                    <p class="text-[13px] font-bold text-gray-900 leading-tight line-clamp-1 group-hover:text-blue-600 transition">${upSafeName}</p>
+                    <p class="text-[12px] font-bold text-gray-500 mt-0.5">+ $${upPrice}</p>
+                </div>
+                <div class="pr-2 pl-1 flex-shrink-0">
+                    <input type="checkbox" id="upsell-check" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" 
+                        data-id="${upsellItem.id}" data-vid="${upV.id}" data-name="${upSafeName}" data-price="${upV.price}" onclick="event.stopPropagation()">
+                </div>
+            </div>
+            `;
+        }
+
         pModal.innerHTML = `
             <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2.5 rounded-full z-[100] transition shadow-md border border-gray-200" aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -1369,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             <div class="w-full md:w-1/2 flex flex-col relative bg-white flex-grow min-h-0 md:h-full">
                 
-                <div class="flex-grow overflow-y-auto p-5 sm:p-8 pb-28 md:pb-32 bg-white">
+                <div class="flex-grow overflow-y-auto p-5 sm:p-8 pb-32 md:pb-36 bg-white">
                     <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight mb-2 pr-4">${safeName}</h2>
                     <div id="modal-price-display" class="text-xl font-bold text-blue-600 mb-6">$${initialPrice}</div>
                     
@@ -1384,7 +1428,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <select id="modal-variant" class="variant-select" onchange="window.updateModalPrice()">${opts}</select>
                     </div>
                     
-                    <div class="mb-8">
+                    <div class="mb-4">
                         <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
                         <div class="qty-wrap inline-flex w-32 h-12 bg-white border border-gray-300 rounded-lg overflow-hidden">
                             <button class="w-10 h-full flex items-center justify-center text-gray-500 hover:bg-gray-50 transition font-medium text-lg" onclick="window.stepModalQty(-1)">−</button>
@@ -1393,7 +1437,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                     
-                    <div class="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-wrap">${safeDesc}</div>
+                    ${upsellHtml}
+                    
+                    <div class="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-wrap mt-6 pt-6 border-t border-gray-100">${safeDesc}</div>
                     <p class="text-[11px] text-gray-500 mt-6 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
 
@@ -1443,11 +1489,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const baseName = p ? (p.name || 'Item') : 'Item';
         const finalName = (vName === 'Regular' || vName === '') ? baseName : `${baseName} (${vName})`;
         
+        // Add main item
         window.Cart.addItem({ id: opt.value, name: finalName, price: parseInt(opt.getAttribute('data-price')), sku: opt.getAttribute('data-sku') || '', quantity: parseInt(qty.value)||1 });
+        
+        // Check for Upsell
+        const upsellCheck = document.getElementById('upsell-check');
+        if(upsellCheck && upsellCheck.checked) {
+            window.Cart.addItem({ 
+                id: upsellCheck.getAttribute('data-vid'), 
+                name: upsellCheck.getAttribute('data-name'), 
+                price: parseInt(upsellCheck.getAttribute('data-price')), 
+                sku: '', 
+                quantity: 1 
+            });
+        }
+        
         window.closeModal();
     };
 
-    // ── DIRECT BUY NOW LOGIC ──
+    // ── DIRECT BUY NOW LOGIC (WITH UPSELL) ──
     window.buyNow = async (id) => {
         const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); 
         if(!sel || !qty) return;
@@ -1458,13 +1518,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const baseName = p ? (p.name || 'Item') : 'Item';
         const finalName = (vName === 'Regular' || vName === '') ? baseName : `${baseName} (${vName})`;
         
-        const singleItem = [{ 
+        const checkoutItems = [{ 
             id: opt.value, 
             name: finalName, 
             price: parseInt(opt.getAttribute('data-price')), 
             sku: opt.getAttribute('data-sku') || '', 
             quantity: parseInt(qty.value)||1 
         }];
+        
+        // Check for Upsell
+        const upsellCheck = document.getElementById('upsell-check');
+        if(upsellCheck && upsellCheck.checked) {
+            checkoutItems.push({
+                id: upsellCheck.getAttribute('data-vid'), 
+                name: upsellCheck.getAttribute('data-name'), 
+                price: parseInt(upsellCheck.getAttribute('data-price')), 
+                sku: '', 
+                quantity: 1 
+            });
+        }
 
         const btn = document.getElementById('modal-buy-now-btn');
         const originalContent = btn.innerHTML;
@@ -1474,7 +1546,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await fetch('/.netlify/functions/create-checkout', { 
                 method: 'POST', 
-                body: JSON.stringify({ cartItems: singleItem }) 
+                body: JSON.stringify({ cartItems: checkoutItems }) 
             });
             const data = await res.json();
             if (data.url) window.location.href = data.url; 
@@ -1518,6 +1590,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const lodgepoleGrid = document.getElementById('lodgepole-grid');
         const lodgepoleSection = document.getElementById('lodgepole-special');
         
+        const flashGrid = document.getElementById('flash-grid');
+        const flashSection = document.getElementById('flash-drop');
+        
         const icons = {
             'Sherpa Throws - 60” x 80”': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
             'Sherpa Throws': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
@@ -1541,6 +1616,7 @@ document.addEventListener('DOMContentLoaded', () => {
             featuredContainer.innerHTML = '';
             nacnaGrid.innerHTML = '';
             lodgepoleGrid.innerHTML = '';
+            flashGrid.innerHTML = '';
 
             if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found in catalog.</p>`; return; }
 
@@ -1548,9 +1624,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const nacnaItems = [];
             const lodgepoleItems = [];
             
-            // Check if the vault is still active
+            // Check if the vaults are still active
             const now = new Date().getTime();
             const isNacnaActive = now < NACNA_DEADLINE;
+            const isFlashActive = now < FLASH_DEADLINE;
 
             const nonBundleProducts = products.filter(p => {
                 const pName = (p.name || '').toLowerCase();
@@ -1589,6 +1666,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 `).join('');
             } else {
                 lodgepoleSection.classList.add('hidden');
+            }
+            
+            // ── Render 72-Hour Flash Drop ──
+            if (isFlashActive) {
+                // Grab up to 4 Sherpa Blankets for the Flash Drop
+                let flashItems = [];
+                const allSherpas = nonBundleProducts.filter(p => p.category && p.category.includes('Sherpa') && !p.name.toUpperCase().includes('LODGEPOLE') && !p.name.toUpperCase().includes('NACNA'));
+                if (allSherpas.length > 0) {
+                    flashSection.classList.remove('hidden');
+                    // Just take the first 4 for stability
+                    flashItems = allSherpas.slice(0, 4);
+                    flashGrid.innerHTML = flashItems.map(p => `
+                        <div class="flash-card bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg">
+                            ${generateCardHTML(p)}
+                        </div>
+                    `).join('');
+                }
+            } else {
+                flashSection.classList.add('hidden');
             }
 
             // ── Render NACNA Vault ──
@@ -1709,9 +1805,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const pName = (p.name || '').toLowerCase();
             const isBundle = pName.includes('bundle') || pName.includes('-piece');
             const matchesTerm = pName.includes(term);
-            // Hide NACNA from search if expired
-            const isNacnaItem = (p.name || '').toUpperCase().includes('NACNA');
+            
             const now = new Date().getTime();
+            // Hide NACNA from search if expired
+            const isNacnaItem = pName.toUpperCase().includes('NACNA');
             if (isNacnaItem && now > NACNA_DEADLINE) return false;
             
             return matchesTerm && !isBundle;
