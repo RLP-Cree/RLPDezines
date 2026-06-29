@@ -77,12 +77,40 @@
         .form-input { width: 100%; background: #f9fafb; border: 1px solid #e5e7eb; color: #111827; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; }
         .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
         
-        /* ── Custom Pulse Animation for CTA Buttons ── */
-        @keyframes subtle-glow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-            50% { box-shadow: 0 0 10px 4px rgba(37, 99, 235, 0.2); }
+        /* ── Advanced Tactile Interactive Buttons ── */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1); }
+            50% { box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.15); }
         }
-        .btn-pulse { animation: subtle-glow 2s infinite; }
+        
+        .btn-pulse { 
+            animation: pulse-glow 2.5s infinite; 
+            /* Bouncy custom cubic-bezier creates that fluid, app-like physics response */
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        border-radius 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        filter 0.4s ease, 
+                        box-shadow 0.4s ease !important;
+            will-change: transform, border-radius, filter, box-shadow;
+            transform: translateZ(0); 
+            position: relative;
+        }
+        
+        /* Expand & Light Up */
+        .btn-pulse:hover, .btn-pulse:focus {
+            transform: scale(1.05) translateY(-2px) !important;
+            filter: brightness(1.15) saturate(1.1) !important; 
+            box-shadow: 0 20px 35px -5px rgba(0,0,0,0.25) !important;
+            z-index: 10;
+        }
+        
+        /* Hold & Morph (Squish) */
+        .btn-pulse:active {
+            transform: scale(0.93) translateY(2px) !important;
+            border-radius: 35px !important; /* Forces square/lg buttons to morph into pure pills */
+            filter: brightness(0.9) !important;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1) !important;
+            transition: all 0.15s ease !important; /* Snaps fast on physical press */
+        }
 
         /* ── BULLETPROOF CART STATE ENGINE ── */
         #cart-drawer { transform: translateX(100%) !important; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; }
@@ -116,7 +144,6 @@
         .qty-num::-webkit-outer-spin-button, .qty-num::-webkit-inner-spin-button { -webkit-appearance: none; }
         .atc-btn { flex-grow: 1; background: #2563EB; color: #fff; border: none; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 16px; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
         .atc-btn:hover { background: #1d4ed8; }
-        .atc-btn:active { transform: scale(0.98); }
 
         details[open] .accordion-content { animation: fadeInDown 0.35s ease-out forwards; }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -204,23 +231,23 @@
             <a href="#wholesale" class="nav-link hover:text-gray-900 transition">Wholesale</a>
             <a href="#services"  class="nav-link hover:text-gray-900 transition">Design</a>
             <a href="#info"      class="nav-link hover:text-gray-900 transition">FAQ</a>
-            <a href="mailto:rlp@rlpdezines.com" class="bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-full font-bold tracking-widest uppercase transition">Contact</a>
+            <a href="mailto:rlp@rlpdezines.com" class="bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-full font-bold tracking-widest uppercase transition btn-pulse">Contact</a>
             
-            <button id="nav-search-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none" aria-label="Search">
+            <button id="nav-search-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none btn-pulse" aria-label="Search">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
 
-            <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase shadow-sm">
+            <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase shadow-sm btn-pulse">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Cart (<span id="cart-count">0</span>)
             </button>
         </nav>
 
         <div class="flex items-center gap-3 lg:hidden">
-            <button id="search-trigger" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1" aria-label="Search">
+            <button id="search-trigger" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1 btn-pulse" aria-label="Search">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
-            <button id="menu-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1" aria-label="Toggle menu">
+            <button id="menu-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1 btn-pulse" aria-label="Toggle menu">
                 <svg id="menu-icon-open"  class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -237,7 +264,7 @@
     <a href="#services"  class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Design Services</a>
     <a href="#endorsements" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Endorsements</a>
     <a href="#info"      class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Policies & FAQ</a>
-    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px]">Start a Project</a>
+    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px] btn-pulse">Start a Project</a>
 </div>
 
 <button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-[0_10px_40px_rgba(37,99,235,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
@@ -251,7 +278,7 @@
 
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
     <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
-        <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2">
+        <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2 btn-pulse">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
         <h2 class="text-[15px] font-black uppercase tracking-widest text-blue-600">RLP Dezines</h2>
@@ -263,7 +290,7 @@
 <div id="privacy-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-2xl bg-white border border-gray-200 rounded-2xl z-[120] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
     <div class="flex justify-between items-center p-5 sm:p-6 border-b border-gray-100 bg-gray-50 flex-shrink-0">
         <h2 class="text-xl font-black uppercase text-blue-600 tracking-tight">Privacy Policy</h2>
-        <button onclick="window.closePrivacyModal()" class="text-gray-400 hover:text-gray-900 transition" aria-label="Close">
+        <button onclick="window.closePrivacyModal()" class="text-gray-400 hover:text-gray-900 transition btn-pulse" aria-label="Close">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
     </div>
@@ -280,7 +307,6 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
-<!-- HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-gray-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
@@ -291,15 +317,13 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Artistry in Prayer</h1>
         <p class="text-gray-200 max-w-lg mx-auto text-xl mb-8 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Every design is a prayer. Every item is an act of beautifying the world.</p>
 
-        <!-- INSTANT, VALUE-DRIVEN CTA -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 reveal reveal-delay-3">
             <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Support the Special</a>
-            <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition">Full Collection</a>
+            <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
         </div>
     </div>
 </section>
 
-<!-- FEATURED ITEMS -->
 <section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10 border-b border-gray-200">
     <div class="max-w-6xl mx-auto" id="featured-container">
         <div class="animate-pulse">
@@ -315,7 +339,6 @@
     </div>
 </section>
 
-<!-- THE INTENT / MISSION -->
 <section id="mission" class="py-20 sm:py-28 px-5 bg-gray-50 border-b border-gray-200">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-12 reveal">
@@ -349,15 +372,13 @@
     </div>
 </section>
 
-<!-- RLP TUNES -->
 <section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-white border-b border-gray-200 transition duration-500 group">
     <p class="section-label mb-5 justify-center reveal">Original NAC Prayers & Music</p>
     <h2 class="text-5xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
     <p class="text-gray-600 max-w-lg mx-auto mb-8 text-lg font-light leading-relaxed reveal">The soundtrack to the journey. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
-    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto">Listen & Stream →</a>
+    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto btn-pulse">Listen & Stream →</a>
 </section>
 
-<!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
 <section id="lodgepole-special" class="hidden fundraiser-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl border-b border-gray-900">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-orange-500 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(249,115,22,0.6)]">Official Fundraiser</div>
@@ -365,12 +386,10 @@
         <p class="text-gray-300 max-w-2xl mx-auto mb-10 font-light text-lg">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
         
         <div id="lodgepole-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-left">
-            <!-- Lodgepole items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- 72 HOUR FLASH DROP SECTION -->
 <section id="flash-drop" class="hidden flash-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl border-b border-gray-900">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-yellow-400 text-gray-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-[0_0_15px_rgba(250,204,21,0.6)]">Limited Vault Release</div>
@@ -393,12 +412,10 @@
         </div>
 
         <div id="flash-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-left">
-            <!-- Flash items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-red-600 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(220,38,38,0.6)]">Retiring Soon</div>
@@ -421,12 +438,10 @@
         </div>
 
         <div id="nacna-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 text-left">
-            <!-- NACNA items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- THE FULL CATALOG -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-10 sm:mb-14 reveal">
@@ -473,7 +488,7 @@
                             <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">10-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-gray-500 mb-6">$600.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/10-piece-sherpa-throw-blanket-bundle/MHSESFUUPQR65SMNTLWYWGLR?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/10-piece-sherpa-throw-blanket-bundle/MHSESFUUPQR65SMNTLWYWGLR?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
@@ -487,7 +502,7 @@
                             <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">15-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-gray-500 mb-6">$900.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/15-piece-sherpa-throw-blanket-bundle/OCEXPFGH74XF2OZ5B7GRTKCY?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/15-piece-sherpa-throw-blanket-bundle/OCEXPFGH74XF2OZ5B7GRTKCY?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
@@ -501,7 +516,7 @@
                             <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">20-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-gray-500 mb-6">$1,200.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/20-piece-sherpa-throw-blanket-bundle/HPFODJHOEWCSXMPP6KC5YXVS?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/20-piece-sherpa-throw-blanket-bundle/HPFODJHOEWCSXMPP6KC5YXVS?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
@@ -618,7 +633,7 @@
                         <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
                         <textarea class="form-input h-32 resize-y" id="intake-message" placeholder="Tell me what you're looking for..." required></textarea>
                     </div>
-                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-md text-base">
+                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-xl shadow-md text-base btn-pulse flex items-center justify-center gap-2">
                         <span id="btn-label">Start My Custom Project</span>
                         <svg id="btn-spinner" class="w-5 h-5 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                     </button>
@@ -712,7 +727,7 @@
 
         <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-blue-400 font-medium border-none">
-            <button type="submit" id="newsletter-submit-btn" class="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded-full font-black uppercase tracking-widest transition shadow-lg text-sm flex items-center justify-center gap-2">
+            <button type="submit" id="newsletter-submit-btn" class="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded-full font-black uppercase tracking-widest transition shadow-lg text-sm flex items-center justify-center gap-2 btn-pulse">
                 <span>Join the Circle</span>
                 <svg id="newsletter-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
             </button>
@@ -1022,7 +1037,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="flex flex-col items-center justify-center h-full p-8 text-center overflow-y-auto pb-32">
                         <h1 class="text-3xl font-black text-blue-600 mb-2">Your cart</h1>
                         <p class="text-gray-500 mb-8">Your cart is empty. Let's find something special.</p>
-                        <button onclick="window.Cart.close()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-10 rounded-full transition w-full max-w-[250px]">Continue shopping</button>
+                        <button onclick="window.Cart.close()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-10 rounded-full transition w-full max-w-[250px] btn-pulse">Continue shopping</button>
                     </div>`;
                 return;
             }
@@ -1069,7 +1084,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             html += `
                 <div class="mt-8 mb-6 border-b border-gray-200 pb-6">
-                    <button onclick="window.Cart.close()" class="w-full py-3.5 bg-white border border-blue-600 hover:bg-blue-50 text-blue-600 font-semibold rounded-full text-[15px] transition">Add more items</button>
+                    <button onclick="window.Cart.close()" class="w-full py-3.5 bg-white border border-blue-600 hover:bg-blue-50 text-blue-600 font-semibold rounded-full text-[15px] transition btn-pulse">Add more items</button>
                 </div>`;
 
             html += `
@@ -1447,12 +1462,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         pModal.innerHTML = `
-            <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2.5 rounded-full z-[100] transition shadow-md border border-gray-200" aria-label="Close">
+            <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2.5 rounded-full z-[100] transition shadow-md border border-gray-200 btn-pulse" aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             
             <div class="w-full md:w-1/2 bg-[#f4f4f4] relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 h-[50vh] md:h-full overflow-hidden group">
-                <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full z-[100] shadow-sm border border-gray-200" aria-label="Close">
+                <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full z-[100] shadow-sm border border-gray-200 btn-pulse" aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
                 <div class="w-full h-full relative flex items-center justify-center p-0 sm:p-6">${imgHtml}</div>
@@ -1491,11 +1506,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
 
                 <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-gray-200 p-3 sm:p-5 flex items-center gap-2 sm:gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
-                    <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-full hidden sm:flex items-center justify-center shadow-sm text-gray-900 transition duration-200" aria-label="Close">
+                    <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-full hidden sm:flex items-center justify-center shadow-sm text-gray-900 transition duration-200 btn-pulse" aria-label="Close">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                     <div class="flex-grow flex gap-2 sm:gap-3 h-[52px]">
-                        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition flex items-center justify-center" onclick="window.addModalToCart('${p.id}')">
+                        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition flex items-center justify-center btn-pulse" onclick="window.addModalToCart('${p.id}')">
                             Add to Cart
                         </button>
                         <button id="modal-buy-now-btn" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition btn-pulse flex items-center justify-center" onclick="window.buyNow('${p.id}')">
@@ -1622,7 +1637,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${buildSwatchesHTML(p)}
                 </div>
                 <div class="mt-4">
-                    <button class="btn-pulse w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3 rounded-lg shadow-md transition-transform active:scale-95" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
+                    <button class="btn-pulse w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3 rounded-lg shadow-md transition-transform" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
                 </div>
             </div>
         </div>`;
