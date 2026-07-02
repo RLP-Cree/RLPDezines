@@ -45,21 +45,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        :root { --blue: #2563EB; --blue-light: #3B82F6; }
+        :root { --brand: #1c1917; --brand-light: #78716c; } /* High-end Stone/Charcoal */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #111827; -webkit-font-smoothing: antialiased; font-size: 16px; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1c1917; -webkit-font-smoothing: antialiased; font-size: 16px; }
         body.no-scroll { overflow: hidden !important; touch-action: none; }
 
         /* ── Nav & UI ── */
         .nav-link { position: relative; text-decoration: none; }
-        .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--blue); transition: width 0.25s ease; }
+        .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: var(--brand); transition: width 0.25s ease; }
         .nav-link:hover::after { width: 100%; }
-        .nav-link:hover { color: #111827; }
+        .nav-link:hover { color: #1c1917; }
         .table-scroll::-webkit-scrollbar { height: 6px; }
-        .table-scroll::-webkit-scrollbar-track { background: #f3f4f6; border-radius: 3px; }
-        .table-scroll::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-        .table-scroll::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+        .table-scroll::-webkit-scrollbar-track { background: #f5f5f4; border-radius: 3px; }
+        .table-scroll::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
+        .table-scroll::-webkit-scrollbar-thumb:hover { background: var(--brand-light); }
 
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -68,24 +68,23 @@
         .reveal-delay-3 { transition-delay: 0.24s; }
         .reveal-delay-4 { transition-delay: 0.32s; }
 
-        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1e3a8a; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
+        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1c1917; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
 
-        .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; }
+        .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; color: #78716c; }
         .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: currentColor; }
         
-        .form-input { width: 100%; background: #f9fafb; border: 1px solid #e5e7eb; color: #111827; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; }
-        .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .form-input { width: 100%; background: #fafaf9; border: 1px solid #e7e5e4; color: #1c1917; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; }
+        .form-input:focus { border-color: var(--brand-light); box-shadow: 0 0 0 3px rgba(120,113,108,0.1); }
         
         /* ── Advanced Tactile Interactive Buttons ── */
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1); }
-            50% { box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.15); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.05); }
+            50% { box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.08); }
         }
         
         .btn-pulse { 
-            animation: pulse-glow 2.5s infinite; 
-            /* Bouncy custom cubic-bezier creates that fluid, app-like physics response */
+            animation: pulse-glow 3s infinite; 
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
                         border-radius 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
                         filter 0.4s ease, 
@@ -95,21 +94,35 @@
             position: relative;
         }
         
-        /* Expand & Light Up */
         .btn-pulse:hover, .btn-pulse:focus {
-            transform: scale(1.05) translateY(-2px) !important;
-            filter: brightness(1.15) saturate(1.1) !important; 
-            box-shadow: 0 20px 35px -5px rgba(0,0,0,0.25) !important;
+            transform: scale(1.03) translateY(-2px) !important;
+            box-shadow: 0 20px 35px -5px rgba(0,0,0,0.15) !important;
             z-index: 10;
         }
         
-        /* Hold & Morph (Squish) */
         .btn-pulse:active {
-            transform: scale(0.93) translateY(2px) !important;
-            border-radius: 35px !important; /* Forces square/lg buttons to morph into pure pills */
+            transform: scale(0.96) translateY(2px) !important;
+            border-radius: 35px !important;
             filter: brightness(0.9) !important;
             box-shadow: 0 5px 10px rgba(0,0,0,0.1) !important;
-            transition: all 0.15s ease !important; /* Snaps fast on physical press */
+            transition: all 0.15s ease !important;
+        }
+
+        /* ── Horizontal App-Like Swipe Carousels ── */
+        .swipe-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 16px;
+            padding-bottom: 24px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .swipe-carousel::-webkit-scrollbar { display: none; }
+        .swipe-carousel > div {
+            scroll-snap-align: start;
+            flex: 0 0 calc(85vw - 32px);
+            max-width: 300px;
         }
 
         /* ── BULLETPROOF CART STATE ENGINE ── */
@@ -120,134 +133,101 @@
         #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
         #mobile-menu.open { opacity: 1; visibility: visible; }
 
-        /* ── Floating Product Cards (Unboxed) ── */
-        .product-card { display: flex; flex-direction: column; background: transparent; border: none; overflow: hidden; transition: transform 0.3s ease; cursor: pointer; }
-        .product-card:hover { transform: translateY(-4px); }
-        .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: transparent; position: relative; }
+        /* ── Floating Product Cards (Unboxed & Minimal) ── */
+        .product-card { display: flex; flex-direction: column; border: none; overflow: hidden; transition: transform 0.3s ease; cursor: pointer; }
+        .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: transparent; position: relative; display: flex; align-items: center; justify-content: center; }
         
-        /* Transparent Image Drop Shadows */
-        .product-card:hover .card-img { transform: scale(1.04) translateY(-2px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.18)); }
-        .card-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease, filter 0.5s ease; mix-blend-mode: multiply; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08)); }
+        .product-card:hover .card-img { transform: scale(1.04) translateY(-2px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); }
+        .card-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease, filter 0.5s ease; mix-blend-mode: multiply; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.06)); }
         
-        .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 13px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; background: #f9fafb; border-radius: 12px; }
-        .card-body { padding: 16px 8px 8px 8px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .view-btn-text { font-size: 11px; font-weight: 800; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.15em; transition: color 0.2s; }
-        .product-card:hover .view-btn-text { color: #2563EB; }
-
+        .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #a8a29e; font-size: 12px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; background: #fafaf9; border-radius: 12px; }
+        .card-body { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        
         /* ── Modal Styles ── */
-        .variant-select { appearance: none; -webkit-appearance: none; background: #f9fafb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid #e5e7eb; color: #111827; padding: 12px 36px 12px 14px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%; outline: none; transition: border-color 0.2s; }
-        .variant-select:focus { border-color: #2563EB; outline: 2px solid rgba(37,99,235,0.1); }
-        .qty-wrap { display: flex; align-items: center; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; flex-shrink: 0; }
-        .qty-btn { width: 40px; height: 100%; background: transparent; color: #6b7280; border: none; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s, background 0.2s; }
-        .qty-btn:hover { color: #111827; background: #f3f4f6; }
-        .qty-num { width: 40px; text-align: center; font-size: 15px; font-weight: 700; color: #111827; background: transparent; border: none; outline: none; -moz-appearance: textfield; }
+        .variant-select { appearance: none; -webkit-appearance: none; background: #fafaf9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid #e7e5e4; color: #1c1917; padding: 12px 36px 12px 14px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%; outline: none; transition: border-color 0.2s; }
+        .variant-select:focus { border-color: var(--brand); outline: 2px solid rgba(28,25,23,0.1); }
+        .qty-wrap { display: flex; align-items: center; background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 8px; flex-shrink: 0; }
+        .qty-btn { width: 40px; height: 100%; background: transparent; color: #78716c; border: none; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s, background 0.2s; }
+        .qty-btn:hover { color: #1c1917; background: #f5f5f4; }
+        .qty-num { width: 40px; text-align: center; font-size: 15px; font-weight: 700; color: #1c1917; background: transparent; border: none; outline: none; -moz-appearance: textfield; }
         .qty-num::-webkit-outer-spin-button, .qty-num::-webkit-inner-spin-button { -webkit-appearance: none; }
-        .atc-btn { flex-grow: 1; background: #2563EB; color: #fff; border: none; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 16px; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-        .atc-btn:hover { background: #1d4ed8; }
 
         details[open] .accordion-content { animation: fadeInDown 0.35s ease-out forwards; }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
+        .skeleton { background: linear-gradient(90deg, #f5f5f4 25%, #e7e5e4 50%, #f5f5f4 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 12px; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         /* General UI Cards */
-        .price-card, .endorse-card { transition: border-color 0.3s, transform 0.3s, background 0.3s, box-shadow 0.3s; }
-        .price-card:hover, .endorse-card:hover { border-color: var(--blue-light); transform: translateY(-3px); background: #f8fafc; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        .endorse-card { transition: border-color 0.3s, transform 0.3s, background 0.3s, box-shadow 0.3s; }
+        .endorse-card:hover { border-color: var(--brand-light); transform: translateY(-3px); background: #fafaf9; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
 
         /* ── Image Gallery Modal Swipe Styles ── */
-        .scroll-gallery {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 12px;
-            -webkit-overflow-scrolling: touch;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            padding: 0;
-            margin: 0;
-        }
+        .scroll-gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; -webkit-overflow-scrolling: touch; width: 100%; height: 100%; align-items: center; padding: 0; margin: 0; }
         .scroll-gallery::-webkit-scrollbar { display: none; }
         .scroll-gallery { -ms-overflow-style: none; scrollbar-width: none; }
-        .scroll-gallery img {
-            flex: 0 0 100%;
-            scroll-snap-align: center;
-            object-fit: contain; 
-            width: 100%;
-            height: 100%;
-            background: #ffffff; 
-        }
+        .scroll-gallery img { flex: 0 0 100%; scroll-snap-align: center; object-fit: contain; width: 100%; height: 100%; background: #ffffff; }
 
         /* Dedicated NACNA Vault Styles */
-        .nacna-bg { background: radial-gradient(circle at top right, #1e3a8a, #111827); border-top: 2px solid #2563eb; }
+        .nacna-bg { background: #1c1917; }
         .nacna-card * { color: white !important; }
-        .nacna-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #6b7280 !important; }
-        .nacna-card .atc-btn { background: #3b82f6 !important; color: white !important; }
-        .nacna-card .atc-btn:hover { background: #60a5fa !important; }
+        .nacna-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #a8a29e !important; }
+        .nacna-card .btn-pulse { background: #fafaf9 !important; color: #1c1917 !important; }
 
         /* ── Dedicated Lodgepole Fundraiser Styles ── */
-        .fundraiser-bg { background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 100%); border-top: 4px solid #f97316; }
+        .fundraiser-bg { background: #1c1917; border-top: 2px solid #b7410e; }
         .fundraiser-card * { color: white !important; }
-        .fundraiser-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #9ca3af !important; }
-        .fundraiser-card .btn-pulse { background-color: #f97316 !important; color: white !important; }
-        .fundraiser-card .btn-pulse:hover { background-color: #ea580c !important; }
-        .fundraiser-card .text-gray-400 { color: #cbd5e1 !important; }
-        .fundraiser-card .text-blue-600 { color: #93c5fd !important; }
-        .fundraiser-card .text-gray-900 { color: #ffffff !important; }
-        .fundraiser-card .border-gray-100 { border-color: rgba(255,255,255,0.1) !important; }
+        .fundraiser-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #a8a29e !important; }
+        .fundraiser-card .btn-pulse { background-color: #b7410e !important; color: white !important; }
+        .fundraiser-card .btn-pulse:hover { background-color: #9a360b !important; }
 
         /* ── Dedicated 72-Hour Flash Drop Styles ── */
-        .flash-bg { background: #111827; border-top: 4px solid #facc15; }
+        .flash-bg { background: #292524; }
         .flash-card * { color: white !important; }
-        .flash-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #9ca3af !important; }
-        .flash-card .btn-pulse { background-color: #facc15 !important; color: #111827 !important; }
-        .flash-card .btn-pulse:hover { background-color: #eab308 !important; }
-        .flash-card .text-gray-400 { color: #cbd5e1 !important; }
-        .flash-card .text-blue-600 { color: #fde047 !important; }
-        .flash-card .text-gray-900 { color: #ffffff !important; }
-        .flash-card .border-gray-100 { border-color: rgba(255,255,255,0.1) !important; }
+        .flash-card .card-img-placeholder { background: rgba(255,255,255,0.05) !important; color: #a8a29e !important; }
+        .flash-card .btn-pulse { background-color: #d4af37 !important; color: #1c1917 !important; }
+        .flash-card .btn-pulse:hover { background-color: #c09e31 !important; }
         
         /* Glowing light shadow for items on dark backgrounds */
-        .fundraiser-card .card-img, .nacna-card .card-img, .flash-card .card-img { mix-blend-mode: normal; filter: drop-shadow(0 4px 15px rgba(255,255,255,0.15)); }
-        .fundraiser-card:hover .card-img, .nacna-card:hover .card-img, .flash-card:hover .card-img { filter: drop-shadow(0 8px 25px rgba(255,255,255,0.25)); transform: scale(1.04) translateY(-2px); }
+        .fundraiser-card .card-img, .nacna-card .card-img, .flash-card .card-img { mix-blend-mode: normal; filter: drop-shadow(0 4px 15px rgba(255,255,255,0.10)); }
+        .fundraiser-card:hover .card-img, .nacna-card:hover .card-img, .flash-card:hover .card-img { filter: drop-shadow(0 8px 25px rgba(255,255,255,0.20)); transform: scale(1.04) translateY(-2px); }
 
-        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .product-card, .price-card, .endorse-card { transition: none; } }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .product-card, .endorse-card { transition: none; } }
     </style>
 </head>
-<body class="bg-white text-gray-900 antialiased flex flex-col min-h-screen relative">
+<body class="bg-white text-stone-900 antialiased flex flex-col min-h-screen relative">
 
-<header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50 h-[69px]">
+<header class="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-stone-200 z-50 h-[69px]">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-5 h-full">
         
         <a href="#top" class="flex items-center transition hover:opacity-80">
             <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w400" alt="RLP Dezines Logo" class="h-8 sm:h-10 w-auto object-contain">
         </a>
 
-        <nav class="hidden lg:flex items-center space-x-6 text-[13px] font-semibold text-gray-500">
-            <a href="#shop-live" class="nav-link hover:text-gray-900 transition">Apparel</a>
-            <a href="#mission"   class="nav-link hover:text-gray-900 transition">Mission</a>
-            <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="nav-link hover:text-gray-900 transition text-blue-600 font-bold">RLP Tunes</a>
-            <a href="#bundles"   class="nav-link hover:text-gray-900 transition">Bundles</a>
-            <a href="#wholesale" class="nav-link hover:text-gray-900 transition">Wholesale</a>
-            <a href="#services"  class="nav-link hover:text-gray-900 transition">Design</a>
-            <a href="#info"      class="nav-link hover:text-gray-900 transition">FAQ</a>
-            <a href="mailto:rlp@rlpdezines.com" class="bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-full font-bold tracking-widest uppercase transition btn-pulse">Contact</a>
+        <nav class="hidden lg:flex items-center space-x-6 text-[13px] font-semibold text-stone-500">
+            <a href="#shop-live" class="nav-link hover:text-stone-900 transition">Apparel</a>
+            <a href="#mission"   class="nav-link hover:text-stone-900 transition">Mission</a>
+            <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="nav-link hover:text-stone-900 transition text-stone-900 font-bold">RLP Tunes</a>
+            <a href="#bundles"   class="nav-link hover:text-stone-900 transition">Bundles</a>
+            <a href="#wholesale" class="nav-link hover:text-stone-900 transition">Wholesale</a>
+            <a href="#services"  class="nav-link hover:text-stone-900 transition">Design</a>
+            <a href="#info"      class="nav-link hover:text-stone-900 transition">FAQ</a>
+            <a href="mailto:rlp@rlpdezines.com" class="bg-stone-900 hover:bg-black text-white px-5 py-2.5 rounded-full font-bold tracking-widest uppercase transition btn-pulse">Contact</a>
             
-            <button id="nav-search-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none btn-pulse" aria-label="Search">
+            <button id="nav-search-btn" class="text-stone-900 hover:text-stone-600 transition focus:outline-none btn-pulse" aria-label="Search">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
 
-            <button id="nav-cart-btn" class="text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase shadow-sm btn-pulse">
+            <button id="nav-cart-btn" class="text-white bg-stone-900 hover:bg-black px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase shadow-sm btn-pulse">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Cart (<span id="cart-count">0</span>)
             </button>
         </nav>
 
         <div class="flex items-center gap-3 lg:hidden">
-            <button id="search-trigger" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1 btn-pulse" aria-label="Search">
+            <button id="search-trigger" class="text-stone-900 hover:text-stone-600 transition focus:outline-none p-1 btn-pulse" aria-label="Search">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
-            <button id="menu-btn" class="text-gray-900 hover:text-blue-600 transition focus:outline-none p-1 btn-pulse" aria-label="Toggle menu">
+            <button id="menu-btn" class="text-stone-900 hover:text-stone-600 transition focus:outline-none p-1 btn-pulse" aria-label="Toggle menu">
                 <svg id="menu-icon-open"  class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -255,280 +235,272 @@
     </div>
 </header>
 
-<div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-white/98 backdrop-blur-xl border-b border-gray-200 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overflow-y-auto" style="height: calc(100vh - 69px);">
-    <a href="#shop-live" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Shop Now</a>
-    <a href="#mission"   class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">The Mission</a>
-    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="mobile-link text-blue-600 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">RLP Tunes</a>
-    <a href="#bundles"   class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Honoring Bundles</a>
-    <a href="#wholesale" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Wholesale</a>
-    <a href="#services"  class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Design Services</a>
-    <a href="#endorsements" class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Endorsements</a>
-    <a href="#info"      class="mobile-link text-gray-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-gray-100">Policies & FAQ</a>
-    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-blue-600 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px] btn-pulse">Start a Project</a>
+<div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-white/98 backdrop-blur-xl border-b border-stone-200 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overflow-y-auto" style="height: calc(100vh - 69px);">
+    <a href="#shop-live" class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Shop Now</a>
+    <a href="#mission"   class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">The Mission</a>
+    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">RLP Tunes</a>
+    <a href="#bundles"   class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Honoring Bundles</a>
+    <a href="#wholesale" class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Wholesale</a>
+    <a href="#services"  class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Design Services</a>
+    <a href="#endorsements" class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Endorsements</a>
+    <a href="#info"      class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Policies & FAQ</a>
+    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-stone-900 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px] btn-pulse">Start a Project</a>
 </div>
 
-<button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-[0_10px_40px_rgba(37,99,235,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
+<button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-stone-900 hover:bg-black text-white p-4 rounded-full shadow-[0_10px_40px_rgba(28,25,23,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center hidden shadow-md border-2 border-white">
+    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center hidden shadow-md border-2 border-white">
         <span id="floating-cart-count">0</span>
     </span>
 </button>
 
-<div id="cart-overlay" class="cart-overlay fixed inset-0 bg-gray-900/50 z-[60]"></div>
+<div id="cart-overlay" class="cart-overlay fixed inset-0 bg-stone-900/50 z-[60]"></div>
 
 <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] flex flex-col shadow-2xl">
-    <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-gray-100">
-        <button id="close-cart-btn" class="absolute left-4 text-blue-600 hover:text-blue-800 transition p-2 btn-pulse">
+    <div class="px-5 py-4 flex items-center justify-center relative bg-white flex-shrink-0 border-b border-stone-100">
+        <button id="close-cart-btn" class="absolute left-4 text-stone-900 hover:text-black transition p-2 btn-pulse">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <h2 class="text-[15px] font-black uppercase tracking-widest text-blue-600">RLP Dezines</h2>
+        <h2 class="text-[14px] font-black uppercase tracking-widest text-stone-900">RLP Dezines</h2>
     </div>
     <div id="cart-content" class="flex-grow flex flex-col overflow-hidden bg-white"></div>
 </div>
 
-<div id="privacy-modal-overlay" class="fixed inset-0 bg-gray-900/60 z-[110] hidden opacity-0 transition-opacity duration-300"></div>
-<div id="privacy-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-2xl bg-white border border-gray-200 rounded-2xl z-[120] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
-    <div class="flex justify-between items-center p-5 sm:p-6 border-b border-gray-100 bg-gray-50 flex-shrink-0">
-        <h2 class="text-xl font-black uppercase text-blue-600 tracking-tight">Privacy Policy</h2>
-        <button onclick="window.closePrivacyModal()" class="text-gray-400 hover:text-gray-900 transition btn-pulse" aria-label="Close">
+<div id="privacy-modal-overlay" class="fixed inset-0 bg-stone-900/60 z-[110] hidden opacity-0 transition-opacity duration-300"></div>
+<div id="privacy-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-2xl bg-white border border-stone-200 rounded-2xl z-[120] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
+    <div class="flex justify-between items-center p-5 sm:p-6 border-b border-stone-100 bg-stone-50 flex-shrink-0">
+        <h2 class="text-xl font-black uppercase text-stone-900 tracking-tight">Privacy Policy</h2>
+        <button onclick="window.closePrivacyModal()" class="text-stone-400 hover:text-stone-900 transition btn-pulse" aria-label="Close">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
     </div>
-    <div class="p-6 sm:p-8 overflow-y-auto text-gray-600 text-sm font-light leading-relaxed space-y-5">
-        <p><strong class="text-gray-900 font-bold">1. Information We Collect:</strong> We collect information you provide directly to us (like your name, email, and shipping address when placing an order or using our intake forms). We also use Google Analytics to automatically collect basic, anonymous usage data (like your IP address, browser type, and pages visited) via cookies.</p>
-        <p><strong class="text-gray-900 font-bold">2. How We Use Cookies:</strong> Cookies are small files stored on your device. We use them to understand how visitors interact with our site, measure ad performance, and improve your overall experience. You can disable cookies in your browser settings, though some site features may not function properly.</p>
-        <p><strong class="text-gray-900 font-bold">3. How We Share Information:</strong> We do not sell your personal data. We only share information with trusted third-party services necessary to run our business, such as Printful (for fulfilling orders) and Square (for secure payment processing). Square handles all payment data securely; we never store your credit card information.</p>
-        <p><strong class="text-gray-900 font-bold">4. Contact Us:</strong> If you have any questions about this Privacy Policy or how your data is handled, please contact us at <a href="mailto:rlp@rlpdezines.com" class="text-blue-600 font-medium hover:underline">rlp@rlpdezines.com</a>.</p>
+    <div class="p-6 sm:p-8 overflow-y-auto text-stone-600 text-sm font-light leading-relaxed space-y-5">
+        <p><strong class="text-stone-900 font-bold">1. Information We Collect:</strong> We collect information you provide directly to us (like your name, email, and shipping address when placing an order or using our intake forms). We also use Google Analytics to automatically collect basic, anonymous usage data (like your IP address, browser type, and pages visited) via cookies.</p>
+        <p><strong class="text-stone-900 font-bold">2. How We Use Cookies:</strong> Cookies are small files stored on your device. We use them to understand how visitors interact with our site, measure ad performance, and improve your overall experience. You can disable cookies in your browser settings, though some site features may not function properly.</p>
+        <p><strong class="text-stone-900 font-bold">3. How We Share Information:</strong> We do not sell your personal data. We only share information with trusted third-party services necessary to run our business, such as Printful (for fulfilling orders) and Square (for secure payment processing). Square handles all payment data securely; we never store your credit card information.</p>
+        <p><strong class="text-stone-900 font-bold">4. Contact Us:</strong> If you have any questions about this Privacy Policy or how your data is handled, please contact us at <a href="mailto:rlp@rlpdezines.com" class="text-stone-900 font-medium hover:underline">rlp@rlpdezines.com</a>.</p>
     </div>
 </div>
 
-<div id="product-modal-overlay" class="fixed inset-0 bg-gray-900/60 z-[80] hidden opacity-0 transition-opacity duration-300"></div>
-
-<div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-gray-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
+<div id="product-modal-overlay" class="fixed inset-0 bg-stone-900/60 z-[80] hidden opacity-0 transition-opacity duration-300"></div>
+<div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-stone-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
 <!-- HERO SECTION -->
-<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-gray-900">
+<section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-stone-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
     </video>
 
     <div class="relative z-10 max-w-4xl mx-auto w-full mt-12 sm:mt-16">
-        <p class="section-label mb-4 justify-center reveal text-blue-400">An Act of Service</p>
+        <p class="section-label mb-4 justify-center reveal text-stone-300">An Act of Service</p>
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Artistry in Prayer</h1>
-        <p class="text-gray-200 max-w-lg mx-auto text-xl mb-8 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Every design is a prayer. Every item is an act of beautifying the world.</p>
+        <p class="text-stone-200 max-w-lg mx-auto text-xl mb-10 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Every design is a prayer. Every item is an act of beautifying the world.</p>
 
-        <!-- INSTANT, VALUE-DRIVEN CTA -->
+        <!-- LUXURY CTA -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 reveal reveal-delay-3">
-            <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Support the Special</a>
-            <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
+            <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white text-stone-900 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
+            <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-transparent border border-white text-white hover:bg-white/10 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm transition btn-pulse">The Family Special</a>
         </div>
     </div>
 </section>
 
 <!-- FEATURED ITEMS -->
-<section id="featured" class="py-12 sm:py-16 px-4 sm:px-6 bg-white relative z-10 border-b border-gray-200">
+<section id="featured" class="py-12 sm:py-20 px-0 sm:px-6 bg-white relative z-10 border-b border-stone-200">
     <div class="max-w-6xl mx-auto" id="featured-container">
-        <div class="animate-pulse">
+        <div class="animate-pulse px-4 sm:px-0">
             <div class="flex justify-center md:justify-start mb-6">
-                <div class="h-4 bg-gray-200 rounded w-48"></div>
+                <div class="h-4 bg-stone-200 rounded w-48"></div>
             </div>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2 pb-8 border-b border-gray-100">
-                <div class="bg-gray-100 rounded-xl h-72"></div>
-                <div class="bg-gray-100 rounded-xl h-72"></div>
-                <div class="bg-gray-100 rounded-xl h-72 hidden lg:block"></div>
+            <div class="flex gap-4 overflow-hidden pt-2 pb-8">
+                <div class="bg-stone-100 rounded-xl h-72 min-w-[280px]"></div>
+                <div class="bg-stone-100 rounded-xl h-72 min-w-[280px]"></div>
+                <div class="bg-stone-100 rounded-xl h-72 min-w-[280px] hidden lg:block"></div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- THE INTENT / MISSION -->
-<section id="mission" class="py-20 sm:py-28 px-5 bg-gray-50 border-b border-gray-200">
+<section id="mission" class="py-20 sm:py-28 px-5 bg-stone-50 border-b border-stone-200">
     <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-12 reveal">
+        <div class="text-center mb-16 reveal">
             <p class="section-label mb-5 justify-center">The Intent</p>
-            <h2 class="text-4xl sm:text-6xl font-black text-gray-900 uppercase tracking-tight">Art as <span class="text-blue-600">Service</span></h2>
+            <h2 class="text-4xl sm:text-6xl font-black text-stone-900 uppercase tracking-tight">Art as Service</h2>
         </div>
 
-        <div class="flex flex-col md:flex-row items-center gap-10 reveal">
+        <div class="flex flex-col md:flex-row items-center gap-12 reveal">
             <div class="w-full md:w-1/3 flex justify-center">
-                <div class="w-64 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+                <div class="w-72 aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-stone-200">
                     <img src="https://drive.google.com/thumbnail?id=14D7LENEECaJWErykSmojWsybv14Bl8Cp&sz=w1000" alt="Ronnie Lodgepole" class="w-full h-full object-cover">
                 </div>
             </div>
             
             <div class="w-full md:w-2/3 text-center md:text-left">
-                <p class="text-gray-600 font-light leading-relaxed mb-6 text-lg">
+                <p class="text-stone-600 font-light leading-relaxed mb-6 text-lg">
                     RLP Dezines is rooted in my identity as a member of the Chippewa Cree Tribe of Rocky Boy, Montana. As a pre-American Indigenous inhabitant of Turtle Island, my perspective is informed by ancestral and genealogical roots spanning from northern Alberta down to Crow country.
                 </p>
-                <p class="text-gray-600 font-light leading-relaxed mb-6 text-lg">
+                <p class="text-stone-600 font-light leading-relaxed mb-6 text-lg">
                     My designs are expressions of the traditional upbringing, Cree language, and ceremonies I was raised in—from the Sundance and sweat lodge to our round and horse dances. Every pattern I create is a prayer for strength, carried forward from 35 years of traditional life.
                 </p>
-                <p class="text-gray-600 font-bold leading-relaxed mb-8 text-lg">
+                <p class="text-stone-900 font-medium leading-relaxed mb-8 text-lg">
                     But I also know that laughter is some of the strongest medicine we have. If you know me from my viral memes, satire, and parody videos online, you know I don't take myself too seriously. I'm not trying to portray myself as some untouchable holy man—I'm just a human being who loves to pray, but loves to laugh just as much.
                 </p>
-                <p class="text-gray-600 font-light leading-relaxed text-lg italic">
+                <p class="text-stone-500 font-light leading-relaxed text-lg italic border-l-2 border-stone-300 pl-4">
                     "My goal is to share these colors, prayers, and good energy as a badge of spiritual, mental, and emotional strength for our community."
                 </p>
-                <div class="text-gray-500 text-xs font-black tracking-[0.2em] uppercase mt-4">— Ronnie Lodgepole, Founder</div>
+                <div class="text-stone-400 text-xs font-black tracking-[0.2em] uppercase mt-6">— Ronnie Lodgepole, Founder</div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- RLP TUNES -->
-<section id="tunes" class="py-20 px-8 flex flex-col items-center justify-center text-center bg-white border-b border-gray-200 transition duration-500 group">
+<section id="tunes" class="py-24 px-8 flex flex-col items-center justify-center text-center bg-white border-b border-stone-200 transition duration-500 group">
     <p class="section-label mb-5 justify-center reveal">Original NAC Prayers & Music</p>
-    <h2 class="text-5xl font-black mb-4 text-blue-600 uppercase group-hover:scale-[1.03] transition duration-500 reveal">RLP Tunes</h2>
-    <p class="text-gray-600 max-w-lg mx-auto mb-8 text-lg font-light leading-relaxed reveal">The soundtrack to the journey. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
-    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-blue-600 text-white px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition shadow-lg text-base uppercase tracking-widest w-full sm:w-auto btn-pulse">Listen & Stream →</a>
+    <h2 class="text-5xl font-black mb-6 text-stone-900 uppercase group-hover:scale-[1.02] transition duration-500 reveal">RLP Tunes</h2>
+    <p class="text-stone-500 max-w-lg mx-auto mb-10 text-lg font-light leading-relaxed reveal">The soundtrack to the journey. Four volumes of original Native American Church music — free to stream, created for the road and the ceremony.</p>
+    <a href="https://tunes.rlpdezines.com" target="_blank" rel="noopener" class="reveal inline-block bg-stone-900 text-white px-10 py-4 rounded-full font-bold hover:bg-black transition shadow-lg text-sm uppercase tracking-widest w-full sm:w-auto btn-pulse">Listen & Stream →</a>
 </section>
 
 <!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
-<section id="lodgepole-special" class="hidden fundraiser-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl border-b border-gray-900">
+<section id="lodgepole-special" class="hidden fundraiser-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
-        <div class="inline-block bg-orange-500 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(249,115,22,0.6)]">Official Fundraiser</div>
+        <div class="inline-block bg-[#b7410e] text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Official Fundraiser</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">Men's Grass vs Women's Jingle</h2>
-        <p class="text-gray-300 max-w-2xl mx-auto mb-10 font-light text-lg">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
+        <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
         
-        <div id="lodgepole-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-left">
+        <div id="lodgepole-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
             <!-- Lodgepole items populate here dynamically -->
         </div>
     </div>
 </section>
 
 <!-- 72 HOUR FLASH DROP SECTION -->
-<section id="flash-drop" class="hidden flash-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl border-b border-gray-900">
+<section id="flash-drop" class="hidden flash-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
-        <div class="inline-block bg-yellow-400 text-gray-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-[0_0_15px_rgba(250,204,21,0.6)]">Limited Vault Release</div>
+        <div class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Limited Vault Release</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">72-Hour Flash Drop</h2>
-        <p class="text-gray-300 max-w-2xl mx-auto mb-10 font-light text-lg">We are opening the vault. These premium designs are only available for the next 72 hours. Once the clock hits zero, they go back in the vault and a new rotation begins.</p>
+        <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">We are opening the vault. These premium designs are only available for the next 72 hours. Once the clock hits zero, they go back in the vault and a new rotation begins.</p>
         
-        <div class="flex justify-center gap-3 sm:gap-6 mb-14">
-            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="fd-hours" class="text-3xl sm:text-5xl font-black text-yellow-400">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Hours</div>
+        <div class="flex justify-center gap-3 sm:gap-6 mb-14 px-4">
+            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="fd-hours" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Hours</div>
             </div>
-            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="fd-minutes" class="text-3xl sm:text-5xl font-black text-yellow-400">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Mins</div>
+            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="fd-minutes" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Mins</div>
             </div>
-            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="fd-seconds" class="text-3xl sm:text-5xl font-black text-yellow-400">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Secs</div>
+            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="fd-seconds" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Secs</div>
             </div>
         </div>
 
-        <div id="flash-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-left">
+        <div id="flash-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
             <!-- Flash items populate here dynamically -->
         </div>
     </div>
 </section>
 
 <!-- NACNA VAULT SECTION -->
-<section id="nacna-vault" class="hidden nacna-bg py-20 px-4 sm:px-6 relative overflow-hidden shadow-2xl">
+<section id="nacna-vault" class="hidden nacna-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
-        <div class="inline-block bg-red-600 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 animate-pulse shadow-[0_0_15px_rgba(220,38,38,0.6)]">Retiring Soon</div>
+        <div class="inline-block bg-stone-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Retiring Soon</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">Official 2026 NACNA National Convention Apparel</h2>
-        <p class="text-gray-300 max-w-2xl mx-auto mb-10 font-light text-lg">The Native American Church of North America 2026 National Convention collection is entering the vault. Grab your gear before production officially closes.</p>
+        <p class="text-stone-400 max-w-2xl mx-auto mb-10 font-light text-lg px-4">The Native American Church of North America 2026 National Convention collection is entering the vault. Grab your gear before production officially closes.</p>
         
-        <div class="flex justify-center gap-3 sm:gap-6 mb-14">
-            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="cd-hours" class="text-3xl sm:text-5xl font-black text-blue-400">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Hours</div>
+        <div class="flex justify-center gap-3 sm:gap-6 mb-14 px-4">
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="cd-hours" class="text-3xl sm:text-5xl font-black text-white">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 font-bold mt-2">Hours</div>
             </div>
-            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="cd-minutes" class="text-3xl sm:text-5xl font-black text-blue-400">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Mins</div>
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="cd-minutes" class="text-3xl sm:text-5xl font-black text-white">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 font-bold mt-2">Mins</div>
             </div>
-            <div class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="cd-seconds" class="text-3xl sm:text-5xl font-black text-blue-400">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 font-bold mt-2">Secs</div>
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+                <div id="cd-seconds" class="text-3xl sm:text-5xl font-black text-white">00</div>
+                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 font-bold mt-2">Secs</div>
             </div>
         </div>
 
-        <div id="nacna-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 text-left">
+        <div id="nacna-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
             <!-- NACNA items populate here dynamically -->
         </div>
     </div>
 </section>
 
 <!-- THE FULL CATALOG -->
-<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
+<section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-10 sm:mb-14 reveal">
+        <div class="text-center mb-16 reveal">
             <p class="section-label mb-4 justify-center">The Full Catalog</p>
-            <h2 class="text-4xl sm:text-6xl font-black text-gray-900 uppercase tracking-tight">The <span class="text-blue-500">Collection</span></h2>
+            <h2 class="text-4xl sm:text-6xl font-black text-stone-900 uppercase tracking-tight">The Collection</h2>
         </div>
         
-        <div id="product-grid" class="w-full flex flex-col gap-4 reveal">
-            <div class="w-full bg-white p-5 rounded-xl border border-gray-200 flex justify-between items-center animate-pulse">
-                <div class="flex items-center gap-3 w-1/2"><div class="h-6 w-6 bg-gray-200 rounded"></div><div class="h-6 bg-gray-200 rounded w-1/2"></div></div>
-            </div>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">
-                <div class="skeleton h-72 rounded-xl"></div>
-                <div class="skeleton h-72 rounded-xl"></div>
-                <div class="skeleton h-72 rounded-xl hidden lg:block"></div>
-            </div>
+        <div id="product-grid" class="w-full flex flex-col gap-6 reveal">
+            <!-- Products inject here via JS -->
         </div>
     </div>
 </section>
 
-<section id="bundles" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
+<section id="bundles" class="py-24 px-4 sm:px-6 border-t border-stone-200 bg-stone-50">
     <div class="max-w-5xl mx-auto">
-        <div class="bg-white border border-gray-200 p-8 sm:p-16 rounded-3xl shadow-sm text-center">
+        <div class="bg-white border border-stone-200 p-8 sm:p-16 rounded-3xl shadow-sm text-center">
             <p class="section-label mb-5 justify-center reveal">Returning Design to the Community</p>
-            <h2 class="text-4xl font-black text-gray-900 uppercase mb-6 reveal">The RLP Family Honoring Specials Bundles</h2>
+            <h2 class="text-4xl font-black text-stone-900 uppercase mb-6 reveal">The RLP Family Honoring Specials Bundles</h2>
             
-            <p class="text-gray-600 font-light leading-relaxed mb-6 text-lg max-w-3xl mx-auto reveal">At RLP Dezines, the goal has always been to provide premium, authentic artwork that serves our people first. Preparing for a family special shouldn't mean turning to massive commercial corporations just to afford the items you need to honor your loved ones.</p>
-            <p class="text-gray-600 font-light leading-relaxed mb-8 text-lg max-w-3xl mx-auto reveal">To better serve the community, we are proud to offer permanent community bulk rates for our 60" × 80" Sherpa Blankets. Accessible, premium items designed specifically for giveaways, specials, and family events.</p>
+            <p class="text-stone-600 font-light leading-relaxed mb-6 text-lg max-w-3xl mx-auto reveal">At RLP Dezines, the goal has always been to provide premium, authentic artwork that serves our people first. Preparing for a family special shouldn't mean turning to massive commercial corporations just to afford the items you need to honor your loved ones.</p>
+            <p class="text-stone-600 font-light leading-relaxed mb-8 text-lg max-w-3xl mx-auto reveal">To better serve the community, we are proud to offer permanent community bulk rates for our 60" × 80" Sherpa Blankets. Accessible, premium items designed specifically for giveaways, specials, and family events.</p>
             
-            <div class="bg-blue-50 border border-blue-200 p-5 rounded-xl max-w-3xl mx-auto mb-10 reveal">
-                <p class="text-blue-800 font-black tracking-widest text-sm uppercase">⚠️ Strict 2-Week Minimum Turnaround</p>
-                <p class="text-blue-700 text-sm mt-2 font-medium">To ensure full production and delivery, your event must be scheduled at least 2 weeks from the date of your paid order.</p>
+            <div class="bg-stone-100 border border-stone-200 p-6 rounded-xl max-w-3xl mx-auto mb-12 reveal">
+                <p class="text-stone-900 font-black tracking-widest text-sm uppercase">⚠️ Strict 2-Week Minimum Turnaround</p>
+                <p class="text-stone-600 text-sm mt-2 font-medium">To ensure full production and delivery, your event must be scheduled at least 2 weeks from the date of your paid order.</p>
             </div>
             
             <div class="grid sm:grid-cols-3 gap-6 mb-10 text-left max-w-5xl mx-auto reveal">
                 
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
-                    <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
+                <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                    <div class="h-48 bg-stone-50 overflow-hidden relative flex items-center justify-center p-4 border-b border-stone-100">
                         <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="10 Piece Bundle">
-                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $100</div>
+                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $100</div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <div>
-                            <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">10-Piece Sherpa Throw Blanket Bundle</h3>
-                            <p class="text-[15px] font-bold text-gray-500 mb-6">$600.00 <span class="font-medium text-xs">($60/ea)</span></p>
+                            <h3 class="text-[15px] font-black text-stone-900 uppercase tracking-tight leading-snug mb-1">10-Piece Sherpa Throw Blanket Bundle</h3>
+                            <p class="text-[15px] font-bold text-stone-500 mb-6">$600.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/10-piece-sherpa-throw-blanket-bundle/MHSESFUUPQR65SMNTLWYWGLR?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/10-piece-sherpa-throw-blanket-bundle/MHSESFUUPQR65SMNTLWYWGLR?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
-                    <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
+                <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                    <div class="h-48 bg-stone-50 overflow-hidden relative flex items-center justify-center p-4 border-b border-stone-100">
                         <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="15 Piece Bundle">
-                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $150</div>
+                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $150</div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <div>
-                            <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">15-Piece Sherpa Throw Blanket Bundle</h3>
-                            <p class="text-[15px] font-bold text-gray-500 mb-6">$900.00 <span class="font-medium text-xs">($60/ea)</span></p>
+                            <h3 class="text-[15px] font-black text-stone-900 uppercase tracking-tight leading-snug mb-1">15-Piece Sherpa Throw Blanket Bundle</h3>
+                            <p class="text-[15px] font-bold text-stone-500 mb-6">$900.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/15-piece-sherpa-throw-blanket-bundle/OCEXPFGH74XF2OZ5B7GRTKCY?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/15-piece-sherpa-throw-blanket-bundle/OCEXPFGH74XF2OZ5B7GRTKCY?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
-                    <div class="h-48 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
+                <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                    <div class="h-48 bg-stone-50 overflow-hidden relative flex items-center justify-center p-4 border-b border-stone-100">
                         <img src="https://drive.google.com/thumbnail?id=1EHu79h0xYzdAu0jSyOPjkaXF8-dPgguI&sz=w600" class="w-full h-full object-contain mix-blend-multiply opacity-50" alt="20 Piece Bundle">
-                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $200</div>
+                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $200</div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <div>
-                            <h3 class="text-[15px] font-black text-gray-900 uppercase tracking-tight leading-snug mb-1">20-Piece Sherpa Throw Blanket Bundle</h3>
-                            <p class="text-[15px] font-bold text-gray-500 mb-6">$1,200.00 <span class="font-medium text-xs">($60/ea)</span></p>
+                            <h3 class="text-[15px] font-black text-stone-900 uppercase tracking-tight leading-snug mb-1">20-Piece Sherpa Throw Blanket Bundle</h3>
+                            <p class="text-[15px] font-bold text-stone-500 mb-6">$1,200.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/20-piece-sherpa-throw-blanket-bundle/HPFODJHOEWCSXMPP6KC5YXVS?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-gray-900 hover:bg-black text-white py-3.5 rounded-xl font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/20-piece-sherpa-throw-blanket-bundle/HPFODJHOEWCSXMPP6KC5YXVS?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
@@ -538,81 +510,81 @@
     </div>
 </section>
 
-<section id="wholesale" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
+<section id="wholesale" class="py-24 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-5xl mx-auto space-y-8">
-        <div class="bg-gray-50 border border-gray-200 p-6 sm:p-14 rounded-3xl shadow-sm">
-            <div class="text-center mb-10 reveal">
+        <div class="bg-stone-50 border border-stone-200 p-6 sm:p-14 rounded-3xl shadow-sm">
+            <div class="text-center mb-12 reveal">
                 <p class="section-label mb-5 justify-center">Community Partners</p>
-                <h2 class="text-4xl font-black text-gray-900 uppercase mb-5">Community Wholesale</h2>
-                <p class="text-gray-600 font-light leading-relaxed max-w-2xl mx-auto text-lg">Just like our Family Honoring Bundles, our wholesale program is designed to keep authentic, premium design within the community. We partner with Indigenous boutiques, programs, and organizations to provide accessible, flat-rate bulk pricing.</p>
+                <h2 class="text-4xl font-black text-stone-900 uppercase mb-5">Community Wholesale</h2>
+                <p class="text-stone-600 font-light leading-relaxed max-w-2xl mx-auto text-lg">Just like our Family Honoring Bundles, our wholesale program is designed to keep authentic, premium design within the community. We partner with Indigenous boutiques, programs, and organizations to provide accessible, flat-rate bulk pricing.</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6 mb-10 reveal">
                 <div>
-                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Order Requirements</h4>
-                    <p class="text-gray-600 font-light text-base leading-relaxed">Standard MOQ: <strong class="text-gray-900">10 total items</strong><br>Reorder MOQ: <strong class="text-gray-900">10 total items</strong></p>
+                    <h4 class="text-stone-900 font-bold uppercase tracking-widest text-sm mb-3">Order Requirements</h4>
+                    <p class="text-stone-600 font-light text-base leading-relaxed">Standard MOQ: <strong class="text-stone-900">10 total items</strong><br>Reorder MOQ: <strong class="text-stone-900">10 total items</strong></p>
                 </div>
                 <div>
-                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Community Rate</h4>
-                    <p class="text-gray-600 font-light text-base leading-relaxed">All wholesale orders of 10 or more items automatically unlock our Community Bulk Rate.</p>
+                    <h4 class="text-stone-900 font-bold uppercase tracking-widest text-sm mb-3">Community Rate</h4>
+                    <p class="text-stone-600 font-light text-base leading-relaxed">All wholesale orders of 10 or more items automatically unlock our Community Bulk Rate.</p>
                 </div>
             </div>
 
-            <div class="w-full overflow-x-auto table-scroll mb-10 rounded-xl border border-gray-200 reveal">
+            <div class="w-full overflow-x-auto table-scroll mb-10 rounded-xl border border-stone-200 reveal">
                 <table class="w-full min-w-[480px] text-center border-collapse bg-white text-base">
                     <thead>
-                        <tr class="bg-blue-600 text-white uppercase text-xs tracking-wider font-bold">
+                        <tr class="bg-stone-100 text-stone-900 uppercase text-xs tracking-wider font-bold">
                             <th class="p-4 text-left pl-6">Product</th>
                             <th class="p-4">New MSRP (Retail)</th>
                             <th class="p-4">Community Bulk Rate (10+ Items)</th>
                         </tr>
                     </thead>
-                    <tbody class="text-gray-700 divide-y divide-gray-200">
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">T-Shirt (Standard S-XL)</td><td class="p-4">$20.00</td><td class="p-4 font-bold text-blue-600">$15.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">T-Shirt (Extended 2XL-5XL)</td><td class="p-4">$28.00</td><td class="p-4 font-bold text-blue-600">$23.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Sherpa Blanket</td><td class="p-4">$70.00</td><td class="p-4 font-bold text-blue-600">$60.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Hoodie (Standard S-XL)</td><td class="p-4">$45.00</td><td class="p-4 font-bold text-blue-600">$35.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Hoodie (Extended 2XL-5XL)</td><td class="p-4">$50.00</td><td class="p-4 font-bold text-blue-600">$40.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Tote Bag</td><td class="p-4">$45.00</td><td class="p-4 font-bold text-blue-600">$36.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Tumbler</td><td class="p-4">$35.00</td><td class="p-4 font-bold text-blue-600">$26.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">iPhone Case</td><td class="p-4">$24.00</td><td class="p-4 font-bold text-blue-600">$19.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Hand Towel</td><td class="p-4">$18.00</td><td class="p-4 font-bold text-blue-600">$14.00</td></tr>
-                        <tr><td class="p-4 text-left pl-6 font-semibold text-gray-900">Mug</td><td class="p-4">$15.00</td><td class="p-4 font-bold text-blue-600">$12.00</td></tr>
+                    <tbody class="text-stone-700 divide-y divide-stone-200">
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">T-Shirt (Standard S-XL)</td><td class="p-4">$20.00</td><td class="p-4 font-bold text-stone-900">$15.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">T-Shirt (Extended 2XL-5XL)</td><td class="p-4">$28.00</td><td class="p-4 font-bold text-stone-900">$23.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">Sherpa Blanket</td><td class="p-4">$70.00</td><td class="p-4 font-bold text-stone-900">$60.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">Hoodie (Standard S-XL)</td><td class="p-4">$45.00</td><td class="p-4 font-bold text-stone-900">$35.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">Hoodie (Extended 2XL-5XL)</td><td class="p-4">$50.00</td><td class="p-4 font-bold text-stone-900">$40.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">Tote Bag</td><td class="p-4">$45.00</td><td class="p-4 font-bold text-stone-900">$36.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">Tumbler</td><td class="p-4">$35.00</td><td class="p-4 font-bold text-stone-900">$26.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">iPhone Case</td><td class="p-4">$24.00</td><td class="p-4 font-bold text-stone-900">$19.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">Hand Towel</td><td class="p-4">$18.00</td><td class="p-4 font-bold text-stone-900">$14.00</td></tr>
+                        <tr><td class="p-4 text-left pl-6 font-semibold text-stone-900">Mug</td><td class="p-4">$15.00</td><td class="p-4 font-bold text-stone-900">$12.00</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-5 reveal">How to Order</h4>
+            <h4 class="text-stone-900 font-bold uppercase tracking-widest text-sm mb-5 reveal">How to Order</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-0 reveal">
-                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
-                    <div class="text-3xl font-black text-blue-600 mb-3">1</div>
-                    <p class="text-gray-600 font-light text-base"><strong class="text-gray-900">Browse:</strong> Select items from the public storefront.</p>
+                <div class="bg-white border border-stone-200 p-6 rounded-xl shadow-sm text-center sm:text-left">
+                    <div class="text-3xl font-black text-stone-300 mb-3">1</div>
+                    <p class="text-stone-600 font-light text-base"><strong class="text-stone-900">Browse:</strong> Select items from the public storefront.</p>
                 </div>
-                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
-                    <div class="text-3xl font-black text-blue-600 mb-3">2</div>
-                    <p class="text-gray-600 font-light text-base"><strong class="text-gray-900">Compile:</strong> Email your list (Product, Design, Size, Qty) to <strong class="text-gray-900">RLP@RLPDEZINES.COM</strong>.</p>
+                <div class="bg-white border border-stone-200 p-6 rounded-xl shadow-sm text-center sm:text-left">
+                    <div class="text-3xl font-black text-stone-300 mb-3">2</div>
+                    <p class="text-stone-600 font-light text-base"><strong class="text-stone-900">Compile:</strong> Email your list (Product, Size, Qty) to <strong class="text-stone-900">RLP@RLPDEZINES.COM</strong>.</p>
                 </div>
-                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
-                    <div class="text-3xl font-black text-blue-600 mb-3">3</div>
-                    <p class="text-gray-600 font-light text-base"><strong class="text-gray-900">Invoice:</strong> I'll apply the Community Bulk Rate and send a digital invoice. Production starts on payment.</p>
+                <div class="bg-white border border-stone-200 p-6 rounded-xl shadow-sm text-center sm:text-left">
+                    <div class="text-3xl font-black text-stone-300 mb-3">3</div>
+                    <p class="text-stone-600 font-light text-base"><strong class="text-stone-900">Invoice:</strong> I'll apply the Bulk Rate and send a digital invoice. Production starts on payment.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="services" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-gray-50">
+<section id="services" class="py-24 px-4 sm:px-6 border-t border-stone-200 bg-stone-50">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white border border-gray-200 border-l-4 border-l-blue-500 p-6 sm:p-14 rounded-3xl shadow-sm">
-            <div class="mb-8 reveal">
+        <div class="bg-white border border-stone-200 p-6 sm:p-14 rounded-3xl shadow-sm">
+            <div class="mb-10 text-center reveal">
                 <p class="section-label mb-5">B2B & Creative Services</p>
-                <h2 class="text-4xl font-black text-gray-900 uppercase mb-5 tracking-tight">Design <span class="text-blue-600">Services</span></h2>
-                <p class="text-gray-600 font-light leading-relaxed max-w-2xl text-lg">
-                    RLP Dezines is your full-stack design partner. We provide <strong class="text-gray-900 font-semibold">bulk production on all catalog items</strong> and <strong class="text-gray-900 font-semibold">custom design services</strong>. Fill out the form below with your project scope and budget.
+                <h2 class="text-4xl font-black text-stone-900 uppercase mb-5 tracking-tight">Design Services</h2>
+                <p class="text-stone-600 font-light leading-relaxed max-w-2xl mx-auto text-lg">
+                    RLP Dezines is your full-stack design partner. We provide <strong class="text-stone-900 font-semibold">bulk production on all catalog items</strong> and <strong class="text-stone-900 font-semibold">custom design services</strong>. Fill out the form below with your project scope.
                 </p>
             </div>
 
-            <div id="intake-form-wrap" class="max-w-3xl mx-auto bg-gray-50 p-6 sm:p-8 rounded-xl border border-gray-200 reveal">
+            <div id="intake-form-wrap" class="max-w-3xl mx-auto bg-stone-50 p-6 sm:p-8 rounded-xl border border-stone-200 reveal">
                 <form name="design-intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
                     <input type="text" name="name">
                     <input type="email" name="email">
@@ -623,16 +595,16 @@
                 <div id="form-fields">
                     <div class="grid sm:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-name">Name / Organization</label>
+                            <label class="block text-sm font-bold text-stone-500 uppercase tracking-widest mb-2" for="intake-name">Name / Organization</label>
                             <input class="form-input" type="text" id="intake-name" placeholder="Your name or org" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-email">Email Address</label>
+                            <label class="block text-sm font-bold text-stone-500 uppercase tracking-widest mb-2" for="intake-email">Email Address</label>
                             <input class="form-input" type="email" id="intake-email" placeholder="you@example.com" required>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-budget">Estimated Budget</label>
+                        <label class="block text-sm font-bold text-stone-500 uppercase tracking-widest mb-2" for="intake-budget">Estimated Budget</label>
                         <select class="form-input" id="intake-budget">
                             <option value="Not Sure Yet">Not Sure Yet</option>
                             <option value="Under $500">Under $500</option>
@@ -642,10 +614,10 @@
                         </select>
                     </div>
                     <div class="mb-5">
-                        <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
+                        <label class="block text-sm font-bold text-stone-500 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
                         <textarea class="form-input h-32 resize-y" id="intake-message" placeholder="Tell me what you're looking for..." required></textarea>
                     </div>
-                    <button id="form-submit-btn" type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black tracking-widest uppercase py-4 rounded-xl shadow-md text-base btn-pulse flex items-center justify-center gap-2">
+                    <button id="form-submit-btn" type="button" class="w-full bg-stone-900 hover:bg-black text-white font-black tracking-widest uppercase py-4 rounded-full shadow-md text-sm btn-pulse flex items-center justify-center gap-2">
                         <span id="btn-label">Start My Custom Project</span>
                         <svg id="btn-spinner" class="w-5 h-5 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                     </button>
@@ -653,93 +625,93 @@
                 </div>
 
                 <div id="form-success" class="hidden text-center py-8">
-                    <div class="text-blue-600 text-6xl mb-4">✓</div>
-                    <h3 class="text-gray-900 font-black text-2xl uppercase tracking-wide mb-2">Request Received</h3>
-                    <p class="text-gray-500 font-light text-base">Thank you. I'll be in touch within 2 business days.</p>
+                    <div class="text-stone-900 text-6xl mb-4">✓</div>
+                    <h3 class="text-stone-900 font-black text-2xl uppercase tracking-wide mb-2">Request Received</h3>
+                    <p class="text-stone-500 font-light text-base">Thank you. I'll be in touch within 2 business days.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="endorsements" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 bg-white">
+<section id="endorsements" class="py-24 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16 reveal">
             <p class="section-label mb-5 justify-center">Verified Partners</p>
-            <h2 class="text-4xl sm:text-6xl font-black text-gray-900 uppercase tracking-tight">Client <span class="text-blue-600">Endorsements</span></h2>
+            <h2 class="text-4xl sm:text-6xl font-black text-stone-900 uppercase tracking-tight">Client Endorsements</h2>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
-            <div class="endorse-card bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-3xl relative flex flex-col h-full reveal shadow-sm">
-                <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
-                <p class="text-gray-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
+            <div class="endorse-card bg-stone-50 border border-stone-200 p-8 sm:p-10 rounded-3xl relative flex flex-col h-full reveal shadow-sm">
+                <div class="absolute top-5 right-7 text-7xl font-black text-stone-200 font-serif leading-none select-none">"</div>
+                <p class="text-stone-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
                     "RLP Dezines provided us with incredible support. From our official organization logo to the banners and custom gear we use for our events, the quality is exceptional."
                 </p>
-                <div class="border-t border-gray-200 pt-5 mt-auto">
-                    <div class="text-gray-900 text-base font-black uppercase mb-1">Executive Committee</div>
-                    <div class="text-blue-600 text-xs font-bold tracking-widest uppercase">Native American Church of North America</div>
+                <div class="border-t border-stone-200 pt-5 mt-auto">
+                    <div class="text-stone-900 text-base font-black uppercase mb-1">Executive Committee</div>
+                    <div class="text-stone-500 text-xs font-bold tracking-widest uppercase">Native American Church of North America</div>
                 </div>
             </div>
 
-            <div class="endorse-card bg-gray-50 border border-gray-200 p-8 sm:p-10 rounded-3xl relative flex flex-col h-full reveal reveal-delay-2 shadow-sm">
-                <div class="absolute top-5 right-7 text-7xl font-black text-blue-500 opacity-10 font-serif leading-none select-none">"</div>
-                <p class="text-gray-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
+            <div class="endorse-card bg-stone-50 border border-stone-200 p-8 sm:p-10 rounded-3xl relative flex flex-col h-full reveal reveal-delay-2 shadow-sm">
+                <div class="absolute top-5 right-7 text-7xl font-black text-stone-200 font-serif leading-none select-none">"</div>
+                <p class="text-stone-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
                     "Working with RLP Dezines has been a great experience. We needed high-quality gear for our health board and community events, and the final products were exactly what we were looking for."
                 </p>
-                <div class="border-t border-gray-200 pt-5 mt-auto">
-                    <div class="text-gray-900 text-base font-black uppercase mb-1">Leadership Team</div>
-                    <div class="text-blue-600 text-xs font-bold tracking-widest uppercase">Rocky Boy Health Board</div>
+                <div class="border-t border-stone-200 pt-5 mt-auto">
+                    <div class="text-stone-900 text-base font-black uppercase mb-1">Leadership Team</div>
+                    <div class="text-stone-500 text-xs font-bold tracking-widest uppercase">Rocky Boy Health Board</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="info" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-gray-200 flex-grow bg-gray-50">
+<section id="info" class="py-24 px-4 sm:px-6 border-t border-stone-200 flex-grow bg-stone-50">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white border-t-4 border-t-blue-600 border border-gray-200 p-6 sm:p-14 rounded-3xl shadow-sm">
-            <h2 class="text-3xl sm:text-4xl font-black text-gray-900 uppercase mb-10 text-center tracking-tight reveal">Store Policies & FAQ</h2>
+        <div class="bg-white border-t-4 border-t-stone-900 border border-stone-200 p-6 sm:p-14 rounded-3xl shadow-sm">
+            <h2 class="text-3xl sm:text-4xl font-black text-stone-900 uppercase mb-10 text-center tracking-tight reveal">Store Policies & FAQ</h2>
 
-            <div class="space-y-8 divide-y divide-gray-100">
+            <div class="space-y-8 divide-y divide-stone-100">
                 <div class="pt-0 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Online Only / Storefront</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-base">RLP Dezines operates 100% online. I don't have a physical brick-and-mortar storefront right now—everything is run directly through this site so I can ship my custom drops directly to your door anywhere in Indian Country. Town of Gilbert Business License: <strong class="text-gray-900">BUSLIC001339-05-2024</strong></p>
+                    <h3 class="text-stone-900 font-black tracking-widest text-sm uppercase mb-3">Online Only / Storefront</h3>
+                    <p class="text-stone-600 font-light leading-relaxed text-base">RLP Dezines operates 100% online. I don't have a physical brick-and-mortar storefront right now—everything is run directly through this site so I can ship my custom drops directly to your door anywhere in Indian Country. Town of Gilbert Business License: <strong class="text-stone-900">BUSLIC001339-05-2024</strong></p>
                 </div>
                 <div class="pt-7 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Crafted Specifically For You (Final Sale)</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-base">Every item is crafted specifically for you at the time of purchase as a vessel for these designs. Because of this custom, print-on-demand model, <strong class="text-gray-900 font-semibold">I do not accept returns, exchanges, or offer cash refunds for buyer's remorse or incorrect size selections.</strong> Please review all product descriptions and size charts carefully before completing your purchase.</p>
+                    <h3 class="text-stone-900 font-black tracking-widest text-sm uppercase mb-3">Crafted Specifically For You (Final Sale)</h3>
+                    <p class="text-stone-600 font-light leading-relaxed text-base">Every item is crafted specifically for you at the time of purchase as a vessel for these designs. Because of this custom, print-on-demand model, <strong class="text-stone-900 font-semibold">I do not accept returns, exchanges, or offer cash refunds for buyer's remorse or incorrect size selections.</strong> Please review all product descriptions and size charts carefully before completing your purchase.</p>
                 </div>
                 <div class="pt-7 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Damaged or Defective Items</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-base">I stand behind the quality of my designs and materials. In the rare event that your item arrives misprinted or defective, contact me at <strong class="text-gray-900">rlp@rlpdezines.com</strong> within 7 days. I will make it right with a free replacement.</p>
+                    <h3 class="text-stone-900 font-black tracking-widest text-sm uppercase mb-3">Damaged or Defective Items</h3>
+                    <p class="text-stone-600 font-light leading-relaxed text-base">I stand behind the quality of my designs and materials. In the rare event that your item arrives misprinted or defective, contact me at <strong class="text-stone-900">rlp@rlpdezines.com</strong> within 7 days. I will make it right with a free replacement.</p>
                 </div>
                 
                 <div class="pt-7 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Production & Delivery Times</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-base">Once an order is paid for, it goes directly into production. Your item will be printed within <strong class="text-gray-900 font-semibold">3 to 5 business days</strong>, undergo a quality check, and then ship out. Because this is a custom print-on-demand process, it doesn’t arrive overnight. You can expect your gear delivered to your door within <strong class="text-gray-900 font-semibold">2 weeks</strong> (typically much quicker, but this allows for shipping traffic and availability).</p>
+                    <h3 class="text-stone-900 font-black tracking-widest text-sm uppercase mb-3">Production & Delivery Times</h3>
+                    <p class="text-stone-600 font-light leading-relaxed text-base">Once an order is paid for, it goes directly into production. Your item will be printed within <strong class="text-stone-900 font-semibold">3 to 5 business days</strong>, undergo a quality check, and then ship out. Because this is a custom print-on-demand process, it doesn’t arrive overnight. You can expect your gear delivered to your door within <strong class="text-stone-900 font-semibold">2 weeks</strong> (typically much quicker, but this allows for shipping traffic and availability).</p>
                 </div>
 
                 <div class="pt-7 reveal">
-                    <h3 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-3">Shipping & Taxes</h3>
-                    <p class="text-gray-600 font-light leading-relaxed text-base">Shipping costs and applicable taxes are calculated automatically by Square at checkout based on your exact shipping address. Bundle pricing reflects community bulk rates for events and specials. Once shipped, you will automatically receive a tracking number via email.</p>
+                    <h3 class="text-stone-900 font-black tracking-widest text-sm uppercase mb-3">Shipping & Taxes</h3>
+                    <p class="text-stone-600 font-light leading-relaxed text-base">Shipping costs and applicable taxes are calculated automatically by Square at checkout based on your exact shipping address. Bundle pricing reflects community bulk rates for events and specials. Once shipped, you will automatically receive a tracking number via email.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="newsletter" class="py-20 px-5 border-t border-gray-200 bg-blue-600 text-white text-center">
+<section id="newsletter" class="py-24 px-5 border-t border-stone-200 bg-stone-900 text-white text-center">
     <div class="max-w-2xl mx-auto reveal">
         <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mb-4">Join the Circle</h2>
-        <p class="text-blue-100 mb-8 text-lg font-light leading-relaxed">Be the first to know about new custom drops, RLP Family Honoring Specials Bundles, and original NAC music releases.</p>
+        <p class="text-stone-300 mb-8 text-lg font-light leading-relaxed">Be the first to know about new custom drops, RLP Family Honoring Specials Bundles, and original NAC music releases.</p>
         
         <form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
             <input type="email" name="email">
         </form>
 
         <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-blue-400 font-medium border-none">
-            <button type="submit" id="newsletter-submit-btn" class="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded-full font-black uppercase tracking-widest transition shadow-lg text-sm flex items-center justify-center gap-2 btn-pulse">
+            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-full text-stone-900 outline-none focus:ring-4 focus:ring-stone-400 font-medium border-none">
+            <button type="submit" id="newsletter-submit-btn" class="bg-white hover:bg-stone-200 text-stone-900 px-8 py-3.5 rounded-full font-black uppercase tracking-widest transition shadow-lg text-sm flex items-center justify-center gap-2 btn-pulse">
                 <span>Join the Circle</span>
                 <svg id="newsletter-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
             </button>
@@ -747,15 +719,15 @@
     </div>
 </section>
 
-<footer class="border-t border-blue-700 bg-gray-900 py-16 px-5 text-gray-400">
+<footer class="border-t border-stone-800 bg-black py-16 px-5 text-stone-500">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm gap-4">
         <div class="text-center sm:text-left">
             <p>© 2026 RLP Dezines. Indigenous-owned &amp; operated.</p>
-            <p class="text-xs text-gray-500 mt-1">Town of Gilbert Bus. License: BUSLIC001339-05-2024</p>
+            <p class="text-xs text-stone-600 mt-1">Town of Gilbert Bus. License: BUSLIC001339-05-2024</p>
         </div>
         <div class="flex items-center gap-4">
             <button onclick="window.openPrivacyModal()" class="hover:text-white transition underline underline-offset-2">Privacy Policy</button>
-            <span class="text-gray-700">|</span>
+            <span class="text-stone-700">|</span>
             <a href="mailto:rlp@rlpdezines.com" class="hover:text-white transition">rlp@rlpdezines.com</a>
         </div>
     </div>
@@ -763,11 +735,11 @@
 
 <div id="toast" role="alert" aria-live="polite"></div>
 
-<div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-gray-900 border-t border-gray-800 p-4 sm:p-6 z-[100] transform translate-y-full transition-transform duration-500 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl">
-    <div class="text-gray-300 text-sm font-light leading-relaxed max-w-4xl text-center sm:text-left">
-        We use cookies (like Google Analytics) to understand site traffic and improve your experience. By continuing to use our site, you agree to our <button onclick="window.openPrivacyModal()" class="text-blue-400 hover:text-blue-300 underline underline-offset-2 font-medium">Privacy Policy</button>.
+<div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-stone-900 border-t border-stone-800 p-4 sm:p-6 z-[100] transform translate-y-full transition-transform duration-500 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl">
+    <div class="text-stone-300 text-sm font-light leading-relaxed max-w-4xl text-center sm:text-left">
+        We use cookies (like Google Analytics) to understand site traffic and improve your experience. By continuing to use our site, you agree to our <button onclick="window.openPrivacyModal()" class="text-white hover:text-stone-200 underline underline-offset-2 font-medium">Privacy Policy</button>.
     </div>
-    <button id="accept-cookies" class="w-full sm:w-auto flex-shrink-0 bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-black uppercase tracking-widest transition text-xs shadow-lg btn-pulse">
+    <button id="accept-cookies" class="w-full sm:w-auto flex-shrink-0 bg-white hover:bg-stone-200 text-stone-900 px-8 py-3 rounded-full font-black uppercase tracking-widest transition text-xs shadow-lg btn-pulse">
         Got It
     </button>
 </div>
@@ -775,21 +747,21 @@
 <div id="filter-modal" class="fixed inset-0 bg-white z-[99] hidden p-6 overflow-y-auto transition-opacity">
     <div class="max-w-xl mx-auto mt-10">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-black uppercase text-blue-600 tracking-tight">Search & Filter</h2>
-            <button id="close-filter-modal" class="text-gray-400 hover:text-gray-900 p-2 transition" aria-label="Close search">
+            <h2 class="text-2xl font-black uppercase text-stone-900 tracking-tight">Search & Filter</h2>
+            <button id="close-filter-modal" class="text-stone-400 hover:text-stone-900 p-2 transition" aria-label="Close search">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
         
         <div class="space-y-6">
             <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3" for="filter-search">Find a Vessel</label>
-                <input type="text" id="filter-search" placeholder="Search blankets, hoodies, designs..." class="w-full p-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-4 focus:ring-blue-100 transition shadow-sm text-lg">
+                <label class="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-3" for="filter-search">Find a Vessel</label>
+                <input type="text" id="filter-search" placeholder="Search blankets, hoodies, designs..." class="w-full p-4 bg-white rounded-xl border border-stone-200 outline-none focus:ring-4 focus:ring-stone-100 transition shadow-sm text-lg">
             </div>
             
             <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3" for="filter-sort">Sort By</label>
-                <select id="filter-sort" class="w-full p-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-4 focus:ring-blue-100 transition shadow-sm text-lg appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23111827%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;">
+                <label class="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-3" for="filter-sort">Sort By</label>
+                <select id="filter-sort" class="w-full p-4 bg-white rounded-xl border border-stone-200 outline-none focus:ring-4 focus:ring-stone-100 transition shadow-sm text-lg appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23111827%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;">
                     <option value="default">Featured Collection</option>
                     <option value="price-low">Price: Low to High</option>
                     <option value="price-high">Price: High to Low</option>
@@ -797,7 +769,7 @@
             </div>
         </div>
         
-        <button id="apply-filters" class="w-full mt-10 bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-xl font-black uppercase tracking-widest transition shadow-lg btn-pulse">Show Results</button>
+        <button id="apply-filters" class="w-full mt-10 bg-stone-900 hover:bg-black text-white py-4 rounded-full font-black uppercase tracking-widest transition shadow-lg btn-pulse">Show Results</button>
     </div>
 </div>
 
@@ -808,8 +780,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // ── Timer Logic for Vaults ──
     const NACNA_DEADLINE = new Date("2026-06-27T23:59:59").getTime();
-    
-    // Updated 72-Hour countdown based on current sequence reset
     const FLASH_DEADLINE = new Date("2026-07-03T23:59:59").getTime(); 
     
     const updateTimer = setInterval(() => {
@@ -1047,14 +1017,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.items.length === 0) {
                 cont.innerHTML = `
                     <div class="flex flex-col items-center justify-center h-full p-8 text-center overflow-y-auto pb-32">
-                        <h1 class="text-3xl font-black text-blue-600 mb-2">Your cart</h1>
-                        <p class="text-gray-500 mb-8">Your cart is empty. Let's find something special.</p>
-                        <button onclick="window.Cart.close()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-10 rounded-full transition w-full max-w-[250px] btn-pulse">Continue shopping</button>
+                        <h1 class="text-3xl font-black text-stone-900 mb-2">Your cart</h1>
+                        <p class="text-stone-500 mb-8">Your cart is empty. Let's find something special.</p>
+                        <button onclick="window.Cart.close()" class="bg-stone-900 hover:bg-black text-white font-semibold py-4 px-10 rounded-full transition w-full max-w-[250px] btn-pulse">Continue shopping</button>
                     </div>`;
                 return;
             }
 
-            let html = `<div class="flex-grow overflow-y-auto px-5 sm:px-8 py-8"><h1 class="text-3xl sm:text-4xl font-black text-blue-600 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
+            let html = `<div class="flex-grow overflow-y-auto px-5 sm:px-8 py-8"><h1 class="text-3xl sm:text-4xl font-black text-stone-900 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
             
             this.items.forEach(i => {
                 const nameParts = i.name.match(/(.*)\s\((.*)\)$/);
@@ -1067,27 +1037,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         pImg = window.globalProducts[pid].imageUrl; break;
                     }
                 }
-                const imgHtml = (pImg && pImg.startsWith('http')) ? `<img src="${pImg}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-gray-100 flex items-center justify-center text-[10px] text-gray-400 font-bold">RLP</div>`;
+                const imgHtml = (pImg && pImg.startsWith('http')) ? `<img src="${pImg}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-stone-100 flex items-center justify-center text-[10px] text-stone-400 font-bold">RLP</div>`;
 
                 html += `
                 <div class="flex gap-4">
-                    <div class="w-[85px] h-[85px] bg-gray-50 rounded-md overflow-hidden flex-shrink-0 border border-gray-100">${imgHtml}</div>
+                    <div class="w-[85px] h-[85px] bg-stone-50 rounded-md overflow-hidden flex-shrink-0 border border-stone-100">${imgHtml}</div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="w-full flex justify-between gap-3">
                             <div>
-                                <h4 class="text-[15px] font-bold text-blue-600 leading-snug">${baseName}</h4>
-                                <p class="text-sm text-blue-600 mt-0.5">$${((i.price)/100).toFixed(2)}</p>
-                                ${vName ? `<p class="text-sm text-blue-600 mt-1.5 opacity-80">Size: ${vName}</p>` : ''}
+                                <h4 class="text-[15px] font-bold text-stone-900 leading-snug">${baseName}</h4>
+                                <p class="text-sm text-stone-500 mt-0.5">$${((i.price)/100).toFixed(2)}</p>
+                                ${vName ? `<p class="text-sm text-stone-500 mt-1.5 opacity-80">Size: ${vName}</p>` : ''}
                             </div>
-                            <span class="text-[15px] font-bold text-blue-600 flex-shrink-0">$${((i.price*i.quantity)/100).toFixed(2)}</span>
+                            <span class="text-[15px] font-bold text-stone-900 flex-shrink-0">$${((i.price*i.quantity)/100).toFixed(2)}</span>
                         </div>
                         <div class="flex items-center justify-between mt-3">
-                            <div class="flex items-center bg-white border border-gray-200 rounded-full h-9 overflow-hidden w-[100px]">
-                                <button onclick="window.Cart.updateItemQty('${i.id}', -1)" class="w-10 h-full flex items-center justify-center text-gray-400 hover:bg-gray-50 transition font-medium text-lg">−</button>
-                                <input type="number" value="${i.quantity}" class="w-8 text-center text-sm font-semibold text-gray-900 border-none outline-none p-0 bg-transparent" readonly>
-                                <button onclick="window.Cart.updateItemQty('${i.id}', 1)" class="w-10 h-full flex items-center justify-center text-gray-400 hover:bg-gray-50 transition font-medium text-lg">+</button>
+                            <div class="flex items-center bg-white border border-stone-200 rounded-full h-9 overflow-hidden w-[100px]">
+                                <button onclick="window.Cart.updateItemQty('${i.id}', -1)" class="w-10 h-full flex items-center justify-center text-stone-400 hover:bg-stone-50 transition font-medium text-lg">−</button>
+                                <input type="number" value="${i.quantity}" class="w-8 text-center text-sm font-semibold text-stone-900 border-none outline-none p-0 bg-transparent" readonly>
+                                <button onclick="window.Cart.updateItemQty('${i.id}', 1)" class="w-10 h-full flex items-center justify-center text-stone-400 hover:bg-stone-50 transition font-medium text-lg">+</button>
                             </div>
-                            <button onclick="window.Cart.removeItem('${i.id}')" class="text-blue-600 hover:text-blue-800 p-2 -mr-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                            <button onclick="window.Cart.removeItem('${i.id}')" class="text-stone-400 hover:text-stone-900 p-2 -mr-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
                         </div>
                     </div>
                 </div>`;
@@ -1095,13 +1065,13 @@ document.addEventListener('DOMContentLoaded', () => {
             html += `</div>`;
 
             html += `
-                <div class="mt-8 mb-6 border-b border-gray-200 pb-6">
-                    <button onclick="window.Cart.close()" class="w-full py-3.5 bg-white border border-blue-600 hover:bg-blue-50 text-blue-600 font-semibold rounded-full text-[15px] transition btn-pulse">Add more items</button>
+                <div class="mt-8 mb-6 border-b border-stone-200 pb-6">
+                    <button onclick="window.Cart.close()" class="w-full py-3.5 bg-white border border-stone-900 hover:bg-stone-50 text-stone-900 font-semibold rounded-full text-[15px] transition btn-pulse">Add more items</button>
                 </div>`;
 
             html += `
-                <div class="border border-gray-400 rounded py-3.5 px-4 mb-6 flex items-center text-gray-500 text-[15px]">
-                    <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                <div class="border border-stone-300 rounded-xl py-3.5 px-4 mb-6 flex items-center text-stone-500 text-[15px]">
+                    <svg class="w-5 h-5 mr-3 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                     Add coupon or gift card
                 </div>`;
 
@@ -1109,31 +1079,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
             html += `
                 <div class="space-y-3 mb-6 text-[15px]">
-                    <div class="flex justify-between text-blue-600 font-black text-lg tracking-tight">
+                    <div class="flex justify-between text-stone-900 font-black text-lg tracking-tight">
                         <span>Subtotal</span><span>$${subtotal}</span>
                     </div>
-                    <p class="text-[12px] text-blue-600 mt-2 opacity-80">Shipping and taxes calculated securely at checkout.</p>
+                    <p class="text-[12px] text-stone-500 mt-2">Shipping and taxes calculated securely at checkout.</p>
                 </div>
             </div>`; 
             
             html += `
-            <div class="flex-shrink-0 bg-white border-t border-gray-200 p-4 sm:p-6 z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.04)] pb-8 sm:pb-6 relative">
-                <div class="flex flex-col items-center justify-center mb-3 text-gray-900 font-semibold text-[13px]">
+            <div class="flex-shrink-0 bg-white border-t border-stone-200 p-4 sm:p-6 z-10 shadow-[0_-10px_40px_rgba(0,0,0,0.04)] pb-8 sm:pb-6 relative">
+                <div class="flex flex-col items-center justify-center mb-3 text-stone-900 font-semibold text-[13px]">
                     <svg class="w-5 h-5 mb-1" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zm-3.5 14h-7c-.827 0-1.5-.673-1.5-1.5v-7c0-.827.673-1.5 1.5-1.5h7c.827 0 1.5.673 1.5 1.5v7c0 .827-.673 1.5-1.5 1.5z"/></svg>
                     Secure checkout by Square
                 </div>
                 <div class="flex justify-center gap-1.5 mb-4">
                     <div class="px-2 py-1 bg-[#00D632] text-white text-[9px] font-bold rounded tracking-wider">CASH APP</div>
                     <div class="px-2 py-1 bg-black text-white text-[9px] font-bold rounded tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.3 48.6-.6 86.8-82.6 102.3-120.4-44.8-18.4-61.6-54.8-61.4-90.2zM153.6 30.1c17-21.4 40.2-30.1 63.6-30.1-2.6 23.4-12.7 44.9-28.7 61.2-16.1 16.5-38.3 26.6-60.8 24.3 1.6-21.7 10.3-40.5 25.9-55.4z"/></svg>Pay</div>
-                    <div class="px-2 py-1 bg-white border border-gray-200 text-gray-600 text-[9px] font-bold rounded tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 488 512" fill="currentColor"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>Pay</div>
+                    <div class="px-2 py-1 bg-white border border-stone-200 text-stone-600 text-[9px] font-bold rounded tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 488 512" fill="currentColor"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>Pay</div>
                     <div class="px-2 py-1 bg-[#1A1F71] text-white text-[9px] font-bold rounded tracking-wider italic">VISA</div>
                 </div>
                 
                 <div class="relative w-full">
-                    <button id="checkout-btn" class="w-full btn-pulse bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-full transition duration-200 flex justify-center items-center text-[15px] tracking-wide shadow-md" onclick="window.Cart.checkout()">
+                    <button id="checkout-btn" class="w-full btn-pulse bg-stone-900 hover:bg-black text-white font-semibold py-4 rounded-full transition duration-200 flex justify-center items-center text-[15px] tracking-wide shadow-md" onclick="window.Cart.checkout()">
                         Continue to payment — $${subtotal}
                     </button>
-                    <span class="absolute -top-2.5 -right-1 bg-red-500 text-white text-[12px] font-black w-6 h-6 rounded-full flex items-center justify-center shadow-lg border-2 border-white pointer-events-none">
+                    <span class="absolute -top-2.5 -right-1 bg-red-600 text-white text-[12px] font-black w-6 h-6 rounded-full flex items-center justify-center shadow-lg border-2 border-white pointer-events-none">
                         ${total}
                     </span>
                 </div>
@@ -1220,138 +1190,72 @@ document.addEventListener('DOMContentLoaded', () => {
     const buildPriceHTML = (p, currentCents) => {
         const former = getFormerPrice(p, currentCents);
         if (!former) {
-            return `<p class="text-[12px] sm:text-sm font-bold text-gray-900 mt-2">$${(currentCents/100).toFixed(2)}</p>`;
+            return `<p class="text-[12px] sm:text-sm font-bold text-stone-900 mt-2">$${(currentCents/100).toFixed(2)}</p>`;
         }
         const pct = Math.round((1 - currentCents / former) * 100);
         return `
             <div class="mt-2.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <span class="text-[13px] sm:text-[15px] font-medium text-gray-400 line-through">$${(former/100).toFixed(2)}</span>
-                <span class="text-[16px] sm:text-lg font-black text-blue-600">$${(currentCents/100).toFixed(2)}</span>
+                <span class="text-[13px] sm:text-[15px] font-medium text-stone-400 line-through">$${(former/100).toFixed(2)}</span>
+                <span class="text-[16px] sm:text-lg font-black text-stone-900">$${(currentCents/100).toFixed(2)}</span>
             </div>
-            <p class="text-[11px] sm:text-[12px] font-black uppercase tracking-wider text-red-600 mt-1">${pct}% Off</p>`;
+            <p class="text-[11px] sm:text-[12px] font-black uppercase tracking-wider text-stone-500 mt-1">${pct}% Off</p>`;
     };
 
     // ── 1. COMPREHENSIVE EXACT-MATCH DICTIONARY ──
     const COLOR_MAP = {
-        // Standard Basics
         'black': '#111111', 'white': '#ffffff', 'ivory': '#fffff0', 'cream': '#fdf6e3', 'natural': '#f0e6d2',
-        
-        // Gildan / Comfort Colors / Bella+Canvas Specifics
-        'azalea': '#f98cb6',
-        'carolina blue': '#7b9dce',
-        'tropical blue': '#0082ba',
-        'sport grey': '#b5b5b5',
-        'sport gray': '#b5b5b5',
-        'navy blazer': '#202a44',
-        'forest green': '#228b22',
-        'navy': '#1e3a5f',
-        'royal': '#1d4ed8',
-        'red': '#dc2626',
-        'maroon': '#7f1d1d',
-        'sand': '#e3cda4',
-        'rust': '#b7410e',
-        'brown': '#7c4a2d',
-        'kelly green': '#4cbb17',
-        'charcoal': '#36454f',
-        'dark chocolate': '#3b2f2f',
-        'heather navy': '#2b3c5a',
-        'dark heather': '#4a4a4a',
-        'irish green': '#009e60',
-        'light blue': '#add8e6',
-        'light pink': '#ffb6c1',
-        'military green': '#4b5320',
-        'purple': '#7e22ce',
-        'orange': '#ea580c',
-        'gold': '#d4af37',
-        'daisy': '#fcdb05',
-        'cherry red': '#d2042d',
-        'sapphire': '#0f52ba',
-        'indigo blue': '#281E5D',
-        'kiwi': '#8ee53f',
-        'orchid': '#da70d6',
-        'tangerine': '#f28500',
-        'antique cherry red': '#800020',
-        'antique sapphire': '#17507D',
-        'ash grey': '#b2beb5',
-        'mint green': '#98ff98',
-        'graphite heather': '#4b4b4b',
-        'safety green': '#ccff00',
-        'safety orange': '#ff6700',
-        'safety pink': '#ff007f',
-        
-        // General Additions
-        'beige': '#e8d9b5', 'tan': '#d2b48c', 'khaki': '#c3b091',
-        'grey': '#9ca3af', 'gray': '#9ca3af', 'silver': '#c0c0c0', 'slate': '#708090', 'heather grey': '#b2beb5',
-        'crimson': '#b91c1c', 'burgundy': '#7b1f2a', 'wine': '#722f37',
-        'burnt orange': '#cc5500', 'coral': '#ff7f50', 'peach': '#ffcba4',
-        'yellow': '#facc15', 'mustard': '#d4a017',
-        'green': '#16a34a', 'olive': '#708238', 'forest': '#228b22', 'army': '#4b5320', 'sage': '#9caf88', 'mint': '#98ff98', 'teal': '#0d9488',
-        'blue': '#2563eb', 'sky': '#38bdf8', 'sky blue': '#38bdf8', 'turquoise': '#30d5c8', 'aqua': '#22d3ee', 'denim': '#3b5b7c', 'indigo': '#4f46e5',
-        'violet': '#8b5cf6', 'lavender': '#c4b5fd', 'plum': '#8e4585',
-        'pink': '#ec4899', 'magenta': '#d6219b', 'hot pink': '#ff69b4', 'rose': '#f43f5e', 'fuchsia': '#d946ef', 'blush': '#f7cad0',
-        'chocolate': '#5c4033', 'coffee': '#6f4e37', 'mocha': '#967259', 'camel': '#c19a6b'
+        'azalea': '#f98cb6', 'carolina blue': '#7b9dce', 'tropical blue': '#0082ba', 'sport grey': '#b5b5b5',
+        'sport gray': '#b5b5b5', 'navy blazer': '#202a44', 'forest green': '#228b22', 'navy': '#1e3a5f',
+        'royal': '#1d4ed8', 'red': '#dc2626', 'maroon': '#7f1d1d', 'sand': '#e3cda4', 'rust': '#b7410e',
+        'brown': '#7c4a2d', 'kelly green': '#4cbb17', 'charcoal': '#36454f', 'dark chocolate': '#3b2f2f',
+        'heather navy': '#2b3c5a', 'dark heather': '#4a4a4a', 'irish green': '#009e60', 'light blue': '#add8e6',
+        'light pink': '#ffb6c1', 'military green': '#4b5320', 'purple': '#7e22ce', 'orange': '#ea580c',
+        'gold': '#d4af37', 'daisy': '#fcdb05', 'cherry red': '#d2042d', 'sapphire': '#0f52ba',
+        'indigo blue': '#281E5D', 'kiwi': '#8ee53f', 'orchid': '#da70d6', 'tangerine': '#f28500',
+        'antique cherry red': '#800020', 'antique sapphire': '#17507D', 'ash grey': '#b2beb5',
+        'mint green': '#98ff98', 'graphite heather': '#4b4b4b', 'safety green': '#ccff00',
+        'safety orange': '#ff6700', 'safety pink': '#ff007f', 'beige': '#e8d9b5', 'tan': '#d2b48c',
+        'khaki': '#c3b091', 'grey': '#9ca3af', 'gray': '#9ca3af', 'silver': '#c0c0c0', 'slate': '#708090',
+        'heather grey': '#b2beb5', 'crimson': '#b91c1c', 'burgundy': '#7b1f2a', 'wine': '#722f37',
+        'burnt orange': '#cc5500', 'coral': '#ff7f50', 'peach': '#ffcba4', 'yellow': '#facc15',
+        'mustard': '#d4a017', 'green': '#16a34a', 'olive': '#708238', 'forest': '#228b22', 'army': '#4b5320',
+        'sage': '#9caf88', 'mint': '#98ff98', 'teal': '#0d9488', 'blue': '#2563eb', 'sky': '#38bdf8',
+        'sky blue': '#38bdf8', 'turquoise': '#30d5c8', 'aqua': '#22d3ee', 'denim': '#3b5b7c', 'indigo': '#4f46e5',
+        'violet': '#8b5cf6', 'lavender': '#c4b5fd', 'plum': '#8e4585', 'pink': '#ec4899', 'magenta': '#d6219b',
+        'hot pink': '#ff69b4', 'rose': '#f43f5e', 'fuchsia': '#d946ef', 'blush': '#f7cad0', 'chocolate': '#5c4033',
+        'coffee': '#6f4e37', 'mocha': '#967259', 'camel': '#c19a6b'
     };
 
-    // ── 2. SMART KEYWORD FALLBACK ──
     const FALLBACK_KEYWORDS = {
-        'blue': '#2563eb',
-        'red': '#dc2626',
-        'green': '#16a34a',
-        'pink': '#ec4899',
-        'grey': '#9ca3af',
-        'gray': '#9ca3af',
-        'yellow': '#facc15',
-        'orange': '#ea580c',
-        'purple': '#7e22ce',
-        'brown': '#7c4a2d',
-        'black': '#111111',
-        'white': '#ffffff',
-        'sand': '#e3cda4',
-        'navy': '#1e3a5f',
-        'rust': '#b7410e',
-        'teal': '#0d9488',
-        'gold': '#d4af37'
+        'blue': '#2563eb', 'red': '#dc2626', 'green': '#16a34a', 'pink': '#ec4899', 'grey': '#9ca3af',
+        'gray': '#9ca3af', 'yellow': '#facc15', 'orange': '#ea580c', 'purple': '#7e22ce', 'brown': '#7c4a2d',
+        'black': '#111111', 'white': '#ffffff', 'sand': '#e3cda4', 'navy': '#1e3a5f', 'rust': '#b7410e',
+        'teal': '#0d9488', 'gold': '#d4af37'
     };
 
-    // Words that are sizes/qualifiers, not colors — should never render as a swatch.
     const NON_COLOR_WORDS = new Set([
         'regular','default','standard','one size','os','small','medium','large','x-large','xl','xxl','xxxl',
         's','m','l','xs','2xl','3xl','4xl','5xl','size','oz','ml','inch','in','"','title'
     ]);
 
-    // Pull the clean color name, stripping sizes (e.g. "Forest Green - Large" -> "Forest Green")
     const cleanColorName = (vName) => {
         if (!vName) return '';
         let s = String(vName).replace(/^color\s*[:\-]\s*/i, '');
-        // Split by typical delimiters to drop sizes (e.g., / , - | )
         const part = s.split(/\s*[\/|,\-]\s*/)[0].trim();
         return part;
     };
 
-    // Resolve color HEX and display name
     const resolveColorSwatch = (rawName) => {
         const cleanName = cleanColorName(rawName);
         if (!cleanName || NON_COLOR_WORDS.has(cleanName.toLowerCase())) return null;
-
         const lowerClean = cleanName.toLowerCase();
-
-        // Layer 1: Exact Match
-        if (COLOR_MAP[lowerClean]) {
-            return { hex: COLOR_MAP[lowerClean], label: cleanName };
-        }
-
-        // Layer 2: Smart Keyword Fallback
+        if (COLOR_MAP[lowerClean]) return { hex: COLOR_MAP[lowerClean], label: cleanName };
         for (const [keyword, hex] of Object.entries(FALLBACK_KEYWORDS)) {
-            if (lowerClean.includes(keyword)) {
-                return { hex: hex, label: cleanName };
-            }
+            if (lowerClean.includes(keyword)) return { hex: hex, label: cleanName };
         }
-
-        // If we don't confidently know it's a color, don't show a dot at all.
         return null; 
     };
 
-    // Build the row of color swatches for a product card.
     const buildSwatchesHTML = (p) => {
         if (!p.variations || p.variations.length < 2) return '';
         const seen = new Set();
@@ -1360,8 +1264,6 @@ document.addEventListener('DOMContentLoaded', () => {
         p.variations.forEach(v => {
             const swatch = resolveColorSwatch(v.name);
             if (!swatch) return;
-            
-            // Use label as uniqueness key so we don't show 5 black dots if sizes vary
             const key = swatch.label.toLowerCase(); 
             if (!seen.has(key)) {
                 seen.add(key);
@@ -1376,13 +1278,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const extra = swatches.length - shown.length;
 
         const dots = shown.map(s => {
-            // Light colors get a slightly darker ring so white/ivory stay visible.
-            const ring = ['#ffffff','#fffff0','#fdf6e3','#f0e6d2'].includes(s.hex) ? 'border-gray-300' : 'border-black/10';
-            // Tooltip label is clean (e.g. "Forest Green" instead of "Forest Green - Large")
+            const ring = ['#ffffff','#fffff0','#fdf6e3','#f0e6d2'].includes(s.hex) ? 'border-stone-300' : 'border-black/10';
             return `<span class="inline-block w-4 h-4 rounded-full border ${ring} shadow-sm" style="background:${s.hex}" title="${s.label}"></span>`;
         }).join('');
 
-        const more = extra > 0 ? `<span class="text-[10px] font-bold text-gray-400 ml-0.5">+${extra}</span>` : '';
+        const more = extra > 0 ? `<span class="text-[10px] font-bold text-stone-400 ml-0.5">+${extra}</span>` : '';
         return `<div class="flex items-center gap-1.5 mt-2.5" aria-label="Available colors">${dots}${more}</div>`;
     };
 
@@ -1438,12 +1338,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (p.imageUrl && p.imageUrl.startsWith('http')) {
             imgHtml = `<img src="${p.imageUrl}" alt="${safeName}" class="w-full h-full object-contain p-0 sm:p-4 drop-shadow-md">`;
         } else {
-            imgHtml = `<div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
+            imgHtml = `<div class="w-full h-full bg-stone-100 flex items-center justify-center text-stone-400 text-xs tracking-widest uppercase font-bold">RLP DEZINES</div>`;
         }
 
         const initialPrice = p.variations && p.variations.length > 0 ? (p.variations[0].price / 100).toFixed(2) : '0.00';
 
-        // UPSELL LOGIC: Find a random Tumbler, Tote, or T-Shirt to recommend
         const upsellCandidates = Object.values(window.globalProducts).filter(prod => 
             prod.id !== id && 
             (prod.category === 'Totes' || prod.category === 'Tumblers' || prod.category === 'T Shirts')
@@ -1458,15 +1357,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const upSafeName = upsellItem.name.replace(/'/g,"&#39;");
             
             upsellHtml = `
-            <div class="mt-5 mb-2 bg-gray-50 border border-blue-200 rounded-xl p-3 flex items-center gap-3 shadow-sm cursor-pointer hover:bg-blue-50 transition group" onclick="document.getElementById('upsell-check').click()">
-                <img src="${upImg}" class="w-14 h-14 object-contain bg-white rounded border border-gray-200 p-1 flex-shrink-0">
+            <div class="mt-5 mb-2 bg-stone-50 border border-stone-200 rounded-xl p-3 flex items-center gap-3 shadow-sm cursor-pointer hover:bg-stone-100 transition group" onclick="document.getElementById('upsell-check').click()">
+                <img src="${upImg}" class="w-14 h-14 object-contain bg-white rounded border border-stone-200 p-1 flex-shrink-0">
                 <div class="flex-grow">
-                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-0.5">Frequently Bought Together</p>
-                    <p class="text-[13px] font-bold text-gray-900 leading-tight line-clamp-1 group-hover:text-blue-600 transition">${upSafeName}</p>
-                    <p class="text-[12px] font-bold text-gray-500 mt-0.5">+ $${upPrice}</p>
+                    <p class="text-[10px] font-black text-stone-900 uppercase tracking-widest mb-0.5">Frequently Bought Together</p>
+                    <p class="text-[13px] font-bold text-stone-900 leading-tight line-clamp-1">${upSafeName}</p>
+                    <p class="text-[12px] font-bold text-stone-500 mt-0.5">+ $${upPrice}</p>
                 </div>
                 <div class="pr-2 pl-1 flex-shrink-0">
-                    <input type="checkbox" id="upsell-check" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" 
+                    <input type="checkbox" id="upsell-check" class="w-5 h-5 rounded border-stone-300 text-stone-900 focus:ring-stone-900 cursor-pointer" 
                         data-id="${upsellItem.id}" data-vid="${upV.id}" data-name="${upSafeName}" data-price="${upV.price}" onclick="event.stopPropagation()">
                 </div>
             </div>
@@ -1474,12 +1373,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         pModal.innerHTML = `
-            <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-gray-100 text-gray-900 p-2.5 rounded-full z-[100] transition shadow-md border border-gray-200 btn-pulse" aria-label="Close">
+            <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-stone-100 text-stone-900 p-2.5 rounded-full z-[100] transition shadow-md border border-stone-200 btn-pulse" aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             
-            <div class="w-full md:w-1/2 bg-[#f4f4f4] relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 h-[50vh] md:h-full overflow-hidden group">
-                <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full z-[100] shadow-sm border border-gray-200 btn-pulse" aria-label="Close">
+            <div class="w-full md:w-1/2 bg-[#fafaf9] relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-stone-200 h-[50vh] md:h-full overflow-hidden group">
+                <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-stone-900 p-2 rounded-full z-[100] shadow-sm border border-stone-200 btn-pulse" aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
                 <div class="w-full h-full relative flex items-center justify-center p-0 sm:p-6">${imgHtml}</div>
@@ -1488,44 +1387,44 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="w-full md:w-1/2 flex flex-col relative bg-white flex-grow min-h-0 md:h-full">
                 
                 <div class="flex-grow overflow-y-auto p-5 sm:p-8 pb-32 md:pb-36 bg-white">
-                    <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-gray-900 leading-tight mb-2 pr-4">${safeName}</h2>
-                    <div id="modal-price-display" class="text-xl font-bold text-blue-600 mb-6">$${initialPrice}</div>
+                    <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-stone-900 leading-tight mb-2 pr-4">${safeName}</h2>
+                    <div id="modal-price-display" class="text-xl font-bold text-stone-900 mb-6">$${initialPrice}</div>
                     
-                    <div class="flex flex-wrap gap-3 mb-6 text-[10px] sm:text-[11px] font-black text-gray-500 uppercase tracking-widest border-b border-gray-100 pb-5">
-                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Indigenous Owned</span>
-                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Made-to-Order</span>
-                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Secure Checkout</span>
+                    <div class="flex flex-wrap gap-3 mb-6 text-[10px] sm:text-[11px] font-black text-stone-500 uppercase tracking-widest border-b border-stone-100 pb-5">
+                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-stone-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Indigenous Owned</span>
+                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-stone-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Made-to-Order</span>
+                        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-stone-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Secure Checkout</span>
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Select Option</label>
+                        <label class="block text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-2">Select Option</label>
                         <select id="modal-variant" class="variant-select" onchange="window.updateModalPrice()">${opts}</select>
                     </div>
                     
                     <div class="mb-4">
-                        <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Quantity</label>
-                        <div class="qty-wrap inline-flex w-32 h-12 bg-white border border-gray-300 rounded-lg overflow-hidden">
-                            <button class="w-10 h-full flex items-center justify-center text-gray-500 hover:bg-gray-50 transition font-medium text-lg" onclick="window.stepModalQty(-1)">−</button>
-                            <input type="number" id="modal-qty" class="w-12 h-full text-center text-sm font-semibold text-gray-900 border-none outline-none p-0 bg-transparent" value="1" min="1" max="99" onchange="window.updateModalPrice()">
-                            <button class="w-10 h-full flex items-center justify-center text-gray-500 hover:bg-gray-50 transition font-medium text-lg" onclick="window.stepModalQty(1)">+</button>
+                        <label class="block text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-2">Quantity</label>
+                        <div class="qty-wrap inline-flex w-32 h-12 bg-white border border-stone-300 rounded-lg overflow-hidden">
+                            <button class="w-10 h-full flex items-center justify-center text-stone-500 hover:bg-stone-50 transition font-medium text-lg" onclick="window.stepModalQty(-1)">−</button>
+                            <input type="number" id="modal-qty" class="w-12 h-full text-center text-sm font-semibold text-stone-900 border-none outline-none p-0 bg-transparent" value="1" min="1" max="99" onchange="window.updateModalPrice()">
+                            <button class="w-10 h-full flex items-center justify-center text-stone-500 hover:bg-stone-50 transition font-medium text-lg" onclick="window.stepModalQty(1)">+</button>
                         </div>
                     </div>
                     
                     ${upsellHtml}
                     
-                    <div class="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-wrap mt-6 pt-6 border-t border-gray-100">${safeDesc}</div>
-                    <p class="text-[11px] text-gray-500 mt-6 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
+                    <div class="text-sm sm:text-base text-stone-600 leading-relaxed whitespace-pre-wrap mt-6 pt-6 border-t border-stone-100">${safeDesc}</div>
+                    <p class="text-[11px] text-stone-500 mt-6 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
 
-                <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-gray-200 p-3 sm:p-5 flex items-center gap-2 sm:gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
-                    <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-full hidden sm:flex items-center justify-center shadow-sm text-gray-900 transition duration-200 btn-pulse" aria-label="Close">
+                <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-stone-200 p-3 sm:p-5 flex items-center gap-2 sm:gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+                    <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-stone-200 hover:bg-stone-50 hover:border-stone-300 rounded-full hidden sm:flex items-center justify-center shadow-sm text-stone-900 transition duration-200 btn-pulse" aria-label="Close">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                     <div class="flex-grow flex gap-2 sm:gap-3 h-[52px]">
-                        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition flex items-center justify-center btn-pulse" onclick="window.addModalToCart('${p.id}')">
+                        <button class="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-900 font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] transition flex items-center justify-center btn-pulse border border-stone-300" onclick="window.addModalToCart('${p.id}')">
                             Add to Cart
                         </button>
-                        <button id="modal-buy-now-btn" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition btn-pulse flex items-center justify-center" onclick="window.buyNow('${p.id}')">
+                        <button id="modal-buy-now-btn" class="flex-1 bg-stone-900 hover:bg-black text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition btn-pulse flex items-center justify-center" onclick="window.buyNow('${p.id}')">
                             Buy Now
                         </button>
                     </div>
@@ -1563,10 +1462,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const baseName = p ? (p.name || 'Item') : 'Item';
         const finalName = (vName === 'Regular' || vName === '') ? baseName : `${baseName} (${vName})`;
         
-        // Add main item
         window.Cart.addItem({ id: opt.value, name: finalName, price: parseInt(opt.getAttribute('data-price')), sku: opt.getAttribute('data-sku') || '', quantity: parseInt(qty.value)||1 });
         
-        // Check for Upsell
         const upsellCheck = document.getElementById('upsell-check');
         if(upsellCheck && upsellCheck.checked) {
             window.Cart.addItem({ 
@@ -1581,7 +1478,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.closeModal();
     };
 
-    // ── DIRECT BUY NOW LOGIC (WITH UPSELL) ──
     window.buyNow = async (id) => {
         const sel = document.getElementById('modal-variant'), qty = document.getElementById('modal-qty'); 
         if(!sel || !qty) return;
@@ -1600,7 +1496,6 @@ document.addEventListener('DOMContentLoaded', () => {
             quantity: parseInt(qty.value)||1 
         }];
         
-        // Check for Upsell
         const upsellCheck = document.getElementById('upsell-check');
         if(upsellCheck && upsellCheck.checked) {
             checkoutItems.push({
@@ -1636,20 +1531,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const sName = (p.name || 'Item').replace(/'/g, "&#39;");
         const img = (p.imageUrl && p.imageUrl.startsWith('http')) ? `<img src="${p.imageUrl}" alt="${sName}" class="card-img" loading="lazy">` : `<div class="card-img-placeholder"><span>RLP DEZINES</span></div>`;
         const pMinPrice = getSafeMinPrice(p);
-        // Items with more than one variation (e.g. shirts with color/size) require the customer to choose options.
         const needsOptions = !!(p.variations && p.variations.length > 1);
         
         return `
-        <div class="product-card group" onclick="window.openModal('${p.id}')">
-            <div class="card-img-wrap">${img}</div>
-            <div class="card-body">
+        <div class="product-card group bg-stone-50/50 hover:bg-stone-50 rounded-2xl p-4 transition duration-300 w-full" onclick="window.openModal('${p.id}')">
+            <div class="card-img-wrap rounded-xl overflow-hidden bg-transparent mb-4">${img}</div>
+            <div class="card-body p-0">
                 <div>
-                    <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-gray-900 leading-snug line-clamp-2">${sName}</h3>
+                    <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-stone-900 leading-snug line-clamp-2">${sName}</h3>
                     ${buildPriceHTML(p, pMinPrice)}
                     ${buildSwatchesHTML(p)}
                 </div>
-                <div class="mt-4">
-                    <button class="btn-pulse w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3 rounded-lg shadow-md transition-transform" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
+                <div class="mt-5">
+                    <button class="btn-pulse w-full bg-stone-900 hover:bg-black text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3.5 rounded-full shadow-md transition-transform" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
                 </div>
             </div>
         </div>`;
@@ -1668,18 +1562,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const flashSection = document.getElementById('flash-drop');
         
         const icons = {
-            'Sherpa Throws - 60” x 80”': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
-            'Sherpa Throws': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
-            'Hoodies': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
-            'T Shirts': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
-            'Mugs': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
-            'Tumblers': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
-            'Totes': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
-            'Towels': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
-            'Hand Towels': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
-            'Phone Cases': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
-            'Design Services': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`,
-            'Other Goods': `<svg class="w-6 h-6 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`
+            'Sherpa Throws - 60” x 80”': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
+            'Sherpa Throws': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
+            'Hoodies': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
+            'T Shirts': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2 12 4 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>`,
+            'Mugs': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
+            'Tumblers': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/></svg>`,
+            'Totes': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+            'Towels': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
+            'Hand Towels': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
+            'Phone Cases': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+            'Design Services': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>`,
+            'Other Goods': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`
         };
 
         try {
@@ -1692,14 +1586,13 @@ document.addEventListener('DOMContentLoaded', () => {
             lodgepoleGrid.innerHTML = '';
             flashGrid.innerHTML = '';
 
-            if (!products.length) { grid.innerHTML = `<p class="text-gray-500 text-sm text-center">No items found in catalog.</p>`; return; }
+            if (!products.length) { grid.innerHTML = `<p class="text-stone-500 text-sm text-center">No items found in catalog.</p>`; return; }
 
             const catMap = {};
             const nacnaItems = [];
             const lodgepoleItems = [];
             const flashPool = [];
             
-            // Check if the vaults are still active
             const now = new Date().getTime();
             const isNacnaActive = now < NACNA_DEADLINE;
             const isFlashActive = now < FLASH_DEADLINE;
@@ -1711,74 +1604,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
             nonBundleProducts.forEach(p => {
                 window.globalProducts[p.id] = p; 
-                
                 const pNameUpper = (p.name || '').toUpperCase();
 
-                // Route Lodgepole Special items
-                if (pNameUpper.includes('SPECIAL')) {
-                    lodgepoleItems.push(p);
-                    return; // Skip adding to the regular catalog
-                }
-
-                // Route NACNA items to the vault
-                if (pNameUpper.includes('NACNA')) {
-                    if (isNacnaActive) nacnaItems.push(p);
-                    return; // Skip adding to the regular catalog
-                }
+                if (pNameUpper.includes('SPECIAL')) { lodgepoleItems.push(p); return; }
+                if (pNameUpper.includes('NACNA')) { if (isNacnaActive) nacnaItems.push(p); return; }
                 
-                // Puts everything else into the potential flash drop pool
                 flashPool.push(p);
             });
 
-            // ── Render Lodgepole Fundraiser ──
             if (lodgepoleItems.length > 0) {
                 lodgepoleSection.classList.remove('hidden');
                 lodgepoleGrid.innerHTML = lodgepoleItems.map(p => `
-                    <div class="fundraiser-card bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg">
+                    <div class="fundraiser-card bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg shrink-0 w-[75vw] sm:w-[280px] snap-start">
                         ${generateCardHTML(p)}
                     </div>
                 `).join('');
-            } else {
-                lodgepoleSection.classList.add('hidden');
-            }
+            } else { lodgepoleSection.classList.add('hidden'); }
             
-            // ── Render 72-Hour Flash Drop ──
             let flashItems = [];
             if (isFlashActive) {
                 if (flashPool.length > 0) {
                     flashSection.classList.remove('hidden');
-                    // Lock the first 4 eligible items into the Flash Drop section
                     flashItems = flashPool.slice(0, 4);
                     flashGrid.innerHTML = flashItems.map(p => `
-                        <div class="flash-card bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg">
+                        <div class="flash-card bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg shrink-0 w-[75vw] sm:w-[280px] snap-start">
                             ${generateCardHTML(p)}
                         </div>
                     `).join('');
                 }
-            } else {
-                flashSection.classList.add('hidden');
-            }
+            } else { flashSection.classList.add('hidden'); }
 
-            // Distribute the remaining pool to the full catalog (excluding flash items)
             flashPool.forEach(p => {
-                if (flashItems.includes(p)) return; // Excludes Flash Drop items from main catalog
+                if (flashItems.includes(p)) return;
                 const c = p.category || 'Other Goods';
                 if (!catMap[c]) catMap[c] = []; 
                 catMap[c].push(p);
             });
 
-            // ── Render NACNA Vault ──
             if (isNacnaActive && nacnaItems.length > 0) {
                 nacnaVault.classList.remove('hidden');
-                // Wrap cards in a div that overrides some styles for dark mode
                 nacnaGrid.innerHTML = nacnaItems.map(p => `
-                    <div class="nacna-card">
+                    <div class="nacna-card shrink-0 w-[75vw] sm:w-[280px] snap-start">
                         ${generateCardHTML(p)}
                     </div>
                 `).join('');
-            } else {
-                nacnaVault.classList.add('hidden');
-            }
+            } else { nacnaVault.classList.add('hidden'); }
 
             const categoryOrder = ['Sherpa Throws - 60” x 80”', 'Sherpa Throws', 'T Shirts', 'Hoodies', 'Totes', 'Tumblers', 'Mugs', 'Phone Cases', 'Towels', 'Hand Towels', 'Design Services'];
             const existingCats = Object.keys(catMap);
@@ -1787,39 +1657,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const featuredItems = [];
             if(nonBundleProducts.length > 0) {
-                // EXPLICIT TARGET LIST FOR FEATURED SECTION
-                const targetNames = [
-                    "STAR HORIZON",
-                    "GEOMETRIC STAR GRAPHIC T-SHIRT",
-                    "TURQUOISE & MAGENTA FLORAL SHERPA BLANKET",
-                    "MEN'S BLACK GEOMETRIC INDIGENOUS PRINT HOODIE",
-                    "THE GRAND ENTRY WEEKENDER TOTE",
-                    "LINEAGE LINK"
-                ];
-
+                const targetNames = ["STAR HORIZON", "GEOMETRIC STAR GRAPHIC T-SHIRT", "TURQUOISE & MAGENTA FLORAL SHERPA BLANKET", "MEN'S BLACK GEOMETRIC INDIGENOUS PRINT HOODIE", "THE GRAND ENTRY WEEKENDER TOTE", "LINEAGE LINK"];
                 targetNames.forEach(target => {
                     let found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes(target.toUpperCase()));
-                    
-                    if (!found && target.includes("STAR HORIZON")) {
-                        found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("STAR HORIZON"));
-                    }
-                    if (!found && target.includes("GEOMETRIC STAR")) {
-                        found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("GEOMETRIC STAR"));
-                    }
-                    if (!found && target.includes("HOODIE")) {
-                        found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("GEOMETRIC INDIGENOUS PRINT HOODIE"));
-                    }
+                    if (!found && target.includes("STAR HORIZON")) found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("STAR HORIZON"));
+                    if (!found && target.includes("GEOMETRIC STAR")) found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("GEOMETRIC STAR"));
+                    if (!found && target.includes("HOODIE")) found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("GEOMETRIC INDIGENOUS PRINT HOODIE"));
                     if (!found) {
                         const cleanTarget = target.replace(/['&]/g, '').replace(/\s+/g, ' ').toUpperCase();
                         found = nonBundleProducts.find(p => (p.name || '').replace(/['&]/g, '').replace(/\s+/g, ' ').toUpperCase().includes(cleanTarget));
                     }
-
                     if (found && !featuredItems.includes(found) && !found.name.toUpperCase().includes('NACNA') && !found.name.toUpperCase().includes('SPECIAL') && !flashItems.includes(found)) {
                         featuredItems.push(found);
                     }
                 });
-
-                // FILL REMAINING SPOTS WITH VARIETY IF ANY TARGETS ARE MISSING (Max 5)
                 for(let p of nonBundleProducts) { 
                     if(featuredItems.length >= 5) break; 
                     if(!featuredItems.includes(p) && !p.name.toUpperCase().includes('NACNA') && !p.name.toUpperCase().includes('SPECIAL') && !flashItems.includes(p)) {
@@ -1829,11 +1680,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (featuredItems.length > 0) {
-                const featuredCards = featuredItems.map(p => generateCardHTML(p)).join('');
+                const featuredCards = featuredItems.map(p => `
+                    <div class="shrink-0 w-[80vw] sm:w-[300px] snap-start">
+                        ${generateCardHTML(p)}
+                    </div>
+                `).join('');
                 featuredContainer.innerHTML = `
-                <div style="animation: fadeInDown 0.5s ease-out forwards;">
+                <div style="animation: fadeInDown 0.5s ease-out forwards; padding-left: 16px;">
                     <p class="section-label mb-4 justify-center md:justify-start">Featured</p>
-                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2 pb-8 border-b border-gray-100">${featuredCards}</div>
+                    <div class="swipe-carousel pt-2">${featuredCards}</div>
                 </div>`;
             } else {
                 document.getElementById('featured').classList.add('hidden');
@@ -1843,21 +1698,25 @@ document.addEventListener('DOMContentLoaded', () => {
             sortedCats.forEach((cat, idx) => {
                 const items = catMap[cat]; if (!items) return;
                 const minPrice = Math.min(...items.map(p => getSafeMinPrice(p)));
-                const priceLabel = `<span class="text-[12px] text-gray-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
-                const cards = items.map(p => generateCardHTML(p)).join('');
+                const priceLabel = `<span class="text-[12px] text-stone-500 font-medium ml-3 lowercase tracking-normal hidden sm:inline">from $${(minPrice/100).toFixed(2)}</span>`;
+                const cards = items.map(p => `
+                    <div class="shrink-0 w-[80vw] sm:w-[300px] snap-start">
+                        ${generateCardHTML(p)}
+                    </div>
+                `).join('');
 
                 htmlOutput += `
                 <details class="group w-full mb-4" open>
-                    <summary class="flex justify-between items-center cursor-pointer bg-white p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-gray-200 hover:border-blue-500 transition-colors select-none shadow-sm">
+                    <summary class="flex justify-between items-center cursor-pointer bg-white p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-stone-200 hover:border-stone-900 transition-colors select-none shadow-sm">
                         <div class="flex items-center gap-3">
                             ${icons[cat] || icons['Other Goods']}
-                            <h3 class="text-[14px] sm:text-base font-black uppercase tracking-widest text-gray-900 flex items-center">
-                                ${cat} <span class="bg-blue-50 border border-blue-200 text-blue-600 text-[11px] px-2 py-0.5 rounded-full ml-3">${items.length}</span> ${priceLabel}
+                            <h3 class="text-[14px] sm:text-base font-black uppercase tracking-widest text-stone-900 flex items-center">
+                                ${cat} <span class="bg-stone-100 border border-stone-200 text-stone-900 text-[11px] px-2 py-0.5 rounded-full ml-3">${items.length}</span> ${priceLabel}
                             </h3>
                         </div>
-                        <span class="text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-open:rotate-180"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        <span class="text-stone-400 group-hover:text-stone-900 transition-transform duration-300 group-open:rotate-180"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
                     </summary>
-                    <div class="accordion-content grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-5 pb-3">${cards}</div>
+                    <div class="accordion-content swipe-carousel pt-5 px-4 sm:px-0 -mx-4 sm:mx-0">${cards}</div>
                 </details>`;
             });
 
@@ -1887,12 +1746,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const pName = (p.name || '').toLowerCase();
             const isBundle = pName.includes('bundle') || pName.includes('-piece');
             const matchesTerm = pName.includes(term);
-            
             const now = new Date().getTime();
-            // Hide NACNA from search if expired
             const isNacnaItem = pName.toUpperCase().includes('NACNA');
             if (isNacnaItem && now > NACNA_DEADLINE) return false;
-            
             return matchesTerm && !isBundle;
         });
         
@@ -1901,14 +1757,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         grid.innerHTML = products.length > 0 
             ? `<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pb-6">` + products.map(p => generateCardHTML(p)).join('') + `</div>`
-            : `<p class="text-center py-10 text-gray-500 w-full col-span-full font-semibold">No items match your search.</p>`;
+            : `<p class="text-center py-10 text-stone-500 w-full col-span-full font-semibold">No items match your search.</p>`;
             
         closeFilter();
         window.showToast('Results updated ✓');
-        
         document.getElementById('shop-live').scrollIntoView({ behavior: 'smooth' });
     });
-
 });
 </script>
 </body>
