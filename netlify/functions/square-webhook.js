@@ -49,8 +49,7 @@ exports.handler = async (event) => {
             const orderResponse = await squareClient.ordersApi.retrieveOrder(orderId);
             const order = orderResponse.result.order;
             
-            // ── NEW FIX: THE STATUTE OF LIMITATIONS ──
-            // Calculate how old the order is. If it's older than 2 hours, it's a historical sync ghost. Ignore it!
+            // ── THE STATUTE OF LIMITATIONS ──
             const orderCreatedAt = new Date(order.createdAt).getTime();
             const now = Date.now();
             const hoursSinceCreation = (now - orderCreatedAt) / (1000 * 60 * 60);
@@ -59,7 +58,6 @@ exports.handler = async (event) => {
                 console.log(`⚠️ GHOST ORDER BLOCKED: Order ${orderId} is ${hoursSinceCreation.toFixed(2)} hours old. Ignoring to prevent duplicate fulfillment.`);
                 return { statusCode: 200, body: 'Historical order safely ignored.' };
             }
-            // ─────────────────────────────────────────
 
             const lineItems = order.lineItems || [];
 
@@ -126,7 +124,7 @@ exports.handler = async (event) => {
                         }
                     });
                     console.log(`Printful Order ${printfulOrderId} officially submitted to production for Square Order ${orderId}!`);
-                    isFreshOrder = true; // Flag it as a brand new success so the email fires
+                    isFreshOrder = true;
                     processedOrders.set(orderId, { timestamp: Date.now(), printfulOrderId });
                 }
             } catch (printfulError) {
@@ -135,13 +133,10 @@ exports.handler = async (event) => {
                 
                 if (errorReason.includes("already exists") || errorData.error?.message?.includes("already exists") || errorData.api_error_code === "OR-13") {
                     console.log(`Duplicate event for Square Order ${orderId} detected. Exiting safely without sending duplicate emails.`);
-                    
-                    // EXIT THE FUNCTION ENTIRELY! This prevents the spam emails.
                     return { statusCode: 200, body: 'Duplicate webhook ignored safely.' };
-                    
                 } else {
                     console.error(`Printful API Error for Order ${orderId}:`, errorReason);
-                    isFreshOrder = true; // It IS a new order, Printful just errored out. Email the customer their receipt!
+                    isFreshOrder = true; 
                     
                     try {
                         await resend.emails.send({
@@ -166,10 +161,9 @@ exports.handler = async (event) => {
                 }
             }
 
-            // ── PREMIUM LUXURY CONFIRMATION EMAIL (STONE THEME) ──
+            // ── PREMIUM CUSTOMER CONFIRMATION EMAIL (STONE LUXURY DESIGN) ──
             if (isFreshOrder) {
                 try {
-                    // Generate Stone-themed item rows
                     const itemsHtml = lineItems.map(item => {
                         const totalLinePrice = item.totalMoney ? (Number(item.totalMoney.amount) / 100).toFixed(2) : "0.00";
                         return `
@@ -205,18 +199,15 @@ exports.handler = async (event) => {
                                 <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #fafaf9; padding: 40px 20px;">
                                     <tr>
                                         <td align="center">
-                                            <!-- Main Card -->
                                             <table width="100%" max-width="600" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 600px; background-color: #ffffff; border: 1px solid #e7e5e4; border-radius: 24px; padding: 50px 40px; text-align: center; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
                                                 <tr>
                                                     <td align="center">
                                                         <h1 style="font-size: 28px; font-weight: 900; letter-spacing: 4px; font-style: italic; text-transform: uppercase; color: #1c1917; margin: 0 0 16px 0;">RLP DEZINES</h1>
                                                         
-                                                        <!-- Status Badge -->
                                                         <div style="display: inline-block; background-color: #f5f5f4; color: #1c1917; padding: 8px 20px; border-radius: 9999px; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 35px;">
                                                             Order Confirmed
                                                         </div>
                                                         
-                                                        <!-- Message -->
                                                         <p style="color: #78716c; font-size: 16px; line-height: 1.7; font-weight: 300; margin: 0 0 20px 0;">
                                                             Ahoooo!! for supporting authentic design. Your payment has cleared successfully, and your custom gear has officially entered production.
                                                         </p>
@@ -228,7 +219,6 @@ exports.handler = async (event) => {
                                                             (Please refer to your receipt for our custom-order return policies.)
                                                         </p>
 
-                                                        <!-- ITEM RECEIPT SECTION -->
                                                         <div style="text-align: left; margin: 35px 0; border-top: 1px solid #e7e5e4; padding-top: 25px;">
                                                             <table style="width: 100%; border-collapse: collapse; margin-bottom: 5px;">
                                                                 <tbody>
@@ -264,7 +254,6 @@ exports.handler = async (event) => {
                                                             </div>
                                                         </div>
 
-                                                        <!-- Community Call-Out -->
                                                         <div style="background-color: #fafaf9; border: 1px solid #e7e5e4; padding: 24px; border-radius: 16px; margin-bottom: 40px; text-align: left;">
                                                             <h4 style="font-weight: 800; font-size: 12px; color: #1c1917; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 10px 0;">Rep Your Culture</h4>
                                                             <p style="font-size: 14px; color: #78716c; line-height: 1.6; font-weight: 300; margin: 0;">
@@ -272,7 +261,6 @@ exports.handler = async (event) => {
                                                             </p>
                                                         </div>
 
-                                                        <!-- Luxury Pill Button -->
                                                         <a href="https://rlpdezines.com" style="display: inline-block; background-color: #1c1917; color: #ffffff; text-decoration: none; padding: 18px 32px; border-radius: 9999px; font-weight: 900; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; text-align: center; width: 100%; box-sizing: border-box;">
                                                             Return to Shop
                                                         </a>
@@ -281,7 +269,6 @@ exports.handler = async (event) => {
                                                 </tr>
                                             </table>
                                             
-                                            <!-- Footer -->
                                             <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin-top: 20px; text-align: center;">
                                                 <tr>
                                                     <td align="center" style="color: #a8a29e; font-size: 11px; line-height: 1.5;">
