@@ -166,19 +166,19 @@ exports.handler = async (event) => {
                 }
             }
 
-            // ── PREMIUM CUSTOMER CONFIRMATION EMAIL (NEW DESIGN) ──
+            // ── PREMIUM LUXURY CONFIRMATION EMAIL (STONE THEME) ──
             if (isFreshOrder) {
                 try {
-                    // Generate light-mode item rows
+                    // Generate Stone-themed item rows
                     const itemsHtml = lineItems.map(item => {
                         const totalLinePrice = item.totalMoney ? (Number(item.totalMoney.amount) / 100).toFixed(2) : "0.00";
                         return `
                             <tr>
-                                <td style="padding: 16px 0; border-bottom: 1px solid #e5e7eb; text-align: left;">
-                                    <strong style="color: #111827; font-size: 14px; font-weight: 700;">${item.name}</strong>
-                                    <div style="color: #6b7280; font-size: 13px; margin-top: 4px;">Qty: ${item.quantity}</div>
+                                <td style="padding: 16px 0; border-bottom: 1px solid #e7e5e4; text-align: left;">
+                                    <strong style="color: #1c1917; font-size: 14px; font-weight: 700;">${item.name}</strong>
+                                    <div style="color: #78716c; font-size: 13px; margin-top: 4px;">Qty: ${item.quantity}</div>
                                 </td>
-                                <td style="padding: 16px 0; border-bottom: 1px solid #e5e7eb; color: #111827; text-align: right; font-weight: 600; font-size: 14px;">$${totalLinePrice}</td>
+                                <td style="padding: 16px 0; border-bottom: 1px solid #e7e5e4; color: #1c1917; text-align: right; font-weight: 600; font-size: 14px;">$${totalLinePrice}</td>
                             </tr>`;
                     }).join('');
 
@@ -193,71 +193,109 @@ exports.handler = async (event) => {
                         to: [recipient.email],
                         subject: 'Order Confirmed - RLP Dezines',
                         html: `
-                            <div style="background-color: #f9fafb; padding: 40px 15px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-                                <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 40px 30px; border: 1px solid #e5e7eb; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
-                                    
-                                    <h1 style="font-size: 28px; font-weight: 900; letter-spacing: 4px; font-style: italic; text-transform: uppercase; margin: 0 0 10px 0; color: #111827;">RLP DEZINES</h1>
-                                    <div style="color: #2563eb; font-size: 14px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px;">Order Confirmed</div>
-                                    
-                                    <p style="color: #4b5563; font-size: 15px; line-height: 1.6; margin: 0 0 20px 0;">
-                                        Ahoooo!! for supporting authentic design. Your payment has cleared successfully, and your custom gear has officially entered production.
-                                    </p>
-                                    <p style="color: #4b5563; font-size: 15px; line-height: 1.6; margin: 0 0 25px 0;">
-                                        A detailed, itemized receipt is below. Because our drops are custom-produced specifically for you, the factory floor has already started spinning up your order.
-                                        <span style="display: block; font-size: 12px; color: #9ca3af; margin-top: 8px;">(Please refer to your receipt for our custom-order return policies.)</span>
-                                    </p>
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+                            </head>
+                            <body style="margin: 0; padding: 0; background-color: #fafaf9; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+                                
+                                <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #fafaf9; padding: 40px 20px;">
+                                    <tr>
+                                        <td align="center">
+                                            <!-- Main Card -->
+                                            <table width="100%" max-width="600" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 600px; background-color: #ffffff; border: 1px solid #e7e5e4; border-radius: 24px; padding: 50px 40px; text-align: center; margin: 0 auto; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+                                                <tr>
+                                                    <td align="center">
+                                                        <h1 style="font-size: 28px; font-weight: 900; letter-spacing: 4px; font-style: italic; text-transform: uppercase; color: #1c1917; margin: 0 0 16px 0;">RLP DEZINES</h1>
+                                                        
+                                                        <!-- Status Badge -->
+                                                        <div style="display: inline-block; background-color: #f5f5f4; color: #1c1917; padding: 8px 20px; border-radius: 9999px; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 35px;">
+                                                            Order Confirmed
+                                                        </div>
+                                                        
+                                                        <!-- Message -->
+                                                        <p style="color: #78716c; font-size: 16px; line-height: 1.7; font-weight: 300; margin: 0 0 20px 0;">
+                                                            Ahoooo!! for supporting authentic design. Your payment has cleared successfully, and your custom gear has officially entered production.
+                                                        </p>
+                                                        
+                                                        <p style="color: #78716c; font-size: 16px; line-height: 1.7; font-weight: 300; margin: 0 0 10px 0;">
+                                                            A detailed, itemized receipt is below. Because our drops are custom-produced specifically for you, the factory floor has already started spinning up your order.
+                                                        </p>
+                                                        <p style="color: #a8a29e; font-size: 12px; font-style: italic; margin: 0 0 40px 0;">
+                                                            (Please refer to your receipt for our custom-order return policies.)
+                                                        </p>
 
-                                    <!-- ITEM RECEIPT SECTION -->
-                                    <div style="text-align: left; margin: 35px 0; border-top: 1px solid #e5e7eb; padding-top: 25px;">
-                                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 5px;">
-                                            <tbody>
-                                                ${itemsHtml}
-                                            </tbody>
-                                        </table>
-                                        
-                                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                                            <tr>
-                                                <td style="padding: 6px 0; color: #4b5563; font-size: 14px; text-align: left;">Subtotal:</td>
-                                                <td style="padding: 6px 0; color: #111827; font-size: 14px; text-align: right; font-weight: 600;">$${calculatedSubtotal.toFixed(2)}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 6px 0; color: #4b5563; font-size: 14px; text-align: left;">Shipping:</td>
-                                                <td style="padding: 6px 0; color: #111827; font-size: 14px; text-align: right; font-weight: 600;">$${calculatedShipping}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 6px 0; color: #4b5563; font-size: 14px; text-align: left;">Tax:</td>
-                                                <td style="padding: 6px 0; color: #111827; font-size: 14px; text-align: right; font-weight: 600;">$${totalTax}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 16px 0 0 0; color: #111827; font-size: 15px; font-weight: 800; text-align: left; text-transform: uppercase;">Total:</td>
-                                                <td style="padding: 16px 0 0 0; color: #2563eb; font-size: 20px; font-weight: 900; text-align: right;">$${totalGross}</td>
-                                            </tr>
-                                        </table>
+                                                        <!-- ITEM RECEIPT SECTION -->
+                                                        <div style="text-align: left; margin: 35px 0; border-top: 1px solid #e7e5e4; padding-top: 25px;">
+                                                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 5px;">
+                                                                <tbody>
+                                                                    ${itemsHtml}
+                                                                </tbody>
+                                                            </table>
+                                                            
+                                                            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                                                                <tr>
+                                                                    <td style="padding: 6px 0; color: #78716c; font-size: 14px; text-align: left;">Subtotal:</td>
+                                                                    <td style="padding: 6px 0; color: #1c1917; font-size: 14px; text-align: right; font-weight: 600;">$${calculatedSubtotal.toFixed(2)}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding: 6px 0; color: #78716c; font-size: 14px; text-align: left;">Shipping:</td>
+                                                                    <td style="padding: 6px 0; color: #1c1917; font-size: 14px; text-align: right; font-weight: 600;">$${calculatedShipping}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding: 6px 0; color: #78716c; font-size: 14px; text-align: left;">Tax:</td>
+                                                                    <td style="padding: 6px 0; color: #1c1917; font-size: 14px; text-align: right; font-weight: 600;">$${totalTax}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding: 16px 0 0 0; color: #1c1917; font-size: 15px; font-weight: 800; text-align: left; text-transform: uppercase;">Total:</td>
+                                                                    <td style="padding: 16px 0 0 0; color: #1c1917; font-size: 20px; font-weight: 900; text-align: right;">$${totalGross}</td>
+                                                                </tr>
+                                                            </table>
 
-                                        <div style="margin-top: 30px; padding: 20px; background-color: #f9fafb; border-radius: 12px; border: 1px solid #e5e7eb;">
-                                            <p style="margin: 0 0 10px 0; font-weight: 800; color: #111827; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Shipping To:</p>
-                                            <p style="margin: 0 0 4px 0; color: #4b5563; font-size: 14px;">${recipient.name}</p>
-                                            <p style="margin: 0 0 4px 0; color: #4b5563; font-size: 14px;">${recipient.address1}</p>
-                                            <p style="margin: 0 0 4px 0; color: #4b5563; font-size: 14px;">${recipient.city}, ${recipient.state_code} ${recipient.zip}</p>
-                                            <p style="margin: 0; color: #4b5563; font-size: 14px;">${recipient.country_code}</p>
-                                        </div>
-                                    </div>
+                                                            <div style="margin-top: 30px; padding: 20px; background-color: #fafaf9; border-radius: 12px; border: 1px solid #e7e5e4;">
+                                                                <p style="margin: 0 0 10px 0; font-weight: 800; color: #1c1917; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Shipping To:</p>
+                                                                <p style="margin: 0 0 4px 0; color: #78716c; font-size: 14px;">${recipient.name}</p>
+                                                                <p style="margin: 0 0 4px 0; color: #78716c; font-size: 14px;">${recipient.address1}</p>
+                                                                <p style="margin: 0 0 4px 0; color: #78716c; font-size: 14px;">${recipient.city}, ${recipient.state_code} ${recipient.zip}</p>
+                                                                <p style="margin: 0; color: #78716c; font-size: 14px;">${recipient.country_code}</p>
+                                                            </div>
+                                                        </div>
 
-                                    <!-- Community Callout -->
-                                    <div style="background-color: #f9fafb; border: 1px solid #f3f4f6; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
-                                        <div style="font-weight: 800; font-size: 13px; color: #111827; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Rep Your Culture</div>
-                                        <div style="font-size: 13px; color: #6b7280; line-height: 1.5;">
-                                            When your package lands, tag us on Facebook or Instagram <strong style="color: #2563eb;">@rlp_cree</strong> so we can share it with the community!
-                                        </div>
-                                    </div>
+                                                        <!-- Community Call-Out -->
+                                                        <div style="background-color: #fafaf9; border: 1px solid #e7e5e4; padding: 24px; border-radius: 16px; margin-bottom: 40px; text-align: left;">
+                                                            <h4 style="font-weight: 800; font-size: 12px; color: #1c1917; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 10px 0;">Rep Your Culture</h4>
+                                                            <p style="font-size: 14px; color: #78716c; line-height: 1.6; font-weight: 300; margin: 0;">
+                                                                When your package lands, tag us on Facebook or Instagram <strong style="color: #1c1917; font-weight: 700;">@rlp_cree</strong> so we can share it with the community!
+                                                            </p>
+                                                        </div>
 
-                                    <a href="https://rlpdezines.com" style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 8px; font-weight: 900; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; width: 100%; box-sizing: border-box; text-align: center;">Return to Shop</a>
-                                    
-                                </div>
-                                <div style="text-align: center; margin-top: 20px; color: #9ca3af; font-size: 11px;">
-                                    © 2026 RLP Dezines. Indigenous-owned & operated.
-                                </div>
-                            </div>
+                                                        <!-- Luxury Pill Button -->
+                                                        <a href="https://rlpdezines.com" style="display: inline-block; background-color: #1c1917; color: #ffffff; text-decoration: none; padding: 18px 32px; border-radius: 9999px; font-weight: 900; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; text-align: center; width: 100%; box-sizing: border-box;">
+                                                            Return to Shop
+                                                        </a>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            
+                                            <!-- Footer -->
+                                            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin-top: 20px; text-align: center;">
+                                                <tr>
+                                                    <td align="center" style="color: #a8a29e; font-size: 11px; line-height: 1.5;">
+                                                        © 2026 RLP Dezines. Indigenous-owned & operated.<br>
+                                                        Town of Gilbert Bus. License: BUSLIC001339-05-2024
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </body>
+                            </html>
                         `
                     });
                     console.log(`Confirmation email sent to ${recipient.email} for order ${orderId}`);
