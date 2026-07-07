@@ -366,34 +366,6 @@
     </div>
 </section>
 
-<!-- 72 HOUR FLASH DROP SECTION -->
-<section id="flash-drop" class="hidden flash-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
-    <div class="max-w-6xl mx-auto relative z-10 text-center">
-        <div class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Limited Vault Release</div>
-        <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">72-Hour Flash Drop</h2>
-        <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">We are opening the vault. These premium designs are only available for the next 72 hours. Once the clock hits zero, they go back in the vault and a new rotation begins.</p>
-        
-        <div class="flex justify-center gap-3 sm:gap-6 mb-14 px-4">
-            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="fd-hours" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Hours</div>
-            </div>
-            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="fd-minutes" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Mins</div>
-            </div>
-            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
-                <div id="fd-seconds" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
-                <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Secs</div>
-            </div>
-        </div>
-
-        <div id="flash-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- Flash items populate here dynamically -->
-        </div>
-    </div>
-</section>
-
 <!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
@@ -770,7 +742,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // ── Timer Logic for Vaults ──
     const NACNA_DEADLINE = new Date("2026-06-27T23:59:59").getTime();
-    const FLASH_DEADLINE = new Date("2026-07-12T14:45:00-04:00").getTime(); 
     
     const updateTimer = setInterval(() => {
         const now = new Date().getTime();
@@ -788,20 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(document.getElementById('cd-seconds')) document.getElementById('cd-seconds').innerText = s.toString().padStart(2, '0');
         }
 
-        // Flash Drop Timer
-        const flashDistance = FLASH_DEADLINE - now;
-        if (flashDistance < 0) {
-            document.getElementById('flash-drop')?.classList.add('hidden');
-        } else {
-            const fh = Math.floor((flashDistance % (1000 * 60 * 60 * 24 * 99)) / (1000 * 60 * 60));
-            const fm = Math.floor((flashDistance % (1000 * 60 * 60)) / (1000 * 60));
-            const fs = Math.floor((flashDistance % (1000 * 60)) / 1000);
-            if(document.getElementById('fd-hours')) document.getElementById('fd-hours').innerText = fh.toString().padStart(2, '0');
-            if(document.getElementById('fd-minutes')) document.getElementById('fd-minutes').innerText = fm.toString().padStart(2, '0');
-            if(document.getElementById('fd-seconds')) document.getElementById('fd-seconds').innerText = fs.toString().padStart(2, '0');
-        }
-
-        if (nacnaDistance < 0 && flashDistance < 0) {
+        if (nacnaDistance < 0) {
             clearInterval(updateTimer);
             if (typeof loadProducts === 'function') loadProducts();
         }
@@ -1548,9 +1506,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const lodgepoleGrid = document.getElementById('lodgepole-grid');
         const lodgepoleSection = document.getElementById('lodgepole-special');
         
-        const flashGrid = document.getElementById('flash-grid');
-        const flashSection = document.getElementById('flash-drop');
-        
         const icons = {
             'Sherpa Throws - 60” x 80”': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
             'Sherpa Throws': `<svg class="w-6 h-6 text-stone-900 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
@@ -1574,18 +1529,15 @@ document.addEventListener('DOMContentLoaded', () => {
             featuredContainer.innerHTML = '';
             nacnaGrid.innerHTML = '';
             lodgepoleGrid.innerHTML = '';
-            flashGrid.innerHTML = '';
 
             if (!products.length) { grid.innerHTML = `<p class="text-stone-500 text-sm text-center">No items found in catalog.</p>`; return; }
 
             const catMap = {};
             const nacnaItems = [];
             const lodgepoleItems = [];
-            const flashPool = [];
             
             const now = new Date().getTime();
             const isNacnaActive = now < NACNA_DEADLINE;
-            const isFlashActive = now < FLASH_DEADLINE;
 
             const nonBundleProducts = products.filter(p => {
                 const pName = (p.name || '').toLowerCase();
@@ -1599,7 +1551,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (pNameUpper.includes('SPECIAL')) { lodgepoleItems.push(p); return; }
                 if (pNameUpper.includes('NACNA')) { if (isNacnaActive) nacnaItems.push(p); return; }
                 
-                flashPool.push(p);
+                const c = p.category || 'Other Goods';
+                if (!catMap[c]) catMap[c] = []; 
+                catMap[c].push(p);
             });
 
             if (lodgepoleItems.length > 0) {
@@ -1611,28 +1565,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `).join('');
             } else { lodgepoleSection.classList.add('hidden'); }
             
-            let flashItems = [];
-            if (isFlashActive) {
-                if (flashPool.length > 0) {
-                    flashSection.classList.remove('hidden');
-                    
-                    flashItems = flashPool.slice(0, 4);
-
-                    flashGrid.innerHTML = flashItems.map(p => `
-                        <div class="flash-card bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg shrink-0 w-[75vw] sm:w-[280px] snap-start">
-                            ${generateCardHTML(p)}
-                        </div>
-                    `).join('');
-                }
-            } else { flashSection.classList.add('hidden'); }
-
-            flashPool.forEach(p => {
-                if (flashItems.includes(p)) return;
-                const c = p.category || 'Other Goods';
-                if (!catMap[c]) catMap[c] = []; 
-                catMap[c].push(p);
-            });
-
             if (isNacnaActive && nacnaItems.length > 0) {
                 nacnaVault.classList.remove('hidden');
                 nacnaGrid.innerHTML = nacnaItems.map(p => `
@@ -1659,13 +1591,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         const cleanTarget = target.replace(/['&]/g, '').replace(/\s+/g, ' ').toUpperCase();
                         found = nonBundleProducts.find(p => (p.name || '').replace(/['&]/g, '').replace(/\s+/g, ' ').toUpperCase().includes(cleanTarget));
                     }
-                    if (found && !featuredItems.includes(found) && !found.name.toUpperCase().includes('NACNA') && !found.name.toUpperCase().includes('SPECIAL') && !flashItems.includes(found)) {
+                    if (found && !featuredItems.includes(found) && !found.name.toUpperCase().includes('NACNA') && !found.name.toUpperCase().includes('SPECIAL')) {
                         featuredItems.push(found);
                     }
                 });
                 for(let p of nonBundleProducts) { 
                     if(featuredItems.length >= 5) break; 
-                    if(!featuredItems.includes(p) && !p.name.toUpperCase().includes('NACNA') && !p.name.toUpperCase().includes('SPECIAL') && !flashItems.includes(p)) {
+                    if(!featuredItems.includes(p) && !p.name.toUpperCase().includes('NACNA') && !p.name.toUpperCase().includes('SPECIAL')) {
                         featuredItems.push(p);
                     } 
                 }
