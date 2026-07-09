@@ -284,6 +284,7 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-stone-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
+<!-- HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-stone-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
@@ -294,6 +295,7 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Wear Your Resistance</h1>
         <p class="text-stone-200 max-w-lg mx-auto text-xl mb-10 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Modern Indigenous streetwear built for resilience. Bold designs, strong attitude, and authentic culture.</p>
 
+        <!-- LUXURY CTA -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 reveal reveal-delay-3">
             <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white text-stone-900 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
             <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-transparent border border-white text-white hover:bg-white/10 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm transition btn-pulse">The Family Special</a>
@@ -301,6 +303,7 @@
     </div>
 </section>
 
+<!-- FEATURED ITEMS -->
 <section id="featured" class="py-12 sm:py-20 px-0 sm:px-6 bg-white relative z-10 border-b border-stone-200">
     <div class="max-w-6xl mx-auto" id="featured-container">
         <div class="animate-pulse px-4 sm:px-0">
@@ -316,6 +319,7 @@
     </div>
 </section>
 
+<!-- THE INTENT / MISSION -->
 <section id="mission" class="py-20 sm:py-28 px-5 bg-stone-50 border-b border-stone-200">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -349,6 +353,7 @@
     </div>
 </section>
 
+<!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
 <section id="lodgepole-special" class="hidden fundraiser-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-[#b7410e] text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Official Fundraiser</div>
@@ -356,16 +361,19 @@
         <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
         
         <div id="lodgepole-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            </div>
+            <!-- Lodgepole items populate here dynamically -->
+        </div>
     </div>
 </section>
 
-<section id="flash-drop" class="hidden flash-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
+<!-- 72 HOUR FLASH DROP SECTION -->
+<section id="flash-drop" class="flash-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
-        <div class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Limited Vault Release</div>
+        <div id="flash-badge" class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Locked Vault</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">72-Hour Flash Drop</h2>
-        <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">We are opening the vault. These premium designs are only available for the next 72 hours. Once the clock hits zero, they go back in the vault and a new rotation begins.</p>
+        <p id="flash-desc" class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">The vault is currently locked. Set your alarms—these designs drop Thursday at 11:45 AM MST.</p>
         
+        <div id="timer-status-label" class="text-[#d4af37] font-bold uppercase tracking-widest text-sm mb-4">Vault Opens In:</div>
         <div class="flex justify-center gap-3 sm:gap-6 mb-14 px-4">
             <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
                 <div id="fd-hours" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
@@ -382,10 +390,12 @@
         </div>
 
         <div id="flash-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            </div>
+            <!-- Flash items populate here dynamically -->
+        </div>
     </div>
 </section>
 
+<!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-stone-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Retiring Soon</div>
@@ -408,10 +418,12 @@
         </div>
 
         <div id="nacna-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            </div>
+            <!-- NACNA items populate here dynamically -->
+        </div>
     </div>
 </section>
 
+<!-- THE FULL CATALOG -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -420,7 +432,8 @@
         </div>
         
         <div id="product-grid" class="w-full flex flex-col gap-6 reveal">
-            </div>
+            <!-- Products inject here via JS -->
+        </div>
     </div>
 </section>
 
@@ -759,9 +772,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Timer Logic for Vaults ──
     const NACNA_DEADLINE = new Date("2026-06-27T23:59:59").getTime();
     
+    // Flash Drop explicitly starts July 9, 2026 11:45 AM MST
     // Flash Drop explicitly ends 72 hours after July 9, 2026 11:45 AM MST
     // MST is UTC-7. 
+    const FLASH_START = new Date("2026-07-09T11:45:00-07:00").getTime();
     const FLASH_DEADLINE = new Date("2026-07-12T11:45:00-07:00").getTime(); 
+    window.flashState = 'init';
     
     const updateTimer = setInterval(() => {
         const now = new Date().getTime();
@@ -779,22 +795,53 @@ document.addEventListener('DOMContentLoaded', () => {
             if(document.getElementById('cd-seconds')) document.getElementById('cd-seconds').innerText = s.toString().padStart(2, '0');
         }
 
-        // Flash Drop Timer
-        const flashDistance = FLASH_DEADLINE - now;
-        if (flashDistance < 0) {
-            document.getElementById('flash-drop')?.classList.add('hidden');
+        // Flash Drop Timer Logic
+        let targetDist = 0;
+        let currentState = '';
+        
+        if (now < FLASH_START) {
+            targetDist = FLASH_START - now;
+            currentState = 'locked';
+        } else if (now < FLASH_DEADLINE) {
+            targetDist = FLASH_DEADLINE - now;
+            currentState = 'live';
         } else {
-            const fh = Math.floor((flashDistance % (1000 * 60 * 60 * 24 * 99)) / (1000 * 60 * 60));
-            const fm = Math.floor((flashDistance % (1000 * 60 * 60)) / (1000 * 60));
-            const fs = Math.floor((flashDistance % (1000 * 60)) / 1000);
+            currentState = 'closed';
+        }
+
+        // Only update DOM structure when state changes
+        if (window.flashState !== currentState) {
+            window.flashState = currentState;
+            const timerLabel = document.getElementById('timer-status-label');
+            const flashBadge = document.getElementById('flash-badge');
+            const flashDesc = document.getElementById('flash-desc');
+            
+            if (currentState === 'locked') {
+                if(timerLabel) timerLabel.innerText = "Vault Opens In:";
+                if(flashBadge) flashBadge.innerText = "Locked Vault";
+                if(flashDesc) flashDesc.innerText = "The vault is currently locked. Set your alarms—these designs drop Thursday at 11:45 AM MST.";
+            } else if (currentState === 'live') {
+                if(timerLabel) timerLabel.innerText = "Vault Closes In:";
+                if(flashBadge) flashBadge.innerText = "Limited Vault Release";
+                if(flashDesc) flashDesc.innerText = "We are opening the vault. These premium designs are only available for 72 hours. Once the clock hits zero, they go back in the vault.";
+                if (typeof loadProducts === 'function') loadProducts(); // Refresh to show products
+            } else if (currentState === 'closed') {
+                document.getElementById('flash-drop')?.classList.add('hidden');
+                if (typeof loadProducts === 'function') loadProducts(); // Refresh to hide products
+            }
+        }
+
+        if (targetDist > 0) {
+            const fh = Math.floor((targetDist % (1000 * 60 * 60 * 24 * 99)) / (1000 * 60 * 60));
+            const fm = Math.floor((targetDist % (1000 * 60 * 60)) / (1000 * 60));
+            const fs = Math.floor((targetDist % (1000 * 60)) / 1000);
             if(document.getElementById('fd-hours')) document.getElementById('fd-hours').innerText = fh.toString().padStart(2, '0');
             if(document.getElementById('fd-minutes')) document.getElementById('fd-minutes').innerText = fm.toString().padStart(2, '0');
             if(document.getElementById('fd-seconds')) document.getElementById('fd-seconds').innerText = fs.toString().padStart(2, '0');
         }
 
-        if (nacnaDistance < 0 && flashDistance < 0) {
+        if (nacnaDistance < 0 && currentState === 'closed') {
             clearInterval(updateTimer);
-            if (typeof loadProducts === 'function') loadProducts();
         }
     }, 1000);
 
@@ -1326,7 +1373,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const upsellCandidates = Object.values(window.globalProducts).filter(prod => 
             prod.id !== id && 
-            (prod.category === 'Totes' || prod.category === 'Tumblers' || prod.category === 'T Shirts')
+            (prod.category === 'Totes' || prod.category === 'Tumblers' || prod.category === 'T Shirts') &&
+            !(prod.name.toLowerCase().includes('native land') || prod.name.toLowerCase().includes('sea to shining sea'))
         );
         const upsellItem = upsellCandidates.length > 0 ? upsellCandidates[Math.floor(Math.random() * upsellCandidates.length)] : null;
         
@@ -1576,7 +1624,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const now = new Date().getTime();
             const isNacnaActive = now < NACNA_DEADLINE;
-            const isFlashActive = now < FLASH_DEADLINE;
+            const isFlashActive = window.flashState === 'live';
 
             const nonBundleProducts = products.filter(p => {
                 const pName = (p.name || '').toLowerCase();
@@ -1588,7 +1636,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 2. Isolate Native Land items for the Flash Drop
                 if (pName.includes('native land') || pName.includes('sea to shining sea')) {
-                    // Only add them to the flashItems array if the timer is still ticking
+                    // Only add them to the flashItems array if the timer is LIVE
                     if (isFlashActive) {
                         flashItems.push(p);
                     }
@@ -1630,8 +1678,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${generateCardHTML(p)}
                     </div>
                 `).join('');
-            } else { 
-                flashSection.classList.add('hidden'); 
             }
 
             if (isNacnaActive && nacnaItems.length > 0) {
@@ -1743,9 +1789,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const isNacnaItem = pName.toUpperCase().includes('NACNA');
             if (isNacnaItem && now > NACNA_DEADLINE) return false;
             
-            // Do not show Flash Drop items in the search filter if the drop is over
+            // Do not show Flash Drop items in the search filter if the drop is over OR hasn't started
             const isFlashItem = pName.includes('native land') || pName.includes('sea to shining sea');
-            if (isFlashItem && now > FLASH_DEADLINE) return false;
+            if (isFlashItem && window.flashState !== 'live') return false;
 
             return matchesTerm && !isBundle;
         });
