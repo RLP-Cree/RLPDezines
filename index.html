@@ -121,6 +121,7 @@
             scroll-snap-align: start;
             flex: 0 0 calc(85vw - 32px);
             max-width: 300px;
+            display: flex;
         }
 
         /* ── BULLETPROOF CART STATE ENGINE ── */
@@ -132,7 +133,7 @@
         #mobile-menu.open { opacity: 1; visibility: visible; }
 
         /* ── Floating Product Cards (Unboxed & Minimal) ── */
-        .product-card { display: flex; flex-direction: column; border: none; overflow: hidden; transition: transform 0.3s ease; cursor: pointer; }
+        .product-card { display: flex; flex-direction: column; border: none; overflow: hidden; transition: transform 0.3s ease; cursor: pointer; height: 100%; width: 100%; }
         .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: transparent; position: relative; display: flex; align-items: center; justify-content: center; }
         
         .product-card:hover .card-img { transform: scale(1.04) translateY(-2px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); }
@@ -1551,13 +1552,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
         <div class="product-card group bg-stone-50/50 hover:bg-stone-50 rounded-none p-4 transition duration-300 w-full" onclick="window.openModal('${p.id}')">
             <div class="card-img-wrap rounded-none overflow-hidden bg-transparent mb-4">${img}</div>
-            <div class="card-body p-0">
+            <div class="card-body p-0 flex flex-col flex-grow">
                 <div>
-                    <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-stone-900 leading-snug line-clamp-2">${sName}</h3>
+                    <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-stone-900 leading-snug line-clamp-2 min-h-[40px]">${sName}</h3>
                     ${buildPriceHTML(p, pMinPrice)}
                     ${buildSwatchesHTML(p)}
                 </div>
-                <div class="mt-5">
+                <div class="mt-auto pt-5">
                     <button class="btn-pulse w-full bg-stone-900 hover:bg-black text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3.5 rounded-none shadow-md transition-transform" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
                 </div>
             </div>
