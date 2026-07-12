@@ -48,13 +48,9 @@
         :root { --brand: #1c1917; --brand-light: #78716c; } 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        /* Native smooth scrolling handled via JS for perfect momentum */
         body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1c1917; -webkit-font-smoothing: antialiased; font-size: 16px; }
-        
-        /* Locks body scrolling on iOS when modal is open */
         body.no-scroll { overflow: hidden !important; }
 
-        /* Forces momentum scrolling on iPhones for internal elements */
         .overflow-y-auto {
             -webkit-overflow-scrolling: touch !important;
             overscroll-behavior-y: contain !important;
@@ -77,7 +73,6 @@
         .reveal-delay-3 { transition-delay: 0.24s; }
         .reveal-delay-4 { transition-delay: 0.32s; }
 
-        /* Updated Toast Notification with Green Success Styling */
         #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #00D632; color: #1c1917; padding: 14px 24px; border-radius: 0; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 8px 32px rgba(0,214,50,0.25); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
 
@@ -87,7 +82,6 @@
         .form-input { width: 100%; background: #fafaf9; border: 1px solid #e7e5e4; color: #1c1917; padding: 12px 14px; border-radius: 0; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; -webkit-appearance: none; appearance: none; }
         .form-input:focus { border-color: var(--brand-light); box-shadow: 0 0 0 3px rgba(120,113,108,0.1); }
         
-        /* ── Advanced Tactile Interactive Buttons ── */
         @keyframes pulse-glow {
             0%, 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.05); }
             50% { box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.08); }
@@ -133,7 +127,6 @@
             display: flex;
         }
 
-        /* ── BULLETPROOF CART STATE ENGINE ── */
         #cart-drawer { transform: translateX(100%) !important; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; }
         #cart-drawer.open { transform: translateX(0) !important; }
         .cart-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
@@ -141,7 +134,7 @@
         #mobile-menu { transition: opacity 0.2s ease, visibility 0.2s ease; opacity: 0; visibility: hidden; }
         #mobile-menu.open { opacity: 1; visibility: visible; }
 
-        /* ── Floating Product Cards (Unboxed & Minimal) ── */
+        /* ── Floating Product Cards ── */
         .product-card { display: flex; flex-direction: column; border: none; overflow: hidden; transition: transform 0.3s ease; cursor: pointer; height: 100%; width: 100%; }
         .card-img-wrap { overflow: hidden; width: 100%; aspect-ratio: 1 / 1; background: transparent; position: relative; display: flex; align-items: center; justify-content: center; }
         
@@ -165,11 +158,9 @@
         .skeleton { background: linear-gradient(90deg, #f5f5f4 25%, #e7e5e4 50%, #f5f5f4 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 0; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* General UI Cards */
         .endorse-card { transition: border-color 0.3s, transform 0.3s, background 0.3s, box-shadow 0.3s; }
         .endorse-card:hover { border-color: var(--brand-light); transform: translateY(-3px); background: #fafaf9; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
 
-        /* ── Image Gallery Modal Swipe Styles ── */
         .scroll-gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; -webkit-overflow-scrolling: touch; width: 100%; height: 100%; align-items: center; padding: 0; margin: 0; }
         .scroll-gallery::-webkit-scrollbar { display: none; }
         .scroll-gallery { -ms-overflow-style: none; scrollbar-width: none; }
@@ -195,7 +186,6 @@
         .flash-card .btn-pulse { background-color: #d4af37 !important; color: #1c1917 !important; }
         .flash-card .btn-pulse:hover { background-color: #c09e31 !important; }
 
-        /* Glowing light shadow for items on dark backgrounds */
         .fundraiser-card .card-img, .nacna-card .card-img, .flash-card .card-img { mix-blend-mode: normal; filter: drop-shadow(0 4px 15px rgba(255,255,255,0.10)); }
         .fundraiser-card:hover .card-img, .nacna-card:hover .card-img, .flash-card:hover .card-img { filter: drop-shadow(0 8px 25px rgba(255,255,255,0.20)); transform: scale(1.04) translateY(-2px); }
 
@@ -292,7 +282,6 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-stone-200 rounded-none z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
-<!-- HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-stone-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
@@ -303,7 +292,6 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Wear Your Resistance</h1>
         <p class="text-stone-200 max-w-lg mx-auto text-xl mb-10 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Modern Indigenous streetwear built for resilience. Bold designs, strong attitude, and authentic culture.</p>
 
-        <!-- LUXURY CTA -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 reveal reveal-delay-3">
             <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white text-stone-900 px-10 py-4 rounded-none font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
             <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-transparent border border-white text-white hover:bg-white/10 px-10 py-4 rounded-none font-black uppercase tracking-widest text-sm transition btn-pulse">The Family Special</a>
@@ -311,7 +299,6 @@
     </div>
 </section>
 
-<!-- 72 HOUR FLASH DROP SECTION -->
 <section id="flash-drop" class="flash-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div id="flash-badge" class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Locked Vault</div>
@@ -335,12 +322,10 @@
         </div>
 
         <div id="flash-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- Flash items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- FEATURED ITEMS -->
 <section id="featured" class="py-12 sm:py-20 px-0 sm:px-6 bg-white relative z-10 border-b border-stone-200">
     <div class="max-w-6xl mx-auto" id="featured-container">
         <div class="animate-pulse px-4 sm:px-0">
@@ -356,7 +341,6 @@
     </div>
 </section>
 
-<!-- THE INTENT / MISSION -->
 <section id="mission" class="py-20 sm:py-28 px-5 bg-stone-50 border-b border-stone-200">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -390,7 +374,6 @@
     </div>
 </section>
 
-<!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
 <section id="lodgepole-special" class="hidden fundraiser-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-[#b7410e] text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Official Fundraiser</div>
@@ -398,12 +381,10 @@
         <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
         
         <div id="lodgepole-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- Lodgepole items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-stone-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Retiring Soon</div>
@@ -426,12 +407,10 @@
         </div>
 
         <div id="nacna-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- NACNA items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- THE FULL CATALOG -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -440,8 +419,7 @@
         </div>
         
         <div id="product-grid" class="w-full flex flex-col gap-6 reveal">
-            <!-- Products inject here via JS -->
-        </div>
+            </div>
     </div>
 </section>
 
@@ -777,7 +755,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const body = document.body;
 
-    // Intercept anchor links for smooth scrolling with fixed header offset (Native Vanilla JS)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -799,10 +776,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // ── Timer Logic for Vaults ──
     const NACNA_DEADLINE = new Date("2026-06-27T23:59:59").getTime();
-    
-    // Flash Drop explicitly starts July 9, 2026 11:45 AM MST
-    // Flash Drop explicitly ends 72 hours after July 9, 2026 11:45 AM MST
-    // MST is UTC-7. 
     const FLASH_START = new Date("2026-07-09T11:45:00-07:00").getTime();
     const FLASH_DEADLINE = new Date("2026-07-12T11:45:00-07:00").getTime(); 
     window.flashState = 'init';
@@ -810,7 +783,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateTimer = setInterval(() => {
         const now = new Date().getTime();
         
-        // NACNA Timer
         const nacnaDistance = NACNA_DEADLINE - now;
         if (nacnaDistance < 0) {
             document.getElementById('nacna-vault')?.classList.add('hidden');
@@ -823,7 +795,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if(document.getElementById('cd-seconds')) document.getElementById('cd-seconds').innerText = s.toString().padStart(2, '0');
         }
 
-        // Flash Drop Timer Logic
         let targetDist = 0;
         let currentState = '';
         
@@ -837,7 +808,6 @@ document.addEventListener('DOMContentLoaded', () => {
             currentState = 'closed';
         }
 
-        // Only update DOM structure when state changes
         if (window.flashState !== currentState) {
             window.flashState = currentState;
             const timerLabel = document.getElementById('timer-status-label');
@@ -852,10 +822,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(timerLabel) timerLabel.innerText = "Vault Closes In:";
                 if(flashBadge) flashBadge.innerText = "Limited Vault Release";
                 if(flashDesc) flashDesc.innerText = "We are opening the vault. These premium designs are only available for 72 hours. Once the clock hits zero, they go back in the vault.";
-                if (typeof loadProducts === 'function') loadProducts(); // Refresh to show products
+                if (typeof loadProducts === 'function') loadProducts();
             } else if (currentState === 'closed') {
                 document.getElementById('flash-drop')?.classList.add('hidden');
-                if (typeof loadProducts === 'function') loadProducts(); // Refresh to hide products
+                if (typeof loadProducts === 'function') loadProducts();
             }
         }
 
@@ -873,7 +843,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 1000);
 
-    // ── Mobile menu ──
     const menuBtn = document.getElementById('menu-btn'), mobileMenu = document.getElementById('mobile-menu');
     const openIcon = document.getElementById('menu-icon-open'), closeIcon = document.getElementById('menu-icon-close');
 
@@ -894,7 +863,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth >= 1024 && mobileMenu && mobileMenu.classList.contains('open')) toggleMobileMenu(false);
     });
 
-    // ── Toast & Reveal ──
     window.showToast = function(msg) { 
         const toast = document.getElementById('toast');
         if(!toast) return;
@@ -906,7 +874,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }});});
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // ── Design Form ──
     const submitBtn = document.getElementById('form-submit-btn');
     if (submitBtn) {
         submitBtn.addEventListener('click', async () => {
@@ -931,7 +898,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── Newsletter Form (Netlify Integration Fix) ──
     const newsletterForm = document.getElementById('newsletter-form');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', async (e) => {
@@ -969,7 +935,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // ── Cookie Banner & Privacy Modal Logic ──
     const cookieBanner = document.getElementById('cookie-banner');
     const acceptBtn = document.getElementById('accept-cookies');
 
@@ -1003,7 +968,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     pModalOverlay.addEventListener('click', window.closePrivacyModal);
 
-    // ── Rebuilt Custom Square-Invoice Style Cart System ──
     class ShoppingCart {
         constructor() { this.items = JSON.parse(localStorage.getItem('rlp_cart') || '[]'); this.initDOM(); this.render(); }
         initDOM() {
@@ -1031,7 +995,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const ex = this.items.find(i => i.id === p.id);
             if (ex) ex.quantity += (p.quantity || 1); else this.items.push({ ...p, quantity: p.quantity || 1 });
             
-            // GA4 Event Tracking Code
             if (typeof gtag === 'function') {
                 gtag('event', 'add_to_cart', {
                     currency: 'USD',
@@ -1593,12 +1556,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="card-img-wrap rounded-none overflow-hidden bg-transparent mb-4">${img}</div>
             <div class="card-body p-0 flex flex-col flex-grow">
                 <div>
-                    <!-- min-h-[40px] locks the title to two lines so prices align -->
                     <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-stone-900 leading-snug line-clamp-2 min-h-[40px]">${sName}</h3>
                     ${buildPriceHTML(p, pMinPrice)}
                     ${buildSwatchesHTML(p)}
                 </div>
-                <!-- mt-auto forces this button container to the absolute bottom of the card -->
                 <div class="mt-auto pt-5">
                     <button class="btn-pulse w-full bg-stone-900 hover:bg-black text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3.5 rounded-none shadow-md transition-transform" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
                 </div>
@@ -1657,12 +1618,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const nonBundleProducts = products.filter(p => {
                 const pName = (p.name || '').toLowerCase();
                 
-                // 1. Check if it's a bundle and hide it from regular grid
                 if (pName.includes('bundle') || pName.includes('-piece')) {
                     return false;
                 }
 
-                // 2. Isolate Native Land items for the Flash Drop
                 if (pName.includes('native land') || pName.includes('sea to shining sea')) {
                     if (isFlashActive) {
                         flashItems.push(p);
@@ -1720,7 +1679,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const featuredItems = [];
             if(nonBundleProducts.length > 0) {
-                const targetNames = ["STAR HORIZON", "GEOMETRIC STAR GRAPHIC T-SHIRT", "TURQUOISE & MAGENTA FLORAL SHERPA BLANKET", "MEN'S BLACK GEOMETRIC INDIGENOUS PRINT HOODIE", "THE GRAND ENTRY WEEKENDER TOTE", "LINEAGE LINK"];
+                // Moved "NATURE ALWAYS WINS" to the absolute first item in the target checklist sequence
+                const targetNames = ["NATURE ALWAYS WINS", "STAR HORIZON", "GEOMETRIC STAR GRAPHIC T-SHIRT", "TURQUOISE & MAGENTA FLORAL SHERPA BLANKET", "MEN'S BLACK GEOMETRIC INDIGENOUS PRINT HOODIE", "THE GRAND ENTRY WEEKENDER TOTE", "LINEAGE LINK"];
                 targetNames.forEach(target => {
                     let found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes(target.toUpperCase()));
                     if (!found && target.includes("STAR HORIZON")) found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("STAR HORIZON"));
