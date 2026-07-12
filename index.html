@@ -57,8 +57,8 @@
         .nav-link:hover::after { width: 100%; }
         .nav-link:hover { color: #1c1917; }
         .table-scroll::-webkit-scrollbar { height: 6px; }
-        .table-scroll::-webkit-scrollbar-track { background: #f5f5f4; border-radius: 3px; }
-        .table-scroll::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
+        .table-scroll::-webkit-scrollbar-track { background: #f5f5f4; border-radius: 0; }
+        .table-scroll::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 0; }
         .table-scroll::-webkit-scrollbar-thumb:hover { background: var(--brand-light); }
 
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
@@ -68,13 +68,13 @@
         .reveal-delay-3 { transition-delay: 0.24s; }
         .reveal-delay-4 { transition-delay: 0.32s; }
 
-        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1c1917; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
+        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1c1917; color: #fff; padding: 14px 24px; border-radius: 0; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
 
         .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; color: #78716c; }
         .section-label::before, .section-label::after { content: ''; display: block; height: 1px; width: 28px; background: currentColor; }
         
-        .form-input { width: 100%; background: #fafaf9; border: 1px solid #e7e5e4; color: #1c1917; padding: 12px 14px; border-radius: 6px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; }
+        .form-input { width: 100%; background: #fafaf9; border: 1px solid #e7e5e4; color: #1c1917; padding: 12px 14px; border-radius: 0; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-size: 1rem; -webkit-appearance: none; appearance: none; }
         .form-input:focus { border-color: var(--brand-light); box-shadow: 0 0 0 3px rgba(120,113,108,0.1); }
         
         /* ── Advanced Tactile Interactive Buttons ── */
@@ -86,10 +86,9 @@
         .btn-pulse { 
             animation: pulse-glow 3s infinite; 
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                        border-radius 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
                         filter 0.4s ease, 
                         box-shadow 0.4s ease !important;
-            will-change: transform, border-radius, filter, box-shadow;
+            will-change: transform, filter, box-shadow;
             transform: translateZ(0); 
             position: relative;
         }
@@ -102,7 +101,6 @@
         
         .btn-pulse:active {
             transform: scale(0.96) translateY(2px) !important;
-            border-radius: 35px !important;
             filter: brightness(0.9) !important;
             box-shadow: 0 5px 10px rgba(0,0,0,0.1) !important;
             transition: all 0.15s ease !important;
@@ -140,13 +138,13 @@
         .product-card:hover .card-img { transform: scale(1.04) translateY(-2px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.12)); }
         .card-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease, filter 0.5s ease; mix-blend-mode: multiply; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.06)); }
         
-        .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #a8a29e; font-size: 12px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; background: #fafaf9; border-radius: 12px; }
+        .card-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #a8a29e; font-size: 12px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; background: #fafaf9; border-radius: 0; }
         .card-body { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         
         /* ── Modal Styles ── */
-        .variant-select { appearance: none; -webkit-appearance: none; background: #fafaf9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid #e7e5e4; color: #1c1917; padding: 12px 36px 12px 14px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%; outline: none; transition: border-color 0.2s; }
+        .variant-select { appearance: none; -webkit-appearance: none; background: #fafaf9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center; border: 1px solid #e7e5e4; color: #1c1917; padding: 12px 36px 12px 14px; border-radius: 0; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%; outline: none; transition: border-color 0.2s; }
         .variant-select:focus { border-color: var(--brand); outline: 2px solid rgba(28,25,23,0.1); }
-        .qty-wrap { display: flex; align-items: center; background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 8px; flex-shrink: 0; }
+        .qty-wrap { display: flex; align-items: center; background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 0; flex-shrink: 0; }
         .qty-btn { width: 40px; height: 100%; background: transparent; color: #78716c; border: none; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s, background 0.2s; }
         .qty-btn:hover { color: #1c1917; background: #f5f5f4; }
         .qty-num { width: 40px; text-align: center; font-size: 15px; font-weight: 700; color: #1c1917; background: transparent; border: none; outline: none; -moz-appearance: textfield; }
@@ -154,7 +152,7 @@
 
         details[open] .accordion-content { animation: fadeInDown 0.35s ease-out forwards; }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .skeleton { background: linear-gradient(90deg, #f5f5f4 25%, #e7e5e4 50%, #f5f5f4 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 12px; }
+        .skeleton { background: linear-gradient(90deg, #f5f5f4 25%, #e7e5e4 50%, #f5f5f4 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 0; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         /* General UI Cards */
@@ -210,13 +208,13 @@
             <a href="#wholesale" class="nav-link hover:text-stone-900 transition">Wholesale</a>
             <a href="#services"  class="nav-link hover:text-stone-900 transition">Design</a>
             <a href="#info"      class="nav-link hover:text-stone-900 transition">FAQ</a>
-            <a href="mailto:rlp@rlpdezines.com" class="bg-stone-900 hover:bg-black text-white px-5 py-2.5 rounded-full font-bold tracking-widest uppercase transition btn-pulse">Contact</a>
+            <a href="mailto:rlp@rlpdezines.com" class="bg-stone-900 hover:bg-black text-white px-5 py-2.5 rounded-none font-bold tracking-widest uppercase transition btn-pulse">Contact</a>
             
             <button id="nav-search-btn" class="text-stone-900 hover:text-stone-600 transition focus:outline-none btn-pulse" aria-label="Search">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
 
-            <button id="nav-cart-btn" class="text-white bg-stone-900 hover:bg-black px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition tracking-widest uppercase shadow-sm btn-pulse">
+            <button id="nav-cart-btn" class="text-white bg-stone-900 hover:bg-black px-5 py-2.5 rounded-none font-bold flex items-center gap-2 transition tracking-widest uppercase shadow-sm btn-pulse">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Cart (<span id="cart-count">0</span>)
             </button>
@@ -242,12 +240,12 @@
     <a href="#services"  class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Design Services</a>
     <a href="#endorsements" class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Endorsements</a>
     <a href="#info"      class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Policies & FAQ</a>
-    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-stone-900 text-white text-center font-black tracking-widest uppercase py-4 rounded-xl text-[15px] btn-pulse">Start a Project</a>
+    <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-stone-900 text-white text-center font-black tracking-widest uppercase py-4 rounded-none text-[15px] btn-pulse">Start a Project</a>
 </div>
 
-<button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-stone-900 hover:bg-black text-white p-4 rounded-full shadow-[0_10px_40px_rgba(28,25,23,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
+<button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-stone-900 hover:bg-black text-white p-4 rounded-none shadow-[0_10px_40px_rgba(28,25,23,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center hidden shadow-md border-2 border-white">
+    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-black w-6 h-6 rounded-none flex items-center justify-center hidden shadow-md border-2 border-white">
         <span id="floating-cart-count">0</span>
     </span>
 </button>
@@ -265,10 +263,10 @@
 </div>
 
 <div id="privacy-modal-overlay" class="fixed inset-0 bg-stone-900/60 z-[110] hidden opacity-0 transition-opacity duration-300"></div>
-<div id="privacy-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-2xl bg-white border border-stone-200 rounded-2xl z-[120] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
+<div id="privacy-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-2xl bg-white border border-stone-200 rounded-none z-[120] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
     <div class="flex justify-between items-center p-5 sm:p-6 border-b border-stone-100 bg-stone-50 flex-shrink-0">
         <h2 class="text-xl font-black uppercase text-stone-900 tracking-tight">Privacy Policy</h2>
-        <button onclick="window.closePrivacyModal()" class="text-stone-400 hover:text-stone-900 transition btn-pulse" aria-label="Close">
+        <button onclick="window.closePrivacyModal()" class="text-stone-400 hover:text-stone-900 transition btn-pulse rounded-none" aria-label="Close">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
     </div>
@@ -281,10 +279,9 @@
 </div>
 
 <div id="product-modal-overlay" class="fixed inset-0 bg-stone-900/60 z-[80] hidden opacity-0 transition-opacity duration-300"></div>
-<div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-stone-200 rounded-2xl z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
+<div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-stone-200 rounded-none z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
-<!-- HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-stone-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
@@ -295,60 +292,55 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Wear Your Resistance</h1>
         <p class="text-stone-200 max-w-lg mx-auto text-xl mb-10 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Modern Indigenous streetwear built for resilience. Bold designs, strong attitude, and authentic culture.</p>
 
-        <!-- LUXURY CTA -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 reveal reveal-delay-3">
-            <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white text-stone-900 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
-            <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-transparent border border-white text-white hover:bg-white/10 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm transition btn-pulse">The Family Special</a>
+            <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white text-stone-900 px-10 py-4 rounded-none font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
+            <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-transparent border border-white text-white hover:bg-white/10 px-10 py-4 rounded-none font-black uppercase tracking-widest text-sm transition btn-pulse">The Family Special</a>
         </div>
     </div>
 </section>
 
-<!-- 72 HOUR FLASH DROP SECTION -->
 <section id="flash-drop" class="flash-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
-        <div id="flash-badge" class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Locked Vault</div>
+        <div id="flash-badge" class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Locked Vault</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">72-Hour Flash Drop</h2>
         <p id="flash-desc" class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">The vault is currently locked. Set your alarms—these designs drop Thursday at 11:45 AM MST.</p>
         
         <div id="timer-status-label" class="text-[#d4af37] font-bold uppercase tracking-widest text-sm mb-4">Vault Opens In:</div>
         <div class="flex justify-center gap-3 sm:gap-6 mb-14 px-4">
-            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-none p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
                 <div id="fd-hours" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
                 <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Hours</div>
             </div>
-            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-none p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
                 <div id="fd-minutes" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
                 <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Mins</div>
             </div>
-            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+            <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-none p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
                 <div id="fd-seconds" class="text-3xl sm:text-5xl font-black text-[#d4af37]">00</div>
                 <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-bold mt-2">Secs</div>
             </div>
         </div>
 
         <div id="flash-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- Flash items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- FEATURED ITEMS -->
 <section id="featured" class="py-12 sm:py-20 px-0 sm:px-6 bg-white relative z-10 border-b border-stone-200">
     <div class="max-w-6xl mx-auto" id="featured-container">
         <div class="animate-pulse px-4 sm:px-0">
             <div class="flex justify-center md:justify-start mb-6">
-                <div class="h-4 bg-stone-200 rounded w-48"></div>
+                <div class="h-4 bg-stone-200 rounded-none w-48"></div>
             </div>
             <div class="flex gap-4 overflow-hidden pt-2 pb-8">
-                <div class="bg-stone-100 rounded-xl h-72 min-w-[280px]"></div>
-                <div class="bg-stone-100 rounded-xl h-72 min-w-[280px]"></div>
-                <div class="bg-stone-100 rounded-xl h-72 min-w-[280px] hidden lg:block"></div>
+                <div class="bg-stone-100 rounded-none h-72 min-w-[280px]"></div>
+                <div class="bg-stone-100 rounded-none h-72 min-w-[280px]"></div>
+                <div class="bg-stone-100 rounded-none h-72 min-w-[280px] hidden lg:block"></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- THE INTENT / MISSION -->
 <section id="mission" class="py-20 sm:py-28 px-5 bg-stone-50 border-b border-stone-200">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -358,7 +350,7 @@
 
         <div class="flex flex-col md:flex-row items-center gap-12 reveal">
             <div class="w-full md:w-1/3 flex justify-center">
-                <div class="w-72 aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-stone-200">
+                <div class="w-72 aspect-[3/4] rounded-none overflow-hidden shadow-xl border border-stone-200">
                     <img src="https://drive.google.com/thumbnail?id=14D7LENEECaJWErykSmojWsybv14Bl8Cp&sz=w1000" alt="Ronnie Lodgepole" class="w-full h-full object-cover">
                 </div>
             </div>
@@ -382,48 +374,43 @@
     </div>
 </section>
 
-<!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
 <section id="lodgepole-special" class="hidden fundraiser-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
-        <div class="inline-block bg-[#b7410e] text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Official Fundraiser</div>
+        <div class="inline-block bg-[#b7410e] text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Official Fundraiser</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">Men's Grass vs Women's Jingle</h2>
         <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
         
         <div id="lodgepole-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- Lodgepole items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
-        <div class="inline-block bg-stone-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-md">Retiring Soon</div>
+        <div class="inline-block bg-stone-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Retiring Soon</div>
         <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-5 text-white">Official 2026 NACNA National Convention Apparel</h2>
         <p class="text-stone-400 max-w-2xl mx-auto mb-10 font-light text-lg px-4">The Native American Church of North America 2026 National Convention collection is entering the vault. Grab your gear before production officially closes.</p>
         
         <div class="flex justify-center gap-3 sm:gap-6 mb-14 px-4">
-            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-none p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
                 <div id="cd-hours" class="text-3xl sm:text-5xl font-black text-white">00</div>
                 <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 font-bold mt-2">Hours</div>
             </div>
-            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-none p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
                 <div id="cd-minutes" class="text-3xl sm:text-5xl font-black text-white">00</div>
                 <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 font-bold mt-2">Mins</div>
             </div>
-            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
+            <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-none p-4 sm:p-5 min-w-[80px] sm:min-w-[100px] shadow-lg">
                 <div id="cd-seconds" class="text-3xl sm:text-5xl font-black text-white">00</div>
                 <div class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 font-bold mt-2">Secs</div>
             </div>
         </div>
 
         <div id="nacna-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- NACNA items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- THE FULL CATALOG -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -432,66 +419,65 @@
         </div>
         
         <div id="product-grid" class="w-full flex flex-col gap-6 reveal">
-            <!-- Products inject here via JS -->
-        </div>
+            </div>
     </div>
 </section>
 
 <section id="bundles" class="py-24 px-4 sm:px-6 border-t border-stone-200 bg-stone-50">
     <div class="max-w-5xl mx-auto">
-        <div class="bg-white border border-stone-200 p-8 sm:p-16 rounded-3xl shadow-sm text-center">
+        <div class="bg-white border border-stone-200 p-8 sm:p-16 rounded-none shadow-sm text-center">
             <p class="section-label mb-5 justify-center reveal">Returning Design to the Community</p>
             <h2 class="text-4xl font-black text-stone-900 uppercase mb-6 reveal">The RLP Family Honoring Specials Bundles</h2>
             
             <p class="text-stone-600 font-light leading-relaxed mb-6 text-lg max-w-3xl mx-auto reveal">At RLP Dezines, the goal has always been to provide premium, authentic artwork that serves our people first. Preparing for a family special shouldn't mean turning to massive commercial corporations just to afford the items you need to honor your loved ones.</p>
             <p class="text-stone-600 font-light leading-relaxed mb-8 text-lg max-w-3xl mx-auto reveal">To better serve the community, we are proud to offer permanent community bulk rates for our 60" × 80" Sherpa Blankets. Accessible, premium items designed specifically for giveaways, specials, and family events.</p>
             
-            <div class="bg-stone-100 border border-stone-200 p-6 rounded-xl max-w-3xl mx-auto mb-12 reveal">
+            <div class="bg-stone-100 border border-stone-200 p-6 rounded-none max-w-3xl mx-auto mb-12 reveal">
                 <p class="text-stone-900 font-black tracking-widest text-sm uppercase">⚠️ Strict 2-Week Minimum Turnaround</p>
                 <p class="text-stone-600 text-sm mt-2 font-medium">To ensure full production and delivery, your event must be scheduled at least 2 weeks from the date of your paid order.</p>
             </div>
             
             <div class="grid sm:grid-cols-3 gap-6 mb-10 text-left max-w-5xl mx-auto reveal">
                 
-                <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                <div class="bg-white border border-stone-200 rounded-none overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
                     <div class="h-48 bg-stone-50 overflow-hidden relative flex items-center justify-center p-4 border-b border-stone-100">
                         <img src="https://drive.google.com/thumbnail?id=1qL8RXOpDvI1-gEn2zObhiXZHW16LDINW&sz=w600" class="w-full h-full object-contain mix-blend-multiply" alt="10 Piece Bundle">
-                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $100</div>
+                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-none">Save $100</div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <div>
                             <h3 class="text-[15px] font-black text-stone-900 uppercase tracking-tight leading-snug mb-1">10-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-stone-500 mb-6">$600.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/10-piece-sherpa-throw-blanket-bundle/MHSESFUUPQR65SMNTLWYWGLR?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/10-piece-sherpa-throw-blanket-bundle/MHSESFUUPQR65SMNTLWYWGLR?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-none font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
-                <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                <div class="bg-white border border-stone-200 rounded-none overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
                     <div class="h-48 bg-stone-50 overflow-hidden relative flex items-center justify-center p-4 border-b border-stone-100">
                         <img src="https://drive.google.com/thumbnail?id=1Eh7k2kuGjvAUeubBWiEjIbEs1pnOosPH&sz=w600" class="w-full h-full object-contain mix-blend-multiply" alt="15 Piece Bundle">
-                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $150</div>
+                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-none">Save $150</div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <div>
                             <h3 class="text-[15px] font-black text-stone-900 uppercase tracking-tight leading-snug mb-1">15-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-stone-500 mb-6">$900.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/15-piece-sherpa-throw-blanket-bundle/OCEXPFGH74XF2OZ5B7GRTKCY?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/15-piece-sherpa-throw-blanket-bundle/OCEXPFGH74XF2OZ5B7GRTKCY?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-none font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
-                <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
+                <div class="bg-white border border-stone-200 rounded-none overflow-hidden shadow-sm hover:shadow-md transition flex flex-col hover:-translate-y-1 duration-300">
                     <div class="h-48 bg-stone-50 overflow-hidden relative flex items-center justify-center p-4 border-b border-stone-100">
                         <img src="https://drive.google.com/thumbnail?id=1UtHdsJaCsCIgCz_4SGvqwe7bGPJ58t4p&sz=w600" class="w-full h-full object-contain mix-blend-multiply" alt="20 Piece Bundle">
-                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Save $200</div>
+                        <div class="absolute top-3 right-3 bg-stone-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-none">Save $200</div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <div>
                             <h3 class="text-[15px] font-black text-stone-900 uppercase tracking-tight leading-snug mb-1">20-Piece Sherpa Throw Blanket Bundle</h3>
                             <p class="text-[15px] font-bold text-stone-500 mb-6">$1,200.00 <span class="font-medium text-xs">($60/ea)</span></p>
                         </div>
-                        <a href="https://rlp-dezines.square.site/product/20-piece-sherpa-throw-blanket-bundle/HPFODJHOEWCSXMPP6KC5YXVS?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
+                        <a href="https://rlp-dezines.square.site/product/20-piece-sherpa-throw-blanket-bundle/HPFODJHOEWCSXMPP6KC5YXVS?cs=true&cst=custom" target="_blank" class="w-full block text-center bg-stone-900 hover:bg-black text-white py-3.5 rounded-none font-black uppercase tracking-widest text-[11px] shadow-sm btn-pulse">Secure Your Bundle</a>
                     </div>
                 </div>
 
@@ -503,7 +489,7 @@
 
 <section id="wholesale" class="py-24 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-5xl mx-auto space-y-8">
-        <div class="bg-stone-50 border border-stone-200 p-6 sm:p-14 rounded-3xl shadow-sm">
+        <div class="bg-stone-50 border border-stone-200 p-6 sm:p-14 rounded-none shadow-sm">
             <div class="text-center mb-12 reveal">
                 <p class="section-label mb-5 justify-center">Community Partners</p>
                 <h2 class="text-4xl font-black text-stone-900 uppercase mb-5">Community Wholesale</h2>
@@ -521,7 +507,7 @@
                 </div>
             </div>
 
-            <div class="w-full overflow-x-auto table-scroll mb-10 rounded-xl border border-stone-200 reveal">
+            <div class="w-full overflow-x-auto table-scroll mb-10 rounded-none border border-stone-200 reveal">
                 <table class="w-full min-w-[480px] text-center border-collapse bg-white text-base">
                     <thead>
                         <tr class="bg-stone-100 text-stone-900 uppercase text-xs tracking-wider font-bold">
@@ -547,15 +533,15 @@
 
             <h4 class="text-stone-900 font-bold uppercase tracking-widest text-sm mb-5 reveal">How to Order</h4>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-0 reveal">
-                <div class="bg-white border border-stone-200 p-6 rounded-xl shadow-sm text-center sm:text-left">
+                <div class="bg-white border border-stone-200 p-6 rounded-none shadow-sm text-center sm:text-left">
                     <div class="text-3xl font-black text-stone-300 mb-3">1</div>
                     <p class="text-stone-600 font-light text-base"><strong class="text-stone-900">Browse:</strong> Select items from the public storefront.</p>
                 </div>
-                <div class="bg-white border border-stone-200 p-6 rounded-xl shadow-sm text-center sm:text-left">
+                <div class="bg-white border border-stone-200 p-6 rounded-none shadow-sm text-center sm:text-left">
                     <div class="text-3xl font-black text-stone-300 mb-3">2</div>
                     <p class="text-stone-600 font-light text-base"><strong class="text-stone-900">Compile:</strong> Email your list (Product, Size, Qty) to <strong class="text-stone-900">RLP@RLPDEZINES.COM</strong>.</p>
                 </div>
-                <div class="bg-white border border-stone-200 p-6 rounded-xl shadow-sm text-center sm:text-left">
+                <div class="bg-white border border-stone-200 p-6 rounded-none shadow-sm text-center sm:text-left">
                     <div class="text-3xl font-black text-stone-300 mb-3">3</div>
                     <p class="text-stone-600 font-light text-base"><strong class="text-stone-900">Invoice:</strong> I'll apply the Bulk Rate and send a digital invoice. Production starts on payment.</p>
                 </div>
@@ -566,7 +552,7 @@
 
 <section id="services" class="py-24 px-4 sm:px-6 border-t border-stone-200 bg-stone-50">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white border border-stone-200 p-6 sm:p-14 rounded-3xl shadow-sm">
+        <div class="bg-white border border-stone-200 p-6 sm:p-14 rounded-none shadow-sm">
             <div class="mb-10 text-center reveal">
                 <p class="section-label mb-5">B2B & Creative Services</p>
                 <h2 class="text-4xl font-black text-stone-900 uppercase mb-5 tracking-tight">Design Services</h2>
@@ -575,7 +561,7 @@
                 </p>
             </div>
 
-            <div id="intake-form-wrap" class="max-w-3xl mx-auto bg-stone-50 p-6 sm:p-8 rounded-xl border border-stone-200 reveal">
+            <div id="intake-form-wrap" class="max-w-3xl mx-auto bg-stone-50 p-6 sm:p-8 rounded-none border border-stone-200 reveal">
                 <form name="design-intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
                     <input type="text" name="name">
                     <input type="email" name="email">
@@ -608,7 +594,7 @@
                         <label class="block text-sm font-bold text-stone-500 uppercase tracking-widest mb-2" for="intake-message">Project Details</label>
                         <textarea class="form-input h-32 resize-y" id="intake-message" placeholder="Tell me what you're looking for..." required></textarea>
                     </div>
-                    <button id="form-submit-btn" type="button" class="w-full bg-stone-900 hover:bg-black text-white font-black tracking-widest uppercase py-4 rounded-full shadow-md text-sm btn-pulse flex items-center justify-center gap-2">
+                    <button id="form-submit-btn" type="button" class="w-full bg-stone-900 hover:bg-black text-white font-black tracking-widest uppercase py-4 rounded-none shadow-md text-sm btn-pulse flex items-center justify-center gap-2">
                         <span id="btn-label">Start My Custom Project</span>
                         <svg id="btn-spinner" class="w-5 h-5 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                     </button>
@@ -633,7 +619,7 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
-            <div class="endorse-card bg-stone-50 border border-stone-200 p-8 sm:p-10 rounded-3xl relative flex flex-col h-full reveal shadow-sm">
+            <div class="endorse-card bg-stone-50 border border-stone-200 p-8 sm:p-10 rounded-none relative flex flex-col h-full reveal shadow-sm">
                 <div class="absolute top-5 right-7 text-7xl font-black text-stone-200 font-serif leading-none select-none">"</div>
                 <p class="text-stone-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
                     "RLP Dezines provided us with incredible support. From our official organization logo to the banners and custom gear we use for our events, the quality is exceptional."
@@ -644,7 +630,7 @@
                 </div>
             </div>
 
-            <div class="endorse-card bg-stone-50 border border-stone-200 p-8 sm:p-10 rounded-3xl relative flex flex-col h-full reveal reveal-delay-2 shadow-sm">
+            <div class="endorse-card bg-stone-50 border border-stone-200 p-8 sm:p-10 rounded-none relative flex flex-col h-full reveal reveal-delay-2 shadow-sm">
                 <div class="absolute top-5 right-7 text-7xl font-black text-stone-200 font-serif leading-none select-none">"</div>
                 <p class="text-stone-600 font-light leading-relaxed mb-8 flex-grow relative z-10 text-lg">
                     "Working with RLP Dezines has been a great experience. We needed high-quality gear for our health board and community events, and the final products were exactly what we were looking for."
@@ -660,7 +646,7 @@
 
 <section id="info" class="py-24 px-4 sm:px-6 border-t border-stone-200 flex-grow bg-stone-50">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white border-t-4 border-t-stone-900 border border-stone-200 p-6 sm:p-14 rounded-3xl shadow-sm">
+        <div class="bg-white border-t-4 border-t-stone-900 border border-stone-200 p-6 sm:p-14 rounded-none shadow-sm">
             <h2 class="text-3xl sm:text-4xl font-black text-stone-900 uppercase mb-10 text-center tracking-tight reveal">Store Policies & FAQ</h2>
 
             <div class="space-y-8 divide-y divide-stone-100">
@@ -701,8 +687,8 @@
         </form>
 
         <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-full text-stone-900 outline-none focus:ring-4 focus:ring-stone-400 font-medium border-none">
-            <button type="submit" id="newsletter-submit-btn" class="bg-white hover:bg-stone-200 text-stone-900 px-8 py-3.5 rounded-full font-black uppercase tracking-widest transition shadow-lg text-sm flex items-center justify-center gap-2 btn-pulse">
+            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required class="flex-grow px-5 py-3.5 rounded-none text-stone-900 outline-none focus:ring-4 focus:ring-stone-400 font-medium border-none">
+            <button type="submit" id="newsletter-submit-btn" class="bg-white hover:bg-stone-200 text-stone-900 px-8 py-3.5 rounded-none font-black uppercase tracking-widest transition shadow-lg text-sm flex items-center justify-center gap-2 btn-pulse">
                 <span>Join the Circle</span>
                 <svg id="newsletter-spinner" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
             </button>
@@ -717,9 +703,9 @@
             <p class="text-xs text-stone-600 mt-1">Town of Gilbert Bus. License: BUSLIC001339-05-2024</p>
         </div>
         <div class="flex items-center gap-4">
-            <button onclick="window.openPrivacyModal()" class="hover:text-white transition underline underline-offset-2">Privacy Policy</button>
+            <button onclick="window.openPrivacyModal()" class="hover:text-white transition underline underline-offset-2 rounded-none">Privacy Policy</button>
             <span class="text-stone-700">|</span>
-            <a href="mailto:rlp@rlpdezines.com" class="hover:text-white transition">rlp@rlpdezines.com</a>
+            <a href="mailto:rlp@rlpdezines.com" class="hover:text-white transition rounded-none">rlp@rlpdezines.com</a>
         </div>
     </div>
 </footer>
@@ -728,9 +714,9 @@
 
 <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-stone-900 border-t border-stone-800 p-4 sm:p-6 z-[100] transform translate-y-full transition-transform duration-500 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl">
     <div class="text-stone-300 text-sm font-light leading-relaxed max-w-4xl text-center sm:text-left">
-        We use cookies (like Google Analytics) to understand site traffic and improve your experience. By continuing to use our site, you agree to our <button onclick="window.openPrivacyModal()" class="text-white hover:text-stone-200 underline underline-offset-2 font-medium">Privacy Policy</button>.
+        We use cookies (like Google Analytics) to understand site traffic and improve your experience. By continuing to use our site, you agree to our <button onclick="window.openPrivacyModal()" class="text-white hover:text-stone-200 underline underline-offset-2 font-medium rounded-none">Privacy Policy</button>.
     </div>
-    <button id="accept-cookies" class="w-full sm:w-auto flex-shrink-0 bg-white hover:bg-stone-200 text-stone-900 px-8 py-3 rounded-full font-black uppercase tracking-widest transition text-xs shadow-lg btn-pulse">
+    <button id="accept-cookies" class="w-full sm:w-auto flex-shrink-0 bg-white hover:bg-stone-200 text-stone-900 px-8 py-3 rounded-none font-black uppercase tracking-widest transition text-xs shadow-lg btn-pulse">
         Got It
     </button>
 </div>
@@ -739,7 +725,7 @@
     <div class="max-w-xl mx-auto mt-10">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-2xl font-black uppercase text-stone-900 tracking-tight">Search & Filter</h2>
-            <button id="close-filter-modal" class="text-stone-400 hover:text-stone-900 p-2 transition" aria-label="Close search">
+            <button id="close-filter-modal" class="text-stone-400 hover:text-stone-900 p-2 transition rounded-none" aria-label="Close search">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
@@ -747,12 +733,12 @@
         <div class="space-y-6">
             <div>
                 <label class="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-3" for="filter-search">Find a Vessel</label>
-                <input type="text" id="filter-search" placeholder="Search blankets, hoodies, designs..." class="w-full p-4 bg-white rounded-xl border border-stone-200 outline-none focus:ring-4 focus:ring-stone-100 transition shadow-sm text-lg">
+                <input type="text" id="filter-search" placeholder="Search blankets, hoodies, designs..." class="w-full p-4 bg-white rounded-none border border-stone-200 outline-none focus:ring-4 focus:ring-stone-100 transition shadow-sm text-lg">
             </div>
             
             <div>
                 <label class="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-3" for="filter-sort">Sort By</label>
-                <select id="filter-sort" class="w-full p-4 bg-white rounded-xl border border-stone-200 outline-none focus:ring-4 focus:ring-stone-100 transition shadow-sm text-lg appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23111827%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;">
+                <select id="filter-sort" class="w-full p-4 bg-white rounded-none border border-stone-200 outline-none focus:ring-4 focus:ring-stone-100 transition shadow-sm text-lg appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23111827%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;">
                     <option value="default">Featured Collection</option>
                     <option value="price-low">Price: Low to High</option>
                     <option value="price-high">Price: High to Low</option>
@@ -760,7 +746,7 @@
             </div>
         </div>
         
-        <button id="apply-filters" class="w-full mt-10 bg-stone-900 hover:bg-black text-white py-4 rounded-full font-black uppercase tracking-widest transition shadow-lg btn-pulse">Show Results</button>
+        <button id="apply-filters" class="w-full mt-10 bg-stone-900 hover:bg-black text-white py-4 rounded-none font-black uppercase tracking-widest transition shadow-lg btn-pulse">Show Results</button>
     </div>
 </div>
 
@@ -1047,7 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="flex flex-col items-center justify-center h-full p-8 text-center overflow-y-auto pb-32">
                         <h1 class="text-3xl font-black text-stone-900 mb-2">Your cart</h1>
                         <p class="text-stone-500 mb-8">Your cart is empty. Let's find something special.</p>
-                        <button onclick="window.Cart.close()" class="bg-stone-900 hover:bg-black text-white font-semibold py-4 px-10 rounded-full transition w-full max-w-[250px] btn-pulse">Continue shopping</button>
+                        <button onclick="window.Cart.close()" class="bg-stone-900 hover:bg-black text-white font-semibold py-4 px-10 rounded-none transition w-full max-w-[250px] btn-pulse">Continue shopping</button>
                     </div>`;
                 return;
             }
@@ -1069,7 +1055,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 html += `
                 <div class="flex gap-4">
-                    <div class="w-[85px] h-[85px] bg-stone-50 rounded-md overflow-hidden flex-shrink-0 border border-stone-100">${imgHtml}</div>
+                    <div class="w-[85px] h-[85px] bg-stone-50 rounded-none overflow-hidden flex-shrink-0 border border-stone-100">${imgHtml}</div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="w-full flex justify-between gap-3">
                             <div>
@@ -1080,7 +1066,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="text-[15px] font-bold text-stone-900 flex-shrink-0">$${((i.price*i.quantity)/100).toFixed(2)}</span>
                         </div>
                         <div class="flex items-center justify-between mt-3">
-                            <div class="flex items-center bg-white border border-stone-200 rounded-full h-9 overflow-hidden w-[100px]">
+                            <div class="flex items-center bg-white border border-stone-200 rounded-none h-9 overflow-hidden w-[100px]">
                                 <button onclick="window.Cart.updateItemQty('${i.id}', -1)" class="w-10 h-full flex items-center justify-center text-stone-400 hover:bg-stone-50 transition font-medium text-lg">−</button>
                                 <input type="number" value="${i.quantity}" class="w-8 text-center text-sm font-semibold text-stone-900 border-none outline-none p-0 bg-transparent" readonly>
                                 <button onclick="window.Cart.updateItemQty('${i.id}', 1)" class="w-10 h-full flex items-center justify-center text-stone-400 hover:bg-stone-50 transition font-medium text-lg">+</button>
@@ -1094,11 +1080,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             html += `
                 <div class="mt-8 mb-6 border-b border-stone-200 pb-6">
-                    <button onclick="window.Cart.close()" class="w-full py-3.5 bg-white border border-stone-900 hover:bg-stone-50 text-stone-900 font-semibold rounded-full text-[15px] transition btn-pulse">Add more items</button>
+                    <button onclick="window.Cart.close()" class="w-full py-3.5 bg-white border border-stone-900 hover:bg-stone-50 text-stone-900 font-semibold rounded-none text-[15px] transition btn-pulse">Add more items</button>
                 </div>`;
 
             html += `
-                <div class="border border-stone-300 rounded-xl py-3.5 px-4 mb-6 flex items-center text-stone-500 text-[15px]">
+                <div class="border border-stone-300 rounded-none py-3.5 px-4 mb-6 flex items-center text-stone-500 text-[15px]">
                     <svg class="w-5 h-5 mr-3 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                     Add coupon or gift card
                 </div>`;
@@ -1121,17 +1107,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     Secure checkout by Square
                 </div>
                 <div class="flex justify-center gap-1.5 mb-4">
-                    <div class="px-2 py-1 bg-[#00D632] text-white text-[9px] font-bold rounded tracking-wider">CASH APP</div>
-                    <div class="px-2 py-1 bg-black text-white text-[9px] font-bold rounded tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.3 48.6-.6 86.8-82.6 102.3-120.4-44.8-18.4-61.6-54.8-61.4-90.2zM153.6 30.1c17-21.4 40.2-30.1 63.6-30.1-2.6 23.4-12.7 44.9-28.7 61.2-16.1 16.5-38.3 26.6-60.8 24.3 1.6-21.7 10.3-40.5 25.9-55.4z"/></svg>Pay</div>
-                    <div class="px-2 py-1 bg-white border border-stone-200 text-stone-600 text-[9px] font-bold rounded tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 488 512" fill="currentColor"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>Pay</div>
-                    <div class="px-2 py-1 bg-[#1A1F71] text-white text-[9px] font-bold rounded tracking-wider italic">VISA</div>
+                    <div class="px-2 py-1 bg-[#00D632] text-white text-[9px] font-bold rounded-none tracking-wider">CASH APP</div>
+                    <div class="px-2 py-1 bg-black text-white text-[9px] font-bold rounded-none tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.3 48.6-.6 86.8-82.6 102.3-120.4-44.8-18.4-61.6-54.8-61.4-90.2zM153.6 30.1c17-21.4 40.2-30.1 63.6-30.1-2.6 23.4-12.7 44.9-28.7 61.2-16.1 16.5-38.3 26.6-60.8 24.3 1.6-21.7 10.3-40.5 25.9-55.4z"/></svg>Pay</div>
+                    <div class="px-2 py-1 bg-white border border-stone-200 text-stone-600 text-[9px] font-bold rounded-none tracking-wider flex items-center"><svg class="w-3 h-3 mr-0.5" viewBox="0 0 488 512" fill="currentColor"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>Pay</div>
+                    <div class="px-2 py-1 bg-[#1A1F71] text-white text-[9px] font-bold rounded-none tracking-wider italic">VISA</div>
                 </div>
                 
                 <div class="relative w-full">
-                    <button id="checkout-btn" class="w-full btn-pulse bg-stone-900 hover:bg-black text-white font-semibold py-4 rounded-full transition duration-200 flex justify-center items-center text-[15px] tracking-wide shadow-md" onclick="window.Cart.checkout()">
+                    <button id="checkout-btn" class="w-full btn-pulse bg-stone-900 hover:bg-black text-white font-semibold py-4 rounded-none transition duration-200 flex justify-center items-center text-[15px] tracking-wide shadow-md" onclick="window.Cart.checkout()">
                         Continue to payment — $${subtotal}
                     </button>
-                    <span class="absolute -top-2.5 -right-1 bg-red-600 text-white text-[12px] font-black w-6 h-6 rounded-full flex items-center justify-center shadow-lg border-2 border-white pointer-events-none">
+                    <span class="absolute -top-2.5 -right-1 bg-red-600 text-white text-[12px] font-black w-6 h-6 rounded-none flex items-center justify-center shadow-lg border-2 border-white pointer-events-none">
                         ${total}
                     </span>
                 </div>
@@ -1307,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dots = shown.map(s => {
             const ring = ['#ffffff','#fffff0','#fdf6e3','#f0e6d2'].includes(s.hex) ? 'border-stone-300' : 'border-black/10';
-            return `<span class="inline-block w-4 h-4 rounded-full border ${ring} shadow-sm" style="background:${s.hex}" title="${s.label}"></span>`;
+            return `<span class="inline-block w-4 h-4 rounded-none border ${ring} shadow-sm" style="background:${s.hex}" title="${s.label}"></span>`;
         }).join('');
 
         const more = extra > 0 ? `<span class="text-[10px] font-bold text-stone-400 ml-0.5">+${extra}</span>` : '';
@@ -1386,15 +1372,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const upSafeName = upsellItem.name.replace(/'/g,"&#39;");
             
             upsellHtml = `
-            <div class="mt-5 mb-2 bg-stone-50 border border-stone-200 rounded-xl p-3 flex items-center gap-3 shadow-sm cursor-pointer hover:bg-stone-100 transition group" onclick="document.getElementById('upsell-check').click()">
-                <img src="${upImg}" class="w-14 h-14 object-contain bg-white rounded border border-stone-200 p-1 flex-shrink-0">
+            <div class="mt-5 mb-2 bg-stone-50 border border-stone-200 rounded-none p-3 flex items-center gap-3 shadow-sm cursor-pointer hover:bg-stone-100 transition group" onclick="document.getElementById('upsell-check').click()">
+                <img src="${upImg}" class="w-14 h-14 object-contain bg-white rounded-none border border-stone-200 p-1 flex-shrink-0">
                 <div class="flex-grow">
                     <p class="text-[10px] font-black text-stone-900 uppercase tracking-widest mb-0.5">Frequently Bought Together</p>
                     <p class="text-[13px] font-bold text-stone-900 leading-tight line-clamp-1">${upSafeName}</p>
                     <p class="text-[12px] font-bold text-stone-500 mt-0.5">+ $${upPrice}</p>
                 </div>
                 <div class="pr-2 pl-1 flex-shrink-0">
-                    <input type="checkbox" id="upsell-check" class="w-5 h-5 rounded border-stone-300 text-stone-900 focus:ring-stone-900 cursor-pointer" 
+                    <input type="checkbox" id="upsell-check" class="w-5 h-5 rounded-none border-stone-300 text-stone-900 focus:ring-stone-900 cursor-pointer" 
                         data-id="${upsellItem.id}" data-vid="${upV.id}" data-name="${upSafeName}" data-price="${upV.price}" onclick="event.stopPropagation()">
                 </div>
             </div>
@@ -1402,12 +1388,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         pModal.innerHTML = `
-            <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-stone-100 text-stone-900 p-2.5 rounded-full z-[100] transition shadow-md border border-stone-200 btn-pulse" aria-label="Close">
+            <button onclick="window.closeModal()" class="hidden md:flex absolute top-4 right-4 bg-white hover:bg-stone-100 text-stone-900 p-2.5 rounded-none z-[100] transition shadow-md border border-stone-200 btn-pulse" aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
             
             <div class="w-full md:w-1/2 bg-[#fafaf9] relative flex-shrink-0 flex items-center justify-center border-b md:border-b-0 md:border-r border-stone-200 h-[50vh] md:h-full overflow-hidden group">
-                <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-stone-900 p-2 rounded-full z-[100] shadow-sm border border-stone-200 btn-pulse" aria-label="Close">
+                <button onclick="window.closeModal()" class="md:hidden absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-stone-900 p-2 rounded-none z-[100] shadow-sm border border-stone-200 btn-pulse" aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
                 <div class="w-full h-full relative flex items-center justify-center p-0 sm:p-6">${imgHtml}</div>
@@ -1432,7 +1418,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     <div class="mb-4">
                         <label class="block text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-2">Quantity</label>
-                        <div class="qty-wrap inline-flex w-32 h-12 bg-white border border-stone-300 rounded-lg overflow-hidden">
+                        <div class="qty-wrap inline-flex w-32 h-12 bg-white border border-stone-300 rounded-none overflow-hidden">
                             <button class="w-10 h-full flex items-center justify-center text-stone-500 hover:bg-stone-50 transition font-medium text-lg" onclick="window.stepModalQty(-1)">−</button>
                             <input type="number" id="modal-qty" class="w-12 h-full text-center text-sm font-semibold text-stone-900 border-none outline-none p-0 bg-transparent" value="1" min="1" max="99" onchange="window.updateModalPrice()">
                             <button class="w-10 h-full flex items-center justify-center text-stone-500 hover:bg-stone-50 transition font-medium text-lg" onclick="window.stepModalQty(1)">+</button>
@@ -1445,15 +1431,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="text-[11px] text-stone-500 mt-6 italic font-medium">Custom-made for you upon order. Please allow 3-5 days for production before shipment.</p>
                 </div>
 
-                <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-stone-200 p-3 sm:p-5 flex items-center gap-2 sm:gap-3 z-50 rounded-b-2xl md:rounded-br-2xl md:rounded-bl-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
-                    <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-stone-200 hover:bg-stone-50 hover:border-stone-300 rounded-full hidden sm:flex items-center justify-center shadow-sm text-stone-900 transition duration-200 btn-pulse" aria-label="Close">
+                <div class="absolute bottom-0 left-0 w-full bg-white/98 backdrop-blur-xl border-t border-stone-200 p-3 sm:p-5 flex items-center gap-2 sm:gap-3 z-50 rounded-none shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+                    <button onclick="window.closeModal()" class="w-[52px] h-[52px] flex-shrink-0 bg-white border border-stone-200 hover:bg-stone-50 hover:border-stone-300 rounded-none hidden sm:flex items-center justify-center shadow-sm text-stone-900 transition duration-200 btn-pulse" aria-label="Close">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                     <div class="flex-grow flex gap-2 sm:gap-3 h-[52px]">
-                        <button class="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-900 font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] transition flex items-center justify-center btn-pulse border border-stone-300" onclick="window.addModalToCart('${p.id}')">
+                        <button class="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-900 font-black tracking-widest uppercase rounded-none text-[11px] sm:text-[13px] transition flex items-center justify-center btn-pulse border border-stone-300" onclick="window.addModalToCart('${p.id}')">
                             Add to Cart
                         </button>
-                        <button id="modal-buy-now-btn" class="flex-1 bg-stone-900 hover:bg-black text-white font-black tracking-widest uppercase rounded-full text-[11px] sm:text-[13px] shadow-md transition btn-pulse flex items-center justify-center" onclick="window.buyNow('${p.id}')">
+                        <button id="modal-buy-now-btn" class="flex-1 bg-stone-900 hover:bg-black text-white font-black tracking-widest uppercase rounded-none text-[11px] sm:text-[13px] shadow-md transition btn-pulse flex items-center justify-center" onclick="window.buyNow('${p.id}')">
                             Buy Now
                         </button>
                     </div>
@@ -1563,8 +1549,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const needsOptions = !!(p.variations && p.variations.length > 1);
         
         return `
-        <div class="product-card group bg-stone-50/50 hover:bg-stone-50 rounded-2xl p-4 transition duration-300 w-full" onclick="window.openModal('${p.id}')">
-            <div class="card-img-wrap rounded-xl overflow-hidden bg-transparent mb-4">${img}</div>
+        <div class="product-card group bg-stone-50/50 hover:bg-stone-50 rounded-none p-4 transition duration-300 w-full" onclick="window.openModal('${p.id}')">
+            <div class="card-img-wrap rounded-none overflow-hidden bg-transparent mb-4">${img}</div>
             <div class="card-body p-0">
                 <div>
                     <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-stone-900 leading-snug line-clamp-2">${sName}</h3>
@@ -1572,7 +1558,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${buildSwatchesHTML(p)}
                 </div>
                 <div class="mt-5">
-                    <button class="btn-pulse w-full bg-stone-900 hover:bg-black text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3.5 rounded-full shadow-md transition-transform" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
+                    <button class="btn-pulse w-full bg-stone-900 hover:bg-black text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3.5 rounded-none shadow-md transition-transform" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
                 </div>
             </div>
         </div>`;
@@ -1662,7 +1648,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (lodgepoleItems.length > 0) {
                 lodgepoleSection.classList.remove('hidden');
                 lodgepoleGrid.innerHTML = lodgepoleItems.map(p => `
-                    <div class="fundraiser-card bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg shrink-0 w-[75vw] sm:w-[280px] snap-start">
+                    <div class="fundraiser-card bg-white/5 p-4 rounded-none border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg shrink-0 w-[75vw] sm:w-[280px] snap-start">
                         ${generateCardHTML(p)}
                     </div>
                 `).join('');
@@ -1674,7 +1660,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Ensure they are available to the modal viewer
                 flashItems.forEach(p => { window.globalProducts[p.id] = p; });
                 flashGrid.innerHTML = flashItems.map(p => `
-                    <div class="flash-card bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg shrink-0 w-[75vw] sm:w-[280px] snap-start">
+                    <div class="flash-card bg-white/5 p-4 rounded-none border border-white/10 hover:bg-white/10 transition duration-300 shadow-lg shrink-0 w-[75vw] sm:w-[280px] snap-start">
                         ${generateCardHTML(p)}
                     </div>
                 `).join('');
@@ -1746,11 +1732,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 htmlOutput += `
                 <details class="group w-full mb-4" open>
-                    <summary class="flex justify-between items-center cursor-pointer bg-white p-5 rounded-xl list-none [&::-webkit-details-marker]:hidden border border-stone-200 hover:border-stone-900 transition-colors select-none shadow-sm">
+                    <summary class="flex justify-between items-center cursor-pointer bg-white p-5 rounded-none list-none [&::-webkit-details-marker]:hidden border border-stone-200 hover:border-stone-900 transition-colors select-none shadow-sm">
                         <div class="flex items-center gap-3">
                             ${icons[cat] || icons['Other Goods']}
                             <h3 class="text-[14px] sm:text-base font-black uppercase tracking-widest text-stone-900 flex items-center">
-                                ${cat} <span class="bg-stone-100 border border-stone-200 text-stone-900 text-[11px] px-2 py-0.5 rounded-full ml-3">${items.length}</span> ${priceLabel}
+                                ${cat} <span class="bg-stone-100 border border-stone-200 text-stone-900 text-[11px] px-2 py-0.5 rounded-none ml-3">${items.length}</span> ${priceLabel}
                             </h3>
                         </div>
                         <span class="text-stone-400 group-hover:text-stone-900 transition-transform duration-300 group-open:rotate-180"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
