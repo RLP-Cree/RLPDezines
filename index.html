@@ -48,11 +48,17 @@
         :root { --brand: #1c1917; --brand-light: #78716c; } 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        /* Removed CSS smooth scroll to prevent desktop wheel stickiness. Handled via JS now. */
+        /* Native smooth scrolling handled via JS for perfect momentum */
         body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1c1917; -webkit-font-smoothing: antialiased; font-size: 16px; }
         
         /* Locks body scrolling on iOS when modal is open */
         body.no-scroll { overflow: hidden !important; }
+
+        /* Forces momentum scrolling on iPhones for internal elements */
+        .overflow-y-auto {
+            -webkit-overflow-scrolling: touch !important;
+            overscroll-behavior-y: contain !important;
+        }
 
         /* ── Nav & UI ── */
         .nav-link { position: relative; text-decoration: none; }
@@ -71,7 +77,8 @@
         .reveal-delay-3 { transition-delay: 0.24s; }
         .reveal-delay-4 { transition-delay: 0.32s; }
 
-        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1c1917; color: #fff; padding: 14px 24px; border-radius: 0; font-size: 1rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
+        /* Updated Toast Notification with Green Success Styling */
+        #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px); background: #00D632; color: #1c1917; padding: 14px 24px; border-radius: 0; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 8px 32px rgba(0,214,50,0.25); z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; opacity: 0; pointer-events: none; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
 
         .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.35em; text-transform: uppercase; color: #78716c; }
@@ -249,7 +256,7 @@
 
 <button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-stone-900 hover:bg-black text-white p-4 rounded-none shadow-[0_10px_40px_rgba(28,25,23,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-black w-6 h-6 rounded-none flex items-center justify-center hidden shadow-md border-2 border-white">
+    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-[#00D632] text-white text-[11px] font-black w-6 h-6 rounded-none flex items-center justify-center hidden shadow-md border-2 border-white">
         <span id="floating-cart-count">0</span>
     </span>
 </button>
@@ -1074,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            let html = `<div class="flex-1 overflow-y-auto overscroll-contain px-5 sm:px-8 py-8 min-h-0" style="-webkit-overflow-scrolling: touch;"><h1 class="text-3xl sm:text-4xl font-black text-stone-900 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
+            let html = `<div class="flex-grow overflow-y-auto px-5 sm:px-8 py-8"><h1 class="text-3xl sm:text-4xl font-black text-stone-900 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
             
             this.items.forEach(i => {
                 const nameParts = i.name.match(/(.*)\s\((.*)\)$/);
@@ -1153,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button id="checkout-btn" class="w-full btn-pulse bg-stone-900 hover:bg-black text-white font-semibold py-4 rounded-none transition duration-200 flex justify-center items-center text-[15px] tracking-wide shadow-md" onclick="window.Cart.checkout()">
                         Continue to payment — $${subtotal}
                     </button>
-                    <span class="absolute -top-2.5 -right-1 bg-red-600 text-white text-[12px] font-black w-6 h-6 rounded-none flex items-center justify-center shadow-lg border-2 border-white pointer-events-none">
+                    <span class="absolute -top-2.5 -right-1 bg-[#00D632] text-white text-[12px] font-black w-6 h-6 rounded-none flex items-center justify-center shadow-lg border-2 border-white pointer-events-none">
                         ${total}
                     </span>
                 </div>
@@ -1433,7 +1440,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="w-full h-full relative flex items-center justify-center p-0 sm:p-6">${imgHtml}</div>
             </div>
             
-            <!-- flex-1 and min-h-0 act as a hard boundary so iOS knows exactly where to scroll -->
             <div class="w-full md:w-1/2 flex flex-col relative bg-white flex-1 min-h-0">
                 
                 <div class="flex-1 overflow-y-auto overscroll-contain p-5 sm:p-8 pb-32 md:pb-36 bg-white min-h-0" style="-webkit-overflow-scrolling: touch;">
