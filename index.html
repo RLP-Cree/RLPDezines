@@ -100,7 +100,6 @@
                         box-shadow 0.4s ease !important;
             will-change: transform, filter, box-shadow;
             transform: translateZ(0); 
-            position: relative;
         }
         
         .btn-pulse:hover, .btn-pulse:focus {
@@ -254,9 +253,9 @@
     <a href="mailto:rlp@rlpdezines.com" class="mobile-link mt-4 bg-stone-900 text-white text-center font-black tracking-widest uppercase py-4 rounded-none text-[15px] btn-pulse">Start a Project</a>
 </div>
 
-<button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 z-[55] bg-stone-900 hover:bg-black text-white p-4 rounded-none shadow-[0_10px_40px_rgba(28,25,23,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart">
+<button id="floating-cart-btn" class="lg:hidden fixed bottom-6 right-6 bg-stone-900 hover:bg-black text-white p-4 rounded-none shadow-[0_10px_40px_rgba(28,25,23,0.5)] transition-transform hover:scale-105 active:scale-95 btn-pulse flex items-center justify-center group" aria-label="Open cart" style="z-index: 55;">
     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-[#00D632] text-white text-[11px] font-black w-6 h-6 rounded-none flex items-center justify-center hidden shadow-md border-2 border-white">
+    <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-[#00D632] text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center hidden shadow-md border-2 border-white">
         <span id="floating-cart-count">0</span>
     </span>
 </button>
@@ -1160,7 +1159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button id="checkout-btn" class="w-full btn-pulse bg-stone-900 hover:bg-black text-white font-semibold py-4 rounded-none transition duration-200 flex justify-center items-center text-[15px] tracking-wide shadow-md" onclick="window.Cart.checkout()">
                         Continue to payment — $${subtotal}
                     </button>
-                    <span class="absolute -top-2.5 -right-1 bg-[#00D632] text-white text-[12px] font-black w-6 h-6 rounded-none flex items-center justify-center shadow-lg border-2 border-white pointer-events-none">
+                    <span class="absolute -top-2.5 -right-1 bg-[#00D632] text-white text-[12px] font-black w-6 h-6 rounded-full flex items-center justify-center shadow-lg border-2 border-white pointer-events-none">
                         ${total}
                     </span>
                 </div>
