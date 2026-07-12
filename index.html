@@ -44,14 +44,21 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Smooth Scroll Engine -->
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
 
     <style>
         :root { --brand: #1c1917; --brand-light: #78716c; } 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1c1917; -webkit-font-smoothing: antialiased; font-size: 16px; }
-        body.no-scroll { overflow: hidden !important; touch-action: none; }
+        
+        /* Removed touch-action: none so iOS doesn't freeze in modals */
+        body.no-scroll { overflow: hidden !important; }
+
+        /* Forces momentum scrolling on iPhones for internal elements */
+        .overflow-y-auto {
+            -webkit-overflow-scrolling: touch !important;
+            overscroll-behavior-y: contain !important;
+        }
 
         /* ── Nav & UI ── */
         .nav-link { position: relative; text-decoration: none; }
@@ -262,7 +269,7 @@
         </button>
         <h2 class="text-[14px] font-black uppercase tracking-widest text-stone-900">RLP Dezines</h2>
     </div>
-    <div id="cart-content" class="flex-grow flex flex-col overflow-hidden bg-white"></div>
+    <div id="cart-content" class="flex-grow flex flex-col overflow-y-auto bg-white"></div>
 </div>
 
 <div id="privacy-modal-overlay" class="fixed inset-0 bg-stone-900/60 z-[110] hidden opacity-0 transition-opacity duration-300"></div>
@@ -285,7 +292,6 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-stone-200 rounded-none z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
-<!-- HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-stone-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
@@ -296,7 +302,6 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Wear Your Resistance</h1>
         <p class="text-stone-200 max-w-lg mx-auto text-xl mb-10 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Modern Indigenous streetwear built for resilience. Bold designs, strong attitude, and authentic culture.</p>
 
-        <!-- LUXURY CTA -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 reveal reveal-delay-3">
             <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white text-stone-900 px-10 py-4 rounded-none font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
             <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-transparent border border-white text-white hover:bg-white/10 px-10 py-4 rounded-none font-black uppercase tracking-widest text-sm transition btn-pulse">The Family Special</a>
@@ -304,7 +309,6 @@
     </div>
 </section>
 
-<!-- 72 HOUR FLASH DROP SECTION -->
 <section id="flash-drop" class="flash-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div id="flash-badge" class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Locked Vault</div>
@@ -328,12 +332,10 @@
         </div>
 
         <div id="flash-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- Flash items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- FEATURED ITEMS -->
 <section id="featured" class="py-12 sm:py-20 px-0 sm:px-6 bg-white relative z-10 border-b border-stone-200">
     <div class="max-w-6xl mx-auto" id="featured-container">
         <div class="animate-pulse px-4 sm:px-0">
@@ -349,7 +351,6 @@
     </div>
 </section>
 
-<!-- THE INTENT / MISSION -->
 <section id="mission" class="py-20 sm:py-28 px-5 bg-stone-50 border-b border-stone-200">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -383,7 +384,6 @@
     </div>
 </section>
 
-<!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
 <section id="lodgepole-special" class="hidden fundraiser-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-[#b7410e] text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Official Fundraiser</div>
@@ -391,12 +391,10 @@
         <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
         
         <div id="lodgepole-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- Lodgepole items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-stone-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Retiring Soon</div>
@@ -419,12 +417,10 @@
         </div>
 
         <div id="nacna-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            <!-- NACNA items populate here dynamically -->
-        </div>
+            </div>
     </div>
 </section>
 
-<!-- THE FULL CATALOG -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -433,8 +429,7 @@
         </div>
         
         <div id="product-grid" class="w-full flex flex-col gap-6 reveal">
-            <!-- Products inject here via JS -->
-        </div>
+            </div>
     </div>
 </section>
 
@@ -772,10 +767,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // ── Smooth Scroll (Lenis) ──
     const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smooth: true,
-        smoothTouch: false // Keeps native touch scrolling on mobile so it doesn't feel weird
+        lerp: 0.1, // Gives that heavy, buttery momentum
+        smoothWheel: true,
+        smoothTouch: false // Keeps native touch scrolling on mobile
     });
 
     function raf(time) {
@@ -792,7 +786,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetId === '#') return;
             const target = document.querySelector(targetId);
             if (target) {
-                lenis.scrollTo(target, { offset: -69 }); // -69px to account for the fixed header
+                lenis.scrollTo(target, { offset: -69 }); // Accounts for the fixed header height
             }
         });
     });
@@ -1584,7 +1578,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const needsOptions = !!(p.variations && p.variations.length > 1);
         
         return `
-        <div class="product-card group bg-stone-50/50 hover:bg-stone-50 rounded-none p-4 transition duration-300" onclick="window.openModal('${p.id}')">
+        <div class="product-card group bg-stone-50/50 hover:bg-stone-50 rounded-none p-4 transition duration-300 w-full" onclick="window.openModal('${p.id}')">
             <div class="card-img-wrap rounded-none overflow-hidden bg-transparent mb-4">${img}</div>
             <div class="card-body p-0 flex flex-col flex-grow">
                 <div>
