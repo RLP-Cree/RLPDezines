@@ -43,22 +43,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Outfit:wght@700;800;900&display=swap">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
 
     <style>
         :root { --brand: #1c1917; --brand-light: #78716c; } 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        /* Removed CSS smooth scroll to prevent desktop wheel stickiness. Handled via JS now. */
         body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1c1917; -webkit-font-smoothing: antialiased; font-size: 16px; }
         
-        /* Removed touch-action: none so iOS doesn't freeze in modals */
+        /* Locks body scrolling on iOS when modal is open */
         body.no-scroll { overflow: hidden !important; }
-
-        /* Forces momentum scrolling on iPhones for internal elements */
-        .overflow-y-auto {
-            -webkit-overflow-scrolling: touch !important;
-            overscroll-behavior-y: contain !important;
-        }
 
         /* ── Nav & UI ── */
         .nav-link { position: relative; text-decoration: none; }
@@ -242,7 +236,7 @@
     </div>
 </header>
 
-<div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-white/98 backdrop-blur-xl border-b border-stone-200 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overflow-y-auto" style="height: calc(100vh - 69px);">
+<div id="mobile-menu" class="lg:hidden fixed top-[69px] left-0 w-full bg-white/98 backdrop-blur-xl border-b border-stone-200 z-40 flex flex-col px-6 py-6 space-y-1 shadow-2xl overscroll-contain" style="height: calc(100vh - 69px); overflow-y: auto; -webkit-overflow-scrolling: touch;">
     <a href="#shop-live" class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Shop Now</a>
     <a href="#mission"   class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">The Ethos</a>
     <a href="#bundles"   class="mobile-link text-stone-900 font-black tracking-widest uppercase text-[15px] py-4 border-b border-stone-100">Honoring Bundles</a>
@@ -269,7 +263,7 @@
         </button>
         <h2 class="text-[14px] font-black uppercase tracking-widest text-stone-900">RLP Dezines</h2>
     </div>
-    <div id="cart-content" class="flex-grow flex flex-col overflow-y-auto bg-white"></div>
+    <div id="cart-content" class="flex-grow flex flex-col min-h-0 bg-white"></div>
 </div>
 
 <div id="privacy-modal-overlay" class="fixed inset-0 bg-stone-900/60 z-[110] hidden opacity-0 transition-opacity duration-300"></div>
@@ -280,7 +274,7 @@
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
     </div>
-    <div class="p-6 sm:p-8 overflow-y-auto text-stone-600 text-sm font-light leading-relaxed space-y-5">
+    <div class="p-6 sm:p-8 overflow-y-auto text-stone-600 text-sm font-light leading-relaxed space-y-5" style="-webkit-overflow-scrolling: touch;">
         <p><strong class="text-stone-900 font-bold">1. Information We Collect:</strong> We collect information you provide directly to us (like your name, email, and shipping address when placing an order or using our intake forms). We also use Google Analytics to automatically collect basic, anonymous usage data (like your IP address, browser type, and pages visited) via cookies.</p>
         <p><strong class="text-stone-900 font-bold">2. How We Use Cookies:</strong> Cookies are small files stored on your device. We use them to understand how visitors interact with our site, measure ad performance, and improve your overall experience. You can disable cookies in your browser settings, though some site features may not function properly.</p>
         <p><strong class="text-stone-900 font-bold">3. How We Share Information:</strong> We do not sell your personal data. We only share information with trusted third-party services necessary to run our business, such as Printful (for fulfilling orders) and Square (for secure payment processing). Square handles all payment data securely; we never store your credit card information.</p>
@@ -292,6 +286,7 @@
 <div id="product-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[85%] max-w-4xl bg-white border border-stone-200 rounded-none z-[90] hidden opacity-0 scale-95 transition-all duration-300 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-[80vh]">
 </div>
 
+<!-- HERO SECTION -->
 <section id="top" class="relative flex flex-col items-center justify-center text-center px-6 pt-36 pb-24 min-h-[90vh] overflow-hidden bg-stone-900">
     <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-60">
         <source src="/hero-bg.mp4" type="video/mp4">
@@ -302,6 +297,7 @@
         <h1 class="text-5xl sm:text-7xl font-black mb-4 text-white tracking-tight uppercase leading-none reveal reveal-delay-1 drop-shadow-lg">Wear Your Resistance</h1>
         <p class="text-stone-200 max-w-lg mx-auto text-xl mb-10 font-light leading-relaxed reveal reveal-delay-2 drop-shadow">Modern Indigenous streetwear built for resilience. Bold designs, strong attitude, and authentic culture.</p>
 
+        <!-- LUXURY CTA -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 reveal reveal-delay-3">
             <a href="#shop-live" class="w-full sm:w-auto inline-block bg-white text-stone-900 px-10 py-4 rounded-none font-black uppercase tracking-widest text-sm shadow-xl transition btn-pulse">Full Collection</a>
             <a href="#lodgepole-special" class="w-full sm:w-auto inline-block bg-transparent border border-white text-white hover:bg-white/10 px-10 py-4 rounded-none font-black uppercase tracking-widest text-sm transition btn-pulse">The Family Special</a>
@@ -309,6 +305,7 @@
     </div>
 </section>
 
+<!-- 72 HOUR FLASH DROP SECTION -->
 <section id="flash-drop" class="flash-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div id="flash-badge" class="inline-block bg-[#d4af37] text-stone-900 text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Locked Vault</div>
@@ -332,10 +329,12 @@
         </div>
 
         <div id="flash-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            </div>
+            <!-- Flash items populate here dynamically -->
+        </div>
     </div>
 </section>
 
+<!-- FEATURED ITEMS -->
 <section id="featured" class="py-12 sm:py-20 px-0 sm:px-6 bg-white relative z-10 border-b border-stone-200">
     <div class="max-w-6xl mx-auto" id="featured-container">
         <div class="animate-pulse px-4 sm:px-0">
@@ -351,6 +350,7 @@
     </div>
 </section>
 
+<!-- THE INTENT / MISSION -->
 <section id="mission" class="py-20 sm:py-28 px-5 bg-stone-50 border-b border-stone-200">
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -384,6 +384,7 @@
     </div>
 </section>
 
+<!-- HEAD MAN SPECIAL FUNDRAISER SECTION -->
 <section id="lodgepole-special" class="hidden fundraiser-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-[#b7410e] text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Official Fundraiser</div>
@@ -391,10 +392,12 @@
         <p class="text-stone-300 max-w-2xl mx-auto mb-10 font-light text-lg px-4">Sponsored by Ron Lodgepole & Family for the 60th Annual Rocky Boy Pow Wow (July 31st - Aug 2nd, 2026). All proceeds from this exclusive drop go directly to funding the Head Man Special. Thank you for your support!</p>
         
         <div id="lodgepole-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            </div>
+            <!-- Lodgepole items populate here dynamically -->
+        </div>
     </div>
 </section>
 
+<!-- NACNA VAULT SECTION -->
 <section id="nacna-vault" class="hidden nacna-bg py-24 px-0 sm:px-6 relative overflow-hidden shadow-2xl border-t border-stone-800">
     <div class="max-w-6xl mx-auto relative z-10 text-center">
         <div class="inline-block bg-stone-700 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-none mb-6 shadow-md">Retiring Soon</div>
@@ -417,10 +420,12 @@
         </div>
 
         <div id="nacna-grid" class="swipe-carousel text-left mt-8 px-4 sm:px-0">
-            </div>
+            <!-- NACNA items populate here dynamically -->
+        </div>
     </div>
 </section>
 
+<!-- THE FULL CATALOG -->
 <section id="shop-live" class="py-20 sm:py-28 px-4 sm:px-6 border-t border-stone-200 bg-white">
     <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16 reveal">
@@ -429,7 +434,8 @@
         </div>
         
         <div id="product-grid" class="w-full flex flex-col gap-6 reveal">
-            </div>
+            <!-- Products inject here via JS -->
+        </div>
     </div>
 </section>
 
@@ -764,21 +770,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const body = document.body;
-    
-    // ── Smooth Scroll (Lenis) ──
-    const lenis = new Lenis({
-        lerp: 0.1, // Gives that heavy, buttery momentum
-        smoothWheel: true,
-        smoothTouch: false // Keeps native touch scrolling on mobile
-    });
 
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Intercept anchor links for smooth scrolling with fixed header offset
+    // Intercept anchor links for smooth scrolling with fixed header offset (Native Vanilla JS)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -786,7 +779,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetId === '#') return;
             const target = document.querySelector(targetId);
             if (target) {
-                lenis.scrollTo(target, { offset: -69 }); // Accounts for the fixed header height
+                const headerOffset = 69;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
             }
         });
     });
@@ -794,6 +794,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Timer Logic for Vaults ──
     const NACNA_DEADLINE = new Date("2026-06-27T23:59:59").getTime();
     
+    // Flash Drop explicitly starts July 9, 2026 11:45 AM MST
+    // Flash Drop explicitly ends 72 hours after July 9, 2026 11:45 AM MST
+    // MST is UTC-7. 
     const FLASH_START = new Date("2026-07-09T11:45:00-07:00").getTime();
     const FLASH_DEADLINE = new Date("2026-07-12T11:45:00-07:00").getTime(); 
     window.flashState = 'init';
@@ -828,6 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentState = 'closed';
         }
 
+        // Only update DOM structure when state changes
         if (window.flashState !== currentState) {
             window.flashState = currentState;
             const timerLabel = document.getElementById('timer-status-label');
@@ -842,10 +846,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(timerLabel) timerLabel.innerText = "Vault Closes In:";
                 if(flashBadge) flashBadge.innerText = "Limited Vault Release";
                 if(flashDesc) flashDesc.innerText = "We are opening the vault. These premium designs are only available for 72 hours. Once the clock hits zero, they go back in the vault.";
-                if (typeof loadProducts === 'function') loadProducts(); 
+                if (typeof loadProducts === 'function') loadProducts(); // Refresh to show products
             } else if (currentState === 'closed') {
                 document.getElementById('flash-drop')?.classList.add('hidden');
-                if (typeof loadProducts === 'function') loadProducts(); 
+                if (typeof loadProducts === 'function') loadProducts(); // Refresh to hide products
             }
         }
 
@@ -873,8 +877,8 @@ document.addEventListener('DOMContentLoaded', () => {
         openIcon.classList.toggle('hidden', isOpen);
         closeIcon.classList.toggle('hidden', !isOpen);
         
-        if (isOpen) { body.classList.add('no-scroll'); lenis.stop(); }
-        else { body.classList.remove('no-scroll'); lenis.start(); }
+        if (isOpen) body.classList.add('no-scroll');
+        else body.classList.remove('no-scroll');
     }
 
     if(menuBtn) menuBtn.addEventListener('click', () => toggleMobileMenu());
@@ -921,7 +925,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── Newsletter Form ──
+    // ── Newsletter Form (Netlify Integration Fix) ──
     const newsletterForm = document.getElementById('newsletter-form');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', async (e) => {
@@ -978,7 +982,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openPrivacyModal = () => {
         pModalOverlay.classList.remove('hidden'); privModal.classList.remove('hidden');
         requestAnimationFrame(() => { pModalOverlay.classList.remove('opacity-0'); privModal.classList.remove('opacity-0', 'scale-95'); });
-        document.body.classList.add('no-scroll'); lenis.stop();
+        document.body.classList.add('no-scroll');
     };
 
     window.closePrivacyModal = () => {
@@ -986,7 +990,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             pModalOverlay.classList.add('hidden'); privModal.classList.add('hidden');
             if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('filter-modal').classList.contains('hidden')) {
-                document.body.classList.remove('no-scroll'); lenis.start();
+                document.body.classList.remove('no-scroll');
             }
         }, 300);
     };
@@ -1006,7 +1010,7 @@ document.addEventListener('DOMContentLoaded', () => {
         open() { 
             this.drawer?.classList.add('open'); 
             this.overlay?.classList.add('open'); 
-            body.classList.add('no-scroll'); lenis.stop();
+            body.classList.add('no-scroll');
             if (mobileMenu && mobileMenu.classList.contains('open')) toggleMobileMenu(false);
         }
         close() { 
@@ -1015,12 +1019,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const pModal = document.getElementById('product-modal');
             const fModal = document.getElementById('filter-modal');
             if((pModal && !pModal.classList.contains('hidden')) || (fModal && !fModal.classList.contains('hidden'))) return;
-            body.classList.remove('no-scroll'); lenis.start();
+            body.classList.remove('no-scroll');
         }
         addItem(p) {
             const ex = this.items.find(i => i.id === p.id);
             if (ex) ex.quantity += (p.quantity || 1); else this.items.push({ ...p, quantity: p.quantity || 1 });
             
+            // GA4 Event Tracking Code
             if (typeof gtag === 'function') {
                 gtag('event', 'add_to_cart', {
                     currency: 'USD',
@@ -1069,7 +1074,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            let html = `<div class="flex-grow overflow-y-auto px-5 sm:px-8 py-8"><h1 class="text-3xl sm:text-4xl font-black text-stone-900 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
+            let html = `<div class="flex-1 overflow-y-auto overscroll-contain px-5 sm:px-8 py-8 min-h-0" style="-webkit-overflow-scrolling: touch;"><h1 class="text-3xl sm:text-4xl font-black text-stone-900 mb-8 tracking-tight">Your cart</h1><div class="space-y-6">`;
             
             this.items.forEach(i => {
                 const nameParts = i.name.match(/(.*)\s\((.*)\)$/);
@@ -1428,9 +1433,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="w-full h-full relative flex items-center justify-center p-0 sm:p-6">${imgHtml}</div>
             </div>
             
-            <div class="w-full md:w-1/2 flex flex-col relative bg-white flex-grow min-h-0 md:h-full">
+            <!-- flex-1 and min-h-0 act as a hard boundary so iOS knows exactly where to scroll -->
+            <div class="w-full md:w-1/2 flex flex-col relative bg-white flex-1 min-h-0">
                 
-                <div class="flex-grow overflow-y-auto p-5 sm:p-8 pb-32 md:pb-36 bg-white">
+                <div class="flex-1 overflow-y-auto overscroll-contain p-5 sm:p-8 pb-32 md:pb-36 bg-white min-h-0" style="-webkit-overflow-scrolling: touch;">
                     <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight text-stone-900 leading-tight mb-2 pr-4">${safeName}</h2>
                     <div id="modal-price-display" class="text-xl font-bold text-stone-900 mb-6">$${initialPrice}</div>
                     
@@ -1482,7 +1488,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pModal.classList.remove('opacity-0', 'scale-95');
             });
         });
-        body.classList.add('no-scroll'); lenis.stop();
+        body.classList.add('no-scroll');
     };
 
     window.closeModal = function() {
@@ -1492,7 +1498,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cDrawer = document.getElementById('cart-drawer');
             const fModal = document.getElementById('filter-modal');
             if((cDrawer && cDrawer.classList.contains('open')) || (fModal && !fModal.classList.contains('hidden')) || (mobileMenu && mobileMenu.classList.contains('open'))) return;
-            body.classList.remove('no-scroll'); lenis.start();
+            body.classList.remove('no-scroll');
         }, 300);
     };
 
@@ -1582,10 +1588,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="card-img-wrap rounded-none overflow-hidden bg-transparent mb-4">${img}</div>
             <div class="card-body p-0 flex flex-col flex-grow">
                 <div>
+                    <!-- min-h-[40px] locks the title to two lines so prices align -->
                     <h3 class="text-[12px] sm:text-sm font-black uppercase tracking-widest text-stone-900 leading-snug line-clamp-2 min-h-[40px]">${sName}</h3>
                     ${buildPriceHTML(p, pMinPrice)}
                     ${buildSwatchesHTML(p)}
                 </div>
+                <!-- mt-auto forces this button container to the absolute bottom of the card -->
                 <div class="mt-auto pt-5">
                     <button class="btn-pulse w-full bg-stone-900 hover:bg-black text-white text-[11px] sm:text-xs font-black uppercase tracking-widest py-3.5 rounded-none shadow-md transition-transform" onclick="window.quickAdd(event, '${p.id}')">${needsOptions ? 'Choose Options' : 'Add to Cart'}</button>
                 </div>
@@ -1780,12 +1788,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const navSearchBtn = document.getElementById('nav-search-btn');
     const closeFilterBtn = document.getElementById('close-filter-modal');
 
-    const openFilter = () => { filterModal.classList.remove('hidden'); body.classList.add('no-scroll'); lenis.stop(); };
+    const openFilter = () => { filterModal.classList.remove('hidden'); body.classList.add('no-scroll'); };
     const closeFilter = () => { 
         filterModal.classList.add('hidden'); 
         if(!document.getElementById('cart-drawer').classList.contains('open') && !document.getElementById('mobile-menu').classList.contains('open')) {
             body.classList.remove('no-scroll'); 
-            lenis.start();
         }
     };
 
@@ -1824,7 +1831,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const target = document.getElementById('shop-live');
         if(target) {
-            lenis.scrollTo(target, { offset: -69 });
+            const headerOffset = 69;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
         }
     });
 });
