@@ -1679,8 +1679,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const featuredItems = [];
             if(nonBundleProducts.length > 0) {
-                // Moved "NATURE ALWAYS WINS" to the absolute first item in the target checklist sequence
-                const targetNames = ["NATURE ALWAYS WINS", "STAR HORIZON", "GEOMETRIC STAR GRAPHIC T-SHIRT", "TURQUOISE & MAGENTA FLORAL SHERPA BLANKET", "MEN'S BLACK GEOMETRIC INDIGENOUS PRINT HOODIE", "THE GRAND ENTRY WEEKENDER TOTE", "LINEAGE LINK"];
+                // Moved "GEO STAR" to the absolute first item in the target checklist sequence
+                const targetNames = ["GEO STAR", "NATURE ALWAYS WINS", "STAR HORIZON", "GEOMETRIC STAR GRAPHIC T-SHIRT", "TURQUOISE & MAGENTA FLORAL SHERPA BLANKET", "MEN'S BLACK GEOMETRIC INDIGENOUS PRINT HOODIE", "THE GRAND ENTRY WEEKENDER TOTE", "LINEAGE LINK"];
                 targetNames.forEach(target => {
                     let found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes(target.toUpperCase()));
                     if (!found && target.includes("STAR HORIZON")) found = nonBundleProducts.find(p => (p.name || '').toUpperCase().includes("STAR HORIZON"));
